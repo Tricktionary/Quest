@@ -14,6 +14,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler,IDragHandler, IEndDrag
 		this.transform.SetParent(this.transform.parent.parent);
 		
 		GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+		DropZone[] zone = GameObject.FindObjectsOfType<DropZone>(); //Find Drop Zones
 	}
 
 	public void OnDrag(PointerEventData eventData){
