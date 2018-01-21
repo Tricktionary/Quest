@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224565260517215794}
+  - component: {fileID: 114318447387890632}
   - component: {fileID: 222441012622083622}
   - component: {fileID: 114128681249014334}
   - component: {fileID: 114035629753851256}
@@ -69,6 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4b52c192e3604741ae068a1b1f6500a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentToReturnTo: {fileID: 0}
 --- !u!114 &114134106101686992
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -88,6 +90,18 @@ MonoBehaviour:
   m_FlexibleWidth: 0
   m_FlexibleHeight: 0
   m_LayoutPriority: 1
+--- !u!114 &114318447387890632
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1841254532680118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2596ee5ac2bea451ea8ef377b7d00b0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentToReturnTo: {fileID: 0}
 --- !u!222 &222441012622083622
 CanvasRenderer:
   m_ObjectHideFlags: 1
