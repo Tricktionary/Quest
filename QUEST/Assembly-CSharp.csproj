@@ -172,10 +172,10 @@
  <HintPath>/Applications/Unity/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="TextMeshPro-2017.3-1.0.56-Editor">
- <HintPath>/Users/andybui/Documents/School/Winter2018/comp3004/Project/COMP3004-QUEST/QUEST/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-2017.3-1.0.56-Editor.dll</HintPath>
+ <HintPath>/Users/andybui/Desktop/gitTest/COMP3004-QUEST/QUEST/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-2017.3-1.0.56-Editor.dll</HintPath>
  </Reference>
  <Reference Include="TextMeshPro-2017.3-1.0.56-Runtime">
- <HintPath>/Users/andybui/Documents/School/Winter2018/comp3004/Project/COMP3004-QUEST/QUEST/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-2017.3-1.0.56-Runtime.dll</HintPath>
+ <HintPath>/Users/andybui/Desktop/gitTest/COMP3004-QUEST/QUEST/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-2017.3-1.0.56-Runtime.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Advertisements">
  <HintPath>/Users/andybui/Library/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.3/UnityEngine.Advertisements.dll</HintPath>
