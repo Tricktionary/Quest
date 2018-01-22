@@ -217,7 +217,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1833412110767810, guid: 6eb155d50af9c4282a79a2560f9b47b6, type: 2}
       propertyPath: m_Name
-      value: Card (3)
+      value: Card3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6eb155d50af9c4282a79a2560f9b47b6, type: 2}
@@ -321,7 +321,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1833412110767810, guid: 6eb155d50af9c4282a79a2560f9b47b6, type: 2}
       propertyPath: m_Name
-      value: Card (5)
+      value: Card5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6eb155d50af9c4282a79a2560f9b47b6, type: 2}
@@ -1110,7 +1110,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1833412110767810, guid: 6eb155d50af9c4282a79a2560f9b47b6, type: 2}
       propertyPath: m_Name
-      value: Card (2)
+      value: Card2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6eb155d50af9c4282a79a2560f9b47b6, type: 2}
@@ -1291,7 +1291,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1833412110767810, guid: 6eb155d50af9c4282a79a2560f9b47b6, type: 2}
       propertyPath: m_Name
-      value: Card (4)
+      value: Card4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6eb155d50af9c4282a79a2560f9b47b6, type: 2}
@@ -1489,7 +1489,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1833412110767810, guid: 6eb155d50af9c4282a79a2560f9b47b6, type: 2}
       propertyPath: m_Name
-      value: Card (1)
+      value: Card1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6eb155d50af9c4282a79a2560f9b47b6, type: 2}
