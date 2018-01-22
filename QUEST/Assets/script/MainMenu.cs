@@ -7,5 +7,6 @@ public class MainMenu : MonoBehaviour {
 
 	public void PlayGame(){ //Loads The "PlayField"
 		SceneManager.LoadScene("playField");
+
 	}
 }

@@ -18,8 +18,9 @@ public class CardArea :  MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 		Card d = eventData.pointerDrag.GetComponent<Card>();
 
 		if(d!=null){
+			//_area.Add (d);
+			//Debug.Log (_area[0].name);
 			d.oldPosition = this.transform;
-
 		}
 
 	}
