@@ -5,14 +5,18 @@ using UnityEngine.EventSystems;
 
 public class CardArea :  MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler{
 
+	//Current Cards in this area
 	private List<Card> _area = new List<Card>();
 
-	public void OnPointerEnter(PointerEventData eventData){
-
+	// Use this for initialization
+	void Start () {	
 	}
-	public void OnPointerExit(PointerEventData eventData){
-
+	
+	// Update is called once per frame
+	void Update () {	
 	}
+
+	//When a card is dropped
 	public void OnDrop(PointerEventData eventData){
 		Debug.Log(eventData.pointerDrag.name + " Drop to "+ gameObject.name);
 		Card d = eventData.pointerDrag.GetComponent<Card>();
@@ -24,14 +28,11 @@ public class CardArea :  MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 		}
 
 	}
+	//Listener for when a mouse enter
+	public void OnPointerEnter(PointerEventData eventData){
+	}
+	//Listener when a mouse exits
+	public void OnPointerExit(PointerEventData eventData){
+	}
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
