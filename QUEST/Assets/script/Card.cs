@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class Card : MonoBehaviour,IBeginDragHandler,IDragHandler, IEndDragHandler{
 
-	private boolean _isAdventure;
-	private boolean _isStory;
+	private bool _isAdventure;
+	private bool _isStory;
 	private string cardAsset;
 	public  Transform oldPosition = null; 	//Old Position of the card on the board
 	 
