@@ -14,17 +14,32 @@ public class Game : MonoBehaviour {
 
 	//Draws Card 
 	void DrawCard(){
+		//_storyDeck
 	}
 
 	//End Turn
 	void EndTurn(){
+		
 	}
 
 	// Use this for initialization
 	void Start () {
+		//assume 3 players
+		_players.Add(new Player());
+		_players.Add(new Player());
+		_players.Add(new Player());
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		
+	}
+
+	void TwoPlayerMode() {
+		
+	}
+
+	void ThreePlayerMode() {
+
 	}
 }
