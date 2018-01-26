@@ -7,9 +7,9 @@ public class CardArea :  MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 
 	//Current Cards in this area
 	private List<Card> _cards = new List<Card>();
-	private boolean _isStoryArea; 
-	private boolean _isAdventureArea;
-	private boolean _isHand;
+	private bool _isStoryArea; 
+	private bool _isAdventureArea;
+	private bool _isHand;
 
 	// Use this for initialization
 	void Start () {	

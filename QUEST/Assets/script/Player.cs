@@ -8,12 +8,12 @@ public class Player : MonoBehaviour {
 	private int _playerId;							//Player ID
 	private int _rank;								//Players current ranks
 	private int _shieldCounter; 					//Shield Counter
-	private List<Card> _allies = new list<Card>();  //List of cards
+	private List<Card> _allies = new List<Card>();  //List of cards
 	private int _bp;								//Current BP
 	public static int limit = 12;
 
 	// Plays Cards
-	void playCard(List<card> cards){
+	void playCard(List<Card> cards){
 	}
 
 	// Use this for initialization
