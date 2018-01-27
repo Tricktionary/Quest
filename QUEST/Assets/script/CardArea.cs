@@ -6,7 +6,10 @@ using UnityEngine.EventSystems;
 public class CardArea :  MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler{
 
 	//Current Cards in this area
-	private List<Card> _area = new List<Card>();
+	private List<Card> _cards = new List<Card>();
+	private bool _isStoryArea; 
+	private bool _isAdventureArea;
+	private bool _isHand;
 
 	// Use this for initialization
 	void Start () {	

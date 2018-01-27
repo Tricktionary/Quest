@@ -6,14 +6,11 @@ using UnityEngine.UI;
 
 public class Card : MonoBehaviour,IBeginDragHandler,IDragHandler, IEndDragHandler{
 
-	private int _type{get; set;}			//Card Type
-	private int _bp {get; set;}				//BattlePoints of Card  
-	public Transform oldPosition = null; 	//Old Position of the card on the board
-
-
-	void OnMouseOver(){
-		Debug.Log("hello");
-	}
+	private bool _isAdventure;
+	private bool _isStory;
+	private string cardAsset;
+	public  Transform oldPosition = null; 	//Old Position of the card on the board
+	 
 	//Action that occurs when you begin to drag
 	public void OnBeginDrag(PointerEventData eventData){
 		Debug.Log("OnBeginDrag");
