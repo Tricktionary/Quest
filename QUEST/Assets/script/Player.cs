@@ -12,6 +12,14 @@ public class Player : MonoBehaviour {
 	private int _bp;								//Current BP
 	public static int limit = 12;
 
+	//Constructor 
+	public Player(int id){
+		_playerId = id;
+		_rank = 1;
+		_shieldCounter = 0;
+		_bp = 5;
+	}
+
 	// Plays Cards
 	void playCard(List<Card> cards){
 		
@@ -32,6 +40,12 @@ public class Player : MonoBehaviour {
 		_shieldCounter += s;
 	}
 
+/* 
+	Rank-up:
+		Squire = 5 BP
+		Knight = 10 BP
+		Champion Knight = 20 BP
+*/
 	void Rankup () {
 		int[] requirements = new int[]{ 5, 7, 10 };
 		if (_rank == 3) {

@@ -6,6 +6,16 @@ public class Deck : MonoBehaviour {
 
 	private List<Card> cards = new List<Card>();
 
+	//Constructor 
+	public Deck(bool isAdventure, bool isStory){
+		if(isAdventure){
+			//Fill Card with adventure cards
+		}
+		if(isStory){
+			//Fill Cards with story cards
+		}
+
+	}
 	// Use this for initialization
 	void Start () {
 		
@@ -17,7 +27,7 @@ public class Deck : MonoBehaviour {
 	}
 
 	void Populate (List<Card> newCards) {
-		cards.AddRange (newCards);
+		cards.AddRange(newCards);
 	}
 
 	Card Draw () {
