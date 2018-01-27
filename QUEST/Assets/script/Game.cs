@@ -23,11 +23,18 @@ public class Game : MonoBehaviour {
 	}
 
 	// Use this for initialization
-	void Start () {
+	void Awake() {
 		//assume 3 players
-		_players.Add(new Player());
-		_players.Add(new Player());
-		_players.Add(new Player());
+		_players.Add(new Player(1));
+		_players.Add(new Player(2));
+		_players.Add(new Player(3));
+
+		//Set up the decks
+		_adventureDeck = new Deck(false,true);
+		_storyDeck = new Deck(true,false);
+
+		_turnId = 1;
+		_numPlayers = 3;
 	}
 	
 	// Update is called once per frame
