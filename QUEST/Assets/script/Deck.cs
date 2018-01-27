@@ -9,11 +9,10 @@ public class Deck : MonoBehaviour {
 	//Constructor 
 	public Deck(bool isAdventure, bool isStory){
 		if(isAdventure){
-
-
+			//Fill Card with adventure cards
 		}
 		if(isStory){
-
+			//Fill Cards with story cards
 		}
 
 	}
