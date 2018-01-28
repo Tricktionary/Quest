@@ -6,5 +6,7 @@ using UnityEngine.UI;
 
 public class FoeCard : Card
 {
-    
+    private int _minBp;
+    private int _maxBp;
+    private string cardType;  
 }
