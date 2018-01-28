@@ -4,13 +4,26 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+//Should Card Be Abstract? 
 public class Card : MonoBehaviour,IBeginDragHandler,IDragHandler, IEndDragHandler{
 
-	private bool _isAdventure;
-	private bool _isStory;
-	private string cardAsset;
+	protected int _cardId;
+	
+	protected bool _isAdventure{
+		get;
+		set;
+	}
+	protected bool _isStory{
+		get;
+		set;
+	}
+	protected string cardAsset{
+		get;
+		set;
+	}
+
 	public  Transform oldPosition = null; 	//Old Position of the card on the board
-	 
+	
 	//Action that occurs when you begin to drag
 	public void OnBeginDrag(PointerEventData eventData){
 		Debug.Log("OnBeginDrag");
