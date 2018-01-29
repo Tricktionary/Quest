@@ -20,6 +20,11 @@ public class Player : MonoBehaviour {
 		_bp = 5;
 	}
 
+	//Add Cards
+	public void addCard(Card card){
+		_hand.Add(card);	//Adds card to hand
+	}
+	
 	// Plays Cards
 	void playCard(List<Card> cards){
 		

@@ -35,6 +35,13 @@ public class Game : MonoBehaviour {
 
 		_turnId = 1;
 		_numPlayers = 3;
+
+		//Populate Hand 
+		for(int i = 0; i < _players.Count ; i++){
+			for(int x = 0 ; x < 12 ; x++){
+				_players[i].addCard((_adventureDeck.Draw()));
+			}
+		}
 	}
 	
 	// Update is called once per frame
