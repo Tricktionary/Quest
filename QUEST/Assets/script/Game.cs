@@ -30,8 +30,8 @@ public class Game : MonoBehaviour {
 		_players.Add(new Player(3));
 
 		//Set up the decks
-		_adventureDeck = new Deck(false,true);
-		_storyDeck = new Deck(true,false);
+		_adventureDeck = new Deck(true);
+		_storyDeck = new Deck(false);
 
 		_turnId = 1;
 		_numPlayers = 3;

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class TournamentCard : Card
+public class TournamentCard : StoryCard
 {
     int _shields;
 

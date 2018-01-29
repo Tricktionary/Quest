@@ -4,16 +4,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class WeaponCard : Card
+public class WeaponCard : AdventureCard
 {
     private int _bp;
 	bool _special;
 	int _power;
-	int _bid;
-	public WeaponCard(string name, int power, int bid, bool special) {
+	public WeaponCard(string name, int power, string asset) {
 		_name = name;
 		_power = power;
-		_bid = bid;
-		_special = special;
+		_asset = asset;
 	}
 }
