@@ -39,15 +39,21 @@ public class Deck : MonoBehaviour {
 		return null;
 	}
 
-
+	//READY TO TEST
 	//made-up shuffling algorithm
 	void Shuffle () {
 		List<Card> newCards = new List<Card>();
 		int count = cards.Count;
-		int[] randomList = new int[count];
+		List<int> randomList = new List<Int>;
 		for (int i=0;i<count;i++) {
-			randomList [i] = 1;
+			randomList.Add(i);
 		}
+		for (int i = count; i > 0; i--) {
+			int value = (int)Mathf.Floor(Random.value * i);
+			newCards.Add(cards[randomList[value]]);
+			randomList.RemoveAt(value);
+		}
+		cards = newCards;
 	}
 
 	int GetSize () {
