@@ -51,12 +51,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\script\AllyCard.cs" />
+     <Compile Include="Assets\script\ArmourCard.cs" />
      <Compile Include="Assets\script\Card.cs" />
      <Compile Include="Assets\script\CardArea.cs" />
      <Compile Include="Assets\script\Deck.cs" />
+     <Compile Include="Assets\script\FoeCard.cs" />
      <Compile Include="Assets\script\Game.cs" />
      <Compile Include="Assets\script\MainMenu.cs" />
      <Compile Include="Assets\script\Player.cs" />
+     <Compile Include="Assets\script\QuestCard.cs" />
+     <Compile Include="Assets\script\TestCard.cs" />
+     <Compile Include="Assets\script\TournamentCard.cs" />
+     <Compile Include="Assets\script\WeaponCard.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
