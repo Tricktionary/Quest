@@ -10,7 +10,7 @@ public class Deck : MonoBehaviour {
 	public Deck(bool isAdventure){
 		if (isAdventure) {
 			//Fill Card with adventure cards
-			List<Card> newCards = new List<Card>();
+			List<AdventureCard> newCards = new List<AdventureCard>();
 
 			/* Weapon Load */
 			/* 2 Excaliburs */
@@ -73,10 +73,25 @@ public class Deck : MonoBehaviour {
 			newCards.Add(new WeaponCard("Dagger",5,"Asset/card_image/weapons/weaponCard2"));
 			newCards.Add(new WeaponCard("Dagger",5,"Asset/card_image/weapons/weaponCard2"));
 			newCards.Add(new WeaponCard("Dagger",5,"Asset/card_image/weapons/weaponCard2"));
+			
+			/* Foe Load */
+			//FoeCard(string name, int loPower, int hiPower, bool special)
+			
+			/* 7 Robber Knight */
+			newCards.Add(new FoeCard("Robber Knight",15,15,false));
+			newCards.Add(new FoeCard("Robber Knight",15,15,false));
+			newCards.Add(new FoeCard("Robber Knight",15,15,false));
+			newCards.Add(new FoeCard("Robber Knight",15,15,false));
+			newCards.Add(new FoeCard("Robber Knight",15,15,false));
+			newCards.Add(new FoeCard("Robber Knight",15,15,false));
+			newCards.Add(new FoeCard("Robber Knight",15,15,false));
 
-			//Populate();
+			
+			Populate();
 		} else {
-			//story
+			/* Story */
+
+			/* Quest Load */
 			//Populate();
 		}
 
