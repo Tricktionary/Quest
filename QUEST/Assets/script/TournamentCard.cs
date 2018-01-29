@@ -12,4 +12,9 @@ public class TournamentCard : StoryCard
 		_name = name;
 		_shields = shields;
 	}
+
+	// ToString Override for nicer printing.
+	public override string ToString(){
+		return "Tournament card:\nName: " + _name + "\nShields: " + _shields;
+	}
 }

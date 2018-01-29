@@ -11,4 +11,9 @@ public class EventCard : StoryCard
     public EventCard(string conditions){
         conditions = _conditions;
     }
+
+	// ToString Override for nicer printing.
+	public override string ToString(){
+		return "Event card:\nName: " + _name + "\nConditions: " + _conditions;
+	}
 }
