@@ -6,7 +6,14 @@ using UnityEngine.UI;
 
 public class FoeCard : Card
 {
-    private int _minBp;
-    private int _maxBp;
-    private string cardType;  
+	bool _special;
+	int _loPower;
+	int _hiPower;
+
+	public FoeCard(string name, int loPower, int hiPower, bool special) {
+		_name = name;
+		_loPower = loPower;
+		_hiPower = hiPower;
+		_special = special;
+	}
 }

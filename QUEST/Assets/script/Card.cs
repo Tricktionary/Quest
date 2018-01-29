@@ -7,6 +7,7 @@ using UnityEngine.UI;
 //Should Card Be Abstract? 
 public class Card : MonoBehaviour,IBeginDragHandler,IDragHandler, IEndDragHandler{
 
+	public int _name;
 	protected int _cardId;
 	
 	protected bool _isAdventure{
