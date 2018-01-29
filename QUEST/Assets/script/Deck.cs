@@ -35,7 +35,18 @@ public class Deck : MonoBehaviour {
 			/* 7 Robber Knight */
 			AddXCopies(new FoeCard("Robber Knight", 15, 15, false), 7);
 		} else {
+			//WHEN ADDING FEATURED FOE * means all
 			// Fill the deck with story cards.
+			AddXCopies(new QuestCard("Search for the Holy Grail",5,"*"),1);
+			AddXCopies(new QuestCard("Test of the Green Knight",4,"Green Knight"),1);
+			AddXCopies(new QuestCard("Search for the Questing Beast",4,""),1);
+			AddXCopies(new QuestCard("Defend the Queen's Honor",4,"*"),1);
+			AddXCopies(new QuestCard("Rescue the Fair Maiden",3,"Black Knight"),1);
+			AddXCopies(new QuestCard("Journey Through the Enchanted Forest",3,"Evil Knight"),1);
+			AddXCopies(new QuestCard("Vanquish King Arthur's Enemies",3,""),2);
+			AddXCopies(new QuestCard("Slay the Dragon",3,"Dragon"),1);
+			AddXCopies(new QuestCard("Boar Hunt",2,"Boar"),2);
+			AddXCopies(new QuestCard("Repel the Saxxon Raiders",2,"Saxon"),2);
 
 		}
 
