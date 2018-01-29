@@ -26,4 +26,10 @@ public class AllyCard : AdventureCard
 		_asset = asset;
 	}
 
+	// ToString Override for nicer printing.
+	public override string ToString(){
+		return "Ally card:\nName: " + _name + "\nPower: " + _power + "\nBid: " + _bid + "\nBonus Power: " + _bonusPower + 
+			"\nBonus Bid: " + _bonusBid + "\nQuest Condition: " + _questCondition + "\nAlly Condition: " + _allyCondition + 
+			"\nSpecial: " + _special + "\nAsset: " + _asset;
+	}
 }

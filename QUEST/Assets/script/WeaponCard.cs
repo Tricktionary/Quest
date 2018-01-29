@@ -14,4 +14,9 @@ public class WeaponCard : AdventureCard
 		_power = power;
 		_asset = asset;
 	}
+
+	// ToString Override for nicer printing.
+	public override string ToString(){
+		return "Weapon card:\nName: " + _name + "\nPower: " + _power + "\nAsset: " + _asset;
+	}
 }

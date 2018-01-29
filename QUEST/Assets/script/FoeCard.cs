@@ -16,4 +16,10 @@ public class FoeCard : AdventureCard
 		_hiPower = hiPower;
 		_special = special;
 	}
+
+	// ToString Override for nicer printing.
+	public override string ToString(){
+		return "Foe card:\nName: " + _name + "\nLow Power: " + _loPower + "\nHigh Power: " + _hiPower +
+			"/nSpecial" + _special;
+	}
 }

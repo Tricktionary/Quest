@@ -17,4 +17,9 @@ public class QuestCard : StoryCard
 		_featuredFoe = featuredFoe;
 	}
 
+	// ToString Override for nicer printing.
+	public override string ToString(){
+		return "Quest card:\nName: " + _name + "\nStages: " + _stages + "\nFeatured Foe: " + _featuredFoe;
+	}
+
 }
