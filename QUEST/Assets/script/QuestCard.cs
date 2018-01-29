@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class QuestCard : Card
+public class QuestCard : StoryCard
 {
     
     int[] _playerId = new int[3];  //Do we need the players or just their ID?

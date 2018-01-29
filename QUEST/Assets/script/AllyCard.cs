@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class AllyCard : Card
+public class AllyCard : AdventureCard
 {
 	bool _special;
 	int _power;
@@ -14,7 +14,7 @@ public class AllyCard : Card
 	string _questCondition;
 	string _allyCondition;
 
-	public AllyCard(string name, int power, int bid, int bonusPower, int bonusBid, string questCondition, string allyCondition, bool special) {
+	public AllyCard(string name, int power, int bid, int bonusPower, int bonusBid, string questCondition, string allyCondition, bool special, string asset) {
 		_name = name;
 		_power = power;
 		_bid = bid;
@@ -23,6 +23,7 @@ public class AllyCard : Card
 		_questCondition = questCondition;
 		_allyCondition = allyCondition;
 		_special = special;
+		_asset = asset;
 	}
 
 }

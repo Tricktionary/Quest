@@ -11,7 +11,69 @@ public class Deck : MonoBehaviour {
 		if (isAdventure) {
 			//Fill Card with adventure cards
 			List<Card> newCards = new List<Card>();
-			//newCards.Add(new FoeCard());
+
+			/* Weapon Load */
+			/* 2 Excaliburs */
+			newCards.Add(new WeaponCard("Excalibur",30,"Asset/card_image/weapons/weaponCard3"));
+			newCards.Add(new WeaponCard("Excalibur",30,"Asset/card_image/weapons/weaponCard3"));
+			
+			/* 6 Lances */
+			newCards.Add(new WeaponCard("Lance",20,"Asset/card_image/weapons/weaponCard4"));
+			newCards.Add(new WeaponCard("Lance",20,"Asset/card_image/weapons/weaponCard4"));
+			newCards.Add(new WeaponCard("Lance",20,"Asset/card_image/weapons/weaponCard4"));
+			newCards.Add(new WeaponCard("Lance",20,"Asset/card_image/weapons/weaponCard4"));
+			newCards.Add(new WeaponCard("Lance",20,"Asset/card_image/weapons/weaponCard4"));
+			newCards.Add(new WeaponCard("Lance",20,"Asset/card_image/weapons/weaponCard4"));
+
+			/* 8 Battle Axe */
+			newCards.Add(new WeaponCard("BattleAxe",15,"Asset/card_image/weapons/weaponCard5"));
+			newCards.Add(new WeaponCard("BattleAxe",15,"Asset/card_image/weapons/weaponCard5"));
+			newCards.Add(new WeaponCard("BattleAxe",15,"Asset/card_image/weapons/weaponCard5"));
+			newCards.Add(new WeaponCard("BattleAxe",15,"Asset/card_image/weapons/weaponCard5"));
+			newCards.Add(new WeaponCard("BattleAxe",15,"Asset/card_image/weapons/weaponCard5"));
+			newCards.Add(new WeaponCard("BattleAxe",15,"Asset/card_image/weapons/weaponCard5"));
+			newCards.Add(new WeaponCard("BattleAxe",15,"Asset/card_image/weapons/weaponCard5"));
+			newCards.Add(new WeaponCard("BattleAxe",15,"Asset/card_image/weapons/weaponCard5"));
+
+			/* 16 Swords */
+			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
+			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
+			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
+			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
+			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
+			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
+			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
+			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
+			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
+			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
+			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
+			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
+			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
+			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
+			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
+			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
+
+			/* 11 Horses */
+			newCards.Add(new WeaponCard("Horse",10,"Asset/card_image/weapons/weaponCard6"));
+			newCards.Add(new WeaponCard("Horse",10,"Asset/card_image/weapons/weaponCard6"));
+			newCards.Add(new WeaponCard("Horse",10,"Asset/card_image/weapons/weaponCard6"));
+			newCards.Add(new WeaponCard("Horse",10,"Asset/card_image/weapons/weaponCard6"));
+			newCards.Add(new WeaponCard("Horse",10,"Asset/card_image/weapons/weaponCard6"));
+			newCards.Add(new WeaponCard("Horse",10,"Asset/card_image/weapons/weaponCard6"));
+			newCards.Add(new WeaponCard("Horse",10,"Asset/card_image/weapons/weaponCard6"));
+			newCards.Add(new WeaponCard("Horse",10,"Asset/card_image/weapons/weaponCard6"));
+			newCards.Add(new WeaponCard("Horse",10,"Asset/card_image/weapons/weaponCard6"));
+			newCards.Add(new WeaponCard("Horse",10,"Asset/card_image/weapons/weaponCard6"));
+			newCards.Add(new WeaponCard("Horse",10,"Asset/card_image/weapons/weaponCard6"));
+
+			/* 6 Daggers */
+			newCards.Add(new WeaponCard("Dagger",5,"Asset/card_image/weapons/weaponCard2"));
+			newCards.Add(new WeaponCard("Dagger",5,"Asset/card_image/weapons/weaponCard2"));
+			newCards.Add(new WeaponCard("Dagger",5,"Asset/card_image/weapons/weaponCard2"));
+			newCards.Add(new WeaponCard("Dagger",5,"Asset/card_image/weapons/weaponCard2"));
+			newCards.Add(new WeaponCard("Dagger",5,"Asset/card_image/weapons/weaponCard2"));
+			newCards.Add(new WeaponCard("Dagger",5,"Asset/card_image/weapons/weaponCard2"));
+
 			//Populate();
 		} else {
 			//story
@@ -47,7 +109,7 @@ public class Deck : MonoBehaviour {
 	void Shuffle () {
 		List<Card> newCards = new List<Card>();
 		int count = cards.Count;
-		List<int> randomList = new List<Int>;
+		List<int> randomList = new List<Int>();
 		for (int i=0;i<count;i++) {
 			randomList.Add(i);
 		}

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class FoeCard : Card
+public class FoeCard : AdventureCard
 {
 	bool _special;
 	int _loPower;
