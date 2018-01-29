@@ -10,11 +10,12 @@ public class FoeCard : AdventureCard
 	int _loPower;
 	int _hiPower;
 
-	public FoeCard(string name, int loPower, int hiPower, bool special) {
+	public FoeCard(string name, int loPower, int hiPower, bool special, string asset) {
 		_name = name;
 		_loPower = loPower;
 		_hiPower = hiPower;
 		_special = special;
+		_asset = asset;
 	}
 
 	// ToString Override for nicer printing.
