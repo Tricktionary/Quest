@@ -32,8 +32,13 @@ public class Deck : MonoBehaviour {
 			AddXCopies(new WeaponCard("Dagger", 5, "Asset/card_image/weapons/weaponCard2"), 6);
 			
 			/* Foe Load */
+
 			/* 7 Robber Knight */
-			AddXCopies(new FoeCard("Robber Knight", 15, 15, false), 7);
+			AddXCopies(new FoeCard("Robber Knight", 15, 15, false,"Asset/card_image/foe/foeCard1"),7);
+
+			/* 5 Saxons */
+			AddXCopies(new FoeCard("Saxons",10,20,false,"Asset/card_image/foe/foeCard2"),5);
+			
 		} else {
 			// Fill the deck with story cards.
 
