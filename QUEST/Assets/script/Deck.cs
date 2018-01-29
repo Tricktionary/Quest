@@ -75,7 +75,7 @@ public class Deck : MonoBehaviour {
 	}
 
 	// Draw a card from the deck.
-	Card Draw () {
+	public Card Draw () {
 		if (cards.Count > 0) {
 			Card card = cards [0];
 			cards.RemoveAt (0);

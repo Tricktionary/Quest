@@ -41,6 +41,13 @@ public class Game : MonoBehaviour {
 		_numPlayers = 3;
 		_running = true;
 		_drawCardButton = null;
+
+		//Populate Hand 
+		for(int i = 0; i < _players.Count ; i++){
+			for(int x = 0 ; x < 12 ; x++){
+				_players[i].addCard((_adventureDeck.Draw()));
+			}
+		}
 	}
 
 	void Start() {
