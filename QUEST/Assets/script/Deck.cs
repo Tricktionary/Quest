@@ -4,112 +4,61 @@ using UnityEngine;
 
 public class Deck : MonoBehaviour {
 
+	// The list of cards that make up the deck.
 	private List<Card> cards = new List<Card>();
 
-	//Constructor 
+	//Constructor. 
 	public Deck(bool isAdventure){
 		if (isAdventure) {
-			//Fill Card with adventure cards
-			List<AdventureCard> newCards = new List<AdventureCard>();
+			//Fill deck with adventure cards.
 
 			/* Weapon Load */
 			/* 2 Excaliburs */
-			newCards.Add(new WeaponCard("Excalibur",30,"Asset/card_image/weapons/weaponCard3"));
-			newCards.Add(new WeaponCard("Excalibur",30,"Asset/card_image/weapons/weaponCard3"));
+			AddXCopies(new WeaponCard("Excalibur", 30, "Asset/card_image/weapons/weaponCard3"), 2);
 			
 			/* 6 Lances */
-			newCards.Add(new WeaponCard("Lance",20,"Asset/card_image/weapons/weaponCard4"));
-			newCards.Add(new WeaponCard("Lance",20,"Asset/card_image/weapons/weaponCard4"));
-			newCards.Add(new WeaponCard("Lance",20,"Asset/card_image/weapons/weaponCard4"));
-			newCards.Add(new WeaponCard("Lance",20,"Asset/card_image/weapons/weaponCard4"));
-			newCards.Add(new WeaponCard("Lance",20,"Asset/card_image/weapons/weaponCard4"));
-			newCards.Add(new WeaponCard("Lance",20,"Asset/card_image/weapons/weaponCard4"));
+			AddXCopies(new WeaponCard("Lance", 20, "Asset/card_image/weapons/weaponCard4"), 6);
 
 			/* 8 Battle Axe */
-			newCards.Add(new WeaponCard("BattleAxe",15,"Asset/card_image/weapons/weaponCard5"));
-			newCards.Add(new WeaponCard("BattleAxe",15,"Asset/card_image/weapons/weaponCard5"));
-			newCards.Add(new WeaponCard("BattleAxe",15,"Asset/card_image/weapons/weaponCard5"));
-			newCards.Add(new WeaponCard("BattleAxe",15,"Asset/card_image/weapons/weaponCard5"));
-			newCards.Add(new WeaponCard("BattleAxe",15,"Asset/card_image/weapons/weaponCard5"));
-			newCards.Add(new WeaponCard("BattleAxe",15,"Asset/card_image/weapons/weaponCard5"));
-			newCards.Add(new WeaponCard("BattleAxe",15,"Asset/card_image/weapons/weaponCard5"));
-			newCards.Add(new WeaponCard("BattleAxe",15,"Asset/card_image/weapons/weaponCard5"));
+			AddXCopies(new WeaponCard("BattleAxe", 15, "Asset/card_image/weapons/weaponCard5"), 8);
 
 			/* 16 Swords */
-			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
-			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
-			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
-			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
-			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
-			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
-			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
-			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
-			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
-			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
-			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
-			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
-			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
-			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
-			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
-			newCards.Add(new WeaponCard("Sword",10,"Asset/card_image/weapons/weaponCard1"));
+			AddXCopies(new WeaponCard("Sword", 10, "Asset/card_image/weapons/weaponCard1"), 16);
 
 			/* 11 Horses */
-			newCards.Add(new WeaponCard("Horse",10,"Asset/card_image/weapons/weaponCard6"));
-			newCards.Add(new WeaponCard("Horse",10,"Asset/card_image/weapons/weaponCard6"));
-			newCards.Add(new WeaponCard("Horse",10,"Asset/card_image/weapons/weaponCard6"));
-			newCards.Add(new WeaponCard("Horse",10,"Asset/card_image/weapons/weaponCard6"));
-			newCards.Add(new WeaponCard("Horse",10,"Asset/card_image/weapons/weaponCard6"));
-			newCards.Add(new WeaponCard("Horse",10,"Asset/card_image/weapons/weaponCard6"));
-			newCards.Add(new WeaponCard("Horse",10,"Asset/card_image/weapons/weaponCard6"));
-			newCards.Add(new WeaponCard("Horse",10,"Asset/card_image/weapons/weaponCard6"));
-			newCards.Add(new WeaponCard("Horse",10,"Asset/card_image/weapons/weaponCard6"));
-			newCards.Add(new WeaponCard("Horse",10,"Asset/card_image/weapons/weaponCard6"));
-			newCards.Add(new WeaponCard("Horse",10,"Asset/card_image/weapons/weaponCard6"));
+			AddXCopies(new WeaponCard("Horse", 10, "Asset/card_image/weapons/weaponCard6"), 11);
 
 			/* 6 Daggers */
-			newCards.Add(new WeaponCard("Dagger",5,"Asset/card_image/weapons/weaponCard2"));
-			newCards.Add(new WeaponCard("Dagger",5,"Asset/card_image/weapons/weaponCard2"));
-			newCards.Add(new WeaponCard("Dagger",5,"Asset/card_image/weapons/weaponCard2"));
-			newCards.Add(new WeaponCard("Dagger",5,"Asset/card_image/weapons/weaponCard2"));
-			newCards.Add(new WeaponCard("Dagger",5,"Asset/card_image/weapons/weaponCard2"));
-			newCards.Add(new WeaponCard("Dagger",5,"Asset/card_image/weapons/weaponCard2"));
+			AddXCopies(new WeaponCard("Dagger", 5, "Asset/card_image/weapons/weaponCard2"), 6);
 			
 			/* Foe Load */
-			//FoeCard(string name, int loPower, int hiPower, bool special)
-			
 			/* 7 Robber Knight */
-			newCards.Add(new FoeCard("Robber Knight",15,15,false));
-			newCards.Add(new FoeCard("Robber Knight",15,15,false));
-			newCards.Add(new FoeCard("Robber Knight",15,15,false));
-			newCards.Add(new FoeCard("Robber Knight",15,15,false));
-			newCards.Add(new FoeCard("Robber Knight",15,15,false));
-			newCards.Add(new FoeCard("Robber Knight",15,15,false));
-			newCards.Add(new FoeCard("Robber Knight",15,15,false));
-
-			
-			Populate();
+			AddXCopies(new FoeCard("Robber Knight", 15, 15, false), 7);
 		} else {
-			/* Story */
+			// Fill the deck with story cards.
 
-			/* Quest Load */
-			//Populate();
 		}
 
+		// Shuffe the deck of cards after adding.
+		this.Shuffle();
 	}
+
+	// Adds x copies of a Card to the deck.
+	void AddXCopies(Card card, int x){
+		for (int i = 0; i < x; i++) {
+			cards.Add(card);
+		}
+	}
+
 	// Use this for initialization
 	void Start () {
-		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
 	}
 
-	void Populate (List<Card> newCards) {
-		cards.AddRange(newCards);
-	}
-
+	// Draw a card from the deck.
 	Card Draw () {
 		if (cards.Count > 0) {
 			Card card = cards [0];
@@ -119,12 +68,11 @@ public class Deck : MonoBehaviour {
 		return null;
 	}
 
-	//READY TO TEST
-	//made-up shuffling algorithm
+	// Shuffe the deck of cards.
 	void Shuffle () {
 		List<Card> newCards = new List<Card>();
 		int count = cards.Count;
-		List<int> randomList = new List<Int>();
+		List<int> randomList = new List<int>();
 		for (int i=0;i<count;i++) {
 			randomList.Add(i);
 		}
@@ -136,6 +84,7 @@ public class Deck : MonoBehaviour {
 		cards = newCards;
 	}
 
+	// Get the size of the deck.
 	int GetSize () {
 		return cards.Count;
 	}
