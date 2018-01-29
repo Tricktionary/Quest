@@ -7,12 +7,15 @@ public class Deck : MonoBehaviour {
 	private List<Card> cards = new List<Card>();
 
 	//Constructor 
-	public Deck(bool isAdventure, bool isStory){
-		if(isAdventure){
+	public Deck(bool isAdventure){
+		if (isAdventure) {
 			//Fill Card with adventure cards
-		}
-		if(isStory){
-			//Fill Cards with story cards
+			List<Card> newCards = new List<Card>();
+			//newCards.Add(new FoeCard());
+			//Populate();
+		} else {
+			//story
+			//Populate();
 		}
 
 	}

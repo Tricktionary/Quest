@@ -7,9 +7,14 @@ using UnityEngine.UI;
 public class QuestCard : Card
 {
     
-    private int[] _playerId = new int[3];  //Do we need the players or just their ID?
-    private int _sponsorId;
-    private int _stages;
-    private string foe;
+    int[] _playerId = new int[3];  //Do we need the players or just their ID?
+    int _stages;
+    string _featuredFoe;
+
+	public QuestCard (string name, int stages, string featuredFoe) {
+		_name = name;
+		_stages = stages;
+		_featuredFoe = featuredFoe;
+	}
 
 }
