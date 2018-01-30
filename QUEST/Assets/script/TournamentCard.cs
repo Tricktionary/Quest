@@ -8,9 +8,10 @@ public class TournamentCard : StoryCard
 {
     int _shields;
 
-	public TournamentCard(string name, int shields) {
+	public TournamentCard(string name, int shields, string asset) {
 		_name = name;
 		_shields = shields;
+		_asset = asset;
 	}
 
 	// ToString Override for nicer printing.

@@ -41,7 +41,13 @@ public class Game : MonoBehaviour {
 		_numPlayers = 3;
 		_running = true;
 		_drawCardButton = null;
-
+		
+		//Popuates Player Hands
+		for(int i = 0; i < _players.Count ; i++){
+			for(int x = 0 ; x < 12 ; x++){
+				_players[i].addCard((_adventureDeck.Draw()));
+			}
+		}
 		debugPrint();
 		 
 	}
@@ -49,11 +55,7 @@ public class Game : MonoBehaviour {
 	void debugPrint(){
 		//Populate Hand of All Player
 		Debug.Log(_players.Count);
-		for(int i = 0; i < _players.Count ; i++){
-			for(int x = 0 ; x < 12 ; x++){
-				_players[i].addCard((_adventureDeck.Draw()));
-			}
-		}
+ 
 		//Test Deck Printing
 		Debug.Log("Adventure Deck:");
 		for(int i = 0; i <_adventureDeck.GetSize();i++){
@@ -68,9 +70,10 @@ public class Game : MonoBehaviour {
 		Debug.Log("Player Hands:");
 		//Trying to print player hand
 		for(int i = 0 ; i <_players.Count; i++){
-			Debug.Log("Player "+ i);
-			for(int x = 0; x <_players[i].getHand().Count; i++){
-				Debug.Log(_players[i].getHand()[x].ToString());
+			Debug.Log("Player:"+ i);
+			//Debug.Log(_players[i]._hand.Count);
+			for(int x = 0; x <_players[i]._hand.Count; x++){
+				Debug.Log(_players[i]._hand[x].ToString());
 			}
 		}	
 	}
