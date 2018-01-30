@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Game : MonoBehaviour {
 
+	public GameObject Card;		//Card Prefab 
+	public GameObject Hand; 	//Play Area Hand Reference
 	private List<Player> _players = new List<Player>(); 	//List of players
 	private int _numPlayers;								//Number of players
 	private int _turnId; 									//Player ID of who's turn
@@ -22,7 +24,7 @@ public class Game : MonoBehaviour {
 	}
 
 	//End Turn
-	void EndTurn(){
+	public void EndTurn(){
 		
 	}
 
@@ -37,18 +39,28 @@ public class Game : MonoBehaviour {
 		_adventureDeck = new Deck(true);
 		_storyDeck = new Deck(false);
 
-		_turnId = 1;
+		_turnId = 0;
 		_numPlayers = 3;
 		_running = true;
 		_drawCardButton = null;
 		
-		//Popuates Player Hands
+		//Populates Player Hands
 		for(int i = 0; i < _players.Count ; i++){
 			for(int x = 0 ; x < 12 ; x++){
 				_players[i].addCard((_adventureDeck.Draw()));
 			}
 		}
-		debugPrint();
+
+		/* Load Player 1 Cards */
+		List<Card> currCard = _players[0]._hand;
+		//Create Card Game Object
+		for(int i = 0 ; i < currCard.Count; i++){
+			GameObject CardUI = Instantiate(Card, new Vector3(-7.5f, -3.5f, -0.5f), new Quaternion(0,0,0,0));
+			
+			CardUI.transform.SetParent(Hand.transform);
+		}
+		
+		//debugPrint();
 		 
 	}
 
