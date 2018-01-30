@@ -20,6 +20,11 @@ public class Player : MonoBehaviour {
 		_bp = 5;
 	}
 
+	//Get Hand Object
+	public List<Card> getHand(){
+		return(_hand);
+	}
+
 	//Add Cards
 	public void addCard(Card card){
 		_hand.Add(card);	//Adds card to hand

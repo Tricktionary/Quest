@@ -6,7 +6,10 @@ public class Deck : MonoBehaviour {
 
 	// The list of cards that make up the deck.
 	private List<Card> cards = new List<Card>();
-
+	
+	public List<Card> GetDeck(){
+		return cards;
+	}
 	//Constructor. 
 	public Deck(bool isAdventure){
 		if (isAdventure) {
@@ -59,6 +62,7 @@ public class Deck : MonoBehaviour {
 		this.Shuffle();
 	}
 
+
 	// Adds x copies of a Card to the deck.
 	void AddXCopies(Card card, int x){
 		for (int i = 0; i < x; i++) {
@@ -101,7 +105,7 @@ public class Deck : MonoBehaviour {
 	}
 
 	// Get the size of the deck.
-	int GetSize () {
+	public int GetSize () {
 		return cards.Count;
 	}
 }

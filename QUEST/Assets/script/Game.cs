@@ -42,12 +42,26 @@ public class Game : MonoBehaviour {
 		_running = true;
 		_drawCardButton = null;
 
-		//Populate Hand 
+		//Populate Hand of All Player
 		for(int i = 0; i < _players.Count ; i++){
 			for(int x = 0 ; x < 12 ; x++){
 				_players[i].addCard((_adventureDeck.Draw()));
 			}
 		}
+		
+		//Test Deck Printing
+		for(int i = 0; i <_adventureDeck.GetSize();i++){
+			Debug.Log(_adventureDeck.GetDeck()[i].ToString());
+		}
+
+		//Test Player Printing 
+		/* 
+		for(int i = 0 ; i <_players.Count; i++){
+			for(int x = 0; x <_players[i].getHand().Count; i++){
+				Debug.Log(_players[i].getHand()[x].ToString());
+			}
+		}
+		*/
 	}
 
 	void Start() {

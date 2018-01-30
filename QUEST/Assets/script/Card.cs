@@ -7,13 +7,16 @@ using UnityEngine.UI;
 //Should Card Be Abstract? 
 public class Card : MonoBehaviour,IBeginDragHandler,IDragHandler, IEndDragHandler{
 
-	public string _name;
+	public string _name{
+		get;
+		set;
+	}
 	protected string _asset{
 		get;
 		set;
 	}
 
-	public  Transform oldPosition = null; 	//Old Position of the card on the board
+	public Transform oldPosition = null; 	//Old Position of the card on the board
 	
 	//Action that occurs when you begin to drag
 	public void OnBeginDrag(PointerEventData eventData){
