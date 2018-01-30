@@ -71,27 +71,20 @@ public class Deck : MonoBehaviour {
 			AddXCopies(new FoeCard("Mordred",30,30,true,"Asset/card_image/foe/foeCard11"),4);
 
 
-			/* Amour load */
-
-			/* */
-
-
 		} else {
 			//WHEN ADDING FEATURED FOE * means all
 			// Fill the deck with story cards.
-			AddXCopies(new QuestCard("Search for the Holy Grail",5,"*"),1);
-			AddXCopies(new QuestCard("Test of the Green Knight",4,"Green Knight"),1);
-			AddXCopies(new QuestCard("Search for the Questing Beast",4,""),1);
-			AddXCopies(new QuestCard("Defend the Queen's Honor",4,"*"),1);
-			AddXCopies(new QuestCard("Rescue the Fair Maiden",3,"Black Knight"),1);
-			AddXCopies(new QuestCard("Journey Through the Enchanted Forest",3,"Evil Knight"),1);
-			AddXCopies(new QuestCard("Vanquish King Arthur's Enemies",3,""),2);
-			AddXCopies(new QuestCard("Slay the Dragon",3,"Dragon"),1);
-			AddXCopies(new QuestCard("Boar Hunt",2,"Boar"),2);
-			AddXCopies(new QuestCard("Repel the Saxxon Raiders",2,"Saxon"),2);
-
+			AddXCopies(new QuestCard("Search for the Holy Grail",5,"*","Asset/card_image/quest/questCard9"),1);
+			AddXCopies(new QuestCard("Test of the Green Knight",4,"Green Knight","Asset/card_image/quest/questCard10"),1);
+			AddXCopies(new QuestCard("Search for the Questing Beast",4,"","Asset/card_image/quest/questCard5"),1);
+			AddXCopies(new QuestCard("Defend the Queen's Honor",4,"*","Asset/card_image/quest/questCard6"),1);
+			AddXCopies(new QuestCard("Rescue the Fair Maiden",3,"Black Knight","Asset/card_image/quest/questCard8"),1);
+			AddXCopies(new QuestCard("Journey Through the Enchanted Forest",3,"Evil Knight","Asset/card_image/quest/questCard1"),1);
+			AddXCopies(new QuestCard("Vanquish King Arthur's Enemies",3,"","Asset/card_image/quest/questCard2"),2);
+			AddXCopies(new QuestCard("Slay the Dragon",3,"Dragon","Asset/card_image/quest/questCard7"),1);
+			AddXCopies(new QuestCard("Boar Hunt",2,"Boar","Asset/card_image/quest/questCard4"),2);
+			AddXCopies(new QuestCard("Repel the Saxxon Raiders",2,"Saxon","Asset/card_image/quest/questCard3"),2);
 		}
-
 		// Shuffe the deck of cards after adding.
 		this.Shuffle();
 	}
@@ -116,7 +109,7 @@ public class Deck : MonoBehaviour {
 	public Card Draw () {
 		if (cards.Count > 0) {
 			Card card = cards [0];
-			cards.RemoveAt (0);
+			cards.RemoveAt(0);
 			return card;
 		}
 		return null;

@@ -11,10 +11,11 @@ public class QuestCard : StoryCard
     int _stages;
     string _featuredFoe;
 
-	public QuestCard (string name, int stages, string featuredFoe) {
+	public QuestCard (string name, int stages, string featuredFoe, string asset) {
 		_name = name;
 		_stages = stages;
 		_featuredFoe = featuredFoe;
+		_asset = asset;
 	}
 
 	// ToString Override for nicer printing.
