@@ -19,10 +19,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224524809405071964}
-  - component: {fileID: 114521064485966522}
   - component: {fileID: 222254964941289160}
   - component: {fileID: 114285412807582094}
   - component: {fileID: 225469385514268084}
+  - component: {fileID: 114638418732092184}
   - component: {fileID: 114754824740384518}
   m_Layer: 5
   m_Name: Card
@@ -58,7 +58,7 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114521064485966522
+--- !u!114 &114638418732092184
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1833412110767810}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b1fcef6b11e74b5586d446eb729743d, type: 3}
+  m_Script: {fileID: 11500000, guid: 32d47554d24e54fc88df2d53866c59ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   oldPosition: {fileID: 0}
