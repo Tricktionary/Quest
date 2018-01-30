@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Game : MonoBehaviour {
 
@@ -53,10 +54,15 @@ public class Game : MonoBehaviour {
 
 		/* Load Player 1 Cards */
 		List<Card> currCard = _players[0]._hand;
+		string currCardAsset;
 		//Create Card Game Object
 		for(int i = 0 ; i < currCard.Count; i++){
+			currCardAsset = currCard[i]._asset;
+			Debug.Log(currCardAsset);
 			GameObject CardUI = Instantiate(Card, new Vector3(-7.5f, -3.5f, -0.5f), new Quaternion(0,0,0,0));
+			Sprite card = Resources.Load<Sprite>(currCardAsset);
 			
+			CardUI.gameObject.GetComponent<Image>().sprite = card;
 			CardUI.transform.SetParent(Hand.transform);
 		}
 		
