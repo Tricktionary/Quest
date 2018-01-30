@@ -6,11 +6,11 @@ using UnityEngine.UI;
 
 public class TestCard : Card
 {
-	string _name;
 	int _minBids;
 
-	public TestCard(string name, int minBids) {
+	public TestCard(string name, int minBids, string asset) {
 		_name = name;
 		_minBids = minBids;
+		_asset = asset;
 	}
 }

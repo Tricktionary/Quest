@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-	private List<Card> _hand = new List<Card>();	//Players Cards
+	public  List<Card> _hand{
+		get;
+		set;
+	}
 	private int _playerId;							//Player ID
 	private int _rank;								//Players current ranks 0-2; 3 ends the game
 	private int _shieldCounter; 					//Shield Counter
-	private List<Card> _allies = new List<Card>();  //List of cards
+	private List<Card> _allies;  //List of cards
 	private int _bp;								//Current BP
 	public static int limit = 12;
 
@@ -18,12 +21,10 @@ public class Player : MonoBehaviour {
 		_rank = 1;
 		_shieldCounter = 0;
 		_bp = 5;
+		_hand = new List<Card>();
+		_allies = new List<Card>();
 	}
 
-	//Get Hand Object
-	public List<Card> getHand(){
-		return(_hand);
-	}
 
 	//Add Cards
 	public void addCard(Card card){
@@ -34,17 +35,7 @@ public class Player : MonoBehaviour {
 	void playCard(List<Card> cards){
 		
 	}
-
-	// Use this for initialization
-	void Start () {
-
-	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
 	//s as number of shields to add, should we force rank up?
 	void AddShields (int s) {
 		_shieldCounter += s;

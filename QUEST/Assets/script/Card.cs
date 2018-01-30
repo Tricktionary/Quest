@@ -11,7 +11,7 @@ public class Card : MonoBehaviour,IBeginDragHandler,IDragHandler, IEndDragHandle
 		get;
 		set;
 	}
-	protected string _asset{
+	public string _asset{
 		get;
 		set;
 	}
