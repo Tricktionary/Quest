@@ -43,6 +43,7 @@ public class Game : MonoBehaviour {
 		_drawCardButton = null;
 
 		//Populate Hand of All Player
+		Debug.Log(_players.Count);
 		for(int i = 0; i < _players.Count ; i++){
 			for(int x = 0 ; x < 12 ; x++){
 				_players[i].addCard((_adventureDeck.Draw()));
@@ -65,7 +66,7 @@ public class Game : MonoBehaviour {
 	}
 
 	void Start() {
-		_drawCardButton.onClick.AddListener (() => {DrawCard();} );
+		//_drawCardButton.onClick.AddListener (() => {DrawCard();} );
 	}
 	
 	// Update is called once per frame
