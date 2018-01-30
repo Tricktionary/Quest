@@ -34,6 +34,7 @@ public class Deck : MonoBehaviour {
 			/* 6 Daggers */
 			AddXCopies(new WeaponCard("Dagger", 5, "Asset/card_image/weapons/weaponCard2"), 6);
 			
+
 			/* Foe Load */
 
 			/* 7 Robber Knight */
@@ -41,7 +42,40 @@ public class Deck : MonoBehaviour {
 
 			/* 5 Saxons */
 			AddXCopies(new FoeCard("Saxons",10,20,false,"Asset/card_image/foe/foeCard2"),5);
-			
+
+			/* 4 Boar*/
+			AddXCopies(new FoeCard("Boar",5,15,false,"Asset/card_image/foe/foeCard3"),4);
+
+			/* 8 Thieves*/
+			AddXCopies(new FoeCard("Thieves",5,5,false,"Asset/card_image/foe/foeCard4"),8);
+
+			/* 2 Green Knight*/
+			AddXCopies(new FoeCard("Green Knight",25,40,false,"Asset/card_image/foe/foeCard5"),2);
+
+			/* 3 Black Knight */
+			AddXCopies(new FoeCard("Black Knight",25,35,false,"Asset/card_image/foe/foeCard6"),3);
+
+			/* 6 Evil Knight*/
+			AddXCopies(new FoeCard("Evil Knight",20,30,false,"Asset/card_image/foe/foeCard7"),6);
+
+			/* 8 Saxon Knight */
+			AddXCopies(new FoeCard("Saxon Knight",15,25,false,"Asset/card_image/foe/foeCard8"),8);
+
+			/* 1 Dragon */
+			AddXCopies(new FoeCard("Dragon",50,70,false,"Asset/card_image/foe/foeCard9"),1);
+
+			/* 2 Giant */
+			AddXCopies(new FoeCard("Giant",40,40,false,"Asset/card_image/foe/foeCard10"),2);
+
+			/* 4 Mordred */
+			AddXCopies(new FoeCard("Mordred",30,30,true,"Asset/card_image/foe/foeCard11"),4);
+
+
+			/* Amour load */
+
+			/* */
+
+
 		} else {
 			//WHEN ADDING FEATURED FOE * means all
 			// Fill the deck with story cards.
