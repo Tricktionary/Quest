@@ -748,8 +748,8 @@ GameObject:
   m_Component:
   - component: {fileID: 913053425}
   - component: {fileID: 913053427}
-  - component: {fileID: 913053426}
   - component: {fileID: 913053428}
+  - component: {fileID: 913053426}
   m_Layer: 5
   m_Name: Game
   m_TagString: Untagged
@@ -827,7 +827,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Card: {fileID: 1833412110767810, guid: 6eb155d50af9c4282a79a2560f9b47b6, type: 2}
   Hand: {fileID: 1004303694}
-  _drawCardButton: {fileID: 0}
+  EndTurnBtn: {fileID: 1089398772}
+  _drawCardButton: {fileID: 1020765784}
 --- !u!1 &1004303694
 GameObject:
   m_ObjectHideFlags: 0

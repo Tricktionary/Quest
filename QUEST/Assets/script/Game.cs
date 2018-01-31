@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class Game : MonoBehaviour {
 
-	public GameObject Card;		//Card Prefab 
-	public GameObject Hand; 	//Play Area Hand Reference
+	public GameObject Card;			//Card Prefab 
+	public GameObject Hand; 		//Play Area Hand Reference
+	public GameObject EndTurnBtn;	//End Turn
 	private List<Player> _players = new List<Player>(); 	//List of players
 	private int _numPlayers;								//Number of players
 	private int _turnId; 									//Player ID of who's turn
@@ -51,23 +52,26 @@ public class Game : MonoBehaviour {
 				_players[i].addCard((_adventureDeck.Draw()));
 			}
 		}
-
-		/* Load Player 1 Cards */
-		List<Card> currCard = _players[0]._hand;
+		loadHand(_turnId);
+		//debugPrint(); 
+	}
+	
+	//Load Player Hand
+	void loadHand(int playerId){
+		List<Card> currCard = _players[playerId]._hand;
 		string currCardAsset;
 		//Create Card Game Object
 		for(int i = 0 ; i < currCard.Count; i++){
 			currCardAsset = currCard[i]._asset;
 			Debug.Log(currCardAsset);
-			GameObject CardUI = Instantiate(Card, new Vector3(-7.5f, -3.5f, -0.5f), new Quaternion(0,0,0,0));
-			Sprite card = Resources.Load<Sprite>(currCardAsset);
+
+			GameObject CardUI = Instantiate(Card, new Vector3(-10.5f, -3.5f, -10.5f), new Quaternion(0,0,0,0));
+			
+			Sprite card = Resources.Load<Sprite>(currCardAsset); //Card Sprite
 			
 			CardUI.gameObject.GetComponent<Image>().sprite = card;
 			CardUI.transform.SetParent(Hand.transform);
 		}
-		
-		//debugPrint();
-		 
 	}
 
 	void debugPrint(){
@@ -97,7 +101,7 @@ public class Game : MonoBehaviour {
 	}
 
 	void Start() {
-		//_drawCardButton.onClick.AddListener (() => {DrawCard();} );
+	//	_drawCardButton.onClick.AddListener (() => {DrawCard();} );
 	}
 	
 	// Update is called once per frame
