@@ -7,7 +7,6 @@ public class Game : MonoBehaviour {
 
 	public GameObject Card;			//Card Prefab 
 	public GameObject Hand; 		//Play Area Hand Reference
-	public GameObject EndTurnBtn;	//End Turn
 	private List<Player> _players = new List<Player>(); 	//List of players
 	private int _numPlayers;								//Number of players
 	private int _turnId; 									//Player ID of who's turn
@@ -27,6 +26,10 @@ public class Game : MonoBehaviour {
 
 	//End Turn
 	public void EndTurn(){
+		//Clear Old Hand
+		//Increment TurnId
+		//Load Player 2 hand
+		Debug.Log("End Turn");
 		
 	}
 
