@@ -5,8 +5,12 @@ using UnityEngine.UI;
 
 public class Game : MonoBehaviour {
 
-	public GameObject Card;			//Card Prefab 
-	public GameObject Hand; 		//Play Area Hand Reference
+	public GameObject Card;									//Card Prefab 
+	public GameObject Hand; 								//Play Area Hand Reference
+	public GameObject drawCardArea;							//DrawCardArea
+	public GameObject storyCard;							//Story Card
+	public GameObject playerIdTxt;							//Player Id
+	public GameObject shieldCounterTxt;						//Shield Counter
 	private List<Player> _players = new List<Player>(); 	//List of players
 	private int _numPlayers;								//Number of players
 	private int _turnId; 									//Player ID of who's turn
@@ -15,22 +19,48 @@ public class Game : MonoBehaviour {
 	private CardArea _storyArea;
 	private CardArea _playArea;
 	private bool _running;
+	private bool _drawn;
 
 	public UnityEngine.UI.Button _drawCardButton; 
 
 	//Draws Card 
 	public void DrawCard(){
 		//_storyDeck
-		Debug.Log("draw card click");
+
+		if (_drawn == false) {
+			//Clears out drawCardArea
+			foreach (Transform child in drawCardArea.transform) {	
+				GameObject.Destroy (child.gameObject);
+			}
+
+			Card currCard = _storyDeck.Draw (); //We need discard pile
+			string currCardAsset = currCard._asset; //Pulls the card asset
+
+			Sprite card = Resources.Load<Sprite> (currCardAsset); //Card Sprite
+
+			GameObject questCard = Instantiate (storyCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
+
+			questCard.gameObject.GetComponent<Image> ().sprite = card;
+			questCard.transform.SetParent (drawCardArea.transform);
+			_drawn = true;
+		}
 	}
 
 	//End Turn
 	public void EndTurn(){
 		//Clear Old Hand
-		//Increment TurnId
-		//Load Player 2 hand
-		Debug.Log("End Turn");
-		
+		foreach (Transform child in Hand.transform) {	
+			GameObject.Destroy(child.gameObject);
+		}
+
+		_turnId++;
+		if (_turnId >= 3) {
+			_turnId = 0;
+		}
+
+		loadHand(_turnId);
+		//Debug.Log("End Turn");
+		_drawn = false;
 	}
 
 	// Use this for initialization
@@ -48,7 +78,8 @@ public class Game : MonoBehaviour {
 		_numPlayers = 3;
 		_running = true;
 		_drawCardButton = null;
-		
+		_drawn = false;
+
 		//Populates Player Hands
 		for(int i = 0; i < _players.Count ; i++){
 			for(int x = 0 ; x < 12 ; x++){
@@ -61,12 +92,21 @@ public class Game : MonoBehaviour {
 	
 	//Load Player Hand
 	void loadHand(int playerId){
+		
 		List<Card> currCard = _players[playerId]._hand;
 		string currCardAsset;
+
+		//Set Player ID text
+		playerIdTxt.GetComponent<UnityEngine.UI.Text>().text = "Player ID : "+ (playerId+1).ToString(); //For User Friendly
+
+		//Get current players shield
+		int currPlayerShield = _players[playerId]._shieldCounter;
+		shieldCounterTxt.GetComponent<UnityEngine.UI.Text>().text = "# Shield: "+ (currPlayerShield).ToString(); //For User Friendly
+
 		//Create Card Game Object
 		for(int i = 0 ; i < currCard.Count; i++){
 			currCardAsset = currCard[i]._asset;
-			Debug.Log(currCardAsset);
+			//Debug.Log(currCardAsset);
 
 			GameObject CardUI = Instantiate(Card, new Vector3(-10.5f, -3.5f, -10.5f), new Quaternion(0,0,0,0));
 			
@@ -77,6 +117,7 @@ public class Game : MonoBehaviour {
 		}
 	}
 
+	//Testing
 	void debugPrint(){
 		//Populate Hand of All Player
 		Debug.Log(_players.Count);

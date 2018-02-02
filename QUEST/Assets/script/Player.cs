@@ -10,7 +10,10 @@ public class Player : MonoBehaviour {
 	}
 	private int _playerId;							//Player ID
 	private int _rank;								//Players current ranks 0-2; 3 ends the game
-	private int _shieldCounter; 					//Shield Counter
+	public  int _shieldCounter { 					//Shield Counter
+		get;
+		set;
+	}
 	private List<Card> _allies;  //List of cards
 	private int _bp;								//Current BP
 	public static int limit = 12;
