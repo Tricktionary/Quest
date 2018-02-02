@@ -736,6 +736,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Card: {fileID: 1833412110767810, guid: 6eb155d50af9c4282a79a2560f9b47b6, type: 2}
   Hand: {fileID: 1004303694}
+  drawCardArea: {fileID: 402292197}
+  storyCard: {fileID: 1251235100696200, guid: 9dcc0839dcfff4e018c3d4f3f62d4abe, type: 2}
   playerIdTxt: {fileID: 1465051566}
   shieldCounterTxt: {fileID: 1762925163}
   _drawCardButton: {fileID: 0}
