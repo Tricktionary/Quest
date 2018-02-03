@@ -1,17 +1,18 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/script/Deck.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/script/AdventureCard.cs">
     <Files>
-      <File FileName="Assets/script/Game.cs" Line="183" Column="27" />
-      <File FileName="Assets/script/Card.cs" Line="9" Column="2" />
-      <File FileName="Assets/script/Deck.cs" Line="116" Column="3" />
-      <File FileName="Assets/script/CardArea.cs" Line="1" Column="1" />
-      <File FileName="Assets/script/FoeCard.cs" Line="1" Column="1" />
-      <File FileName="Assets/script/QuestCard.cs" Line="19" Column="22" />
-      <File FileName="Assets/script/WeaponCard.cs" Line="11" Column="2" />
-      <File FileName="Assets/script/Player.cs" Line="17" Column="1" />
-      <File FileName="Assets/script/TestCard.cs" Line="1" Column="1" />
-      <File FileName="Assets/script/EventCard.cs" Line="1" Column="1" />
+      <File FileName="Assets/script/AdventureCard.cs" Line="28" Column="46" />
+      <File FileName="Assets/script/Card.cs" Line="10" Column="2" NotebookId="1" />
+      <File FileName="Assets/script/CardArea.cs" Line="34" Column="55" NotebookId="1" />
+      <File FileName="Assets/script/Game.cs" Line="164" Column="1" NotebookId="1" />
+      <File FileName="Assets/script/Deck.cs" Line="116" Column="3" NotebookId="1" />
+      <File FileName="Assets/script/FoeCard.cs" Line="1" Column="1" NotebookId="1" />
+      <File FileName="Assets/script/QuestCard.cs" Line="19" Column="22" NotebookId="1" />
+      <File FileName="Assets/script/WeaponCard.cs" Line="1" Column="1" NotebookId="1" />
+      <File FileName="Assets/script/Player.cs" Line="1" Column="1" NotebookId="1" />
+      <File FileName="Assets/script/TestCard.cs" Line="1" Column="1" NotebookId="1" />
+      <File FileName="Assets/script/EventCard.cs" Line="1" Column="1" NotebookId="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
