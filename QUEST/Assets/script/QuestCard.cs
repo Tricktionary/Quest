@@ -16,6 +16,7 @@ public class QuestCard : StoryCard
 		_stages = stages;
 		_featuredFoe = featuredFoe;
 		_asset = asset;
+		oldPosition = null;
 	}
 
 	// ToString Override for nicer printing.
