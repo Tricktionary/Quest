@@ -40,5 +40,4 @@ public class Card : MonoBehaviour,IBeginDragHandler,IDragHandler, IEndDragHandle
 		this.transform.SetParent(oldPosition);
 		GetComponent<CanvasGroup>().blocksRaycasts = true;
 	}
-		
 }
