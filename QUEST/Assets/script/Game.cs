@@ -16,10 +16,20 @@ public class Game : MonoBehaviour {
 	private int _turnId; 									//Player ID of who's turn
 	private Deck _adventureDeck;
 	private Deck _storyDeck;
+	private Deck _discardPileAdventure;
+	private Deck _discardPileStory;
 	private CardArea _storyArea;
 	private CardArea _playArea;
 	private bool _running;
 	private bool _drawn;
+
+	private List<List<Card>> _Quest;
+	private int _questSponsor;
+	private List<int> _playersIn;
+
+	//if the user can end their turn
+	private bool _standardTurn;
+	private bool _canEnd;
 
 	public UnityEngine.UI.Button _drawCardButton; 
 
@@ -34,6 +44,7 @@ public class Game : MonoBehaviour {
 			}
 
 			Card currCard = _storyDeck.Draw (); //We need discard pile
+			_discardPileStory.Discard(currCard);
 			string currCardAsset = currCard._asset; //Pulls the card asset
 
 			Sprite card = Resources.Load<Sprite> (currCardAsset); //Card Sprite
@@ -48,19 +59,27 @@ public class Game : MonoBehaviour {
 
 	//End Turn
 	public void EndTurn(){
-		//Clear Old Hand
-		foreach (Transform child in Hand.transform) {	
-			GameObject.Destroy(child.gameObject);
-		}
+		if (_canEnd) {
+			//Clear Old Hand
+			foreach (Transform child in Hand.transform) {	
+				GameObject.Destroy (child.gameObject);
+			}
 
-		_turnId++;
-		if (_turnId >= 3) {
-			_turnId = 0;
-		}
+			_turnId++;
+			if (_turnId >= 3) {
+				_turnId = 0;
+			}
 
-		loadHand(_turnId);
-		//Debug.Log("End Turn");
-		_drawn = false;
+			loadHand (_turnId);
+			//Debug.Log("End Turn");
+			_drawn = false;
+			_canEnd = false;
+		}
+	}
+
+	private void acceptSponsor() {
+		_questSponsor = _turnId;
+		_canEnd = false;
 	}
 
 	// Use this for initialization
@@ -71,14 +90,18 @@ public class Game : MonoBehaviour {
 		_players.Add(new Player(3));
 
 		//Set up the decks
-		_adventureDeck = new Deck(true);
-		_storyDeck = new Deck(false);
+		_adventureDeck = new Deck("Adventure");
+		_storyDeck = new Deck("Story");
+		_discardPileAdventure = new Deck ("");
+		_discardPileStory = new Deck ("");
 
 		_turnId = 0;
 		_numPlayers = 3;
 		_running = true;
 		_drawCardButton = null;
 		_drawn = false;
+		_standardTurn = true;
+		_canEnd = true;
 
 		//Populates Player Hands
 		for(int i = 0; i < _players.Count ; i++){

@@ -5,95 +5,95 @@ using UnityEngine;
 public class Deck : MonoBehaviour {
 
 	// The list of cards that make up the deck.
-	private List<Card> cards = new List<Card>();
+	private List<Card> _cards = new List<Card>();
 	
 	public List<Card> GetDeck(){
-		return cards;
+		return _cards;
 	}
 	//Constructor. 
-	public Deck(bool isAdventure){
-		if (isAdventure) {
+	public Deck(string type){
+		if (type.Equals ("Adventure")) {
 			//Fill deck with adventure cards.
 
 			/* Weapon Load */
 			/* 2 Excaliburs */
-			AddXCopies(new WeaponCard("Excalibur", 30, "card_image/weapons/weaponCard3"), 2);
+			AddXCopies (new WeaponCard ("Excalibur", 30, "card_image/weapons/weaponCard3"), 2);
 			
 			/* 6 Lances */
-			AddXCopies(new WeaponCard("Lance", 20, "card_image/weapons/weaponCard4"), 6);
+			AddXCopies (new WeaponCard ("Lance", 20, "card_image/weapons/weaponCard4"), 6);
 
 			/* 8 Battle Axe */
-			AddXCopies(new WeaponCard("BattleAxe", 15, "card_image/weapons/weaponCard5"), 8);
+			AddXCopies (new WeaponCard ("BattleAxe", 15, "card_image/weapons/weaponCard5"), 8);
 
 			/* 16 Swords */
-			AddXCopies(new WeaponCard("Sword", 10, "card_image/weapons/weaponCard1"), 16);
+			AddXCopies (new WeaponCard ("Sword", 10, "card_image/weapons/weaponCard1"), 16);
 
 			/* 11 Horses */
-			AddXCopies(new WeaponCard("Horse", 10, "card_image/weapons/weaponCard6"), 11);
+			AddXCopies (new WeaponCard ("Horse", 10, "card_image/weapons/weaponCard6"), 11);
 
 			/* 6 Daggers */
-			AddXCopies(new WeaponCard("Dagger", 5, "card_image/weapons/weaponCard2"), 6);
+			AddXCopies (new WeaponCard ("Dagger", 5, "card_image/weapons/weaponCard2"), 6);
 			
 
 			/* Foe Load */
 
 			/* 7 Robber Knight */
-			AddXCopies(new FoeCard("Robber Knight", 15, 15, false,"card_image/foe/foeCard1"),7);
+			AddXCopies (new FoeCard ("Robber Knight", 15, 15, false, "card_image/foe/foeCard1"), 7);
 
 			/* 5 Saxons */
-			AddXCopies(new FoeCard("Saxons",10,20,false,"card_image/foe/foeCard2"),5);
+			AddXCopies (new FoeCard ("Saxons", 10, 20, false, "card_image/foe/foeCard2"), 5);
 
 			/* 4 Boar*/
-			AddXCopies(new FoeCard("Boar",5,15,false,"card_image/foe/foeCard3"),4);
+			AddXCopies (new FoeCard ("Boar", 5, 15, false, "card_image/foe/foeCard3"), 4);
 
 			/* 8 Thieves*/
-			AddXCopies(new FoeCard("Thieves",5,5,false,"card_image/foe/foeCard4"),8);
+			AddXCopies (new FoeCard ("Thieves", 5, 5, false, "card_image/foe/foeCard4"), 8);
 
 			/* 2 Green Knight*/
-			AddXCopies(new FoeCard("Green Knight",25,40,false,"card_image/foe/foeCard5"),2);
+			AddXCopies (new FoeCard ("Green Knight", 25, 40, false, "card_image/foe/foeCard5"), 2);
 
 			/* 3 Black Knight */
-			AddXCopies(new FoeCard("Black Knight",25,35,false,"card_image/foe/foeCard6"),3);
+			AddXCopies (new FoeCard ("Black Knight", 25, 35, false, "card_image/foe/foeCard6"), 3);
 
 			/* 6 Evil Knight*/
-			AddXCopies(new FoeCard("Evil Knight",20,30,false,"card_image/foe/foeCard7"),6);
+			AddXCopies (new FoeCard ("Evil Knight", 20, 30, false, "card_image/foe/foeCard7"), 6);
 
 			/* 8 Saxon Knight */
-			AddXCopies(new FoeCard("Saxon Knight",15,25,false,"card_image/foe/foeCard8"),8);
+			AddXCopies (new FoeCard ("Saxon Knight", 15, 25, false, "card_image/foe/foeCard8"), 8);
 
 			/* 1 Dragon */
-			AddXCopies(new FoeCard("Dragon",50,70,false,"card_image/foe/foeCard9"),1);
+			AddXCopies (new FoeCard ("Dragon", 50, 70, false, "card_image/foe/foeCard9"), 1);
 
 			/* 2 Giant */
-			AddXCopies(new FoeCard("Giant",40,40,false,"card_image/foe/foeCard10"),2);
+			AddXCopies (new FoeCard ("Giant", 40, 40, false, "card_image/foe/foeCard10"), 2);
 
 			/* 4 Mordred */
-			AddXCopies(new FoeCard("Mordred",30,30,true,"card_image/foe/foeCard11"),4);
+			AddXCopies (new FoeCard ("Mordred", 30, 30, true, "card_image/foe/foeCard11"), 4);
 
-		 
-		} else {
+			// Shuffe the deck of cards after adding.
+			this.Shuffle();
+		} else if (type.Equals ("Story")) {
 			//WHEN ADDING FEATURED FOE * means all
 			// Fill the deck with story cards.
-			AddXCopies(new QuestCard("Search for the Holy Grail",5,"*","card_image/quest/questCard9"),1);
-			AddXCopies(new QuestCard("Test of the Green Knight",4,"Green Knight","card_image/quest/questCard10"),1);
-			AddXCopies(new QuestCard("Search for the Questing Beast",4,"","card_image/quest/questCard5"),1);
-			AddXCopies(new QuestCard("Defend the Queen's Honor",4,"*","card_image/quest/questCard6"),1);
-			AddXCopies(new QuestCard("Rescue the Fair Maiden",3,"Black Knight","card_image/quest/questCard8"),1);
-			AddXCopies(new QuestCard("Journey Through the Enchanted Forest",3,"Evil Knight","card_image/quest/questCard1"),1);
-			AddXCopies(new QuestCard("Vanquish King Arthur's Enemies",3,"","card_image/quest/questCard2"),2);
-			AddXCopies(new QuestCard("Slay the Dragon",3,"Dragon","card_image/quest/questCard7"),1);
-			AddXCopies(new QuestCard("Boar Hunt",2,"Boar","card_image/quest/questCard4"),2);
-			AddXCopies(new QuestCard("Repel the Saxxon Raiders",2,"Saxon","card_image/quest/questCard3"),2);
+			AddXCopies (new QuestCard ("Search for the Holy Grail", 5, "*", "card_image/quest/questCard9"), 1);
+			AddXCopies (new QuestCard ("Test of the Green Knight", 4, "Green Knight", "card_image/quest/questCard10"), 1);
+			AddXCopies (new QuestCard ("Search for the Questing Beast", 4, "", "card_image/quest/questCard5"), 1);
+			AddXCopies (new QuestCard ("Defend the Queen's Honor", 4, "*", "card_image/quest/questCard6"), 1);
+			AddXCopies (new QuestCard ("Rescue the Fair Maiden", 3, "Black Knight", "card_image/quest/questCard8"), 1);
+			AddXCopies (new QuestCard ("Journey Through the Enchanted Forest", 3, "Evil Knight", "card_image/quest/questCard1"), 1);
+			AddXCopies (new QuestCard ("Vanquish King Arthur's Enemies", 3, "", "card_image/quest/questCard2"), 2);
+			AddXCopies (new QuestCard ("Slay the Dragon", 3, "Dragon", "card_image/quest/questCard7"), 1);
+			AddXCopies (new QuestCard ("Boar Hunt", 2, "Boar", "card_image/quest/questCard4"), 2);
+			AddXCopies (new QuestCard ("Repel the Saxxon Raiders", 2, "Saxon", "card_image/quest/questCard3"), 2);
+			// Shuffe the deck of cards after adding.
+			this.Shuffle();
 		}
-		// Shuffe the deck of cards after adding.
-		this.Shuffle();
 	}
-
 
 	// Adds x copies of a Card to the deck.
 	void AddXCopies(Card card, int x){
 		for (int i = 0; i < x; i++) {
-			cards.Add(card);
+			_cards.Add(card);
 		}
 	}
 
@@ -107,32 +107,36 @@ public class Deck : MonoBehaviour {
 
 	// Draw a card from the deck.
 	public Card Draw () {
-		if (cards.Count > 0) {
-			Card card = cards [0];
-			cards.RemoveAt(0);
+		if (_cards.Count > 0) {
+			Card card = _cards [0];
+			_cards.RemoveAt(0);
 			return card;
 		}
 		return null;
 	}
 
+	public void Discard (Card card) {
+		_cards.Add (card);
+	}
+
 	// Shuffe the deck of cards.
 	void Shuffle () {
 		List<Card> newCards = new List<Card>();
-		int count = cards.Count;
+		int count = _cards.Count;
 		List<int> randomList = new List<int>();
 		for (int i=0;i<count;i++) {
 			randomList.Add(i);
 		}
 		for (int i = count; i > 0; i--) {
 			int value = (int)Mathf.Floor(Random.value * i);
-			newCards.Add(cards[randomList[value]]);
+			newCards.Add(_cards[randomList[value]]);
 			randomList.RemoveAt(value);
 		}
-		cards = newCards;
+		_cards = newCards;
 	}
 
 	// Get the size of the deck.
 	public int GetSize () {
-		return cards.Count;
+		return _cards.Count;
 	}
 }
