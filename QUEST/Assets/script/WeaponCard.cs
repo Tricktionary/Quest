@@ -10,6 +10,32 @@ public class WeaponCard : AdventureCard
 	private bool _special;
 	private int _power;
 
+	public int bp{
+		get{
+			return this._bp;
+		}
+		set{
+			this._bp = value;
+		}
+	}
+
+	public bool special{
+		get{
+			return this._special;
+		}
+		set{
+			this._special = value;
+		}
+	}
+
+	public int power{
+		get{
+			return this._power;
+		}
+		set{
+			this._power = value;
+		}
+	}
 
 
 	public WeaponCard(string name, int power, string asset) {

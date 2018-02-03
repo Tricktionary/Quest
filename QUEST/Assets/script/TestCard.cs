@@ -8,6 +8,15 @@ public class TestCard : Card
 {
 	int _minBids;
 
+	public int minBids{
+		get{
+			return this._minBids;
+		}
+		set{
+			this._minBids = value;
+		}
+	}
+
 	public TestCard(string name, int minBids, string asset) {
 		_name = name;
 		_minBids = minBids;

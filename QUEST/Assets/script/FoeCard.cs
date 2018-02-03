@@ -6,9 +6,38 @@ using UnityEngine.UI;
 
 public class FoeCard : AdventureCard
 {
-	bool _special;
-	int _loPower;
-	int _hiPower;
+	private bool _special;
+	private int _loPower;
+	private int _hiPower;
+
+	public bool special{
+		get{
+			return this._special;
+		}
+		set{
+			this._special = value;
+		}
+	}
+
+	public int loPower{
+		get{
+			return this._loPower;
+		}
+		set{
+			this._loPower = value;
+		}
+	}
+
+	public int hiPower{
+		get{
+			return this._hiPower;
+		}
+		set{
+			this._hiPower = value;
+		}
+	}
+
+
 
 	public FoeCard(string name, int loPower, int hiPower, bool special, string asset) {
 		_name = name;

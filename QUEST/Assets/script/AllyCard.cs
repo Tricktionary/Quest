@@ -6,16 +6,16 @@ using UnityEngine.UI;
 
 public class AllyCard : AdventureCard
 {
-	bool _special;
-	int _power;
-	int _bid;
-	int _bonusPower;
-	int _bonusBid;
-	string _questCondition;
-	string _allyCondition;
+	private bool _special;
+	private int _power;
+	private int _bid;
+	private int _bonusPower;
+	private int _bonusBid;
+	private string _questCondition;
+	private string _allyCondition;
 
 	//getters and setters 
-	public int special{
+	public bool special{
 		get{
 			return this._special;
 		}
@@ -60,7 +60,7 @@ public class AllyCard : AdventureCard
 		}
 	}
 
-	public int questCondition{
+	public string questCondition{
 		get{
 			return this._questCondition;
 		}
@@ -69,7 +69,7 @@ public class AllyCard : AdventureCard
 		}
 	}
 
-	public int allyCondition{
+	public string allyCondition{
 		get{
 			return this._allyCondition;
 		}

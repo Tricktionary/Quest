@@ -7,9 +7,40 @@ using UnityEngine.UI;
 public class QuestCard : StoryCard
 {
     
-    int[] _playerId = new int[3];  //Do we need the players or just their ID?
-    int _stages;
-    string _featuredFoe;
+    private int[] _playerId = new int[3];  //Do we need the players or just their ID?
+    private int _stages;
+    private string _featuredFoe;
+
+
+    //getters and setters 
+    public int[] playerId{ //not sure about get/set for array
+		get{
+			return this._playerId;
+		}
+		set{
+			this._playerId = value;
+		}
+	}
+
+	public int stages{
+		get{
+			return this._stages;
+		}
+		set{
+			this._stages = value;
+		}
+	}
+
+	public string featuredFoe{
+		get{
+			return this._featuredFoe;
+		}
+		set{
+			this._featuredFoe = value;
+		}
+	}
+
+
 
 	public QuestCard (string name, int stages, string featuredFoe, string asset) {
 		_name = name;
