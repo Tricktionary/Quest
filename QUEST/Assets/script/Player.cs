@@ -13,12 +13,32 @@ public class Player : MonoBehaviour {
 	public static int limit = 12;
 
 
+
+	//gets and sets for all vars
 	public List<Card> hand{
 		get{
 			return this._hand;
 		}
 		set{
 			this._hand = value;
+		}
+	}
+
+	public int playerId{
+		get{
+			return this._playerId;
+		}
+		set{
+			this._playerId = value;
+		}
+	}
+
+	public int rank{
+		get{
+			return this._rank;
+		}
+		set{
+			this._rank = value;
 		}
 	}
 
@@ -30,6 +50,30 @@ public class Player : MonoBehaviour {
 			this._shieldCounter = value;
 		}
 	}
+
+	public List<Card> allies{
+		get{
+			return this._allies;
+		}
+		set{
+			this._allies = value;
+		}
+	}
+
+	public int bp{
+		get{
+			return this._bp;
+		}
+		set{
+			this._bp = value;
+		}
+	}
+
+
+	
+
+
+
 
 	//Constructor 
 	public Player(int id){
