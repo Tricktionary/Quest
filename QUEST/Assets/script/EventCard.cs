@@ -6,7 +6,16 @@ using UnityEngine.UI;
 
 public class EventCard : StoryCard
 {
-    string _conditions;
+    private string _conditions;
+
+    public string conditions{
+		get{
+			return this._conditions;
+		}
+		set{
+			this._conditions = value;
+		}
+	}
     
     public EventCard(string conditions){
         conditions = _conditions;

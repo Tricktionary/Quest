@@ -8,6 +8,15 @@ public class TournamentCard : StoryCard
 {
     int _shields;
 
+    public int shields{
+		get{
+			return this._shields;
+		}
+		set{
+			this._shields = value;
+		}
+	}
+
 	public TournamentCard(string name, int shields, string asset) {
 		_name = name;
 		_shields = shields;
