@@ -5,9 +5,15 @@ using UnityEngine.UI;
 
 public class Game : MonoBehaviour {
 
-	public GameObject Card;									//Card Prefab 
-	public GameObject Hand; 								//Play Area Hand Reference
+	public GameObject Card;									//General Card Prefab 
+	public GameObject WeaponCard;							//Weapon Card Prefab
+	public GameObject FoeCard;								//Foe Card Prefab
+
+	public GameObject playArea;								//Play Zone
+	public GameObject currentEvent;							//Current Cards in event
 	public GameObject drawCardArea;							//DrawCardArea
+	public GameObject Hand; 								//Play Area Hand Reference
+ 
 	public GameObject storyCard;							//Story Card
 	public GameObject playerIdTxt;							//Player Id
 	public GameObject shieldCounterTxt;						//Shield Counter
@@ -31,7 +37,6 @@ public class Game : MonoBehaviour {
 	private bool _standardTurn;
 	private bool _canEnd;
 
-	public UnityEngine.UI.Button _drawCardButton; 
 
 	//Draws Card 
 	public void DrawCard(){
@@ -54,6 +59,8 @@ public class Game : MonoBehaviour {
 			questCard.gameObject.GetComponent<Image> ().sprite = card;
 			questCard.transform.SetParent (drawCardArea.transform);
 			_drawn = true;
+
+			//Check What card i drawn and initialize a quest
 		}
 	}
 
@@ -80,6 +87,8 @@ public class Game : MonoBehaviour {
 	private void acceptSponsor() {
 		_questSponsor = _turnId;
 		_canEnd = false;
+
+
 	}
 
 	// Use this for initialization
@@ -88,6 +97,7 @@ public class Game : MonoBehaviour {
 		_players.Add(new Player(1));
 		_players.Add(new Player(2));
 		_players.Add(new Player(3));
+		_players.Add(new Player(4));
 
 		//Set up the decks
 		_adventureDeck = new Deck("Adventure");
@@ -98,7 +108,6 @@ public class Game : MonoBehaviour {
 		_turnId = 0;
 		_numPlayers = 3;
 		_running = true;
-		_drawCardButton = null;
 		_drawn = false;
 		_standardTurn = true;
 		_canEnd = true;
@@ -116,25 +125,34 @@ public class Game : MonoBehaviour {
 	//Load Player Hand
 	void loadHand(int playerId){
 		
-		List<Card> currCard = _players[playerId]._hand;
-		string currCardAsset;
+		List<Card> currHand = _players[playerId].hand;
+		Card currCard;
 
 		//Set Player ID text
 		playerIdTxt.GetComponent<UnityEngine.UI.Text>().text = "Player ID : "+ (playerId+1).ToString(); //For User Friendly
 
 		//Get current players shield
-		int currPlayerShield = _players[playerId]._shieldCounter;
+		int currPlayerShield = _players[playerId].shieldCounter;
 		shieldCounterTxt.GetComponent<UnityEngine.UI.Text>().text = "# Shield: "+ (currPlayerShield).ToString(); //For User Friendly
 
 		//Create Card Game Object
-		for(int i = 0 ; i < currCard.Count; i++){
-			currCardAsset = currCard[i]._asset;
-			//Debug.Log(currCardAsset);
+		for(int i = 0 ; i < currHand.Count; i++){
+			currCard = currHand[i];
 
-			GameObject CardUI = Instantiate(Card, new Vector3(-10.5f, -3.5f, -10.5f), new Quaternion(0,0,0,0));
-			
-			Sprite card = Resources.Load<Sprite>(currCardAsset); //Card Sprite
-			
+
+			GameObject CardUI = null; 
+
+			if (currCard.GetType () == typeof(WeaponCard)) {
+				CardUI = Instantiate (WeaponCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
+				CardUI.GetComponent<WeaponCard>()._asset = currCard._asset;
+			}
+			if (currCard.GetType () == typeof(FoeCard)) {
+				CardUI = Instantiate (FoeCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
+
+			}
+
+			Sprite card = Resources.Load<Sprite>(currCard._asset); //Card Sprite
+
 			CardUI.gameObject.GetComponent<Image>().sprite = card;
 			CardUI.transform.SetParent(Hand.transform);
 		}
@@ -161,15 +179,12 @@ public class Game : MonoBehaviour {
 		for(int i = 0 ; i <_players.Count; i++){
 			Debug.Log("Player:"+ i);
 			//Debug.Log(_players[i]._hand.Count);
-			for(int x = 0; x <_players[i]._hand.Count; x++){
-				Debug.Log(_players[i]._hand[x].ToString());
+			for(int x = 0; x <_players[i].hand.Count; x++){
+				Debug.Log(_players[i].hand[x].ToString());
 			}
 		}	
 	}
-
-	void Start() {
-	//	_drawCardButton.onClick.AddListener (() => {DrawCard();} );
-	}
+		
 	
 	// Update is called once per frame
 	void Update () {

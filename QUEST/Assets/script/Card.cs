@@ -7,7 +7,7 @@ using UnityEngine.UI;
 //Should Card Be Abstract? 
 public class Card : MonoBehaviour,IBeginDragHandler,IDragHandler, IEndDragHandler{
 
-	public string _name{
+	public string _name {
 		get;
 		set;
 	}

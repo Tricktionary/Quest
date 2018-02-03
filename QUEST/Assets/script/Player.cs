@@ -4,19 +4,32 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-	public  List<Card> _hand{
-		get;
-		set;
-	}
+	private List<Card> _hand;
 	private int _playerId;							//Player ID
 	private int _rank;								//Players current ranks 0-2; 3 ends the game
-	public  int _shieldCounter { 					//Shield Counter
-		get;
-		set;
-	}
+	private int _shieldCounter;      				//Shield Counter
 	private List<Card> _allies;  //List of cards
 	private int _bp;								//Current BP
 	public static int limit = 12;
+
+
+	public List<Card> hand{
+		get{
+			return this._hand;
+		}
+		set{
+			this._hand = value;
+		}
+	}
+
+	public int shieldCounter{
+		get{
+			return this._shieldCounter;
+		}
+		set{
+			this._shieldCounter = value;
+		}
+	}
 
 	//Constructor 
 	public Player(int id){
