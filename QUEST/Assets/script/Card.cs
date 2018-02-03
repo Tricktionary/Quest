@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
-//Should Card Be Abstract? 
-public class Card : MonoBehaviour,IBeginDragHandler,IDragHandler, IEndDragHandler{
+ 
+public class Card : MonoBehaviour,IBeginDragHandler,IDragHandler, IEndDragHandler,IDropHandler{
 
 	public string _name {
 		get;
@@ -39,5 +38,18 @@ public class Card : MonoBehaviour,IBeginDragHandler,IDragHandler, IEndDragHandle
 		Debug.Log("OnEndDrag");
 		this.transform.SetParent(oldPosition);
 		GetComponent<CanvasGroup>().blocksRaycasts = true;
+	}
+
+	//When a card is dropped
+	public void OnDrop(PointerEventData eventData){
+		Debug.Log(eventData.pointerDrag.name + " Drop to "+ gameObject.name);
+		Card d = eventData.pointerDrag.GetComponent<Card>();
+
+		if(d!=null){
+			//_area.Add (d);
+			//Debug.Log (_area[0].name);
+			d.oldPosition = this.transform;
+		}
+
 	}
 }
