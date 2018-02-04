@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class TournamentCard : StoryCard
+class TournamentCard : StoryCard
 {
-    int _shields;
+    protected int _shields;
 
     public int shields{
 		get{

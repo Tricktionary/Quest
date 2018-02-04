@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class WeaponCard : AdventureCard
+class WeaponCard : AdventureCard
 {
-    private int _bp;
-	private bool _special;
-	private int _power;
+    protected int _bp;
+	protected bool _special;
+	protected int _power;
 
 	public int bp{
 		get{
