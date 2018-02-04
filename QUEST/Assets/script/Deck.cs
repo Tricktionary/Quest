@@ -70,6 +70,43 @@ public class Deck : MonoBehaviour {
 			/* 4 Mordred */
 			AddXCopies (new FoeCard ("Mordred", 30, 30, true, "card_image/foe/foeCard11"), 4);
 
+
+			/* Ally load */
+
+			/* Sir Pellinore */
+			AddXCopies(new AllyCard("Sir Pellinore",10,0,0,4,"Search for the Questing Beast", null, false,  "card_image/special/specialCard1"));
+
+			/* Sir Percival */
+			AddXCopies(new AllyCard("Sir Percival",5,0,20,0,"Search for the Holy Grail", null, false,  "card_image/special/specialCard2"));
+
+			/* Sir Tristan */
+			AddXCopies(new AllyCard("Sir Tristan",10,0,20,0,null, "Queen Iseult", false,  "card_image/special/specialCard4"));
+
+			/* King Arthur */
+			AddXCopies(new AllyCard("King Arthur",10,2,0,0,null, null, false,  "card_image/special/specialCard5"));
+
+			/* Queen Guinevere */
+			AddXCopies(new AllyCard("Queen Guinevere",0,3,0,0,null, null, false,  "card_image/special/specialCard6"));
+
+			/* Merlin */
+			AddXCopies(new AllyCard("Merlin",0,0,0,0,null, null, true,  "card_image/special/specialCard7"));
+
+			/* Queen Iseult */
+			AddXCopies(new AllyCard("Queen Iseult",0,2,0,4,null, "Sir Tristan", false,  "card_image/special/specialCard8"));			
+
+			/* Sir Lancelot */
+			AddXCopies(new AllyCard("Sir Lancelot",15,0,25,0,"Defend the Queen's Honor", null, false,  "card_image/special/specialCard9"));
+			
+			/* Sir Galahad */
+			AddXCopies(new AllyCard("Galahad",15,0,0,0,null, null, false,  "card_image/special/specialCard10"));
+
+			/* Sir Gawain */
+			AddXCopies(new AllyCard("Sir Gawain",10,0,20,0,"Test of the Green Knight", null, false,  "card_image/special/specialCard11"));		
+	
+
+			/* Amour load */
+			AddXCopies(new AmourCard("Amour",10,1, "card_image/special/specialCard3" ));
+
 			// Shuffe the deck of cards after adding.
 			this.Shuffle();
 		} else if (type.Equals ("Story")) {

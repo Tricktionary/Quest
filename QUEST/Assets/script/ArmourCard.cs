@@ -5,8 +5,23 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 
-//MERGE THIS CLASS WITH ALLY
+
 public class ArmourCard : AdventureCard
 { 
+	int _power;
+	int _bid;
+
+	public AmourCard(string name, int power, int bid, string asset){
+		_name = name;
+		_power = power;
+		_bid = bid;
+		_asset = asset;
+
+	}
+
+	public override string ToString(){
+		return "Ally card:\nName: " + _name + "\nPower: " + _power + "\nBid: " + _bid + "\nAsset: " + _asset;
+	}
+
 
 }
