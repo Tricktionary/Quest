@@ -10,7 +10,9 @@ public class Game : MonoBehaviour {
 	public GameObject FoeCard;								//Foe Card Prefab
 
 	public GameObject playArea;								//Play Zone
-	public GameObject currentEvent;							//Current Cards in event
+	public GameObject stage1;							    //Stage1 of quest
+	public GameObject stage2;
+	public GameObject stage3;
 	public GameObject drawCardArea;							//DrawCardArea
 	public GameObject Hand; 								//Play Area Hand Reference
  
@@ -143,11 +145,20 @@ public class Game : MonoBehaviour {
 			GameObject CardUI = null; 
 
 			if (currCard.GetType () == typeof(WeaponCard)) {
+				//Is this convention ?
 				CardUI = Instantiate (WeaponCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
+				CardUI.GetComponent<WeaponCard>().name = currCard.name;
 				CardUI.GetComponent<WeaponCard>().asset = currCard.asset;
+				//CardUI.GetComponent<WeaponCard>().power = currCard.power;
+				
 			}
 			if (currCard.GetType () == typeof(FoeCard)) {
 				CardUI = Instantiate (FoeCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
+				CardUI.GetComponent<FoeCard>().name    = currCard.name;
+				//CardUI.GetComponent<FoeCard>().loPower = currCard.loPower;
+				//CardUI.GetComponent<FoeCard>().hiPower = currCard.hiPower;
+				//CardUI.GetComponent<FoeCard>().special = currCard.special;
+				CardUI.GetComponent<FoeCard>().asset   = currCard.asset;
 			}
 
 			Sprite card = Resources.Load<Sprite>(currCard.asset); //Card Sprite

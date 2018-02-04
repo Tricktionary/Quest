@@ -53,7 +53,7 @@
   <ItemGroup>
      <Compile Include="Assets\script\AdventureCard.cs" />
      <Compile Include="Assets\script\AllyCard.cs" />
-     <Compile Include="Assets\script\ArmourCard.cs" />
+     <Compile Include="Assets\script\AmourCard.cs" />
      <Compile Include="Assets\script\Card.cs" />
      <Compile Include="Assets\script\CardArea.cs" />
      <Compile Include="Assets\script\Deck.cs" />
