@@ -8,13 +8,25 @@ public class Card : MonoBehaviour{
 
 	public Transform oldPosition = null; 	//Old Position of the card on the board
 
-	public string _name {
-		get;
-		set;
+	protected string _asset;
+	protected string _name;
+
+	public string name {
+		get{
+			return this._name;
+		}
+		set{
+			this._name = value;
+		}
 	}
-	public string _asset{
-		get;
-		set;
+
+	public string asset{
+		get{
+			return this._asset;
+		}
+		set{
+			this._asset = value;
+		}
 	}
 		
 }
