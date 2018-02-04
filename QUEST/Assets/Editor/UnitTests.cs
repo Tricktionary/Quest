@@ -20,7 +20,7 @@ public class UnitTests {
 		Card secondCard = deck.Draw ();
 		Assert.AreEqual (deck.GetSize(),currentStoryCardTotal-2);
 		//test shuffle
-		Assert.AreNotEqual (firstCard._name, secondCard._name);
+		Assert.AreNotEqual (firstCard.name, secondCard.name);
 
 		Deck deck2 = new Deck ("Adventure");
 		Assert.AreEqual (deck2.GetSize(), currentAdventureCardTotal);
@@ -31,7 +31,7 @@ public class UnitTests {
 		Assert.AreEqual (deck2.GetSize(),currentAdventureCardTotal-4);
 		//test shuffle
 		//The last 4 put is Mordred, ensure that it is shuffled
-		Assert.False ((firstCard2._name.Equals(secondCard2._name) && firstCard2._name.Equals(thirdCard2._name) && firstCard2._name.Equals(fourthCard2._name)));
+		Assert.False ((firstCard2.name.Equals(secondCard2.name) && firstCard2.name.Equals(thirdCard2.name) && firstCard2.name.Equals(fourthCard2.name)));
 
 		Deck discard = new Deck ("");
 		//test discard

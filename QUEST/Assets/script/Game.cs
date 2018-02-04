@@ -50,7 +50,7 @@ public class Game : MonoBehaviour {
 
 			Card currCard = _storyDeck.Draw (); //We need discard pile
 			_discardPileStory.Discard(currCard);
-			string currCardAsset = currCard._asset; //Pulls the card asset
+			string currCardAsset = currCard.asset; //Pulls the card asset
 
 			Sprite card = Resources.Load<Sprite> (currCardAsset); //Card Sprite
 
@@ -144,14 +144,13 @@ public class Game : MonoBehaviour {
 
 			if (currCard.GetType () == typeof(WeaponCard)) {
 				CardUI = Instantiate (WeaponCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
-				CardUI.GetComponent<WeaponCard>()._asset = currCard._asset;
+				CardUI.GetComponent<WeaponCard>().asset = currCard.asset;
 			}
 			if (currCard.GetType () == typeof(FoeCard)) {
 				CardUI = Instantiate (FoeCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
-
 			}
 
-			Sprite card = Resources.Load<Sprite>(currCard._asset); //Card Sprite
+			Sprite card = Resources.Load<Sprite>(currCard.asset); //Card Sprite
 
 			CardUI.gameObject.GetComponent<Image>().sprite = card;
 			CardUI.transform.SetParent(Hand.transform);
