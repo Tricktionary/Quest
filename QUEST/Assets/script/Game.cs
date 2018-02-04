@@ -139,6 +139,7 @@ public class Game : MonoBehaviour {
 
 		//Create Card Game Object
 		for(int i = 0 ; i < currHand.Count; i++){
+			//Debug.Log(currHand[i].power);
 			currCard = currHand[i];
 
 
@@ -147,7 +148,7 @@ public class Game : MonoBehaviour {
 			if (currCard.GetType () == typeof(WeaponCard)) {
 				//Is this convention ?
 				CardUI = Instantiate (WeaponCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
-				CardUI.GetComponent<WeaponCard>().name = currCard.name;
+				CardUI.GetComponent<WeaponCard>().name  = currCard.name;
 				CardUI.GetComponent<WeaponCard>().asset = currCard.asset;
 				//CardUI.GetComponent<WeaponCard>().power = currCard.power;
 				
