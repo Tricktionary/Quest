@@ -921,6 +921,7 @@ MonoBehaviour:
   Card: {fileID: 1833412110767810, guid: 6eb155d50af9c4282a79a2560f9b47b6, type: 2}
   WeaponCard: {fileID: 1405695734331132, guid: 5e6167b2599404fd89e86fd2c46a9f9b, type: 2}
   FoeCard: {fileID: 1115157619569266, guid: 674b3aed3fde8421d8933860e8745e98, type: 2}
+  AllyCard: {fileID: 1097128100082594, guid: 52d4c5c17bf384c5fa0399609cfc88d2, type: 2}
   playArea: {fileID: 1814199544}
   stage1: {fileID: 1710249156}
   stage2: {fileID: 1494690799}

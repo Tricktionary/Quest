@@ -8,6 +8,7 @@ public class Game : MonoBehaviour {
 	public GameObject Card;									//General Card Prefab 
 	public GameObject WeaponCard;							//Weapon Card Prefab
 	public GameObject FoeCard;								//Foe Card Prefab
+	public GameObject AllyCard;								//Ally Card Prefab
 
 	public GameObject playArea;								//Play Zone
 	public GameObject stage1;							    //Stage1 of quest
@@ -79,7 +80,7 @@ public class Game : MonoBehaviour {
 				_turnId = 0;
 			}
 
-			loadHand (_turnId);
+			loadHand(_turnId);
 			//Debug.Log("End Turn");
 			_drawn = false;
 			_canEnd = false;
@@ -99,7 +100,6 @@ public class Game : MonoBehaviour {
 		_players.Add(new Player(1));
 		_players.Add(new Player(2));
 		_players.Add(new Player(3));
-		_players.Add(new Player(4));
 
 		//Set up the decks
 		_adventureDeck = new Deck("Adventure");
@@ -161,8 +161,19 @@ public class Game : MonoBehaviour {
 				CardUI.GetComponent<FoeCard>().asset   = currCard.asset;
 			}
 
+			if (currCard.GetType () == typeof(AllyCard)) {
+				CardUI = Instantiate (AllyCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
+				CardUI.GetComponent<AllyCard>().name    = currCard.name;
+				//CardUI.GetComponent<FoeCard>().loPower = currCard.loPower;
+				//CardUI.GetComponent<FoeCard>().hiPower = currCard.hiPower;
+				//CardUI.GetComponent<FoeCard>().special = currCard.special;
+				CardUI.GetComponent<AllyCard>().asset   = currCard.asset;
+			}
+
+
 			Sprite card = Resources.Load<Sprite>(currCard.asset); //Card Sprite
 
+			Debug.Log(card);
 			CardUI.gameObject.GetComponent<Image>().sprite = card;
 			CardUI.transform.SetParent(Hand.transform);
 		}
