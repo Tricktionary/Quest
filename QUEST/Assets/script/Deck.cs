@@ -105,7 +105,7 @@ public class Deck : MonoBehaviour {
 	
 
 			/* Amour load */
-			AddXCopies(new AmourCard("Amour",10,1, "card_image/special/specialCard3" ),1);
+			//AddXCopies(new AmourCard("Amour",10,1, "card_image/special/specialCard3" ),1);
 
 			// Shuffe the deck of cards after adding.
 			this.Shuffle();
