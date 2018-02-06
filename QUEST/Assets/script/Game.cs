@@ -68,6 +68,7 @@ public class Game : MonoBehaviour {
 			if (currCard.GetType () == typeof(QuestCard)){	//Instantiate Quest Card Prefab
 				storyCard = Instantiate (QuestCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
 			}
+
 			storyCard.gameObject.GetComponent<Image> ().sprite = card;
 			storyCard.transform.SetParent (drawCardArea.transform);
 			_drawn = true;
