@@ -63,13 +63,11 @@ public class Game : MonoBehaviour {
 
 			Sprite card = Resources.Load<Sprite> (currCardAsset); //Card Sprite
 
-
 			GameObject storyCard = null;
 
 			if (currCard.GetType () == typeof(QuestCard)){	//Instantiate Quest Card Prefab
 				storyCard = Instantiate (QuestCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
 			}
-
 
 			storyCard.gameObject.GetComponent<Image> ().sprite = card;
 			storyCard.transform.SetParent (drawCardArea.transform);
@@ -77,7 +75,7 @@ public class Game : MonoBehaviour {
 
 			//Check What card i drawn and initialize a quest
 			debugPrint();
-			System.Type cardType = currCard.GetType;
+			System.Type cardType = currCard.GetType();
 			if (cardType.Equals(typeof(QuestCard))) {
 				//quest
 				QuestCard questCard = (QuestCard)currCard;
