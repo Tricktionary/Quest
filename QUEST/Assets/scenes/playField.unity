@@ -219,7 +219,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 913053425}
-  m_RootOrder: 10
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -309,7 +309,7 @@ GameObject:
   - component: {fileID: 407580262}
   - component: {fileID: 407580261}
   m_Layer: 5
-  m_Name: Stage3 (2)
+  m_Name: Stage5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -327,7 +327,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 913053425}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -775,7 +775,7 @@ GameObject:
   - component: {fileID: 767911024}
   - component: {fileID: 767911023}
   m_Layer: 5
-  m_Name: Stage3 (1)
+  m_Name: Stage4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -793,7 +793,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 913053425}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1081,9 +1081,9 @@ RectTransform:
   - {fileID: 1372807440}
   - {fileID: 1494690800}
   - {fileID: 968365559}
-  - {fileID: 402292198}
   - {fileID: 767911022}
   - {fileID: 407580260}
+  - {fileID: 402292198}
   m_Father: {fileID: 1872371446}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1144,6 +1144,8 @@ MonoBehaviour:
   stage1: {fileID: 1710249156}
   stage2: {fileID: 1494690799}
   stage3: {fileID: 968365558}
+  stage4: {fileID: 767911021}
+  stage5: {fileID: 407580259}
   drawCardArea: {fileID: 402292197}
   Hand: {fileID: 1004303694}
   storyCard: {fileID: 1251235100696200, guid: 9dcc0839dcfff4e018c3d4f3f62d4abe, type: 2}
