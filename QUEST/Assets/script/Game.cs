@@ -11,9 +11,13 @@ public class Game : MonoBehaviour {
 	public GameObject AllyCard;								//Ally Card Prefab
 
 	public GameObject playArea;								//Play Zone
+	
 	public GameObject stage1;							    //Stage1 of quest
 	public GameObject stage2;
 	public GameObject stage3;
+	public GameObject stage4;
+	public GameObject stage5;
+
 	public GameObject drawCardArea;							//DrawCardArea
 	public GameObject Hand; 								//Play Area Hand Reference
  
@@ -58,7 +62,6 @@ public class Game : MonoBehaviour {
 			Sprite card = Resources.Load<Sprite> (currCardAsset); //Card Sprite
 
 			GameObject questCard = Instantiate (storyCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
-
 			questCard.gameObject.GetComponent<Image> ().sprite = card;
 			questCard.transform.SetParent (drawCardArea.transform);
 			_drawn = true;
@@ -206,7 +209,6 @@ public class Game : MonoBehaviour {
 		}	
 	}
 		
-	
 	// Update is called once per frame
 	void Update () {
 		
