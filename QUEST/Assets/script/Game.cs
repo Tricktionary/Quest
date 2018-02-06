@@ -9,6 +9,7 @@ public class Game : MonoBehaviour {
 	public GameObject WeaponCard;							//Weapon Card Prefab
 	public GameObject FoeCard;								//Foe Card Prefab
 	public GameObject AllyCard;								//Ally Card Prefab
+	public GameObject QuestCard;
 
 	public GameObject playArea;								//Play Zone
 	
@@ -21,7 +22,6 @@ public class Game : MonoBehaviour {
 	public GameObject drawCardArea;							//DrawCardArea
 	public GameObject Hand; 								//Play Area Hand Reference
  
-	public GameObject storyCard;							//Story Card
 	public GameObject playerIdTxt;							//Player Id
 	public GameObject shieldCounterTxt;						//Shield Counter
 	private List<Player> _players = new List<Player>(); 	//List of players
@@ -56,12 +56,21 @@ public class Game : MonoBehaviour {
 			}
 
 			Card currCard = _storyDeck.Draw (); //We need discard pile
+			
 			_discardPileStory.Discard(currCard);
+			
 			string currCardAsset = currCard.asset; //Pulls the card asset
 
 			Sprite card = Resources.Load<Sprite> (currCardAsset); //Card Sprite
 
-			GameObject storyCard = Instantiate (storyCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
+
+			GameObject storyCard = null;
+
+			if (currCard.GetType () == typeof(QuestCard)){	//Instantiate Quest Card Prefab
+				storyCard = Instantiate (QuestCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
+			}
+
+
 			storyCard.gameObject.GetComponent<Image> ().sprite = card;
 			storyCard.transform.SetParent (drawCardArea.transform);
 			_drawn = true;
