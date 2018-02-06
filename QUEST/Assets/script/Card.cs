@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
  
-public class Card : MonoBehaviour{
+public abstract class Card : MonoBehaviour{
 
 	public Transform oldPosition = null; 	//Old Position of the card on the board
 
