@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class StoryCard : Card
+public abstract class StoryCard : Card
 {
 
 }
