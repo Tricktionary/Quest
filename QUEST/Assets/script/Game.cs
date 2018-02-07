@@ -65,6 +65,7 @@ public class Game : MonoBehaviour {
 
 			Sprite card = Resources.Load<Sprite> (currCardAsset); //Card Sprite
 
+
 			GameObject storyCard = null;
 
 			if (currCard.GetType () == typeof(QuestCard)){	//Instantiate Quest Card Prefab
@@ -72,12 +73,30 @@ public class Game : MonoBehaviour {
 				_questInPlay = true;
 			}
 
+
 			storyCard.gameObject.GetComponent<Image> ().sprite = card;
 			storyCard.transform.SetParent (drawCardArea.transform);
 			_drawn = true;
 
 			//Check What card i drawn and initialize a quest
-			if (_questInPlay == true){
+			debugPrint();
+			System.Type cardType = currCard.GetType;
+			if (cardType.Equals(typeof(QuestCard))) {
+				//quest
+				QuestCard questCard = (QuestCard)currCard;
+				Debug.Log (questCard.stages);
+			} else if (cardType.Equals(typeof(TournamentCard))) {
+				//tournament
+				TournamentCard tournamentCard = (TournamentCard)currCard;
+			} else if (cardType.Equals(typeof(EventCard))) {
+				//event
+				EventCard eventCard = (EventCard)currCard;
+			} else {
+				
+			}
+			
+			//Quest Gameplay concept 
+/*			if (_questInPlay == true){
 				int currPlayer = _turnId;
 				bool sponsor = sponsorPrompt(currPlayer); 
 
@@ -91,6 +110,7 @@ public class Game : MonoBehaviour {
 					}
 					sponsor = sponsorPrompt(currPlayer);
 				}
+
 				if(sponsor == true){				//Someone has sponsored so we must ask if people want to play
 					_questSponsor = currPlayer;		//Quest Sponsor is the current player
 					for(var i = 0 ; i < _numPlayers ; i++){	
@@ -100,14 +120,18 @@ public class Game : MonoBehaviour {
 							}
 						}
 					}
-					
-				}
-				else
-				
-				//Quest Loop
-				//Pay Players Shields
-				_questInPlay = false;
-			}
+					if(_playersIn.Count == 0){	//If no one joins end quest
+						_questInPlay = false;
+					}
+					else{
+						//Quest Loop
+						//Pay Players Shields
+					}
+					 
+				}else{
+					_questInPlay = false;
+				}		 
+			}						*/
 		}
 	}
 	
