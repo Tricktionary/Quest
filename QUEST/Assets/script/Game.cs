@@ -39,17 +39,19 @@ public class Game : MonoBehaviour {
 	private List<List<Card>> _Quest;
 	private int _questSponsor;
 	private List<int> _playersIn;
+	private bool _questInPlay;
 
 	//if the user can end their turn
 	private bool _standardTurn;
 	private bool _canEnd;
 
+	
 
 	//Draws Card 
 	public void DrawCard(){
 		//_storyDeck
-
 		if (_drawn == false) {
+
 			//Clears out drawCardArea
 			foreach (Transform child in drawCardArea.transform) {	
 				GameObject.Destroy (child.gameObject);
@@ -67,14 +69,21 @@ public class Game : MonoBehaviour {
 
 			if (currCard.GetType () == typeof(QuestCard)){	//Instantiate Quest Card Prefab
 				storyCard = Instantiate (QuestCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
+				_questInPlay = true;
 			}
 
 			storyCard.gameObject.GetComponent<Image> ().sprite = card;
 			storyCard.transform.SetParent (drawCardArea.transform);
 			_drawn = true;
 
+
+			if(_questInPlay == true){
+				initQuest(_turnId);		//Initialize Quest Should ALSO TAKE IN QUEST CARD
+			}
+
 			//Check What card i drawn and initialize a quest
 			debugPrint();
+
 			System.Type cardType = currCard.GetType();
 			if (cardType.Equals(typeof(QuestCard))) {
 				//quest
@@ -89,8 +98,43 @@ public class Game : MonoBehaviour {
 			} else {
 				
 			}
-
+								
 		}
+	}
+	
+	private void initQuest(int currPlayer){		
+		bool sponsor = sponsorPrompt(currPlayer); 
+
+		currPlayer++;
+		while(sponsor == false){		//Find Sponsor
+			if(currPlayer == _turnId){	//We asked all the players so break
+				break;
+			}
+			if (currPlayer >= 3) {		
+				currPlayer = 0;			//Reset asking because maybe we started at the end 
+			}
+			sponsor = sponsorPrompt(currPlayer);
+		}
+
+		if(sponsor == true){				//Someone has sponsored so we must ask if people want to play
+			_questSponsor = currPlayer;		//Quest Sponsor is the current player
+			for(var i = 0 ; i < _numPlayers ; i++){	
+				if(i != _questSponsor){			//Skip quest sponsor
+					if(playPrompt(i)){			//Ask them and add them to players in this quest
+						_playersIn.Add(i);
+					}
+				}
+			}
+			if(_playersIn.Count == 0){	//If no one joins end quest
+				_questInPlay = false;
+			}
+			else{
+				//Quest Loop
+				//Pay Players Shields
+			}			 
+		}else{
+			_questInPlay = false;
+		}		 
 	}
 
 	//End Turn
@@ -113,11 +157,17 @@ public class Game : MonoBehaviour {
 		}
 	}
 
+	private bool sponsorPrompt(int playerId){
+		return false;
+	}
+
+	private bool playPrompt(int playerId){
+		return false;
+	}
+
 	private void acceptSponsor() {
 		_questSponsor = _turnId;
 		_canEnd = false;
-
-
 	}
 
 	// Use this for initialization
@@ -139,6 +189,7 @@ public class Game : MonoBehaviour {
 		_drawn = false;
 		_standardTurn = true;
 		_canEnd = true;
+		_questInPlay = false;
 
 		//Populates Player Hands
 		for(int i = 0; i < _players.Count ; i++){
@@ -150,7 +201,8 @@ public class Game : MonoBehaviour {
 		//debugPrint(); 
 	}
 	
-	//Load Player Hand
+	//Input : Integer Player Id
+	//Functionality : Loads player hand onto the UI
 	void loadHand(int playerId){
 		
 		List<Card> currHand = _players[playerId].hand;
@@ -205,7 +257,7 @@ public class Game : MonoBehaviour {
 		}
 	}
 
-	//Testing
+	//Purpose is for printing deck values
 	void debugPrint(){
 		//Populate Hand of All Player
 		Debug.Log(_players.Count);
