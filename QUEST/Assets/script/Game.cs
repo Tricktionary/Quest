@@ -78,9 +78,14 @@ public class Game : MonoBehaviour {
 			storyCard.transform.SetParent (drawCardArea.transform);
 			_drawn = true;
 
+
+			if(_questInPlay == true){
+				initQuest(_turnId);		//Initialize Quest Should ALSO TAKE IN QUEST CARD
+			}
+
 			//Check What card i drawn and initialize a quest
 			debugPrint();
-			System.Type cardType = currCard.GetType;
+			//System.Type cardType = currCard.GetType;
 			if (cardType.Equals(typeof(QuestCard))) {
 				//quest
 				QuestCard questCard = (QuestCard)currCard;
@@ -94,47 +99,44 @@ public class Game : MonoBehaviour {
 			} else {
 				
 			}
-			
-			//Quest Gameplay concept 
-/*			if (_questInPlay == true){
-				int currPlayer = _turnId;
-				bool sponsor = sponsorPrompt(currPlayer); 
-
-				currPlayer++;
-				while(sponsor == false){		//Find Sponsor
-					if(currPlayer == _turnId){	//We asked all the players so break
-						break;
-					}
-					if (currPlayer >= 3) {		
-						currPlayer = 0;			//Reset asking because maybe we started at the end 
-					}
-					sponsor = sponsorPrompt(currPlayer);
-				}
-
-				if(sponsor == true){				//Someone has sponsored so we must ask if people want to play
-					_questSponsor = currPlayer;		//Quest Sponsor is the current player
-					for(var i = 0 ; i < _numPlayers ; i++){	
-						if(i != _questSponsor){			//Skip quest sponsor
-							if(playPrompt(i)){			//Ask them and add them to players in this quest
-								_playersIn.Add(i);
-							}
-						}
-					}
-					if(_playersIn.Count == 0){	//If no one joins end quest
-						_questInPlay = false;
-					}
-					else{
-						//Quest Loop
-						//Pay Players Shields
-					}
-					 
-				}else{
-					_questInPlay = false;
-				}		 
-			}						*/
+								
 		}
 	}
 	
+	private void initQuest(int currPlayer){		
+		bool sponsor = sponsorPrompt(currPlayer); 
+
+		currPlayer++;
+		while(sponsor == false){		//Find Sponsor
+			if(currPlayer == _turnId){	//We asked all the players so break
+				break;
+			}
+			if (currPlayer >= 3) {		
+				currPlayer = 0;			//Reset asking because maybe we started at the end 
+			}
+			sponsor = sponsorPrompt(currPlayer);
+		}
+
+		if(sponsor == true){				//Someone has sponsored so we must ask if people want to play
+			_questSponsor = currPlayer;		//Quest Sponsor is the current player
+			for(var i = 0 ; i < _numPlayers ; i++){	
+				if(i != _questSponsor){			//Skip quest sponsor
+					if(playPrompt(i)){			//Ask them and add them to players in this quest
+						_playersIn.Add(i);
+					}
+				}
+			}
+			if(_playersIn.Count == 0){	//If no one joins end quest
+				_questInPlay = false;
+			}
+			else{
+				//Quest Loop
+				//Pay Players Shields
+			}			 
+		}else{
+			_questInPlay = false;
+		}		 
+	}
 
 	//End Turn
 	public void EndTurn(){
@@ -156,11 +158,11 @@ public class Game : MonoBehaviour {
 		}
 	}
 
-	public boolean sponsorPrompt(int playerId){
+	private bool sponsorPrompt(int playerId){
 		return false;
 	}
 
-	public boolean playPrompt(int playerId){
+	private bool playPrompt(int playerId){
 		return false;
 	}
 
