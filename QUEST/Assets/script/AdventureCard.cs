@@ -27,7 +27,7 @@ public abstract class AdventureCard : Card,IBeginDragHandler,IDragHandler, IEndD
 	public void OnEndDrag(PointerEventData eventData){
 		//Debug.Log("OnEndDrag");
 		this.transform.SetParent(oldPosition);
-		this.transform.parent.GetComponent<CardArea>().removeCard(this);
+		//this.transform.parent.GetComponent<CardArea>().removeCard(this);
 		GetComponent<CanvasGroup>().blocksRaycasts = true;
 	}
 
