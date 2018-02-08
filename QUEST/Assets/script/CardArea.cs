@@ -30,8 +30,6 @@ public class CardArea :  MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 		set;
 	}
 
-
-
 	// Use this for initialization
 	void Start () {	
 	}
@@ -43,12 +41,16 @@ public class CardArea :  MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 	//When a card is dropped
 	public void OnDrop(PointerEventData eventData){
 		Debug.Log(eventData.pointerDrag.name + " Drop to "+ gameObject.name);
-		Card d = eventData.pointerDrag.GetComponent<Card>();
-
-		if(d!=null){
+		Card currCard = eventData.pointerDrag.GetComponent<Card>();
+		
+		if(currCard!=null){
+			_cards.Add(currCard);
+			for(int i = 0 ; i < _cards.Count; i++){
+				Debug.Log(_cards[i].name);
+			}
 			//_area.Add (d);
 			//Debug.Log (_area[0].name);
-			d.oldPosition = this.transform;
+			currCard.oldPosition = this.transform;
 		}
 
 	}

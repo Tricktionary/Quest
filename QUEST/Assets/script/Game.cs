@@ -245,7 +245,7 @@ public class Game : MonoBehaviour {
 
 			Sprite card = Resources.Load<Sprite>(currCard.asset); //Card Sprite
 
-			Debug.Log(card);
+			//Debug.Log(card);
 			CardUI.gameObject.GetComponent<Image>().sprite = card;
 			CardUI.transform.SetParent(Hand.transform);
 		}

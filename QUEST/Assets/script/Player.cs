@@ -78,6 +78,16 @@ public class Player : MonoBehaviour {
 		_hand = new List<Card>();
 		_allies = new List<Card>();
 	}
+	
+	//AI
+	public Player(){
+		_playerId = -1;
+		_rank = 1;
+		_shieldCounter = 0;
+		_bp = 5;
+		_hand = new List<Card>();
+		_allies = new List<Card>();	
+	}
 
 
 	//Add Cards

@@ -8,7 +8,7 @@ public abstract class AdventureCard : Card,IBeginDragHandler,IDragHandler, IEndD
 {
 	//Action that occurs when you begin to drag
 	public void OnBeginDrag(PointerEventData eventData){
-		Debug.Log("OnBeginDrag");
+		//Debug.Log("OnBeginDrag");
 		oldPosition = this.transform.parent;
 		this.transform.SetParent(this.transform.parent.parent);
 		GetComponent<CanvasGroup>().blocksRaycasts = false;
@@ -24,21 +24,9 @@ public abstract class AdventureCard : Card,IBeginDragHandler,IDragHandler, IEndD
 
 	//Action that occurs at the end of the drag
 	public void OnEndDrag(PointerEventData eventData){
-		Debug.Log("OnEndDrag");
+		//Debug.Log("OnEndDrag");
 		this.transform.SetParent(oldPosition);
 		GetComponent<CanvasGroup>().blocksRaycasts = true;
 	}
 
-	//When a card is dropped
-	/* 
-	public void OnDrop(PointerEventData eventData){
-		Debug.Log(eventData.pointerDrag.name + " Drop to "+ gameObject.name);
-		Card d = eventData.pointerDrag.GetComponent<Card>();
-
-		if(d!=null){
-			//_area.Add (d);
-			//Debug.Log (_area[0].name);
-			d.oldPosition = this.transform;
-		}
-	}*/
 }
