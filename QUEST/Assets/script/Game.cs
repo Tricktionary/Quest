@@ -78,7 +78,8 @@ public class Game : MonoBehaviour {
 
 
 			if(_questInPlay == true){
-				initQuest(_turnId, (QuestCard)currCard);		//Initialize Quest Should ALSO TAKE IN QUEST CARD
+				QuestCard currQuest = (QuestCard)currCard;
+				initQuest(_turnId, currQuest);		//Initialize Quest Should ALSO TAKE IN QUEST CARD
 			}
 
 			//Check What card i have drawn and initialize a quest
