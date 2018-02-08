@@ -9,6 +9,7 @@ public abstract class AdventureCard : Card,IBeginDragHandler,IDragHandler, IEndD
 	//Action that occurs when you begin to drag
 	public void OnBeginDrag(PointerEventData eventData){
 		//Debug.Log("OnBeginDrag");
+		this.transform.parent.GetComponent<CardArea>().removeCard(this);
 		oldPosition = this.transform.parent;
 		this.transform.SetParent(this.transform.parent.parent);
 		GetComponent<CanvasGroup>().blocksRaycasts = false;

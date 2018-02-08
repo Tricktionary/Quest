@@ -199,6 +199,7 @@ public class Game : MonoBehaviour {
 		
 		List<Card> currHand = _players[playerId].hand;
 		Card currCard;
+		
 
 		//Set Player ID text
 		playerIdTxt.GetComponent<UnityEngine.UI.Text>().text = "Player ID : "+ (playerId+1).ToString(); //For User Friendly
@@ -211,7 +212,7 @@ public class Game : MonoBehaviour {
 		for(int i = 0 ; i < currHand.Count; i++){
 			currCard = currHand[i];
 
-
+			Hand.GetComponent<CardArea>().addCard(currCard);
 			GameObject CardUI = null; 
 
 			if (currCard.GetType () == typeof(WeaponCard)) {
@@ -236,9 +237,6 @@ public class Game : MonoBehaviour {
 			if (currCard.GetType () == typeof(AllyCard)) {
 				CardUI = Instantiate (AllyCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
 				CardUI.GetComponent<AllyCard>().name    = currCard.name;
-				//CardUI.GetComponent<FoeCard>().loPower = currCard.loPower;
-				//CardUI.GetComponent<FoeCard>().hiPower = currCard.hiPower;
-				//CardUI.GetComponent<FoeCard>().special = currCard.special;
 				CardUI.GetComponent<AllyCard>().asset   = currCard.asset;
 			}
 
