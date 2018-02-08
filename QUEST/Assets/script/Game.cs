@@ -51,9 +51,8 @@ public class Game : MonoBehaviour {
 	public void DrawCard(){
 		//_storyDeck
 		if (_drawn == false) {
-
-			//Clears out drawCardArea
-			foreach (Transform child in drawCardArea.transform) {	
+			 
+			foreach (Transform child in drawCardArea.transform) {	//Clears out drawCardArea
 				GameObject.Destroy (child.gameObject);
 			}
 
@@ -78,46 +77,34 @@ public class Game : MonoBehaviour {
 
 
 			if(_questInPlay == true){
-				initQuest(_turnId);		//Initialize Quest Should ALSO TAKE IN QUEST CARD
-			}
-
-			//Check What card i drawn and initialize a quest
-			debugPrint();
-
-			System.Type cardType = currCard.GetType();
-			if (cardType.Equals(typeof(QuestCard))) {
-				//quest
-				QuestCard questCard = (QuestCard)currCard;
-				Debug.Log (questCard.stages);
-			} else if (cardType.Equals(typeof(TournamentCard))) {
-				//tournament
-				TournamentCard tournamentCard = (TournamentCard)currCard;
-			} else if (cardType.Equals(typeof(EventCard))) {
-				//event
-				EventCard eventCard = (EventCard)currCard;
-			} else {
+				QuestCard currQuest = (QuestCard)currCard;
 				
+				//initQuest(_turnId, currQuest);		//Initialize Quest Should ALSO TAKE IN QUEST CARD
 			}
-								
+
+			//Check What card i have drawn and initialize a quest
+			//debugPrint();
 		}
 	}
 	
-	private void initQuest(int currPlayer){		
+
+	//Quest Initialization
+	private void initQuest(int currPlayer , QuestCard card){		
 		bool sponsor = sponsorPrompt(currPlayer); 
 
 		currPlayer++;
-		while(sponsor == false){		//Find Sponsor
-			if(currPlayer == _turnId){	//We asked all the players so break
+		while(sponsor == false){				//Find Sponsor
+			if(currPlayer == _turnId){			//We asked all the players so break
 				break;
 			}
 			if (currPlayer >= 3) {		
-				currPlayer = 0;			//Reset asking because maybe we started at the end 
+				currPlayer = 0;					//Reset asking because maybe we started at the end 
 			}
 			sponsor = sponsorPrompt(currPlayer);
 		}
 
-		if(sponsor == true){				//Someone has sponsored so we must ask if people want to play
-			_questSponsor = currPlayer;		//Quest Sponsor is the current player
+		if(sponsor == true){					//Someone has sponsored so we must ask if people want to play
+			_questSponsor = currPlayer;			//Quest Sponsor is the current player
 			for(var i = 0 ; i < _numPlayers ; i++){	
 				if(i != _questSponsor){			//Skip quest sponsor
 					if(playPrompt(i)){			//Ask them and add them to players in this quest
@@ -128,13 +115,25 @@ public class Game : MonoBehaviour {
 			if(_playersIn.Count == 0){	//If no one joins end quest
 				_questInPlay = false;
 			}
+
 			else{
+			//FOR REFERENCE:
+				//Sprite card = Resources.Load<Sprite> ("/card_image/special/specialCard7"); //Load card image(CAN BE BACK OF CARD)
+				//List<Card> cardStage1 = stage1.GetComponent<CardArea>().cards;
+				
+
 				//Quest Loop
+					//Quest Creation
+					//Ready Up players 
+					//Survive?
+						//Removed Used Wepons 
+						//Ready Up
+						//(Maybe give players more weapon)
+				//Pay Sponsor in cards
 				//Pay Players Shields
 			}			 
-		}else{
-			_questInPlay = false;
-		}		 
+		}
+		_questInPlay = false; 
 	}
 
 	//End Turn
@@ -157,11 +156,17 @@ public class Game : MonoBehaviour {
 		}
 	}
 
+	//Prompt Sponsor
 	private bool sponsorPrompt(int playerId){
+		loadHand(playerId);
+		Debug.Log(playerId +" Do you want to sponsor");
 		return false;
 	}
 
 	private bool playPrompt(int playerId){
+		loadHand(playerId);
+		Debug.Log(playerId +" Do you want to play");
+
 		return false;
 	}
 
@@ -207,6 +212,7 @@ public class Game : MonoBehaviour {
 		
 		List<Card> currHand = _players[playerId].hand;
 		Card currCard;
+		
 
 		//Set Player ID text
 		playerIdTxt.GetComponent<UnityEngine.UI.Text>().text = "Player ID : "+ (playerId+1).ToString(); //For User Friendly
@@ -219,39 +225,38 @@ public class Game : MonoBehaviour {
 		for(int i = 0 ; i < currHand.Count; i++){
 			currCard = currHand[i];
 
-
+			Hand.GetComponent<CardArea>().addCard(currCard);
 			GameObject CardUI = null; 
 
 			if (currCard.GetType () == typeof(WeaponCard)) {
 				//Is this convention ?
+				WeaponCard currWeapon = (WeaponCard)currCard;
 				CardUI = Instantiate (WeaponCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
-				CardUI.GetComponent<WeaponCard>().name = currCard.name;
-				CardUI.GetComponent<WeaponCard>().asset = currCard.asset;
-				//CardUI.GetComponent<WeaponCard>().power = currCard.power;
+				CardUI.GetComponent<WeaponCard>().name =  currWeapon.name;
+				CardUI.GetComponent<WeaponCard>().asset = currWeapon.asset;
+				CardUI.GetComponent<WeaponCard>().power = currWeapon.power;
 				
 			}
 			if (currCard.GetType () == typeof(FoeCard)) {
 				CardUI = Instantiate (FoeCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
-				CardUI.GetComponent<FoeCard>().name    = currCard.name;
-				//CardUI.GetComponent<FoeCard>().loPower = currCard.loPower;
-				//CardUI.GetComponent<FoeCard>().hiPower = currCard.hiPower;
-				//CardUI.GetComponent<FoeCard>().special = currCard.special;
-				CardUI.GetComponent<FoeCard>().asset   = currCard.asset;
+				FoeCard currFoe = (FoeCard)currCard;
+				CardUI.GetComponent<FoeCard>().name    = currFoe.name;
+				CardUI.GetComponent<FoeCard>().loPower = currFoe.loPower;
+				CardUI.GetComponent<FoeCard>().hiPower = currFoe.hiPower;
+				CardUI.GetComponent<FoeCard>().special = currFoe.special;
+				CardUI.GetComponent<FoeCard>().asset   = currFoe.asset;
 			}
 
 			if (currCard.GetType () == typeof(AllyCard)) {
 				CardUI = Instantiate (AllyCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
 				CardUI.GetComponent<AllyCard>().name    = currCard.name;
-				//CardUI.GetComponent<FoeCard>().loPower = currCard.loPower;
-				//CardUI.GetComponent<FoeCard>().hiPower = currCard.hiPower;
-				//CardUI.GetComponent<FoeCard>().special = currCard.special;
 				CardUI.GetComponent<AllyCard>().asset   = currCard.asset;
 			}
 
 
 			Sprite card = Resources.Load<Sprite>(currCard.asset); //Card Sprite
 
-			Debug.Log(card);
+			//Debug.Log(card);
 			CardUI.gameObject.GetComponent<Image>().sprite = card;
 			CardUI.transform.SetParent(Hand.transform);
 		}
@@ -286,7 +291,7 @@ public class Game : MonoBehaviour {
 		
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 
 	void TwoPlayerMode() {
