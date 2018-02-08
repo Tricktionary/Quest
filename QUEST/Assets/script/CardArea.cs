@@ -12,7 +12,12 @@ public class CardArea :  MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 	private bool _isHand;
 	private bool _inPlay;
 
-
+	public List<Card> cards{
+		get{
+			return this._cards;
+		}
+		set;
+	}
 	public bool isStoryArea{
 		get;
 		set;
@@ -56,10 +61,10 @@ public class CardArea :  MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 		Card currCard = eventData.pointerDrag.GetComponent<Card>();
 		if(currCard!=null){
 			_cards.Add(currCard);
-			Debug.Log(_cards.Count);
-			for(int i = 0 ; i < _cards.Count; i++){
+			//Debug.Log(_cards.Count);
+			///for(int i = 0 ; i < _cards.Count; i++){
 			//	Debug.Log(_cards[i].name);
-			}
+			//}
 			currCard.oldPosition.GetComponent<CardArea>().removeCard(currCard);
 			currCard.oldPosition= this.transform;
 		}

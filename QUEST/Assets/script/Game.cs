@@ -51,8 +51,8 @@ public class Game : MonoBehaviour {
 	public void DrawCard(){
 		//_storyDeck
 		if (_drawn == false) {
-			//Clears out drawCardArea
-			foreach (Transform child in drawCardArea.transform) {	
+			 
+			foreach (Transform child in drawCardArea.transform) {	//Clears out drawCardArea
 				GameObject.Destroy (child.gameObject);
 			}
 
@@ -117,7 +117,19 @@ public class Game : MonoBehaviour {
 			}
 
 			else{
+			//FOR REFERENCE:
+				//Sprite card = Resources.Load<Sprite> ("/card_image/special/specialCard7"); //Load card image(CAN BE BACK OF CARD)
+				//List<Card> cardStage1 = stage1.GetComponent<CardArea>().cards;
+				
+
 				//Quest Loop
+					//Quest Creation
+					//Ready Up players 
+					//Survive?
+						//Removed Used Wepons 
+						//Ready Up
+						//(Maybe give players more weapon)
+				//Pay Sponsor in cards
 				//Pay Players Shields
 			}			 
 		}
@@ -144,6 +156,7 @@ public class Game : MonoBehaviour {
 		}
 	}
 
+	//Prompt Sponsor
 	private bool sponsorPrompt(int playerId){
 		loadHand(playerId);
 		Debug.Log(playerId +" Do you want to sponsor");
