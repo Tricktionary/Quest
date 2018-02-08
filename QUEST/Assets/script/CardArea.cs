@@ -16,7 +16,9 @@ public class CardArea :  MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 		get{
 			return this._cards;
 		}
-		set;
+		set{
+			this._cards = value;
+		}
 	}
 	public bool isStoryArea{
 		get;
