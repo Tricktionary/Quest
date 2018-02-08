@@ -78,26 +78,12 @@ public class Game : MonoBehaviour {
 
 			if(_questInPlay == true){
 				QuestCard currQuest = (QuestCard)currCard;
-				initQuest(_turnId, currQuest);		//Initialize Quest Should ALSO TAKE IN QUEST CARD
+				PlaceSelectionOnSurface obj;
+				//initQuest(_turnId, currQuest);		//Initialize Quest Should ALSO TAKE IN QUEST CARD
 			}
 
 			//Check What card i have drawn and initialize a quest
-			debugPrint();
-
-			System.Type cardType = currCard.GetType();
-			if (cardType.Equals(typeof(QuestCard))) {
-				//quest
-				QuestCard questCard = (QuestCard)currCard;
-				Debug.Log (questCard.stages);
-			} else if (cardType.Equals(typeof(TournamentCard))) {
-				//tournament
-				TournamentCard tournamentCard = (TournamentCard)currCard;
-			} else if (cardType.Equals(typeof(EventCard))) {
-				//event
-				EventCard eventCard = (EventCard)currCard;
-			} else {
-				
-			}
+			//debugPrint();
 		}
 	}
 	
