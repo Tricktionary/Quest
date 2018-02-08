@@ -7,18 +7,30 @@ public class CardArea :  MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 
 	//Current Cards in this area
 	private List<Card> _cards = new List<Card>();
-	private bool _isStoryArea{
+	private bool _isStoryArea;
+	private bool _isAdventureArea;
+	private bool _isHand;
+	private bool _inPlay;
+
+
+	public bool isStoryArea{
 		get;
 		set;
 	} 
-	private bool _isAdventureArea{
+	public bool isAdventureArea{
 		get;
 		set;
 	}
-	private bool _isHand{
+	public bool isHand{
 		get;
 		set;
 	}
+	public bool inPlay{
+		get;
+		set;
+	}
+
+
 
 	// Use this for initialization
 	void Start () {	

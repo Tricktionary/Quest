@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public abstract class AdventureCard : Card,IBeginDragHandler,IDragHandler, IEndDragHandler,IDropHandler
+public abstract class AdventureCard : Card,IBeginDragHandler,IDragHandler, IEndDragHandler
 {
 	//Action that occurs when you begin to drag
 	public void OnBeginDrag(PointerEventData eventData){
@@ -30,6 +30,7 @@ public abstract class AdventureCard : Card,IBeginDragHandler,IDragHandler, IEndD
 	}
 
 	//When a card is dropped
+	/* 
 	public void OnDrop(PointerEventData eventData){
 		Debug.Log(eventData.pointerDrag.name + " Drop to "+ gameObject.name);
 		Card d = eventData.pointerDrag.GetComponent<Card>();
@@ -39,5 +40,5 @@ public abstract class AdventureCard : Card,IBeginDragHandler,IDragHandler, IEndD
 			//Debug.Log (_area[0].name);
 			d.oldPosition = this.transform;
 		}
-	}
+	}*/
 }

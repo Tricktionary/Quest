@@ -51,7 +51,6 @@ public class Game : MonoBehaviour {
 	public void DrawCard(){
 		//_storyDeck
 		if (_drawn == false) {
-
 			//Clears out drawCardArea
 			foreach (Transform child in drawCardArea.transform) {	
 				GameObject.Destroy (child.gameObject);
@@ -99,8 +98,6 @@ public class Game : MonoBehaviour {
 			} else {
 				
 			}
-			
-								
 		}
 	}
 	

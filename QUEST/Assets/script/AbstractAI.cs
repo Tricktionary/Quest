@@ -10,6 +10,7 @@ public class AbstractAI{
     private bool canTheyWin;
     private List<Card> _hand;
 
+
     public bool doIParticipateInTournament(){
         return false;
     }
@@ -22,8 +23,7 @@ public class AbstractAI{
         return false;
     }
 
-    public void nextBid(){
-        
+    public void nextBid(){    
     }
 
     
