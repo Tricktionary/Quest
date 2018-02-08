@@ -58,11 +58,9 @@ public class CardArea :  MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 		if(currCard!=null){
 			_cards.Add(currCard);
 			Debug.Log(_cards.Count);
-			//for(int i = 0 ; i < _cards.Count; i++){
-			//	Debug.Log(_cards[i].name);
-			//}
-			//_area.Add (d);
-			//Debug.Log (_area[0].name);
+			for(int i = 0 ; i < _cards.Count; i++){
+				//Debug.Log(_cards[i].name);
+			}
 			currCard.oldPosition = this.transform;
 		}
 	}
