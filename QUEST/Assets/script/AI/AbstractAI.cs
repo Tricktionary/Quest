@@ -4,20 +4,27 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class AbstractAI{
+public class AbstractAI:Player{
 
     private bool canIWin;
     private bool canTheyWin;
-    private List<Card> _hand;
-    ParticipateInTournament pTournamentStrategy= null;
-    SponsorQuest sQuestStrategy= null;
-    ParticipateInQuest pQuestStrategy= null;
-    NextBid nBidStrategy= null;
+    AIBehaviour pTournamentStrategy= null;
+    AIBehaviour sQuestStrategy= null;
+    AIBehaviour pQuestStrategy= null;
+    AIBehaviour nBidStrategy= null;
 
 
-    public void doIParticipateInTournament(List<Player> players){
+    public bool doIParticipateInTournament(List<Player> players){
         bool participate = false;
+        int rankCounter = 0;
         for(int i = 0 ; i < players.Count ; i++){
+            if(players[i].rank < this._rank){
+                rankCounter++;
+                if(rankCounter > 2){
+                    participate = true;
+                    break;
+                }
+            }
         }
         if(participate){
             pTournamentStrategy = ParticipateInTournament(_hand);
@@ -25,12 +32,12 @@ public class AbstractAI{
         else{
             pTournamentStrategy = backOut();
         }
+        return(participate);
     }
 
-    public bool doISponsorAQuest(List<Player> players){
+    public bool doISponsorAQuest(){
         bool participate = false;
         for(int i = 0 ; i < players.Count ; i++){
-
 
         }
         if(participate){
@@ -39,6 +46,7 @@ public class AbstractAI{
         else{
             sQuestStrategy = backOut();
         }
+        return(participate);
     }
 
     public bool doIParticipateInQuest(List<Player> players){
@@ -52,9 +60,12 @@ public class AbstractAI{
         else{
             ParticipateInQuest = backOut();
         }
+        return(participate);
     }
 
     public void nextBid(){  
+        bool participate = false;
 
+        return(participate);
     }
 }

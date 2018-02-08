@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-	private List<Card> _hand;
-	private int _playerId;							//Player ID
-	private int _rank;								//Players current ranks 0-2; 3 ends the game
-	private int _shieldCounter;      				//Shield Counter
-	private List<Card> _allies;  //List of cards
-	private int _bp;								//Current BP
+	protected List<Card> _hand;
+	protected int _playerId;							//Player ID
+	protected int _rank;								//Players current ranks 0-2; 3 ends the game
+	protected int _shieldCounter;      				//Shield Counter
+	protected List<Card> _allies;  //List of cards
+	protected int _bp;								//Current BP
 	public static int limit = 12;
 
 

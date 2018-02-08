@@ -78,7 +78,7 @@ public class Game : MonoBehaviour {
 
 			if(_questInPlay == true){
 				QuestCard currQuest = (QuestCard)currCard;
-				PlaceSelectionOnSurface obj;
+				
 				//initQuest(_turnId, currQuest);		//Initialize Quest Should ALSO TAKE IN QUEST CARD
 			}
 
@@ -121,9 +121,7 @@ public class Game : MonoBehaviour {
 				//Pay Players Shields
 			}			 
 		}
-
-		_questInPlay = false;
-			 
+		_questInPlay = false; 
 	}
 
 	//End Turn
@@ -282,7 +280,7 @@ public class Game : MonoBehaviour {
 		
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 
 	void TwoPlayerMode() {
