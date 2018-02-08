@@ -234,19 +234,21 @@ public class Game : MonoBehaviour {
 
 			if (currCard.GetType () == typeof(WeaponCard)) {
 				//Is this convention ?
+				WeaponCard currWeapon = (WeaponCard)currCard;
 				CardUI = Instantiate (WeaponCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
-				CardUI.GetComponent<WeaponCard>().name = currCard.name;
-				CardUI.GetComponent<WeaponCard>().asset = currCard.asset;
-				//CardUI.GetComponent<WeaponCard>().power = currCard.power;
+				CardUI.GetComponent<WeaponCard>().name =  currWeapon.name;
+				CardUI.GetComponent<WeaponCard>().asset = currWeapon.asset;
+				CardUI.GetComponent<WeaponCard>().power = currWeapon.power;
 				
 			}
 			if (currCard.GetType () == typeof(FoeCard)) {
 				CardUI = Instantiate (FoeCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
-				CardUI.GetComponent<FoeCard>().name    = currCard.name;
-				//CardUI.GetComponent<FoeCard>().loPower = currCard.loPower;
-				//CardUI.GetComponent<FoeCard>().hiPower = currCard.hiPower;
-				//CardUI.GetComponent<FoeCard>().special = currCard.special;
-				CardUI.GetComponent<FoeCard>().asset   = currCard.asset;
+				FoeCard currFoe = (FoeCard)currCard;
+				CardUI.GetComponent<FoeCard>().name    = currFoe.name;
+				CardUI.GetComponent<FoeCard>().loPower = currFoe.loPower;
+				CardUI.GetComponent<FoeCard>().hiPower = currFoe.hiPower;
+				CardUI.GetComponent<FoeCard>().special = currFoe.special;
+				CardUI.GetComponent<FoeCard>().asset   = currFoe.asset;
 			}
 
 			if (currCard.GetType () == typeof(AllyCard)) {

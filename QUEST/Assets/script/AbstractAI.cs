@@ -11,19 +11,19 @@ public class AbstractAI{
     private List<Card> _hand;
 
     public bool doIParticipateInTournament(){
-
+        return false;
     }
 
     public bool doISponsorAQuest(){
-
+        return false;
     }
 
     public bool doIParticipateInQuest(){
-
+        return false;
     }
 
     public void nextBid(){
-
+        
     }
 
     
