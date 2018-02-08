@@ -69,12 +69,6 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-
-	
-
-
-
-
 	//Constructor 
 	public Player(int id){
 		_playerId = id;
@@ -91,7 +85,7 @@ public class Player : MonoBehaviour {
 		_hand.Add(card);	//Adds card to hand
 	}
 	
-	// Plays Cards
+	// Plays Cards (Get rid of cards played)
 	void playCard(List<Card> cards){
 		
 	}

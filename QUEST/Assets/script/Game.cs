@@ -80,12 +80,14 @@ public class Game : MonoBehaviour {
 
 
 			if(_questInPlay == true){
-				initQuest(_turnId);		//Initialize Quest Should ALSO TAKE IN QUEST CARD
+				initQuest(_turnId, (QuestCard)currCard);		//Initialize Quest Should ALSO TAKE IN QUEST CARD
 			}
 
-			//Check What card i drawn and initialize a quest
+			//Check What card i have drawn and initialize a quest
 			debugPrint();
-			//System.Type cardType = currCard.GetType;
+			
+			
+			System.Type cardType = currCard.GetType;
 			if (cardType.Equals(typeof(QuestCard))) {
 				//quest
 				QuestCard questCard = (QuestCard)currCard;
@@ -99,26 +101,29 @@ public class Game : MonoBehaviour {
 			} else {
 				
 			}
+			
 								
 		}
 	}
 	
-	private void initQuest(int currPlayer){		
+
+	//Quest Initialization
+	private void initQuest(int currPlayer , QuestCard card){		
 		bool sponsor = sponsorPrompt(currPlayer); 
 
 		currPlayer++;
-		while(sponsor == false){		//Find Sponsor
-			if(currPlayer == _turnId){	//We asked all the players so break
+		while(sponsor == false){				//Find Sponsor
+			if(currPlayer == _turnId){			//We asked all the players so break
 				break;
 			}
 			if (currPlayer >= 3) {		
-				currPlayer = 0;			//Reset asking because maybe we started at the end 
+				currPlayer = 0;					//Reset asking because maybe we started at the end 
 			}
 			sponsor = sponsorPrompt(currPlayer);
 		}
 
-		if(sponsor == true){				//Someone has sponsored so we must ask if people want to play
-			_questSponsor = currPlayer;		//Quest Sponsor is the current player
+		if(sponsor == true){					//Someone has sponsored so we must ask if people want to play
+			_questSponsor = currPlayer;			//Quest Sponsor is the current player
 			for(var i = 0 ; i < _numPlayers ; i++){	
 				if(i != _questSponsor){			//Skip quest sponsor
 					if(playPrompt(i)){			//Ask them and add them to players in this quest
@@ -129,13 +134,15 @@ public class Game : MonoBehaviour {
 			if(_playersIn.Count == 0){	//If no one joins end quest
 				_questInPlay = false;
 			}
+
 			else{
 				//Quest Loop
 				//Pay Players Shields
 			}			 
-		}else{
-			_questInPlay = false;
-		}		 
+		}
+
+		_questInPlay = false;
+			 
 	}
 
 	//End Turn
@@ -159,10 +166,15 @@ public class Game : MonoBehaviour {
 	}
 
 	private bool sponsorPrompt(int playerId){
+		loadHand(playerId);
+		Debug.Log(playerId +" Do you want to sponsor");
 		return false;
 	}
 
 	private bool playPrompt(int playerId){
+		loadHand(playerId);
+		Debug.Log(playerId +" Do you want to play");
+
 		return false;
 	}
 
