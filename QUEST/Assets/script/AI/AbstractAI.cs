@@ -21,55 +21,40 @@ public class AbstractAI:Player{
 		_hand = new List<Card>();
 		_allies = new List<Card>(); 
     }
+    
     //Should The AI Participate in the Tournenment
-    public bool doIParticipateInTournament(List<Player> players,TournamentCard card){
+    public bool DoIParticipateInTournament(List<Player> players,TournamentCard card){
         bool participate = false;
+        bool aggro = false;
         int rankCounter = 0;
 
-        //If the Bots Rank is Greater Participate
-        for(int i = 0 ; i < players.Count ; i++){
-            if(players[i].rank < this._rank){
-                rankCounter++;
-                if(rankCounter > 2){
+        for (int i = 0 ; i < players.Count ;i++){ //
+            if(players[i].rank = 0){
+                if(players[i].shieldCounter > 3){
                     participate = true;
+                    aggro = true;
+                    break;
+                }
+            }
+            if(players[i].rank = 1){
+                if(players[i].shieldCounter > 5){
+                    participate = true;
+                    aggro = true;
+                    break;
+                }
+            }
+            if(players[i].rank = 2){
+                if(players[i].shieldCounter > 10){
+                    participate = true;
+                    aggro = true;
                     break;
                 }
             }
         }
-        //A player is about to win 
-        for(int i = 0 ; i <players.Count ; i++){    
-            if(players[i].rank == 2){
-                participate = true;
-                break;
-            }
-        }
-        //If shield counter is greater then 2 
-        if(card.shields > 2){
-            participate = true;
-        }
-        
-        if(participate){
-            //currBehaviour = ParticipateInTournament(_hand);
-        }
-        else{
-            //currBehaviour = Backout();
-        }
 
-        return(participate);
-    }
-
-    //Does the AI Sponsor The Quest
-    public bool doISponsorAQuest(QuestCard card){
-        bool participate = false;
-        
-        if((card.stages > 3) && (this._hand.Count > 10)){
-            participate = true;
-        }
-        if((card.stages > 2) && (this._hand.Count > 5) ){
-            participate = true;
-        }
-
-        if(participate){
+        if(participate && aggro){
+            //currBehaviour = SponsorQuest(_hand);
+        }if(participate && !aggro){
             //currBehaviour = SponsorQuest(_hand);
         }else{
             //currBehaviour = Backout();
@@ -77,12 +62,64 @@ public class AbstractAI:Player{
         return(participate);
     }
 
-    //Does AI Particatpe in the quest 
-    public bool doIParticipateInQuest(List<Player> players){
-        bool participate = false;
-        for(int i = 0 ; i < players.Count ; i++){
+    //Does AI Sponsor in the quest 
+    public bool DoISponsorAQuest(List<Player> players){
+        bool sponsor = true;
 
+        for (int i = 0 ; i < players.Count ;i++){ 
+            if(players[i].rank = 0){
+                if(players[i].shieldCounter > 3){
+                    sponsor = false ;
+                    break;
+                }
+            }
+            if(players[i].rank = 1){
+                if(players[i].shieldCounter > 5){
+                    sponsor = false;
+                    break;
+                }
+            }
+            if(players[i].rank = 2){
+                if(players[i].shieldCounter > 10){
+                    sponsor = false;
+                    break;
+                }
+            }
         }
+
+        if(sponsor){
+            //currBehaviour = ParticipateInQuest(_hand);
+        }
+        else{
+            //currBehaviour = Backout();
+        }
+        return(sponsor);
+    }
+
+    //Does AI Particatpe in the quest 
+    public bool doIParticipateInQuest(QuestCard quest){
+        bool participate = false;
+        int power = 0;  //Total Powers of Weapon
+        int numFoe = 0; //Valid Foes For Discard
+        
+        for(int i = 0 ; i < _hand.Count ; i++){
+            if(_hand[i].GetType() == typeof(WeaponCard)){
+                WeaponCard currWeapon = (WeaponCard)_hand[i];
+                power = currWeapon.power + power;
+            }  
+            if(_hand[i].GetType() == typeof(FoeCard)){
+                FoeCard currFoe = (FoeCard)_hand[i];
+                if (currFoe.loPower < 25){
+                    numFoe++;
+                }
+            }      
+        }
+
+        if(power/quest.stages > 10 && numFoe >= 2 ){
+            participate = true;
+        }
+        
+
         if(participate){
             //currBehaviour = ParticipateInQuest(_hand);
         }
