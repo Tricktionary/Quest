@@ -132,6 +132,23 @@ public class AbstractAI:Player{
     public bool nextBid(){  
         bool participate = false;
 
+        int handValue = 0;
+        for(int i = 0 ; i < _hand.Count; i++){
+            if(_hand[i].GetType() == typeof(FoeCard)){
+                FoeCard currFoe = (FoeCard)_hand[i];
+                if (currFoe.loPower < 25){
+                    handValue = handValue + currFoe.loPower;
+                }
+            }
+        }
+
+        if(handValue > 25){
+            participate = true;
+        }
         return(participate);
+    }
+
+    public bool discardAfterWinningTest(){
+        //Discard Foes less then 25
     }
 }
