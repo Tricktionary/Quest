@@ -26,6 +26,11 @@ public class Game : MonoBehaviour {
  
 	public GameObject playerIdTxt;							//Player Id
 	public GameObject shieldCounterTxt;						//Shield Counter
+
+	private CardArea _storyArea;
+	private CardArea _playArea;
+
+
 	private List<Player> _players = new List<Player>(); 	//List of players
 	private int _numPlayers;								//Number of players
 	private int _turnId; 									//Player ID of who's turn
@@ -33,17 +38,18 @@ public class Game : MonoBehaviour {
 	private Deck _storyDeck;
 	private Deck _discardPileAdventure;
 	private Deck _discardPileStory;
-	private CardArea _storyArea;
-	private CardArea _playArea;
+
+	//CURRENT TURN
 	private bool _running;
 	private bool _drawn;
 
-	private List<List<Card>> _Quest;
-	private int _questSponsor;
-	private List<int> _playersIn;
 	private bool _questInPlay;
+	private List<List<Card>> _Quest;
+	private int _sponsorId;
+	private int _questeeTurnId;
+	private List<int> _playersIn;
+	private string featFoe;  //Could be unused
 	private int numStages;
-	private string featFoe;
 
 	//if the user can end their turn
 	private bool _standardTurn;
@@ -80,13 +86,10 @@ public class Game : MonoBehaviour {
 			storyCard.transform.SetParent (drawCardArea.transform);
 			_drawn = true;
 
-
+			//THERE IS QUEST IN PLAY
 			if(_questInPlay == true){
 				QuestCard currQuest = (QuestCard)currCard;
 				numStages = currQuest.stages;
-				//Debug.Log(currQuest.name);
-				//Debug.Log(currQuest.stages);
-				//Debug.Log(currQuest.featuredFoe);
 
 				initQuest(_turnId, currQuest);		//Initialize Quest Should ALSO TAKE IN QUEST CARD
 			}
@@ -101,12 +104,31 @@ public class Game : MonoBehaviour {
         print(Time.time);
     }
 
+	//TODO: Check to make sure the play area is successfully filled
+	public bool checkQuest() {
+		return false ();
+	}
 
 	//Quest Initialization
 	public void initQuest(int currPlayer , QuestCard card){		
 		//Debug.Log("initiating quest");
-
-		sponsorPopup(currPlayer, sponsorOrNot); 
+		/*
+		 * CHANGE OF PLANS not needed here
+		bool sponsored = false;
+		for (int i = 0; i < _numPlayers; i++) {
+			if (sponsorPopup (currPlayer, sponsorOrNot)) {
+				_turnId = (_turnId+i) % _numPlayers;
+				createQuest();
+				sponsored = true;
+				break;
+			}
+		}
+		if (!sponsored) {
+			//No sponsor? end turn
+			_questInPlay = false;
+			return;
+		}
+		*/
 		//StartCoroutine(waitRoutine()); //curently keeps going even with the wait 
 		
 		//Debug.Log("sponsed value: " + sponsorOrNot);
@@ -188,25 +210,64 @@ public class Game : MonoBehaviour {
 	}
 
 	//End Turn
-	public void EndTurn(){
+	public void EndTurn() {
 		if (_canEnd) {
-			//Clear Old Hand
-			foreach (Transform child in Hand.transform) {	
-				GameObject.Destroy (child.gameObject);
-			}
 
-			_turnId++;
-			if (_turnId >= 3) {
-				_turnId = 0;
-			}
+			if (_questInPlay) {
+				if (_sponsorId) {
+					//TODO: Quest is already sponsored, move on to next player, if it is the last player then let the sponsor do any final actions
+					for (int i = 0; i < _playersIn.Count; i++) {
+						if (_playersIn [i] == _questeeTurnId) {
+							if (i == _playersIn.Count - 1) {
+								//TODO: SPONSOR'S TURN
+							} else {
+								_questeeTurnId = _playersIn [i + 1];
+							}
+							break;
+						}
+					}
 
-			loadHand(_turnId);
-			//Debug.Log("End Turn");
-			_drawn = false;
-			_canEnd = false;
+				} else {
+					//TODO: Check if quest pile is successfully filled and if it is then sponsor
+					//TODO: Set questeeId turn, run init quest code here
+					_questeeTurnId = (_sponsorId + 1) % _numPlayers;
+					loadHand(_questeeTurnId);
+					_drawn = true;
+					_canEnd = true;
+				}
+			} else {
+				//Clear Old Hand
+				foreach (Transform child in Hand.transform) {	
+					GameObject.Destroy (child.gameObject);
+				}
+
+				_turnId++;
+				if (_turnId >= 3) {
+					_turnId = 0;
+				}
+
+				loadHand(_turnId);
+				_drawn = false;
+				_canEnd = false;
+			}
+			StartTurn ();
 		}
 	}
 
+	//redundant function for now. We can use it to move code later from endTurn()
+	public void StartTurn() {
+		if (_questInPlay) {
+			if (_sponsorId) {
+				//TODO: Normal turn, remember to use _questeeId!
+			} else {
+				//TODO: RUN popup asking if you want to sponsor
+			}
+		} else {
+			
+		}
+	}
+		
+	//TODO: PHILIPPE: CONVERT these to simply a popup function that asks something and returns true for yes or false for no
 	//Load prompt popop
 	public bool sponsorPopup(int playerId, int sponsorOrNot){ //used to call sponsor prompt 
 		loadHand(playerId);
@@ -226,9 +287,6 @@ public class Game : MonoBehaviour {
 
 		if(sponsorOrNot == 1){ //using click bool value to know if quest was sponsored 
 			Debug.Log("Quest was sponsored");
-			_turnId = playerId;
-			Sponsor.SetActive(false);
-			createQuest();
 			return true;
 		}
 		else if(sponsorOrNot == 2){
