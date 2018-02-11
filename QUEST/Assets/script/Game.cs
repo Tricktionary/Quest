@@ -44,6 +44,7 @@ public class Game : MonoBehaviour {
 	private bool _drawn;
 
 	private bool _questInPlay;
+	private QuestCard _questCard;
 	private List<List<Card>> _Quest;
 	private int _sponsorId;
 	private int _questeeTurnId;
@@ -82,8 +83,8 @@ public class Game : MonoBehaviour {
 				storyCard = Instantiate (QuestCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
 				_questInPlay = true;
 				_canEnd = true;
-				QuestCard currQuest = (QuestCard)currCard;
-				numStages = currQuest.stages;
+				_questCard = (QuestCard)currCard;
+				numStages = _questCard.stages;
 
 				_playersIn = new List<int> ();
 				for (int i = 0; i < _numPlayers; i++) {
@@ -122,7 +123,7 @@ public class Game : MonoBehaviour {
 	}
 
 	//Quest Initialization
-	public void initQuest(int currPlayer , QuestCard card){		
+	public void initQuest(){		
 		//sponsorPopup(currPlayer, sponsorOrNot);  Don't have it here. code to actually set up the quest
 
 		_sponsorId = _turnId;
