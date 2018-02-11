@@ -508,7 +508,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!224 &407580260
 RectTransform:
@@ -802,7 +802,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!224 &767911022
 RectTransform:
@@ -1166,16 +1166,17 @@ MonoBehaviour:
   AllyCard: {fileID: 1097128100082594, guid: 52d4c5c17bf384c5fa0399609cfc88d2, type: 2}
   QuestCard: {fileID: 1251235100696200, guid: 9dcc0839dcfff4e018c3d4f3f62d4abe, type: 2}
   playArea: {fileID: 1814199544}
-  stage1: {fileID: 1710249156}
-  stage2: {fileID: 1494690799}
-  stage3: {fileID: 968365558}
-  stage4: {fileID: 767911021}
-  stage5: {fileID: 407580259}
+  Stage1: {fileID: 1710249156}
+  Stage2: {fileID: 1494690799}
+  Stage3: {fileID: 968365558}
+  Stage4: {fileID: 767911021}
+  Stage5: {fileID: 407580259}
   Sponsor: {fileID: 476693332}
   drawCardArea: {fileID: 402292197}
   Hand: {fileID: 1004303694}
   playerIdTxt: {fileID: 1465051566}
   shieldCounterTxt: {fileID: 1762925163}
+  sponsorOrNot: 0
 --- !u!1 &968365558
 GameObject:
   m_ObjectHideFlags: 0
@@ -1212,7 +1213,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -70.5, y: 97.4}
+  m_AnchoredPosition: {x: 40.8909, y: 97.4}
   m_SizeDelta: {x: -678.41, y: -381.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &968365560
@@ -1760,7 +1761,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 54.4, y: 97.399994}
+  m_AnchoredPosition: {x: -79.92012, y: 97.399956}
   m_SizeDelta: {x: -680.84, y: -381.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1494690801
