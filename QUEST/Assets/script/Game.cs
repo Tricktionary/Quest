@@ -13,11 +13,13 @@ public class Game : MonoBehaviour {
 
 	public GameObject playArea;								//Play Zone
 	
-	public GameObject stage1;							    //Stage1 of quest
-	public GameObject stage2;
-	public GameObject stage3;
-	public GameObject stage4;
-	public GameObject stage5;
+	public GameObject Stage1;							    //Stage1 of quest
+	public GameObject Stage2;
+	public GameObject Stage3;
+	public GameObject Stage4;
+	public GameObject Stage5;
+
+	public GameObject Sponsor;
 
 	public GameObject drawCardArea;							//DrawCardArea
 	public GameObject Hand; 								//Play Area Hand Reference
@@ -40,10 +42,13 @@ public class Game : MonoBehaviour {
 	private int _questSponsor;
 	private List<int> _playersIn;
 	private bool _questInPlay;
+	private int numStages;
+	private string featFoe;
 
 	//if the user can end their turn
 	private bool _standardTurn;
 	private bool _canEnd;
+	public int sponsorOrNot; //used in the sponsor click function 
 
 	
 
@@ -78,23 +83,40 @@ public class Game : MonoBehaviour {
 
 			if(_questInPlay == true){
 				QuestCard currQuest = (QuestCard)currCard;
-				
-				//initQuest(_turnId, currQuest);		//Initialize Quest Should ALSO TAKE IN QUEST CARD
+				numStages = currQuest.stages;
+				//Debug.Log(currQuest.name);
+				//Debug.Log(currQuest.stages);
+				//Debug.Log(currQuest.featuredFoe);
+
+				initQuest(_turnId, currQuest);		//Initialize Quest Should ALSO TAKE IN QUEST CARD
 			}
 
 			//Check What card i have drawn and initialize a quest
-			//debugPrint();
+		
 		}
 	}
 	
+	IEnumerator waitRoutine() {
+        yield return new WaitForSeconds(10);
+        print(Time.time);
+    }
+
 
 	//Quest Initialization
-	private void initQuest(int currPlayer , QuestCard card){		
-		bool sponsor = sponsorPrompt(currPlayer); 
+	public void initQuest(int currPlayer , QuestCard card){		
+		//Debug.Log("initiating quest");
 
-		currPlayer++;
+		sponsorPopup(currPlayer, sponsorOrNot); 
+		//StartCoroutine(waitRoutine()); //curently keeps going even with the wait 
+		
+		//Debug.Log("sponsed value: " + sponsorOrNot);
+		
+
+		//currPlayer++;
+		/*
 		while(sponsor == false){				//Find Sponsor
 			if(currPlayer == _turnId){			//We asked all the players so break
+
 				break;
 			}
 			if (currPlayer >= 3) {		
@@ -115,8 +137,36 @@ public class Game : MonoBehaviour {
 			if(_playersIn.Count == 0){	//If no one joins end quest
 				_questInPlay = false;
 			}
-
 			else{
+				
+				featFoe = card.featuredFoe;
+				Debug.Log(numStages);
+				List<Card> cardStage1 = stage1.GetComponent<CardArea>().cards;
+				List<Card> cardStage2 = stage1.GetComponent<CardArea>().cards;
+				List<Card> cardStage3 = stage1.GetComponent<CardArea>().cards;
+				List<Card> cardStage4 = stage1.GetComponent<CardArea>().cards;
+				List<Card> cardStage5 = stage1.GetComponent<CardArea>().cards;
+
+				for(var x=0; x<cardStage1.Count; x++){
+					Debug.Log(cardStage1.Count);
+				}
+
+				if(numStages == 4){
+					stage5.SetActive(false);
+				}
+				else if(numStages == 3){
+					stage4.SetActive(false);
+					stage5.SetActive(false);
+				}
+				else if(numStages == 2){
+					stage3.SetActive(false);
+					stage4.SetActive(false);
+					stage5.SetActive(false);
+				}
+				
+
+
+
 			//FOR REFERENCE:
 				//Sprite card = Resources.Load<Sprite> ("/card_image/special/specialCard7"); //Load card image(CAN BE BACK OF CARD)
 				//List<Card> cardStage1 = stage1.GetComponent<CardArea>().cards;
@@ -133,7 +183,8 @@ public class Game : MonoBehaviour {
 				//Pay Players Shields
 			}			 
 		}
-		_questInPlay = false; 
+		*/
+		//_questInPlay = false; 
 	}
 
 	//End Turn
@@ -156,24 +207,81 @@ public class Game : MonoBehaviour {
 		}
 	}
 
-	//Prompt Sponsor
-	private bool sponsorPrompt(int playerId){
+	//Load prompt popop
+	public bool sponsorPopup(int playerId, int sponsorOrNot){ //used to call sponsor prompt 
 		loadHand(playerId);
 		Debug.Log(playerId +" Do you want to sponsor");
-		return false;
+		Debug.Log("sponsorOrnot " + sponsorOrNot);
+		Sponsor.SetActive(true); //sponsor prompt begins as hidden until set Active when quest card appears 
+		//yield return StartCoroutine(WaitAndPrint(2.0F));
+		return sponsorPrompt(playerId);
 	}
 
+	
+	//Prompt Sponsor
+	public bool sponsorPrompt(int playerId){
+		
+		//Debug.Log(playerId +" Inside sponsorPrompt");
+		//Sponsor.SetActive(true); //sponsor prompt begins as hidden until set Active when quest card appears
+
+		if(sponsorOrNot == 1){ //using click bool value to know if quest was sponsored 
+			Debug.Log("Quest was sponsored");
+			_turnId = playerId;
+			Sponsor.SetActive(false);
+			createQuest();
+			return true;
+		}
+		else if(sponsorOrNot == 2){
+			Debug.Log("Quest was not sponsored");
+			return false;
+
+		}
+		else{
+			return false;
+		}
+		
+	}
+
+	public void createQuest(){
+		_questSponsor = _turnId;
+		Debug.Log("numStages " + numStages);
+		if(numStages == 4){ //alters board based on number of stages of the quest
+			Debug.Log("making inactive");
+			Stage5.SetActive(false);
+		}
+		else if(numStages == 3){
+			Debug.Log("making inactive");
+			Stage4.SetActive(false);
+			Stage5.SetActive(false);
+		}
+		else if(numStages == 2){
+			Debug.Log("making inactive");
+			Stage3.SetActive(false);
+			Stage4.SetActive(false);
+			Stage5.SetActive(false);
+		}
+		List<Card> cardStage1 = Stage1.GetComponent<CardArea>().cards;
+
+
+
+
+	}
+
+	
+	/*
 	private bool playPrompt(int playerId){
 		loadHand(playerId);
-		Debug.Log(playerId +" Do you want to play");
+		//Debug.Log(playerId +" Do you want to play");
 
 		return false;
 	}
+	
 
 	private void acceptSponsor() {
 		_questSponsor = _turnId;
 		_canEnd = false;
 	}
+	*/
 
 	// Use this for initialization
 	void Awake() {
@@ -287,6 +395,19 @@ public class Game : MonoBehaviour {
 				Debug.Log(_players[i].hand[x].ToString());
 			}
 		}	
+	}
+
+	public void YesButton_Click(){
+		Debug.Log("clicked the Yes button");
+		sponsorOrNot = 1;
+		sponsorPopup(_turnId, sponsorOrNot);
+			
+	}
+
+	public void NoButton_Click(){
+		Debug.Log("clicked the No button");
+		sponsorOrNot = 2;
+		sponsorPopup(_turnId, sponsorOrNot);
 	}
 		
 	// Update is called once per frame
