@@ -112,7 +112,7 @@ public class Game : MonoBehaviour {
 
 	//Quest Initialization
 	public void initQuest(int currPlayer , QuestCard card){		
-		sponsorPopup(currPlayer, sponsorOrNot);
+		sponsorPopup(currPlayer, sponsorOrNot); 
 	}
 
 	//End Turn
@@ -177,25 +177,26 @@ public class Game : MonoBehaviour {
 		
 	//TODO: PHILIPPE: CONVERT these to simply a popup function that asks something and returns true for yes or false for no
 	//Load prompt popop
-	public bool sponsorPopup(int playerId, int sponsorOrNot){ //used to call sponsor prompt 
-		loadHand(playerId);
-		//Debug.Log(playerId +" Do you want to sponsor");
+	public void sponsorPopup(int playerId, int sponsorOrNot){ //used to call sponsor prompt 
 		Debug.Log("sponsorOrnot " + sponsorOrNot);
 		Sponsor.SetActive(true); //sponsor prompt begins as hidden until set Active when quest card appears 
-		//yield return StartCoroutine(WaitAndPrint(2.0F));
-		return sponsorPrompt(playerId);
+		//return sponsorPrompt(playerId);
 	}
 
 	
 	//Prompt Sponsor
 	public bool sponsorPrompt(int playerId){
-		if(sponsorOrNot == 1){ //using click bool value to know if quest was sponsored 
+		//using sponsorOrNot to check if quest was sponsored because when using bool 
+		//would start as false and break out of if statement before user could click yes/no
+		if(sponsorOrNot == 1){
 			Debug.Log("Quest was sponsored");
 			Sponsor.SetActive(false);
 			createQuest();
 			return true;
 		}
 		else if(sponsorOrNot == 2){
+			 //should redo the sponsor prompt process with the next user ID
+			 //until someone has accepted or all users have said no, yet to be implemented  
 			Debug.Log("Quest was not sponsored");
 			return false;
 
@@ -206,10 +207,11 @@ public class Game : MonoBehaviour {
 		
 	}
 
+	//changes the number of stages based on numStages on the quest card
 	public void createQuest(){
 		_questSponsor = _turnId;
 		Debug.Log("numStages " + numStages);
-		if(numStages == 4){ //alters board based on number of stages of the quest
+		if(numStages == 4){ 
 			Debug.Log("making inactive");
 			Stage5.SetActive(false);
 		}
@@ -340,18 +342,19 @@ public class Game : MonoBehaviour {
 			}
 		}	
 	}
-
+	//click function that changed the value of sponsorOrNot 
+	//and calls the sponsorPrompt function which closes the prompt window and calls createQuest
 	public void YesButton_Click(){
 		Debug.Log("clicked the Yes button");
 		sponsorOrNot = 1;
-		sponsorPopup(_turnId, sponsorOrNot);
+		sponsorPrompt(_turnId);
 			
 	}
-
+	//click function that changed the value of sponsorOrNot 
 	public void NoButton_Click(){
 		Debug.Log("clicked the No button");
 		sponsorOrNot = 2;
-		sponsorPopup(_turnId, sponsorOrNot);
+		sponsorPrompt(_turnId);
 	}
 		
 	// Update is called once per frame
