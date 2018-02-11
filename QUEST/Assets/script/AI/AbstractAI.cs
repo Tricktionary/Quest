@@ -29,21 +29,21 @@ public class AbstractAI:Player{
         int rankCounter = 0;
 
         for (int i = 0 ; i < players.Count ;i++){ //
-            if(players[i].rank = 0){
+            if(players[i].rank == 0){
                 if(players[i].shieldCounter > 3){
                     participate = true;
                     aggro = true;
                     break;
                 }
             }
-            if(players[i].rank = 1){
+            if(players[i].rank == 1){
                 if(players[i].shieldCounter > 5){
                     participate = true;
                     aggro = true;
                     break;
                 }
             }
-            if(players[i].rank = 2){
+            if(players[i].rank == 2){
                 if(players[i].shieldCounter > 10){
                     participate = true;
                     aggro = true;
@@ -67,19 +67,19 @@ public class AbstractAI:Player{
         bool sponsor = true;
 
         for (int i = 0 ; i < players.Count ;i++){ 
-            if(players[i].rank = 0){
+            if(players[i].rank == 0){
                 if(players[i].shieldCounter > 3){
                     sponsor = false ;
                     break;
                 }
             }
-            if(players[i].rank = 1){
+            if(players[i].rank == 1){
                 if(players[i].shieldCounter > 5){
                     sponsor = false;
                     break;
                 }
             }
-            if(players[i].rank = 2){
+            if(players[i].rank == 2){
                 if(players[i].shieldCounter > 10){
                     sponsor = false;
                     break;
@@ -150,5 +150,6 @@ public class AbstractAI:Player{
 
     public bool discardAfterWinningTest(){
         //Discard Foes less then 25
+		return false;
     }
 }
