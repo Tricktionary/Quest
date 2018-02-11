@@ -50,6 +50,7 @@ public class Game : MonoBehaviour {
 	private List<int> _playersIn;
 	private string featFoe;  //Could be unused
 	private int numStages;
+	private int _questSponsor;	
 
 	//if the user can end their turn
 	private bool _standardTurn;
@@ -106,107 +107,12 @@ public class Game : MonoBehaviour {
 
 	//TODO: Check to make sure the play area is successfully filled
 	public bool checkQuest() {
-		return false ();
+		return false;
 	}
 
 	//Quest Initialization
 	public void initQuest(int currPlayer , QuestCard card){		
-		//Debug.Log("initiating quest");
-		/*
-		 * CHANGE OF PLANS not needed here
-		bool sponsored = false;
-		for (int i = 0; i < _numPlayers; i++) {
-			if (sponsorPopup (currPlayer, sponsorOrNot)) {
-				_turnId = (_turnId+i) % _numPlayers;
-				createQuest();
-				sponsored = true;
-				break;
-			}
-		}
-		if (!sponsored) {
-			//No sponsor? end turn
-			_questInPlay = false;
-			return;
-		}
-		*/
-		//StartCoroutine(waitRoutine()); //curently keeps going even with the wait 
-		
-		//Debug.Log("sponsed value: " + sponsorOrNot);
-		
-
-		//currPlayer++;
-		/*
-		while(sponsor == false){				//Find Sponsor
-			if(currPlayer == _turnId){			//We asked all the players so break
-
-				break;
-			}
-			if (currPlayer >= 3) {		
-				currPlayer = 0;					//Reset asking because maybe we started at the end 
-			}
-			sponsor = sponsorPrompt(currPlayer);
-		}
-
-		if(sponsor == true){					//Someone has sponsored so we must ask if people want to play
-			_questSponsor = currPlayer;			//Quest Sponsor is the current player
-			for(var i = 0 ; i < _numPlayers ; i++){	
-				if(i != _questSponsor){			//Skip quest sponsor
-					if(playPrompt(i)){			//Ask them and add them to players in this quest
-						_playersIn.Add(i);
-					}
-				}
-			}
-			if(_playersIn.Count == 0){	//If no one joins end quest
-				_questInPlay = false;
-			}
-			else{
-				
-				featFoe = card.featuredFoe;
-				Debug.Log(numStages);
-				List<Card> cardStage1 = stage1.GetComponent<CardArea>().cards;
-				List<Card> cardStage2 = stage1.GetComponent<CardArea>().cards;
-				List<Card> cardStage3 = stage1.GetComponent<CardArea>().cards;
-				List<Card> cardStage4 = stage1.GetComponent<CardArea>().cards;
-				List<Card> cardStage5 = stage1.GetComponent<CardArea>().cards;
-
-				for(var x=0; x<cardStage1.Count; x++){
-					Debug.Log(cardStage1.Count);
-				}
-
-				if(numStages == 4){
-					stage5.SetActive(false);
-				}
-				else if(numStages == 3){
-					stage4.SetActive(false);
-					stage5.SetActive(false);
-				}
-				else if(numStages == 2){
-					stage3.SetActive(false);
-					stage4.SetActive(false);
-					stage5.SetActive(false);
-				}
-				
-
-
-
-			//FOR REFERENCE:
-				//Sprite card = Resources.Load<Sprite> ("/card_image/special/specialCard7"); //Load card image(CAN BE BACK OF CARD)
-				//List<Card> cardStage1 = stage1.GetComponent<CardArea>().cards;
-				
-
-				//Quest Loop
-					//Quest Creation
-					//Ready Up players 
-					//Survive?
-						//Removed Used Wepons 
-						//Ready Up
-						//(Maybe give players more weapon)
-				//Pay Sponsor in cards
-				//Pay Players Shields
-			}			 
-		}
-		*/
-		//_questInPlay = false; 
+		sponsorPopup(currPlayer, sponsorOrNot);
 	}
 
 	//End Turn
@@ -214,7 +120,7 @@ public class Game : MonoBehaviour {
 		if (_canEnd) {
 
 			if (_questInPlay) {
-				if (_sponsorId) {
+				if (_sponsorId >= 0) {
 					//TODO: Quest is already sponsored, move on to next player, if it is the last player then let the sponsor do any final actions
 					for (int i = 0; i < _playersIn.Count; i++) {
 						if (_playersIn [i] == _questeeTurnId) {
@@ -255,9 +161,10 @@ public class Game : MonoBehaviour {
 	}
 
 	//redundant function for now. We can use it to move code later from endTurn()
+	
 	public void StartTurn() {
 		if (_questInPlay) {
-			if (_sponsorId) {
+			if (_sponsorId >= 0) { //was if (_sponsorId) changed to (_sponsorId >= 0) because was giving error
 				//TODO: Normal turn, remember to use _questeeId!
 			} else {
 				//TODO: RUN popup asking if you want to sponsor
@@ -266,12 +173,13 @@ public class Game : MonoBehaviour {
 			
 		}
 	}
+	
 		
 	//TODO: PHILIPPE: CONVERT these to simply a popup function that asks something and returns true for yes or false for no
 	//Load prompt popop
 	public bool sponsorPopup(int playerId, int sponsorOrNot){ //used to call sponsor prompt 
 		loadHand(playerId);
-		Debug.Log(playerId +" Do you want to sponsor");
+		//Debug.Log(playerId +" Do you want to sponsor");
 		Debug.Log("sponsorOrnot " + sponsorOrNot);
 		Sponsor.SetActive(true); //sponsor prompt begins as hidden until set Active when quest card appears 
 		//yield return StartCoroutine(WaitAndPrint(2.0F));
@@ -281,12 +189,10 @@ public class Game : MonoBehaviour {
 	
 	//Prompt Sponsor
 	public bool sponsorPrompt(int playerId){
-		
-		//Debug.Log(playerId +" Inside sponsorPrompt");
-		//Sponsor.SetActive(true); //sponsor prompt begins as hidden until set Active when quest card appears
-
 		if(sponsorOrNot == 1){ //using click bool value to know if quest was sponsored 
 			Debug.Log("Quest was sponsored");
+			Sponsor.SetActive(false);
+			createQuest();
 			return true;
 		}
 		else if(sponsorOrNot == 2){
@@ -318,28 +224,8 @@ public class Game : MonoBehaviour {
 			Stage4.SetActive(false);
 			Stage5.SetActive(false);
 		}
-		List<Card> cardStage1 = Stage1.GetComponent<CardArea>().cards;
-
-
-
 
 	}
-
-	
-	/*
-	private bool playPrompt(int playerId){
-		loadHand(playerId);
-		//Debug.Log(playerId +" Do you want to play");
-
-		return false;
-	}
-	
-
-	private void acceptSponsor() {
-		_questSponsor = _turnId;
-		_canEnd = false;
-	}
-	*/
 
 	// Use this for initialization
 	void Awake() {
