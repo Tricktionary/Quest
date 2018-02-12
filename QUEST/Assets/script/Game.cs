@@ -114,19 +114,19 @@ public class Game : MonoBehaviour {
 			currCard = currStage[i];
 
 			if(currCard.GetType() == typeof(WeaponCard)){
-
+				
 			}
 			if(currCard.GetType() == typeof(FoeCard)){
 
 			}
-
 		}
+
 		if(foeCount > 1 || foeCount <= 0){
 			return false;
 		}
 		return false;
 	}
-	
+
 	public bool checkQuest() {
 		if(numStages == 5){
 			List<Card> currStageCard5 = Stage5.GetComponent<CardArea>().cards;
