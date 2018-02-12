@@ -44,10 +44,11 @@ public class Game : MonoBehaviour {
 	private bool _drawn;
 
 	private bool _questInPlay;
+	private QuestCard _questCard;
 	private List<List<Card>> _Quest;
 	private int _sponsorId;
 	private int _questeeTurnId;
-	private List<int> _playersIn;
+	private List<int> _playersIn; //We are using this to store questees in the quest and before the quest is sponsored, who is next to decide to sponsor
 	private string featFoe;  //Could be unused
 	private int numStages;
 	private int _questSponsor;	
@@ -55,7 +56,7 @@ public class Game : MonoBehaviour {
 	//if the user can end their turn
 	private bool _standardTurn;
 	private bool _canEnd;
-	public int sponsorOrNot; //used in the sponsor click function 
+	public int sponsorOrNot; //used in the sponsor click function Dont think we need this, popup just have to return true or false
 
 	
 
@@ -81,20 +82,31 @@ public class Game : MonoBehaviour {
 			if (currCard.GetType () == typeof(QuestCard)){	//Instantiate Quest Card Prefab
 				storyCard = Instantiate (QuestCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
 				_questInPlay = true;
+				_canEnd = true;
+				_questCard = (QuestCard)currCard;
+				numStages = _questCard.stages;
+
+				_playersIn = new List<int> ();
+				for (int i = 0; i < _numPlayers; i++) {
+					//all questees in
+					_playersIn.Add ((_turnId + i) % _numPlayers);
+				}
 			}
 
 			storyCard.gameObject.GetComponent<Image> ().sprite = card;
 			storyCard.transform.SetParent (drawCardArea.transform);
 			_drawn = true;
 
+
 			//THERE IS QUEST IN PLAY
+			/*
 			if(_questInPlay == true){
 				QuestCard currQuest = (QuestCard)currCard;
 				numStages = currQuest.stages;
 
-				initQuest(_turnId, currQuest);		//Initialize Quest Should ALSO TAKE IN QUEST CARD
+				//initQuest(_turnId, currQuest);		//Initialize Quest Should ALSO TAKE IN QUEST CARD
 			}
-
+			*/
 			//Check What card i have drawn and initialize a quest
 		
 		}
@@ -111,14 +123,21 @@ public class Game : MonoBehaviour {
 	}
 
 	//Quest Initialization
-	public void initQuest(int currPlayer , QuestCard card){		
-		sponsorPopup(currPlayer, sponsorOrNot); 
+	public void initQuest(){		
+		//sponsorPopup(currPlayer, sponsorOrNot);  Don't have it here. code to actually set up the quest
+
+		_sponsorId = _turnId;
+		_playersIn = new List<int> ();
+		for (int i = 1; i < _numPlayers; i++) {
+			//all questees in
+			_playersIn.Add ((_sponsorId + i) % _numPlayers);
+		}
+		_questeeTurnId = _playersIn[0];
 	}
 
 	//End Turn
 	public void EndTurn() {
 		if (_canEnd) {
-
 			if (_questInPlay) {
 				if (_sponsorId >= 0) {
 					//TODO: Quest is already sponsored, move on to next player, if it is the last player then let the sponsor do any final actions
@@ -136,8 +155,14 @@ public class Game : MonoBehaviour {
 				} else {
 					//TODO: Check if quest pile is successfully filled and if it is then sponsor
 					//TODO: Set questeeId turn, run init quest code here
-					_questeeTurnId = (_sponsorId + 1) % _numPlayers;
-					loadHand(_questeeTurnId);
+					if (checkQuest ()) {
+						initQuest ();
+						loadHand (_questeeTurnId);
+					} else {
+						//TODO: Prompt here. if no then:
+						//remove [0] from _playersIn
+						//load _player[0] (the next player's hand
+					}
 					_drawn = true;
 					_canEnd = true;
 				}
@@ -250,6 +275,9 @@ public class Game : MonoBehaviour {
 		_canEnd = true;
 		_questInPlay = false;
 
+		_sponsorId = -1;
+		_questeeTurnId = -1;
+
 		//Populates Player Hands
 		for(int i = 0; i < _players.Count ; i++){
 			for(int x = 0 ; x < 12 ; x++){
@@ -257,7 +285,6 @@ public class Game : MonoBehaviour {
 			}
 		}
 		loadHand(_turnId);
-		//debugPrint(); 
 	}
 	
 	//Input : Integer Player Id
