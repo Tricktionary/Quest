@@ -105,65 +105,96 @@ public class Game : MonoBehaviour {
 	
 
 	//TODO: Check to make sure the play area is successfully filled
-	public bool stageValid(List<Card> currStage){
+	public int stageValid(List<Card> currStage){
 		bool check = false;
 		int foeCount = 0; 
 		Card currCard = null;
+		int power = 0;
+		List<WeaponCard> weapons = new List<WeaponCard>();
 
 		for(int i = 0 ; i < currStage.Count ; i++) {
 			currCard = currStage[i];
-
 			if(currCard.GetType() == typeof(WeaponCard)){
-				
+				WeaponCard currWeapon = (WeaponCard)currCard;	
+				for(int x = 0 ; x < weapons.Count; x++){	//Duplicate Weapons Logic
+					if(currWeapon.name == weapons[i].name){
+						return -1;
+					}
+				}
+				weapons.Add(currWeapon);
+				power = power + currWeapon.power;
+
 			}
 			if(currCard.GetType() == typeof(FoeCard)){
-
+				FoeCard currFoe = (FoeCard)currCard;
+				if(_questCard.featuredFoe == currFoe.name){	//Feature Foe Logic 
+					power = power + currFoe.hiPower;
+				}
+				else{
+					power = power + currFoe.loPower;
+				}
+				foeCount++;
+			}
+			else{ 			//Not Valid if you use anything other than weapons and foes (FOR NOW)
+				return -1;   
 			}
 		}
-
 		if(foeCount > 1 || foeCount <= 0){
-			return false;
+			return -1;
 		}
-		return false;
+		return power;
 	}
 
-	public bool checkQuest() {
-		if(numStages == 5){
-			List<Card> currStageCard5 = Stage5.GetComponent<CardArea>().cards;
-			List<Card> currStageCard4 = Stage4.GetComponent<CardArea>().cards;
-			List<Card> currStageCard3 = Stage3.GetComponent<CardArea>().cards;
-			List<Card> currStageCard2 = Stage2.GetComponent<CardArea>().cards;
-			List<Card> currStageCard1 = Stage1.GetComponent<CardArea>().cards;
 
-			int[] powerValues = new int[5];
+	public bool checkQuest() {
+		List<List<Card>> allStages = new List<List<Card>>();
+		List<int> powerLevels = new List<int>();
+
+		int currPower = 0;
+		if(numStages == 5){
+			allStages.Add(Stage1.GetComponent<CardArea>().cards);
+			allStages.Add(Stage2.GetComponent<CardArea>().cards);
+			allStages.Add(Stage3.GetComponent<CardArea>().cards);
+			allStages.Add(Stage4.GetComponent<CardArea>().cards);
+			allStages.Add(Stage5.GetComponent<CardArea>().cards);
+			
 		}
 		if(numStages == 4){
-			List<Card> currStageCard4;
-			List<Card> currStageCard3;
-			List<Card> currStageCard2;
-			List<Card> currStageCard1;
-			int[] powerValues = new int[4];
-
+			allStages.Add(Stage1.GetComponent<CardArea>().cards);
+			allStages.Add(Stage2.GetComponent<CardArea>().cards);
+			allStages.Add(Stage3.GetComponent<CardArea>().cards);
+			allStages.Add(Stage4.GetComponent<CardArea>().cards);
 		}
 		if(numStages == 3){
-			List<Card> currStageCard3;
-			List<Card> currStageCard2;
-			List<Card> currStageCard1;
-			int[] powerValues = new int[3];
-
+			allStages.Add(Stage1.GetComponent<CardArea>().cards);
+			allStages.Add(Stage2.GetComponent<CardArea>().cards);
+			allStages.Add(Stage3.GetComponent<CardArea>().cards);
 		}
 		if(numStages == 2){
-			List<Card> currStageCard2;
-			List<Card> currStageCard1;
-			int[] powerValues = new int[2];
+			allStages.Add(Stage1.GetComponent<CardArea>().cards);
+			allStages.Add(Stage2.GetComponent<CardArea>().cards);
 		}
 		if(numStages == 1){
-			List<Card> currStageCard1;
-			int[] powerValues = new int[1];
-			 
+			allStages.Add(Stage1.GetComponent<CardArea>().cards); 
 		}
 
-		return false;
+		for(int i = 0 ; i < allStages.Count ; i++){
+			currPower = stageValid(allStages[i]);
+			if(currPower == -1){
+				return false;
+			}
+			else{
+				powerLevels.Add(currPower);
+			}
+		}
+		//Check Ascending Power Level
+		for(int i = 0 ; i < powerLevels.Count ; i++){
+			Debug.Log(powerLevels[i]);
+			if(powerLevels[i] > powerLevels[i+1]){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	//Quest Initialization
