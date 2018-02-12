@@ -19,7 +19,8 @@ public class Game : MonoBehaviour {
 	public GameObject Stage4;
 	public GameObject Stage5;
 
-	public GameObject Sponsor;
+	public GameObject Prompt;								//Prompter
+	public GameObject promptTxt;
 
 	public GameObject drawCardArea;							//DrawCardArea
 	public GameObject Hand; 								//Play Area Hand Reference
@@ -51,11 +52,13 @@ public class Game : MonoBehaviour {
 	private List<int> _playersIn; //We are using this to store questees in the quest and before the quest is sponsored, who is next to decide to sponsor
 	private string featFoe;  //Could be unused
 	private int numStages;
-	private int _questSponsor;	
+	private int _questSponsor;		//Quest Sponsor	
 
 	//if the user can end their turn
 	private bool _standardTurn;
 	private bool _canEnd;
+
+	public int promptAnswer;
 	public int sponsorOrNot; //used in the sponsor click function Dont think we need this, popup just have to return true or false
 
 	
@@ -80,11 +83,11 @@ public class Game : MonoBehaviour {
 			GameObject storyCard = null;
 
 			if (currCard.GetType () == typeof(QuestCard)){	//Instantiate Quest Card Prefab
-				storyCard = Instantiate (QuestCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
+				storyCard = Instantiate (QuestCard);
 				_questInPlay = true;
 				_canEnd = true;
 				_questCard = (QuestCard)currCard;
-				numStages = _questCard.stages;
+				numStages = _questCard.stages;				//Stages of the Quest
 
 				_playersIn = new List<int> ();
 				for (int i = 0; i < _numPlayers; i++) {
@@ -93,39 +96,79 @@ public class Game : MonoBehaviour {
 				}
 			}
 
-			storyCard.gameObject.GetComponent<Image> ().sprite = card;
+			storyCard.gameObject.GetComponent<Image>().sprite = card;
 			storyCard.transform.SetParent (drawCardArea.transform);
 			_drawn = true;
-
-
-			//THERE IS QUEST IN PLAY
-			/*
-			if(_questInPlay == true){
-				QuestCard currQuest = (QuestCard)currCard;
-				numStages = currQuest.stages;
-
-				//initQuest(_turnId, currQuest);		//Initialize Quest Should ALSO TAKE IN QUEST CARD
-			}
-			*/
-			//Check What card i have drawn and initialize a quest
 		
 		}
 	}
 	
-	IEnumerator waitRoutine() {
-        yield return new WaitForSeconds(10);
-        print(Time.time);
-    }
 
 	//TODO: Check to make sure the play area is successfully filled
+	public bool stageValid(List<Card> currStage){
+		bool check = false;
+		int foeCount = 0; 
+		Card currCard = null;
+
+		for(int i = 0 ; i < currStage.Count ; i++) {
+			currCard = currStage[i];
+
+			if(currCard.GetType() == typeof(WeaponCard)){
+
+			}
+			if(currCard.GetType() == typeof(FoeCard)){
+
+			}
+
+		}
+		if(foeCount > 1 || foeCount <= 0){
+			return false;
+		}
+		return false;
+	}
+	
 	public bool checkQuest() {
+		if(numStages == 5){
+			List<Card> currStageCard5 = Stage5.GetComponent<CardArea>().cards;
+			List<Card> currStageCard4 = Stage4.GetComponent<CardArea>().cards;
+			List<Card> currStageCard3 = Stage3.GetComponent<CardArea>().cards;
+			List<Card> currStageCard2 = Stage2.GetComponent<CardArea>().cards;
+			List<Card> currStageCard1 = Stage1.GetComponent<CardArea>().cards;
+
+			int[] powerValues = new int[5];
+		}
+		if(numStages == 4){
+			List<Card> currStageCard4;
+			List<Card> currStageCard3;
+			List<Card> currStageCard2;
+			List<Card> currStageCard1;
+			int[] powerValues = new int[4];
+
+		}
+		if(numStages == 3){
+			List<Card> currStageCard3;
+			List<Card> currStageCard2;
+			List<Card> currStageCard1;
+			int[] powerValues = new int[3];
+
+		}
+		if(numStages == 2){
+			List<Card> currStageCard2;
+			List<Card> currStageCard1;
+			int[] powerValues = new int[2];
+		}
+		if(numStages == 1){
+			List<Card> currStageCard1;
+			int[] powerValues = new int[1];
+			 
+		}
+
 		return false;
 	}
 
 	//Quest Initialization
 	public void initQuest(){		
-		//sponsorPopup(currPlayer, sponsorOrNot);  Don't have it here. code to actually set up the quest
-
+		//sponsorPopup(currPlayer, sponsorOrNot);  //Don't have it here. code to actually set up the quest
 		_sponsorId = _turnId;
 		_playersIn = new List<int> ();
 		for (int i = 1; i < _numPlayers; i++) {
@@ -154,6 +197,7 @@ public class Game : MonoBehaviour {
 
 				} else {
 					//TODO: Check if quest pile is successfully filled and if it is then sponsor
+
 					//TODO: Set questeeId turn, run init quest code here
 					if (checkQuest ()) {
 						initQuest ();
@@ -186,72 +230,61 @@ public class Game : MonoBehaviour {
 	}
 
 	//redundant function for now. We can use it to move code later from endTurn()
-	
 	public void StartTurn() {
 		if (_questInPlay) {
 			if (_sponsorId >= 0) { //was if (_sponsorId) changed to (_sponsorId >= 0) because was giving error
 				//TODO: Normal turn, remember to use _questeeId!
 			} else {
 				//TODO: RUN popup asking if you want to sponsor
+				prompt(_turnId, "sponsor");
 			}
 		} else {
 			
 		}
 	}
-	
-		
-	//TODO: PHILIPPE: CONVERT these to simply a popup function that asks something and returns true for yes or false for no
-	//Load prompt popop
-	public void sponsorPopup(int playerId, int sponsorOrNot){ //used to call sponsor prompt 
-		Debug.Log("sponsorOrnot " + sponsorOrNot);
-		Sponsor.SetActive(true); //sponsor prompt begins as hidden until set Active when quest card appears 
-		//return sponsorPrompt(playerId);
+
+	//Prompt User
+	public void prompt(int turnId, string messageType){
+		if(messageType == "sponsor"){
+			Prompt.SetActive(true);
+			promptTxt.GetComponent<UnityEngine.UI.Text>().text = "Do You Want To Sponsor This Quest";
+		}
 	}
 
-	
-	//Prompt Sponsor
-	public bool sponsorPrompt(int playerId){
-		//using sponsorOrNot to check if quest was sponsored because when using bool 
-		//would start as false and break out of if statement before user could click yes/no
-		if(sponsorOrNot == 1){
-			Debug.Log("Quest was sponsored");
-			Sponsor.SetActive(false);
-			createQuest();
-			return true;
-		}
-		else if(sponsorOrNot == 2){
-			 //should redo the sponsor prompt process with the next user ID
-			 //until someone has accepted or all users have said no, yet to be implemented  
-			Debug.Log("Quest was not sponsored");
-			return false;
 
+	//Handles Prompt Actions
+	public void promptReceiv(int answer ,string type){
+		if(type == "sponsor"){
+			if(answer == 1){
+				Prompt.SetActive(false);
+				createQuest(_turnId);				//Someone Has Sponsored
+			}
+			if(answer == 2){
+				Prompt.SetActive(false);
+			}
 		}
-		else{
-			return false;
-		}
-		
 	}
-
+	
 	//changes the number of stages based on numStages on the quest card
-	public void createQuest(){
-		_questSponsor = _turnId;
+	public void createQuest(int sponsor){
+
+		_questSponsor = sponsor;	
 		Debug.Log("numStages " + numStages);
 		if(numStages == 4){ 
-			Debug.Log("making inactive");
+			//Debug.Log("making inactive");
 			Stage5.SetActive(false);
 		}
 		else if(numStages == 3){
-			Debug.Log("making inactive");
+			//Debug.Log("making inactive");
 			Stage4.SetActive(false);
 			Stage5.SetActive(false);
 		}
 		else if(numStages == 2){
-			Debug.Log("making inactive");
+			//Debug.Log("making inactive");
 			Stage3.SetActive(false);
 			Stage4.SetActive(false);
 			Stage5.SetActive(false);
 		}
-
 	}
 
 	// Use this for initialization
@@ -312,15 +345,16 @@ public class Game : MonoBehaviour {
 			if (currCard.GetType () == typeof(WeaponCard)) {
 				//Is this convention ?
 				WeaponCard currWeapon = (WeaponCard)currCard;
-				CardUI = Instantiate (WeaponCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
+				CardUI = Instantiate (WeaponCard);
 				CardUI.GetComponent<WeaponCard>().name =  currWeapon.name;
 				CardUI.GetComponent<WeaponCard>().asset = currWeapon.asset;
 				CardUI.GetComponent<WeaponCard>().power = currWeapon.power;
 				
 			}
 			if (currCard.GetType () == typeof(FoeCard)) {
-				CardUI = Instantiate (FoeCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
+				 
 				FoeCard currFoe = (FoeCard)currCard;
+				CardUI = Instantiate (FoeCard);
 				CardUI.GetComponent<FoeCard>().name    = currFoe.name;
 				CardUI.GetComponent<FoeCard>().loPower = currFoe.loPower;
 				CardUI.GetComponent<FoeCard>().hiPower = currFoe.hiPower;
@@ -329,9 +363,11 @@ public class Game : MonoBehaviour {
 			}
 
 			if (currCard.GetType () == typeof(AllyCard)) {
-				CardUI = Instantiate (AllyCard, new Vector3 (-10.5f, -3.5f, -10.5f), new Quaternion (0, 0, 0, 0));
-				CardUI.GetComponent<AllyCard>().name    = currCard.name;
-				CardUI.GetComponent<AllyCard>().asset   = currCard.asset;
+
+				AllyCard currAlly = (AllyCard)currCard;
+				CardUI = Instantiate (AllyCard);
+				CardUI.GetComponent<AllyCard>().name    = currAlly.name;
+				CardUI.GetComponent<AllyCard>().asset   = currAlly.asset;
 			}
 
 
@@ -369,24 +405,28 @@ public class Game : MonoBehaviour {
 			}
 		}	
 	}
+
 	//click function that changed the value of sponsorOrNot 
 	//and calls the sponsorPrompt function which closes the prompt window and calls createQuest
 	public void YesButton_Click(){
-		Debug.Log("clicked the Yes button");
-		sponsorOrNot = 1;
-		sponsorPrompt(_turnId);
-			
+		if(promptTxt.GetComponent<UnityEngine.UI.Text>().text == "Do You Want To Sponsor This Quest"){
+			Debug.Log("clicked the Yes button in Sponsor");
+			promptAnswer = 1;
+			promptReceiv(promptAnswer,"sponsor");
+		}
 	}
+
 	//click function that changed the value of sponsorOrNot 
 	public void NoButton_Click(){
-		Debug.Log("clicked the No button");
-		sponsorOrNot = 2;
-		sponsorPrompt(_turnId);
+		if(promptTxt.GetComponent<UnityEngine.UI.Text>().text == "Do You Want To Sponsor This Quest"){
+			Debug.Log("clicked the No button in Sponsor");
+			promptAnswer = 2;
+			promptReceiv(promptAnswer,"sponsor");
+		}
 	}
 		
 	// Update is called once per frame
 	void Update () {
-
 	}
 
 	void TwoPlayerMode() {

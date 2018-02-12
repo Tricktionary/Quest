@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Deck : MonoBehaviour {
+public class Deck{
 
 	// The list of cards that make up the deck.
 	private List<Card> _cards = new List<Card>();

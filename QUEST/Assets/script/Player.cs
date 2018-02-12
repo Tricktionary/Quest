@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class Player {
 
 	protected List<Card> _hand;
 	protected int _playerId;							//Player ID
