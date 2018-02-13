@@ -92,10 +92,12 @@ public class Game : MonoBehaviour {
 				numStages = _questCard.stages;				//Stages of the Quest
 
 				_playersIn = new List<int> ();
+				/*
 				for (int i = 0; i < _numPlayers; i++) {
 					//all questees in
 					_playersIn.Add ((_turnId + i) % _numPlayers);
 				}
+				*/
 			}
 
 			storyCard.gameObject.GetComponent<Image>().sprite = card;
@@ -149,6 +151,7 @@ public class Game : MonoBehaviour {
 
 		return power;
 	}
+
 	public bool checkQuest() {
 		List<List<Card>> allStages = new List<List<Card>>();
 		List<int> powerLevels = new List<int>();
@@ -183,7 +186,6 @@ public class Game : MonoBehaviour {
 
 		for(int i = 0 ; i < allStages.Count ; i++){
 			currPower = stageValid(allStages[i]);	
-			Debug.Log(currPower);
 			if(currPower == -1){
 				return false;
 			}
@@ -207,34 +209,58 @@ public class Game : MonoBehaviour {
 	public void initQuest(){		
 		_sponsorId = _turnId;
 		_playersIn = new List<int> ();
+		/*
 		for (int i = 1; i < _numPlayers; i++) {
 			//all questees in
 			_playersIn.Add ((_sponsorId + i) % _numPlayers);
 		}
+		*/
 		_questeeTurnId = _playersIn[0];
+	}
+
+	//Update The hand of turn ID based off of the user interface
+	public void updateHand(int turnID){
+		List<Card> tempHand = new List<Card>();
+		tempHand = Hand.GetComponent<CardArea>().cards;
+		_players[_turnId].hand  = new List<Card>();	
+		for(int i = 0 ; i < tempHand.Count ;i++){
+			_players[_turnId].addCard(tempHand[i]);
+		}
 	}
 
 	//End Turn
 	public void EndTurn() {
+		Debug.Log(_canEnd);
+		Debug.Log(_questInPlay);
+		Debug.Log(_sponsorId);
+		Debug.Log(_questReady);
 		if (_canEnd) {
-
 			if (_questInPlay) {			//Quest Currently in plays
 				if (_sponsorId >= 0) {  //There is a sponsor
-					if(_questReady == false){
-						_questReady = checkQuest();	//Quest Validation
-						if(_questReady == true){	
-							nextTurn(false,false);
+					
+					if(_questReady == false){			//Quest is not Ready
+						if(checkQuest()){	
+							_questReady = true;
+
+							updateHand(_turnId); 		 //Update Sponsor Hand based off of the UI
+							nextTurn(true,false);
 							prompt(_turnId,"playQuest"); //Start Asking if other players want to play
 							statusPrompt("");
 						}
 						else{
-							statusPrompt("Quest is Bad");
+							statusPrompt("Quest is Not Valid");
 						}
 					}
-					if(_questReady == true){
-
+					if(_questReady == true){			//Quest is Ready
+						if(_playersIn.Count > 0){		//If people are participating
+							Debug.Log("Quest In Play");
+							//GAMEPLAY LOGIC
+						}
 					}
-
+				}
+				if(_sponsorId == -1){ 			//Find A Sponsor
+					prompt(_turnId, "sponsor");
+				}
 					//TODO: Quest is already sponsored, move on to next player, if it is the last player then let the sponsor do any final actions
 					//prompt(_turnId,"playQuest");
 
@@ -249,10 +275,7 @@ public class Game : MonoBehaviour {
 							break;
 						}
 					}*/
-				}
-				if(_sponsorId == -1){ 			//Find A Sponsor
-					prompt(_turnId, "sponsor");
-				}
+				 
 				else {
 					//TODO: Check if quest pile is successfully filled and if it is then sponsor
 
@@ -314,15 +337,54 @@ public class Game : MonoBehaviour {
 		}
 	}
 
+	//User Status Prompt
 	public void statusPrompt(string message){
 		gameStatus.GetComponent<UnityEngine.UI.Text>().text = message;
 	}
+
+	//Reset Values
+	public void reset(){
+		_playersIn = new List<int>(); //Reset Players In
+		_questReady = false;
+		_questInPlay = false;
+		_sponsorId = -1;
+		Stage5.SetActive(true);
+		Stage4.SetActive(true);
+		Stage3.SetActive(true);
+		Stage2.SetActive(true);
+		Stage1.SetActive(true);
+
+
+		Stage5.GetComponent<CardArea>().cards = new List<Card>();
+		Stage4.GetComponent<CardArea>().cards = new List<Card>();
+		Stage3.GetComponent<CardArea>().cards = new List<Card>();
+		Stage2.GetComponent<CardArea>().cards = new List<Card>();
+		Stage1.GetComponent<CardArea>().cards = new List<Card>();
+
+		foreach (Transform child in Stage5.transform) {	//Clears out drawCardArea
+				GameObject.Destroy (child.gameObject);
+		}
+		foreach (Transform child in Stage4.transform) {	//Clears out drawCardArea
+				GameObject.Destroy (child.gameObject);
+		}
+		foreach (Transform child in Stage3.transform) {	//Clears out drawCardArea
+				GameObject.Destroy (child.gameObject);
+		}
+		foreach (Transform child in Stage2.transform) {	//Clears out drawCardArea
+				GameObject.Destroy (child.gameObject);
+		}
+		foreach (Transform child in Stage1.transform) {	//Clears out drawCardArea
+				GameObject.Destroy (child.gameObject);
+		}
+
+	}
+
 
 	//Handles Prompt Actions
 	public void promptReceiv(int answer ,string type){
 		if(type == "sponsor"){
 			_askCounter++;
-			if(_askCounter >= 3){
+			if(_askCounter >= _numPlayers){
 				Prompt.SetActive(false);
 				_askCounter = 0; //Reset
 				nextTurn(false,false);
@@ -338,16 +400,26 @@ public class Game : MonoBehaviour {
 		}
 		if(type == "playQuest"){
 			_askCounter++;
-			if(_askCounter >= 3){
+			//Debug.Log(_playersIn.Count);
+			
+			if(_askCounter >= _numPlayers){	
 				Prompt.SetActive(false);
 				_askCounter = 0; //Reset
-				nextTurn(false,false);
+				if(_playersIn.Count == 0){ //Reset
+					reset();
+					nextTurn(false,false);
+				}
+				else{
+					nextTurn(true,true);
+					statusPrompt("Setup Your Weapons");
+				}
 			}
-			if(answer == 1){							//Yes
+
+			else if(answer == 1){							//Yes
 				_playersIn.Add(_turnId);				//Add if Player says yes
 				nextTurn(false,false); 
 			}
-			if(answer == 2){							//No
+			else if(answer == 2){							//No
 				nextTurn(false,false); 
 			}
 		}

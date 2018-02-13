@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player {
 
 	protected List<Card> _hand;
+	protected List<Card> _inPlay;
 	protected int _playerId;							//Player ID
 	protected int _rank;								//Players current ranks 0-2; 3 ends the game
 	protected int _shieldCounter;      				//Shield Counter
@@ -23,6 +24,7 @@ public class Player {
 			this._hand = value;
 		}
 	}
+
 
 	public int playerId{
 		get{
