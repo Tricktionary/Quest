@@ -537,6 +537,11 @@ public class Game : MonoBehaviour {
 			//Debug.Log(card);
 			CardUI.gameObject.GetComponent<Image>().sprite = card;
 			CardUI.transform.SetParent(Hand.transform);
+
+			// Set the cards obj to it's UI.
+			// NOTE: There is probably a better built in Unity way to do this,
+			// if so, we should definitely swap it out.
+			currCard.obj = CardUI;
 		}
 	}
 
