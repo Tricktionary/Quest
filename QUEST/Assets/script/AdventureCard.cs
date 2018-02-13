@@ -31,14 +31,4 @@ public abstract class AdventureCard : Card,IBeginDragHandler,IDragHandler, IEndD
 		GetComponent<CanvasGroup>().blocksRaycasts = true;
 	}
 
-	//Change Card Sprite to back of card
-	public void flip(){
-
-	}
-
-	//Change Card Sprite to front of card
-	public void unFlip(){
-
-	}
-
 }
