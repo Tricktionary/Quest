@@ -50,7 +50,7 @@ public class Game : MonoBehaviour {
 	private int _sponsorId;
 	private int _questeeTurnId;
 	private List<int> _playersIn; //We are using this to store questees in the quest and before the quest is sponsored, who is next to decide to sponsor
-	private string featFoe;  //Could be unused
+	private string featFoe;       //Could be unused
 	private int numStages;
 	private int _questSponsor;		//Quest Sponsor	
 
@@ -58,14 +58,15 @@ public class Game : MonoBehaviour {
 	private bool _standardTurn;
 	private bool _canEnd;
 
-	public int promptAnswer;
-	public int sponsorOrNot; //used in the sponsor click function Dont think we need this, popup just have to return true or false
 
+	public int promptAnswer;
+	public int _askCounter;  //How many people you asked this prompt to
 	
 
 	//Draws Card 
 	public void DrawCard(){
 		//_storyDeck
+
 		if (_drawn == false) {
 			 
 			foreach (Transform child in drawCardArea.transform) {	//Clears out drawCardArea
@@ -199,7 +200,6 @@ public class Game : MonoBehaviour {
 
 	//Quest Initialization
 	public void initQuest(){		
-		//sponsorPopup(currPlayer, sponsorOrNot);  //Don't have it here. code to actually set up the quest
 		_sponsorId = _turnId;
 		_playersIn = new List<int> ();
 		for (int i = 1; i < _numPlayers; i++) {
@@ -213,8 +213,9 @@ public class Game : MonoBehaviour {
 	public void EndTurn() {
 		if (_canEnd) {
 			if (_questInPlay) {
-				if (_sponsorId >= 0) {
+				if (_sponsorId >= 0) {  //There is a sponsor
 					//TODO: Quest is already sponsored, move on to next player, if it is the last player then let the sponsor do any final actions
+					
 					for (int i = 0; i < _playersIn.Count; i++) {
 						if (_playersIn [i] == _questeeTurnId) {
 							if (i == _playersIn.Count - 1) {
@@ -226,7 +227,11 @@ public class Game : MonoBehaviour {
 						}
 					}
 
-				} else {
+				}
+				if(_sponsorId == -1){ //Find A Sponsor
+					prompt(_turnId, "sponsor");
+				}
+				else {
 					//TODO: Check if quest pile is successfully filled and if it is then sponsor
 
 					//TODO: Set questeeId turn, run init quest code here
@@ -237,41 +242,33 @@ public class Game : MonoBehaviour {
 						//TODO: Prompt here. if no then:
 						//remove [0] from _playersIn
 						//load _player[0] (the next player's hand
+						_drawn = true;
+						_canEnd = true;
 					}
-					_drawn = true;
-					_canEnd = true;
+					_drawn = false;
+					_canEnd = false;
 				}
-			} else {
-				//Clear Old Hand
-				foreach (Transform child in Hand.transform) {	
-					GameObject.Destroy (child.gameObject);
-				}
-
-				_turnId++;
-				if (_turnId >= 3) {
-					_turnId = 0;
-				}
-
-				loadHand(_turnId);
-				_drawn = false;
-				_canEnd = false;
 			}
-			StartTurn ();
+			else {	//No Quest In Play
+				nextTurn(false,true);
+			}
 		}
 	}
 
-	//redundant function for now. We can use it to move code later from endTurn()
-	public void StartTurn() {
-		if (_questInPlay) {
-			if (_sponsorId >= 0) { //was if (_sponsorId) changed to (_sponsorId >= 0) because was giving error
-				//TODO: Normal turn, remember to use _questeeId!
-			} else {
-				//TODO: RUN popup asking if you want to sponsor
-				prompt(_turnId, "sponsor");
-			}
-		} else {
-			
+
+	public void nextTurn(bool drawn, bool canEnd){
+		//Clear Old Hand
+		foreach (Transform child in Hand.transform) {	
+			GameObject.Destroy (child.gameObject);
 		}
+		_turnId++;
+		if (_turnId >= 3) {
+			_turnId = 0;
+		}
+
+		loadHand(_turnId);
+		_drawn = drawn;
+		_canEnd = canEnd;
 	}
 
 	//Prompt User
@@ -286,19 +283,25 @@ public class Game : MonoBehaviour {
 	//Handles Prompt Actions
 	public void promptReceiv(int answer ,string type){
 		if(type == "sponsor"){
+			_askCounter++;
+			if(_askCounter >= 3){
+				Prompt.SetActive(false);
+				_askCounter = 0; //Reset
+				nextTurn(false,true);
+
+			}
 			if(answer == 1){
 				Prompt.SetActive(false);
 				createQuest(_turnId);				//Someone Has Sponsored
 			}
 			if(answer == 2){
-				Prompt.SetActive(false);
+				nextTurn(false,false);         //Drawn = End // CanEnd = False
 			}
 		}
 	}
 	
 	//changes the number of stages based on numStages on the quest card
 	public void createQuest(int sponsor){
-
 		_questSponsor = sponsor;	
 		Debug.Log("numStages " + numStages);
 		if(numStages == 4){ 
@@ -341,6 +344,7 @@ public class Game : MonoBehaviour {
 
 		_sponsorId = -1;
 		_questeeTurnId = -1;
+		_askCounter = 0;
 
 		//Populates Player Hands
 		for(int i = 0; i < _players.Count ; i++){
