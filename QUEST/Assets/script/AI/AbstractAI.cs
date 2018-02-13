@@ -10,6 +10,7 @@ public class AbstractAI:Player{
     private bool canTheyWin;
     AIBehaviour  currBehaviour;
 
+    //AI Initiation
     public AbstractAI(int id){
         canIWin = false;
         canTheyWin = false;
@@ -147,6 +148,7 @@ public class AbstractAI:Player{
         }
         return(participate);
     }
+
 
     public bool discardAfterWinningTest(){
         //Discard Foes less then 25
