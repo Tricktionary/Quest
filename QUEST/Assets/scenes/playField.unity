@@ -1445,11 +1445,12 @@ MonoBehaviour:
   AllyCard: {fileID: 1097128100082594, guid: 52d4c5c17bf384c5fa0399609cfc88d2, type: 2}
   QuestCard: {fileID: 1251235100696200, guid: 9dcc0839dcfff4e018c3d4f3f62d4abe, type: 2}
   playArea: {fileID: 1814199544}
-  Stage1: {fileID: 1710249156}
-  Stage2: {fileID: 1494690799}
-  Stage3: {fileID: 968365558}
-  Stage4: {fileID: 767911021}
-  Stage5: {fileID: 407580259}
+  Stages:
+  - {fileID: 1710249156}
+  - {fileID: 1494690799}
+  - {fileID: 968365558}
+  - {fileID: 767911021}
+  - {fileID: 407580259}
   Prompt: {fileID: 476693332}
   promptTxt: {fileID: 777646660}
   gameStatus: {fileID: 924288325}
