@@ -12,12 +12,8 @@ public class Game : MonoBehaviour {
 	public GameObject QuestCard;
 
 	public GameObject playArea;								//Play Zone
-	
-	public GameObject Stage1;							    //Stage1 of quest
-	public GameObject Stage2;
-	public GameObject Stage3;
-	public GameObject Stage4;
-	public GameObject Stage5;
+
+	public List<GameObject> Stages;
 
 	public GameObject Prompt;								//Prompter
 	public GameObject promptTxt;
@@ -146,54 +142,44 @@ public class Game : MonoBehaviour {
 		return power;
 	}
 
+	// Get all the staged cards objects.
+	public List<Card> getStagedCards() {
+		List<Card> stagedCards = new List<Card> ();
+		for (int i = 0; i < numStages; i++) {
+			for (int j = 0; j < Stages[i].GetComponent<CardArea>().cards.Count; j++) {
+				stagedCards.Add(Stages[i].GetComponent<CardArea>().cards[j]);
+			}
+		}
+		return stagedCards;
+	}
+
+	// Get a list of all the stages.
+	public List<List<Card>> getStages() {
+		List<List<Card>> stages = new List<List<Card>> ();
+		for (int i = 0; i < numStages; i++) {
+			stages.Add(Stages[i].GetComponent<CardArea> ().cards);
+		}
+		return stages;
+	}
+
 	public bool checkQuest() {
-		List<List<Card>> allStages = new List<List<Card>>();
 		List<int> powerLevels = new List<int>();
 
 		int currPower = 0;
-		if(numStages == 5){
-			allStages.Add(Stage1.GetComponent<CardArea>().cards);
-			allStages.Add(Stage2.GetComponent<CardArea>().cards);
-			allStages.Add(Stage3.GetComponent<CardArea>().cards);
-			allStages.Add(Stage4.GetComponent<CardArea>().cards);
-			allStages.Add(Stage5.GetComponent<CardArea>().cards);
-			
-		}
-		if(numStages == 4){
-			allStages.Add(Stage1.GetComponent<CardArea>().cards);
-			allStages.Add(Stage2.GetComponent<CardArea>().cards);
-			allStages.Add(Stage3.GetComponent<CardArea>().cards);
-			allStages.Add(Stage4.GetComponent<CardArea>().cards);
-		}
-		if(numStages == 3){
-			allStages.Add(Stage1.GetComponent<CardArea>().cards);
-			allStages.Add(Stage2.GetComponent<CardArea>().cards);
-			allStages.Add(Stage3.GetComponent<CardArea>().cards);
-		}
-		if(numStages == 2){
-			allStages.Add(Stage1.GetComponent<CardArea>().cards);
-			allStages.Add(Stage2.GetComponent<CardArea>().cards);
-		}
-		if(numStages == 1){
-			allStages.Add(Stage1.GetComponent<CardArea>().cards); 
-		}
+		List<List<Card>> stages = getStages();
 
-		for(int i = 0 ; i < allStages.Count ; i++){
-			currPower = stageValid(allStages[i]);	
+		for (int i = 0; i < stages.Count; i++) {
+			currPower = stageValid (stages [i]);
 			if(currPower == -1){
 				return false;
-			}
-			else{
+			} else {
 				powerLevels.Add(currPower);
 			}
-		}
+		} 
 
-		//Check Ascending Power Level
-		for(int i = 0 ; i < powerLevels.Count - 1 ; i++){
-			//Debug.Log(powerLevels[i]);
-			if(powerLevels[i] > powerLevels[i+1]){
-				return false;
-			}
+		// Check ascending power level.
+		for(int i = 0; i < powerLevels.Count - 1; i++){
+			if(powerLevels[i] > powerLevels[i + 1]){ return false; }
 		}
 
 		return true;
@@ -232,6 +218,9 @@ public class Game : MonoBehaviour {
 						if(checkQuest()){	
 							Debug.Log("Quest Here hehe");
 							_questReady = true;
+
+							// Flip the staged cards.
+
 
 							updateHand(_turnId); 		 //Update Sponsor Hand based off of the UI
 							nextTurn(true,false);
@@ -375,35 +364,16 @@ public class Game : MonoBehaviour {
 		_questInPlay = false;
 		_sponsorId = -1;
 		_questeeTurnId = -1;
-		Stage5.SetActive(true);
-		Stage4.SetActive(true);
-		Stage3.SetActive(true);
-		Stage2.SetActive(true);
-		Stage1.SetActive(true);
 
-
-		Stage5.GetComponent<CardArea>().cards = new List<Card>();
-		Stage4.GetComponent<CardArea>().cards = new List<Card>();
-		Stage3.GetComponent<CardArea>().cards = new List<Card>();
-		Stage2.GetComponent<CardArea>().cards = new List<Card>();
-		Stage1.GetComponent<CardArea>().cards = new List<Card>();
-
-		foreach (Transform child in Stage5.transform) {	//Clears out drawCardArea
-				GameObject.Destroy (child.gameObject);
+		// Clean the stages..
+		for (int i = 0; i < Stages.Count; i++) {
+			Stages[i].SetActive(true);
+			Stages[i].GetComponent<CardArea>().cards = new List<Card>();
+			// Clears out draw card area.
+			foreach (Transform child in Stages[i].transform) {
+				GameObject.Destroy(child.gameObject);
+			}
 		}
-		foreach (Transform child in Stage4.transform) {	//Clears out drawCardArea
-				GameObject.Destroy (child.gameObject);
-		}
-		foreach (Transform child in Stage3.transform) {	//Clears out drawCardArea
-				GameObject.Destroy (child.gameObject);
-		}
-		foreach (Transform child in Stage2.transform) {	//Clears out drawCardArea
-				GameObject.Destroy (child.gameObject);
-		}
-		foreach (Transform child in Stage1.transform) {	//Clears out drawCardArea
-				GameObject.Destroy (child.gameObject);
-		}
-
 	}
 
 
@@ -485,20 +455,9 @@ public class Game : MonoBehaviour {
 		_sponsorId = sponsor;
 		_questReady = false;	//Quest is not ready yet
 		Debug.Log("numStages " + numStages);
-		if(numStages == 4){ 
-			//Debug.Log("making inactive");
-			Stage5.SetActive(false);
-		}
-		else if(numStages == 3){
-			//Debug.Log("making inactive");
-			Stage4.SetActive(false);
-			Stage5.SetActive(false);
-		}
-		else if(numStages == 2){
-			//Debug.Log("making inactive");
-			Stage3.SetActive(false);
-			Stage4.SetActive(false);
-			Stage5.SetActive(false);
+
+		for (int i = 0; i < (5 - numStages); i++) {
+			Stages[4-i].SetActive(false);
 		}
 	}
 

@@ -1,20 +1,9 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/script/Card.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/script/Game.cs">
     <Files>
-      <File FileName="Assets/script/Game.cs" Line="107" Column="1" />
-      <File FileName="Assets/script/CardArea.cs" Line="1" Column="1" />
-      <File FileName="Assets/script/AI/AbstractAI.cs" Line="1" Column="1" />
-      <File FileName="Assets/Editor/UnitTests.cs" Line="1" Column="1" />
-      <File FileName="Assets/script/AdventureCard.cs" Line="1" Column="1" />
-      <File FileName="Assets/script/Card.cs" Line="1" Column="1" NotebookId="1" />
-      <File FileName="Assets/script/Deck.cs" Line="1" Column="1" NotebookId="1" />
-      <File FileName="Assets/script/FoeCard.cs" Line="1" Column="1" NotebookId="1" />
-      <File FileName="Assets/script/QuestCard.cs" Line="1" Column="1" NotebookId="1" />
-      <File FileName="Assets/script/WeaponCard.cs" Line="1" Column="1" NotebookId="1" />
-      <File FileName="Assets/script/Player.cs" Line="1" Column="1" NotebookId="1" />
-      <File FileName="Assets/script/TestCard.cs" Line="1" Column="1" NotebookId="1" />
-      <File FileName="Assets/script/EventCard.cs" Line="1" Column="1" NotebookId="1" />
+      <File FileName="Assets/script/Game.cs" Line="1" Column="1" />
+      <File FileName="Assets/script/popUp.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
