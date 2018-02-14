@@ -216,11 +216,13 @@ public class Game : MonoBehaviour {
 					
 					if(_questReady == false){			//Quest is not Ready
 						if(checkQuest()){	
-							Debug.Log("Quest Here hehe");
 							_questReady = true;
 
 							// Flip the staged cards.
-
+							List<Card> stagedCards = getStagedCards();
+							for (int i = 0; i < stagedCards.Count; i++) {
+								stagedCards[i].flipCard(true);
+							}
 
 							updateHand(_turnId); 		 //Update Sponsor Hand based off of the UI
 							nextTurn(true,false);
@@ -501,7 +503,6 @@ public class Game : MonoBehaviour {
 		
 		List<Card> currHand = _players[playerId].hand;
 		Card currCard;
-		
 
 		//Set Player ID text
 		playerIdTxt.GetComponent<UnityEngine.UI.Text>().text = "Player ID : "+ (playerId+1).ToString(); //For User Friendly
@@ -544,11 +545,9 @@ public class Game : MonoBehaviour {
 				CardUI.GetComponent<AllyCard>().name    = currAlly.name;
 				CardUI.GetComponent<AllyCard>().asset   = currAlly.asset;
 			}
-
-
+				
 			Sprite card = Resources.Load<Sprite>(currCard.asset); //Card Sprite
 
-			//Debug.Log(card);
 			CardUI.gameObject.GetComponent<Image>().sprite = card;
 			CardUI.transform.SetParent(Hand.transform);
 

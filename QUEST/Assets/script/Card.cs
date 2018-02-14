@@ -50,8 +50,8 @@ public abstract class Card : MonoBehaviour {
 	}
 
 	// Flip a card over.
-	public void flipCard(){
-		_flipped = !_flipped;
+	public void flipCard(bool f){
+		_flipped = f;
 		Sprite card_image;
 		if(_flipped){
 			card_image = Resources.Load<Sprite>("card_image/special/backOfCard");

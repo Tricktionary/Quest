@@ -109,14 +109,14 @@ public class Deck{
 		} else if (type.Equals ("Story")) {
 			//WHEN ADDING FEATURED FOE * means all
 			// Fill the deck with story cards.
-			addQuest("Search for the Holy Grail", 5, "*", "card_image/quest/questCard9", 1);
-			addQuest("Test of the Green Knight", 4, "Green Knight", "card_image/quest/questCard10", 1);
-			addQuest("Search for the Questing Beast", 4, "", "card_image/quest/questCard5", 1);
-			addQuest("Defend the Queen's Honor", 4, "*", "card_image/quest/questCard6", 1);
-			addQuest("Rescue the Fair Maiden", 3, "Black Knight", "card_image/quest/questCard8", 1);
-			addQuest("Journey Through the Enchanted Forest", 3, "Evil Knight", "card_image/quest/questCard1", 1);
-			addQuest("Vanquish King Arthur's Enemies", 3, "", "card_image/quest/questCard2", 2);
-			addQuest("Slay the Dragon", 3, "Dragon", "card_image/quest/questCard7", 1);
+			//addQuest("Search for the Holy Grail", 5, "*", "card_image/quest/questCard9", 1);
+			//addQuest("Test of the Green Knight", 4, "Green Knight", "card_image/quest/questCard10", 1);
+			//addQuest("Search for the Questing Beast", 4, "", "card_image/quest/questCard5", 1);
+			//addQuest("Defend the Queen's Honor", 4, "*", "card_image/quest/questCard6", 1);
+			//addQuest("Rescue the Fair Maiden", 3, "Black Knight", "card_image/quest/questCard8", 1);
+			//addQuest("Journey Through the Enchanted Forest", 3, "Evil Knight", "card_image/quest/questCard1", 1);
+			//addQuest("Vanquish King Arthur's Enemies", 3, "", "card_image/quest/questCard2", 2);
+			//addQuest("Slay the Dragon", 3, "Dragon", "card_image/quest/questCard7", 1);
 			addQuest("Boar Hunt", 2, "Boar", "card_image/quest/questCard4", 2);
 			addQuest("Repel the Saxxon Raiders", 2, "Saxon", "card_image/quest/questCard3", 2);
 
