@@ -14,6 +14,15 @@ public class Player {
 	public static int limit = 12;
 
 
+	public List<Card> inPlay{
+		get{
+			return this._inPlay;
+		}
+		set{
+			this._inPlay = value;
+		}
+	}
+
 
 	//gets and sets for all vars
 	public List<Card> hand{

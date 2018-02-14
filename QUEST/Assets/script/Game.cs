@@ -29,10 +29,6 @@ public class Game : MonoBehaviour {
 	public GameObject playerIdTxt;							//Player Id
 	public GameObject shieldCounterTxt;						//Shield Counter
 
-	private CardArea _storyArea;
-	private CardArea _playArea;
-
-
 	private List<Player> _players = new List<Player>(); 	//List of players
 	private int _numPlayers;								//Number of players
 	private int _turnId; 									//Player ID of who's turn
@@ -90,8 +86,6 @@ public class Game : MonoBehaviour {
 				_canEnd = true;
 				_questCard = (QuestCard)currCard;
 				numStages = _questCard.stages;				//Stages of the Quest
-
-				_playersIn = new List<int> ();
 				/*
 				for (int i = 0; i < _numPlayers; i++) {
 					//all questees in
@@ -205,35 +199,31 @@ public class Game : MonoBehaviour {
 		return true;
 	}
 
-	//Quest Initialization
-	public void initQuest(){		
-		_sponsorId = _turnId;
-		_playersIn = new List<int> ();
-		/*
-		for (int i = 1; i < _numPlayers; i++) {
-			//all questees in
-			_playersIn.Add ((_sponsorId + i) % _numPlayers);
-		}
-		*/
-		_questeeTurnId = _playersIn[0];
-	}
-
 	//Update The hand of turn ID based off of the user interface
 	public void updateHand(int turnID){
+		
 		List<Card> tempHand = new List<Card>();
 		tempHand = Hand.GetComponent<CardArea>().cards;
 		_players[_turnId].hand  = new List<Card>();	
 		for(int i = 0 ; i < tempHand.Count ;i++){
 			_players[_turnId].addCard(tempHand[i]);
 		}
+
+		/*
+		List<Card> tempPlay = new List<Card>();
+		tempPlay = playArea.GetComponent<CardArea>().cards;
+		_players[_turnId].inPlay = new List<Card>();
+		_players[_turnId].inPlay = tempPlay;
+		*/
 	}
+
 
 	//End Turn
 	public void EndTurn() {
-		Debug.Log(_canEnd);
-		Debug.Log(_questInPlay);
-		Debug.Log(_sponsorId);
-		Debug.Log(_questReady);
+		//Debug.Log(_canEnd);
+		//Debug.Log(_questInPlay);
+		//Debug.Log(_sponsorId);
+		//Debug.Log(_questReady);
 		if (_canEnd) {
 			if (_questInPlay) {			//Quest Currently in plays
 				if (_sponsorId >= 0) {  //There is a sponsor
@@ -254,8 +244,9 @@ public class Game : MonoBehaviour {
 					}
 					if(_questReady == true){			//Quest is Ready
 						if(_playersIn.Count > 0){		//If people are participating
-							Debug.Log("Quest In Play");
-							//GAMEPLAY LOGIC
+							//Debug.Log("Quest In Play");
+							//updateHand(_turnId);
+							nextTurnQuest();
 						}
 					}
 				}
@@ -313,6 +304,8 @@ public class Game : MonoBehaviour {
 		foreach (Transform child in Hand.transform) {	
 			GameObject.Destroy (child.gameObject);
 		}
+
+
 		_turnId++;
 		if (_turnId >= 3) {
 			_turnId = 0;
@@ -321,6 +314,38 @@ public class Game : MonoBehaviour {
 		loadHand(_turnId);
 		_drawn = drawn;
 		_canEnd = canEnd;
+	}
+
+/*
+	Rotate through questeeTurnId
+
+*/
+	public void nextTurnQuest(){
+		bool revealStage;
+		
+		foreach (Transform child in Hand.transform) {	
+			GameObject.Destroy (child.gameObject);
+		}
+		
+		foreach (Transform child in playArea.transform) {	
+			GameObject.Destroy (child.gameObject);
+		}
+
+		if(_questeeTurnId == -1){ //Instantiate
+			_questeeTurnId = 0;
+		}
+		else{
+			_questeeTurnId++;
+		}
+		
+		if(_questeeTurnId >= _playersIn.Count){
+			_questeeTurnId = 0;
+		}
+
+		_turnId =  _playersIn[_questeeTurnId]; 
+		loadHand(_turnId);
+		_drawn = true;	//Can't Draw cards while in quest
+		_canEnd = true; //Can End turn
 	}
 /*
 	Prompt User
@@ -349,6 +374,7 @@ public class Game : MonoBehaviour {
 		_questReady = false;
 		_questInPlay = false;
 		_sponsorId = -1;
+		_questeeTurnId = -1;
 		Stage5.SetActive(true);
 		Stage4.SetActive(true);
 		Stage3.SetActive(true);
@@ -389,6 +415,9 @@ public class Game : MonoBehaviour {
 				Prompt.SetActive(false);
 				statusPrompt("Please Set Up Quest");
 				createQuest(_turnId);					//Someone Has Sponsored
+				_canEnd = true;
+				_drawn = true;
+				_askCounter = 0;
 			}
 			if(answer == 2){							//No
 				if(_askCounter < _numPlayers){
@@ -413,23 +442,20 @@ public class Game : MonoBehaviour {
 			if(answer == 1){								//Yes
 				_playersIn.Add(_turnId);					//Add if Player to _playersIn
 
-				if(_askCounter < _numPlayers){				//Continue Asking
+				if(_askCounter < (_numPlayers - 1)){				//Continue Asking
 					Debug.Log("Here3");
 					nextTurn(false,false); 		
 				}	
 				else{										//Done Asking
-					_turnId++;								//Skip Sponsor
-					if (_turnId >= 3) {
-						_turnId = 0;
-					}
+					//Change To QuesteeTurns
 					statusPrompt("Setup your Weapons");
 					Debug.Log("Here4");
-					nextTurn(true,true);
+					nextTurnQuest();
 					Prompt.SetActive(false);
 				}		
 			}
 			else if(answer == 2){							//No
-				if(_askCounter < _numPlayers){				//Continue asking
+				if(_askCounter < (_numPlayers - 1)){				//Continue asking
 					Debug.Log("Here5");
 					nextTurn(false,false); 		
 				}	
@@ -455,6 +481,7 @@ public class Game : MonoBehaviour {
 	
 	//changes the number of stages based on numStages on the quest card
 	public void createQuest(int sponsor){
+		_playersIn = new List<int> ();
 		_sponsorId = sponsor;
 		_questReady = false;	//Quest is not ready yet
 		Debug.Log("numStages " + numStages);
