@@ -103,7 +103,7 @@ public class Game : MonoBehaviour {
 			storyCard.gameObject.GetComponent<Image>().sprite = card;
 			storyCard.transform.SetParent (drawCardArea.transform);
 			_drawn = true;
-			_canEnd = true;
+			
 		
 		}
 	}
@@ -240,6 +240,7 @@ public class Game : MonoBehaviour {
 					
 					if(_questReady == false){			//Quest is not Ready
 						if(checkQuest()){	
+							Debug.Log("Quest Here hehe");
 							_questReady = true;
 
 							updateHand(_turnId); 		 //Update Sponsor Hand based off of the UI
@@ -384,43 +385,70 @@ public class Game : MonoBehaviour {
 	public void promptReceiv(int answer ,string type){
 		if(type == "sponsor"){
 			_askCounter++;
-			if(_askCounter >= _numPlayers){
-				Prompt.SetActive(false);
-				_askCounter = 0; //Reset
-				nextTurn(false,false);
-			}
 			if(answer == 1){							//Yes
 				Prompt.SetActive(false);
 				statusPrompt("Please Set Up Quest");
 				createQuest(_turnId);					//Someone Has Sponsored
 			}
 			if(answer == 2){							//No
-				nextTurn(false,false);          
-			}
-		}
-		if(type == "playQuest"){
-			_askCounter++;
-			//Debug.Log(_playersIn.Count);
-			
-			if(_askCounter >= _numPlayers){	
-				Prompt.SetActive(false);
-				_askCounter = 0; //Reset
-				if(_playersIn.Count == 0){ //Reset
-					reset();
+				if(_askCounter < _numPlayers){
 					nextTurn(false,false);
 				}
-				else{
-					nextTurn(true,true);
-					statusPrompt("Setup Your Weapons");
+				else{									//No Sponsor
+					_askCounter = 0;
+					reset();
+					_turnId++;							//Skip The original draw turn
+					if (_turnId >= 3) {
+						_turnId = 0;
+					}
+					nextTurn(false,false);
+					Prompt.SetActive(false);
+					Debug.Log(_turnId);
 				}
 			}
+		}
 
-			else if(answer == 1){							//Yes
-				_playersIn.Add(_turnId);				//Add if Player says yes
-				nextTurn(false,false); 
+		if(type == "playQuest"){
+			_askCounter++;
+			if(answer == 1){								//Yes
+				_playersIn.Add(_turnId);					//Add if Player to _playersIn
+
+				if(_askCounter < _numPlayers){				//Continue Asking
+					Debug.Log("Here3");
+					nextTurn(false,false); 		
+				}	
+				else{										//Done Asking
+					_turnId++;								//Skip Sponsor
+					if (_turnId >= 3) {
+						_turnId = 0;
+					}
+					statusPrompt("Setup your Weapons");
+					Debug.Log("Here4");
+					nextTurn(true,true);
+					Prompt.SetActive(false);
+				}		
 			}
 			else if(answer == 2){							//No
-				nextTurn(false,false); 
+				if(_askCounter < _numPlayers){				//Continue asking
+					Debug.Log("Here5");
+					nextTurn(false,false); 		
+				}	
+				else{										//Done Asking
+					_askCounter = 0;
+					_turnId++;								//Skip Sponsor
+					if (_turnId >= 3) {
+						_turnId = 0;
+					}
+					if(_playersIn.Count <= 0){				//No on joined so reset
+						reset();
+						nextTurn(false,false);
+					}
+					else{									//Someone joined
+						Debug.Log("Here6");
+						nextTurn(true,true);
+					}
+					Prompt.SetActive(false);				//Turn The Prompt Off
+				}
 			}
 		}
 	}
