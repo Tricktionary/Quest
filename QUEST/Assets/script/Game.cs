@@ -415,6 +415,9 @@ public class Game : MonoBehaviour {
 				Prompt.SetActive(false);
 				statusPrompt("Please Set Up Quest");
 				createQuest(_turnId);					//Someone Has Sponsored
+				_canEnd = true;
+				_drawn = true;
+				_askCounter = 0;
 			}
 			if(answer == 2){							//No
 				if(_askCounter < _numPlayers){
@@ -439,7 +442,7 @@ public class Game : MonoBehaviour {
 			if(answer == 1){								//Yes
 				_playersIn.Add(_turnId);					//Add if Player to _playersIn
 
-				if(_askCounter < _numPlayers){				//Continue Asking
+				if(_askCounter < (_numPlayers - 1)){				//Continue Asking
 					Debug.Log("Here3");
 					nextTurn(false,false); 		
 				}	
@@ -452,7 +455,7 @@ public class Game : MonoBehaviour {
 				}		
 			}
 			else if(answer == 2){							//No
-				if(_askCounter < _numPlayers){				//Continue asking
+				if(_askCounter < (_numPlayers - 1)){				//Continue asking
 					Debug.Log("Here5");
 					nextTurn(false,false); 		
 				}	
