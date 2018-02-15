@@ -106,9 +106,8 @@ public class Player {
 		_hand.Add(card);	//Adds card to hand
 	}
 	
-	// Plays Cards (Get rid of cards played)
-	void playCard(List<Card> cards){
-		
+	public void addPlayCard(Card card){
+		_inPlay.Add(card);
 	}
 	
 	//s as number of shields to add, should we force rank up?

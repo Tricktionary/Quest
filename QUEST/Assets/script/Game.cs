@@ -188,6 +188,7 @@ public class Game : MonoBehaviour {
 	//Update The hand of turn ID based off of the user interface
 	public void updateHand(int turnID){
 		
+		//Update the players Hand 
 		List<Card> tempHand = new List<Card>();
 		tempHand = Hand.GetComponent<CardArea>().cards;
 		_players[_turnId].hand  = new List<Card>();	
@@ -195,12 +196,14 @@ public class Game : MonoBehaviour {
 			_players[_turnId].addCard(tempHand[i]);
 		}
 
-		/*
+		//Update the players play area
 		List<Card> tempPlay = new List<Card>();
 		tempPlay = playArea.GetComponent<CardArea>().cards;
 		_players[_turnId].inPlay = new List<Card>();
-		_players[_turnId].inPlay = tempPlay;
-		*/
+		for(int i = 0 ; i < tempPlay.Count ;i++){
+			_players[_turnId].addPlayCard(tempPlay[i]);
+		}
+		
 	}
 
 
@@ -219,11 +222,12 @@ public class Game : MonoBehaviour {
 							_questReady = true;
 
 							// Flip the staged cards.
+							/*
 							List<Card> stagedCards = getStagedCards();
 							for (int i = 0; i < stagedCards.Count; i++) {
 								stagedCards[i].flipCard(true);
 							}
-
+							*/
 							updateHand(_turnId); 		 //Update Sponsor Hand based off of the UI
 							nextTurn(true,false);
 							prompt(_turnId,"playQuest"); //Start Asking if other players want to play
@@ -235,8 +239,8 @@ public class Game : MonoBehaviour {
 					}
 					if(_questReady == true){			//Quest is Ready
 						if(_playersIn.Count > 0){		//If people are participating
-							//Debug.Log("Quest In Play");
-							//updateHand(_turnId);
+							Debug.Log("Quest In Play");
+							updateHand(_turnId);
 							nextTurnQuest();
 						}
 					}
@@ -501,8 +505,11 @@ public class Game : MonoBehaviour {
 	//Functionality : Loads player hand onto the UI
 	void loadHand(int playerId){
 		
-		List<Card> currHand = _players[playerId].hand;
-		Card currCard;
+
+		playArea.GetComponent<CardArea>().cards =  new List<Card>();
+		Hand.GetComponent<CardArea>().cards =  new List<Card>();
+
+		 
 
 		//Set Player ID text
 		playerIdTxt.GetComponent<UnityEngine.UI.Text>().text = "Player ID : "+ (playerId+1).ToString(); //For User Friendly
@@ -510,6 +517,10 @@ public class Game : MonoBehaviour {
 		//Get current players shield
 		int currPlayerShield = _players[playerId].shieldCounter;
 		shieldCounterTxt.GetComponent<UnityEngine.UI.Text>().text = "# Shield: "+ (currPlayerShield).ToString(); //For User Friendly
+
+		List<Card> currHand = _players[playerId].hand;
+		List<Card> currPlay = _players[playerId].inPlay;
+		Card currCard;
 
 		//Create Card Game Object
 		for(int i = 0 ; i < currHand.Count; i++){
@@ -556,7 +567,56 @@ public class Game : MonoBehaviour {
 			// if so, we should definitely swap it out.
 			currCard.obj = CardUI;
 		}
+		/*
+		for(int i = 0 ; i < currPlay.Count; i++){
+			currCard = currPlay[i];
+
+			playArea.GetComponent<CardArea>().addCard(currCard);
+			GameObject CardUI = null; 
+
+			if (currCard.GetType () == typeof(WeaponCard)) {
+				//Is this convention ?
+				WeaponCard currWeapon = (WeaponCard)currCard;
+				CardUI = Instantiate (WeaponCard);
+				CardUI.GetComponent<WeaponCard>().name =  currWeapon.name;
+				CardUI.GetComponent<WeaponCard>().asset = currWeapon.asset;
+				CardUI.GetComponent<WeaponCard>().power = currWeapon.power;
+				
+			}
+			if (currCard.GetType () == typeof(FoeCard)) {
+				 
+				FoeCard currFoe = (FoeCard)currCard;
+				CardUI = Instantiate (FoeCard);
+				CardUI.GetComponent<FoeCard>().name    = currFoe.name;
+				CardUI.GetComponent<FoeCard>().loPower = currFoe.loPower;
+				CardUI.GetComponent<FoeCard>().hiPower = currFoe.hiPower;
+				CardUI.GetComponent<FoeCard>().special = currFoe.special;
+				CardUI.GetComponent<FoeCard>().asset   = currFoe.asset;
+			}
+
+			if (currCard.GetType () == typeof(AllyCard)) {
+
+				AllyCard currAlly = (AllyCard)currCard;
+				CardUI = Instantiate (AllyCard);
+				CardUI.GetComponent<AllyCard>().name    = currAlly.name;
+				CardUI.GetComponent<AllyCard>().asset   = currAlly.asset;
+			}
+				
+			Sprite card = Resources.Load<Sprite>(currCard.asset); //Card Sprite
+
+			CardUI.gameObject.GetComponent<Image>().sprite = card;
+			CardUI.transform.SetParent(playArea.transform);
+
+			// Set the cards obj to it's UI.
+			// NOTE: There is probably a better built in Unity way to do this,
+			// if so, we should definitely swap it out.
+			currCard.obj = CardUI;
+		}
+		*/
+
 	}
+
+
 
 	//Purpose is for printing deck values
 	void debugPrint(){
