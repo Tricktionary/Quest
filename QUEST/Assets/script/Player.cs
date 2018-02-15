@@ -88,6 +88,7 @@ public class Player {
 		_bp = 5;
 		_hand = new List<Card>();
 		_allies = new List<Card>();
+		_inPlay = new List<Card>();
 	}
 	
 	//AI
@@ -97,7 +98,8 @@ public class Player {
 		_shieldCounter = 0;
 		_bp = 5;
 		_hand = new List<Card>();
-		_allies = new List<Card>();	
+		_allies = new List<Card>();
+		_inPlay = new List<Card>();	
 	}
 
 

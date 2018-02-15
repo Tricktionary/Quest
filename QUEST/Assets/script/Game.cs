@@ -520,103 +520,60 @@ public class Game : MonoBehaviour {
 
 		List<Card> currHand = _players[playerId].hand;
 		List<Card> currPlay = _players[playerId].inPlay;
-		Card currCard;
-
-		//Create Card Game Object
-		for(int i = 0 ; i < currHand.Count; i++){
-			currCard = currHand[i];
-
-			Hand.GetComponent<CardArea>().addCard(currCard);
-			GameObject CardUI = null; 
-
-			if (currCard.GetType () == typeof(WeaponCard)) {
-				//Is this convention ?
-				WeaponCard currWeapon = (WeaponCard)currCard;
-				CardUI = Instantiate (WeaponCard);
-				CardUI.GetComponent<WeaponCard>().name =  currWeapon.name;
-				CardUI.GetComponent<WeaponCard>().asset = currWeapon.asset;
-				CardUI.GetComponent<WeaponCard>().power = currWeapon.power;
-				
-			}
-			if (currCard.GetType () == typeof(FoeCard)) {
-				 
-				FoeCard currFoe = (FoeCard)currCard;
-				CardUI = Instantiate (FoeCard);
-				CardUI.GetComponent<FoeCard>().name    = currFoe.name;
-				CardUI.GetComponent<FoeCard>().loPower = currFoe.loPower;
-				CardUI.GetComponent<FoeCard>().hiPower = currFoe.hiPower;
-				CardUI.GetComponent<FoeCard>().special = currFoe.special;
-				CardUI.GetComponent<FoeCard>().asset   = currFoe.asset;
-			}
-
-			if (currCard.GetType () == typeof(AllyCard)) {
-
-				AllyCard currAlly = (AllyCard)currCard;
-				CardUI = Instantiate (AllyCard);
-				CardUI.GetComponent<AllyCard>().name    = currAlly.name;
-				CardUI.GetComponent<AllyCard>().asset   = currAlly.asset;
-			}
-				
-			Sprite card = Resources.Load<Sprite>(currCard.asset); //Card Sprite
-
-			CardUI.gameObject.GetComponent<Image>().sprite = card;
-			CardUI.transform.SetParent(Hand.transform);
-
-			// Set the cards obj to it's UI.
-			// NOTE: There is probably a better built in Unity way to do this,
-			// if so, we should definitely swap it out.
-			currCard.obj = CardUI;
-		}
-		/*
-		for(int i = 0 ; i < currPlay.Count; i++){
-			currCard = currPlay[i];
-
-			playArea.GetComponent<CardArea>().addCard(currCard);
-			GameObject CardUI = null; 
-
-			if (currCard.GetType () == typeof(WeaponCard)) {
-				//Is this convention ?
-				WeaponCard currWeapon = (WeaponCard)currCard;
-				CardUI = Instantiate (WeaponCard);
-				CardUI.GetComponent<WeaponCard>().name =  currWeapon.name;
-				CardUI.GetComponent<WeaponCard>().asset = currWeapon.asset;
-				CardUI.GetComponent<WeaponCard>().power = currWeapon.power;
-				
-			}
-			if (currCard.GetType () == typeof(FoeCard)) {
-				 
-				FoeCard currFoe = (FoeCard)currCard;
-				CardUI = Instantiate (FoeCard);
-				CardUI.GetComponent<FoeCard>().name    = currFoe.name;
-				CardUI.GetComponent<FoeCard>().loPower = currFoe.loPower;
-				CardUI.GetComponent<FoeCard>().hiPower = currFoe.hiPower;
-				CardUI.GetComponent<FoeCard>().special = currFoe.special;
-				CardUI.GetComponent<FoeCard>().asset   = currFoe.asset;
-			}
-
-			if (currCard.GetType () == typeof(AllyCard)) {
-
-				AllyCard currAlly = (AllyCard)currCard;
-				CardUI = Instantiate (AllyCard);
-				CardUI.GetComponent<AllyCard>().name    = currAlly.name;
-				CardUI.GetComponent<AllyCard>().asset   = currAlly.asset;
-			}
-				
-			Sprite card = Resources.Load<Sprite>(currCard.asset); //Card Sprite
-
-			CardUI.gameObject.GetComponent<Image>().sprite = card;
-			CardUI.transform.SetParent(playArea.transform);
-
-			// Set the cards obj to it's UI.
-			// NOTE: There is probably a better built in Unity way to do this,
-			// if so, we should definitely swap it out.
-			currCard.obj = CardUI;
-		}
-		*/
+		
+		loadCards(currHand,Hand);
+		loadCards(currPlay,playArea);
 
 	}
 
+	void loadCards(List<Card> cards, GameObject area){
+		Card currCard;
+		//Create Card Game Object
+		for(int i = 0 ; i < cards.Count; i++){
+			currCard = cards[i];
 
+			area.GetComponent<CardArea>().addCard(currCard);
+			GameObject CardUI = null; 
+
+			if (currCard.GetType () == typeof(WeaponCard)) {
+				//Is this convention ?
+				WeaponCard currWeapon = (WeaponCard)currCard;
+				CardUI = Instantiate (WeaponCard);
+				CardUI.GetComponent<WeaponCard>().name =  currWeapon.name;
+				CardUI.GetComponent<WeaponCard>().asset = currWeapon.asset;
+				CardUI.GetComponent<WeaponCard>().power = currWeapon.power;
+				
+			}
+			if (currCard.GetType () == typeof(FoeCard)) {
+				 
+				FoeCard currFoe = (FoeCard)currCard;
+				CardUI = Instantiate (FoeCard);
+				CardUI.GetComponent<FoeCard>().name    = currFoe.name;
+				CardUI.GetComponent<FoeCard>().loPower = currFoe.loPower;
+				CardUI.GetComponent<FoeCard>().hiPower = currFoe.hiPower;
+				CardUI.GetComponent<FoeCard>().special = currFoe.special;
+				CardUI.GetComponent<FoeCard>().asset   = currFoe.asset;
+			}
+
+			if (currCard.GetType () == typeof(AllyCard)) {
+
+				AllyCard currAlly = (AllyCard)currCard;
+				CardUI = Instantiate (AllyCard);
+				CardUI.GetComponent<AllyCard>().name    = currAlly.name;
+				CardUI.GetComponent<AllyCard>().asset   = currAlly.asset;
+			}
+				
+			Sprite card = Resources.Load<Sprite>(currCard.asset); //Card Sprite
+
+			CardUI.gameObject.GetComponent<Image>().sprite = card;
+			CardUI.transform.SetParent(area.transform);
+
+			// Set the cards obj to it's UI.
+			// NOTE: There is probably a better built in Unity way to do this,
+			// if so, we should definitely swap it out.
+			currCard.obj = CardUI;
+		}
+	}
 
 	//Purpose is for printing deck values
 	void debugPrint(){
