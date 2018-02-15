@@ -9,6 +9,16 @@ public class FoeCard : AdventureCard
 	private bool _special;
 	private int _loPower;
 	private int _hiPower;
+	private string _type;
+
+	public string type{
+		get{
+			return this._type;
+		}
+		set{
+			this._type = value;
+		}
+	}
 
 	public bool special{
 		get{
@@ -39,8 +49,9 @@ public class FoeCard : AdventureCard
 
 
 
-	public FoeCard(string name, int loPower, int hiPower, bool special, string asset) {
+	public FoeCard(string name, string type,  int loPower, int hiPower, bool special, string asset) {
 		_name = name;
+		_type = type;
 		_loPower = loPower;
 		_hiPower = hiPower;
 		_special = special;
@@ -49,7 +60,7 @@ public class FoeCard : AdventureCard
 
 	// ToString Override for nicer printing.
 	public override string ToString(){
-		return "Foe card:\nName: " + _name + "\nLow Power: " + _loPower + "\nHigh Power: " + _hiPower +
+		return "Foe card:\nName: " + _name + "\n _type" + _type + "\nLow Power: " + _loPower + "\nHigh Power: " + _hiPower +
 			"/nSpecial" + _special;
 	}
 }

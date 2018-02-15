@@ -122,7 +122,11 @@ public class Game : MonoBehaviour {
 			}
 			else if(currCard.GetType() == typeof(FoeCard)){
 				FoeCard currFoe = (FoeCard)currCard;
-				if(_questCard.featuredFoe == currFoe.name){	//Feature Foe Logic 
+
+				if(_questCard.featuredFoe == currFoe.type){	//Feature Foe Logic 
+					power = power + currFoe.hiPower;
+				}
+				else if(_questCard.featuredFoe == "*"){
 					power = power + currFoe.hiPower;
 				}
 				else{
@@ -531,6 +535,7 @@ public class Game : MonoBehaviour {
 				FoeCard currFoe = (FoeCard)currCard;
 				CardUI = Instantiate (FoeCard);
 				CardUI.GetComponent<FoeCard>().name    = currFoe.name;
+				CardUI.GetComponent<FoeCard>().type    = currFoe.type;
 				CardUI.GetComponent<FoeCard>().loPower = currFoe.loPower;
 				CardUI.GetComponent<FoeCard>().hiPower = currFoe.hiPower;
 				CardUI.GetComponent<FoeCard>().special = currFoe.special;

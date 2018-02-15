@@ -37,37 +37,37 @@ public class Deck{
 			/* Foe Load */
 
 			/* 7 Robber Knight */
-			addFoe("Robber Knight", 15, 15, false, "card_image/foe/foeCard1", 7);
+			addFoe("Robber Knight","Robber Knight", 15, 15, false, "card_image/foe/foeCard1", 7);
 
 			/* 5 Saxons */
-			addFoe("Saxons", 10, 20, false, "card_image/foe/foeCard2", 5);
+			addFoe("Saxons","Saxon", 10, 20, false, "card_image/foe/foeCard2", 5);
 
 			/* 4 Boar*/
-			addFoe("Boar", 5, 15, false, "card_image/foe/foeCard3", 4);
+			addFoe("Boar","Boar", 5, 15, false, "card_image/foe/foeCard3", 4);
 
 			/* 8 Thieves*/
-			addFoe("Thieves", 5, 5, false, "card_image/foe/foeCard4", 8);
+			addFoe("Thieves","Thieves", 5, 5, false, "card_image/foe/foeCard4", 8);
 
 			/* 2 Green Knight*/
-			addFoe("Green Knight", 25, 40, false, "card_image/foe/foeCard5", 2);
+			addFoe("Green Knight","Green Knight", 25, 40, false, "card_image/foe/foeCard5", 2);
 
 			/* 3 Black Knight */
-			addFoe("Black Knight", 25, 35, false, "card_image/foe/foeCard6", 3);
+			addFoe("Black Knight","Black Knight", 25, 35, false, "card_image/foe/foeCard6", 3);
 
 			/* 6 Evil Knight*/
-			addFoe("Evil Knight", 20, 30, false, "card_image/foe/foeCard7", 6);
+			addFoe("Evil Knight","Evil Knight", 20, 30, false, "card_image/foe/foeCard7", 6);
 
 			/* 8 Saxon Knight */
-			addFoe("Saxon Knight", 15, 25, false, "card_image/foe/foeCard8", 8);
+			addFoe("Saxon Knight","Saxon", 15, 25, false, "card_image/foe/foeCard8", 8);
 
 			/* 1 Dragon */
-			addFoe("Dragon", 50, 70, false, "card_image/foe/foeCard9", 1);
+			addFoe("Dragon","Dragon", 50, 70, false, "card_image/foe/foeCard9", 1);
 
 			/* 2 Giant */
-			addFoe("Giant", 40, 40, false, "card_image/foe/foeCard10", 2);
+			addFoe("Giant","Giant", 40, 40, false, "card_image/foe/foeCard10", 2);
 
 			/* 4 Mordred */
-			addFoe("Mordred", 30, 30, true, "card_image/foe/foeCard11", 4);
+			addFoe("Mordred","Mordred", 30, 30, true, "card_image/foe/foeCard11", 4);
 
 			/* Ally load */
 
@@ -133,9 +133,9 @@ public class Deck{
 	}
 
 	// Add a given amount of a foe to the deck.
-	void addFoe(string name, int loPower, int hiPower, bool special, string asset, int copies){
+	void addFoe(string name, string type, int loPower, int hiPower, bool special, string asset, int copies){
 		for (int i = 0; i < copies; i++) {
-			_cards.Add(new FoeCard(name, loPower, hiPower, special, asset));
+			_cards.Add(new FoeCard(name, type, loPower, hiPower, special, asset));
 		}
 	}
 
