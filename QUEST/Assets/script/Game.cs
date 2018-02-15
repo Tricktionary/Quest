@@ -55,6 +55,8 @@ public class Game : MonoBehaviour {
 	
 	private bool _questInPlay;
 	private bool _questReady;
+	private int _currQuestStage;
+	private List<int> _stagePower;
 
 	//Draws Card 
 	public void DrawCard(){
@@ -142,6 +144,8 @@ public class Game : MonoBehaviour {
 		return power;
 	}
 
+	
+
 	// Get all the staged cards objects.
 	public List<Card> getStagedCards() {
 		List<Card> stagedCards = new List<Card> ();
@@ -151,6 +155,15 @@ public class Game : MonoBehaviour {
 			}
 		}
 		return stagedCards;
+	}
+
+	public bool playAreaValidQuest(List<Card> cards){
+		for(int i = 0 ; i < cards.Count ; i++){
+			if(cards[i].GetType() != typeof(WeaponCard)){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	// Get a list of all the stages.
@@ -182,12 +195,14 @@ public class Game : MonoBehaviour {
 			if(powerLevels[i] > powerLevels[i + 1]){ return false; }
 		}
 
+		_stagePower = powerLevels;		//Get Calculated stage powers if valid
 		return true;
 	}
 
 	//Update The hand of turn ID based off of the user interface
 	public void updateHand(int turnID){
 		
+		//Update the players Hand 
 		List<Card> tempHand = new List<Card>();
 		tempHand = Hand.GetComponent<CardArea>().cards;
 		_players[_turnId].hand  = new List<Card>();	
@@ -195,15 +210,42 @@ public class Game : MonoBehaviour {
 			_players[_turnId].addCard(tempHand[i]);
 		}
 
-		/*
+		//Update the players play area
 		List<Card> tempPlay = new List<Card>();
 		tempPlay = playArea.GetComponent<CardArea>().cards;
 		_players[_turnId].inPlay = new List<Card>();
-		_players[_turnId].inPlay = tempPlay;
-		*/
+		for(int i = 0 ; i < tempPlay.Count ;i++){
+			_players[_turnId].addPlayCard(tempPlay[i]);
+		}
+		
 	}
 
+	public bool didYouSurvive(List<Card> cards){
+		int power = 0;
+		for(int i = 0 ; i < cards.Count ; i++){
+			if(cards[i].GetType() == typeof(WeaponCard)){
+				WeaponCard currWeapon = (WeaponCard)cards[i];	
+				power = power + currWeapon.power;
+			}
+		}
+		if(_players[_turnId].rank == 0 ){
+			power = power + 5;
+		}
+		else if( _players[_turnId].rank == 1){
+			power = power + 10;
+		}
+		else if(_players[_turnId].rank == 2){
+			power = power + 20;
+		}
 
+
+		if(power > _stagePower[_currQuestStage]){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 	//End Turn
 	public void EndTurn() {
 		//Debug.Log(_canEnd);
@@ -219,10 +261,13 @@ public class Game : MonoBehaviour {
 							_questReady = true;
 
 							// Flip the staged cards.
+							/*
 							List<Card> stagedCards = getStagedCards();
 							for (int i = 0; i < stagedCards.Count; i++) {
 								stagedCards[i].flipCard(true);
 							}
+							*/
+							//Get the ammount of cards used in this stage and refund to sponsor
 
 							updateHand(_turnId); 		 //Update Sponsor Hand based off of the UI
 							nextTurn(true,false);
@@ -235,9 +280,29 @@ public class Game : MonoBehaviour {
 					}
 					if(_questReady == true){			//Quest is Ready
 						if(_playersIn.Count > 0){		//If people are participating
-							//Debug.Log("Quest In Play");
-							//updateHand(_turnId);
-							nextTurnQuest();
+							
+
+							if(playAreaValidQuest(playArea.GetComponent<CardArea>().cards)){	//PlayZone is valid
+								statusPrompt("");
+								_askCounter++;
+								if(_askCounter > _playersIn.Count){		//TIME TO RUMBLE
+									nextTurnQuest();
+									if(didYouSurvive(playArea.GetComponent<CardArea>().cards)){
+										statusPrompt("You Lived!");
+									}
+									else{
+										statusPrompt("You Have Perished R.I.P");
+									}
+								}
+								else{										//SETUP
+									updateHand(_turnId);
+									nextTurnQuest();
+									statusPrompt("Setup Your Weapons");
+								}
+							}	
+							else{						//Not Valid
+								statusPrompt("Play Zone is Not Valid");
+							}
 						}
 					}
 				}
@@ -284,6 +349,7 @@ public class Game : MonoBehaviour {
 			}
 		}
 	}
+
 
 /*
 	Funtion : Litterally Itterates to the next turn 
@@ -366,7 +432,7 @@ public class Game : MonoBehaviour {
 		_questInPlay = false;
 		_sponsorId = -1;
 		_questeeTurnId = -1;
-
+		_currQuestStage = -1;
 		// Clean the stages..
 		for (int i = 0; i < Stages.Count; i++) {
 			Stages[i].SetActive(true);
@@ -420,10 +486,12 @@ public class Game : MonoBehaviour {
 				}	
 				else{										//Done Asking
 					//Change To QuesteeTurns
+					_askCounter = 1;
 					statusPrompt("Setup your Weapons");
 					Debug.Log("Here4");
 					nextTurnQuest();
 					Prompt.SetActive(false);
+					_currQuestStage = 0;
 				}		
 			}
 			else if(answer == 2){							//No
@@ -442,8 +510,13 @@ public class Game : MonoBehaviour {
 						nextTurn(false,false);
 					}
 					else{									//Someone joined
-						Debug.Log("Here6");
-						nextTurn(true,true);
+						//Change To QuesteeTurns
+						_askCounter = 1;
+						statusPrompt("Setup your Weapons");
+						Debug.Log("Here4");
+						nextTurnQuest();
+						Prompt.SetActive(false);
+						_currQuestStage = 0;
 					}
 					Prompt.SetActive(false);				//Turn The Prompt Off
 				}
@@ -487,6 +560,7 @@ public class Game : MonoBehaviour {
 		_sponsorId = -1;
 		_questeeTurnId = -1;
 		_askCounter = 0;
+		_currQuestStage = -1;	
 
 		//Populates Player Hands
 		for(int i = 0; i < _players.Count ; i++){
@@ -501,8 +575,11 @@ public class Game : MonoBehaviour {
 	//Functionality : Loads player hand onto the UI
 	void loadHand(int playerId){
 		
-		List<Card> currHand = _players[playerId].hand;
-		Card currCard;
+
+		playArea.GetComponent<CardArea>().cards =  new List<Card>();
+		Hand.GetComponent<CardArea>().cards =  new List<Card>();
+
+		 
 
 		//Set Player ID text
 		playerIdTxt.GetComponent<UnityEngine.UI.Text>().text = "Player ID : "+ (playerId+1).ToString(); //For User Friendly
@@ -511,11 +588,21 @@ public class Game : MonoBehaviour {
 		int currPlayerShield = _players[playerId].shieldCounter;
 		shieldCounterTxt.GetComponent<UnityEngine.UI.Text>().text = "# Shield: "+ (currPlayerShield).ToString(); //For User Friendly
 
-		//Create Card Game Object
-		for(int i = 0 ; i < currHand.Count; i++){
-			currCard = currHand[i];
+		List<Card> currHand = _players[playerId].hand;
+		List<Card> currPlay = _players[playerId].inPlay;
+		
+		loadCards(currHand,Hand);
+		loadCards(currPlay,playArea);
 
-			Hand.GetComponent<CardArea>().addCard(currCard);
+	}
+
+	void loadCards(List<Card> cards, GameObject area){
+		Card currCard;
+		//Create Card Game Object
+		for(int i = 0 ; i < cards.Count; i++){
+			currCard = cards[i];
+
+			area.GetComponent<CardArea>().addCard(currCard);
 			GameObject CardUI = null; 
 
 			if (currCard.GetType () == typeof(WeaponCard)) {
@@ -549,7 +636,7 @@ public class Game : MonoBehaviour {
 			Sprite card = Resources.Load<Sprite>(currCard.asset); //Card Sprite
 
 			CardUI.gameObject.GetComponent<Image>().sprite = card;
-			CardUI.transform.SetParent(Hand.transform);
+			CardUI.transform.SetParent(area.transform);
 
 			// Set the cards obj to it's UI.
 			// NOTE: There is probably a better built in Unity way to do this,

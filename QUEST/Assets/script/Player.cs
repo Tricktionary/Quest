@@ -88,6 +88,7 @@ public class Player {
 		_bp = 5;
 		_hand = new List<Card>();
 		_allies = new List<Card>();
+		_inPlay = new List<Card>();
 	}
 	
 	//AI
@@ -97,7 +98,8 @@ public class Player {
 		_shieldCounter = 0;
 		_bp = 5;
 		_hand = new List<Card>();
-		_allies = new List<Card>();	
+		_allies = new List<Card>();
+		_inPlay = new List<Card>();	
 	}
 
 
@@ -106,9 +108,8 @@ public class Player {
 		_hand.Add(card);	//Adds card to hand
 	}
 	
-	// Plays Cards (Get rid of cards played)
-	void playCard(List<Card> cards){
-		
+	public void addPlayCard(Card card){
+		_inPlay.Add(card);
 	}
 	
 	//s as number of shields to add, should we force rank up?
