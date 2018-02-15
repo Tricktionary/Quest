@@ -113,7 +113,7 @@ public class Player {
 	}
 	
 	//s as number of shields to add, should we force rank up?
-	void AddShields (int s) {
+	public void AddShields (int s) {
 		_shieldCounter += s;
 	}
 

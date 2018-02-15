@@ -18,6 +18,7 @@ public class Game : MonoBehaviour {
 	public GameObject Prompt;								//Prompter
 	public GameObject promptTxt;
 	public GameObject gameStatus;
+	public GameObject currStageTxt;
 
 	public GameObject drawCardArea;							//DrawCardArea
 	public GameObject Hand; 								//Play Area Hand Reference
@@ -42,6 +43,7 @@ public class Game : MonoBehaviour {
 	private int _sponsorId;
 	private int _questeeTurnId;
 	private List<int> _playersIn; //We are using this to store questees in the quest and before the quest is sponsored, who is next to decide to sponsor
+	private List<int> _deadPlayers;
 	private string featFoe;       //Could be unused
 	private int numStages;
 
@@ -50,13 +52,16 @@ public class Game : MonoBehaviour {
 	private bool _canEnd;
 
 
+
 	public int promptAnswer;
 	public int _askCounter;  //How many people you asked this prompt to
-	
+
 	private bool _questInPlay;
 	private bool _questReady;
 	private int _currQuestStage;
 	private List<int> _stagePower;
+	private bool _rumble;
+	
 
 	//Draws Card 
 	public void DrawCard(){
@@ -220,6 +225,7 @@ public class Game : MonoBehaviour {
 		
 	}
 
+	//Did the player surive the stage
 	public bool didYouSurvive(List<Card> cards){
 		int power = 0;
 		for(int i = 0 ; i < cards.Count ; i++){
@@ -246,6 +252,7 @@ public class Game : MonoBehaviour {
 			return false;
 		}
 	}
+	
 	//End Turn
 	public void EndTurn() {
 		//Debug.Log(_canEnd);
@@ -261,12 +268,12 @@ public class Game : MonoBehaviour {
 							_questReady = true;
 
 							// Flip the staged cards.
-							/*
+							
 							List<Card> stagedCards = getStagedCards();
 							for (int i = 0; i < stagedCards.Count; i++) {
 								stagedCards[i].flipCard(true);
 							}
-							*/
+							
 							//Get the ammount of cards used in this stage and refund to sponsor
 
 							updateHand(_turnId); 		 //Update Sponsor Hand based off of the UI
@@ -283,17 +290,67 @@ public class Game : MonoBehaviour {
 							
 
 							if(playAreaValidQuest(playArea.GetComponent<CardArea>().cards)){	//PlayZone is valid
+								updateHand(_turnId);
 								statusPrompt("");
-								_askCounter++;
-								if(_askCounter > _playersIn.Count){		//TIME TO RUMBLE
-									nextTurnQuest();
-									if(didYouSurvive(playArea.GetComponent<CardArea>().cards)){
-										statusPrompt("You Lived!");
-									}
+								_askCounter++;	
+								if(_askCounter > _playersIn.Count){
+									if(_rumble == true){	//Done Checking all Questees go back to setup
+										
+										//Removing Dead players
+										for(int i = 0 ; i < _deadPlayers.Count; i++){
+											_playersIn.Remove(_deadPlayers[i]);
+										}
+
+										if(_playersIn.Count <= 0){ //Everyone is dead
+											reset();
+											nextTurn(false,false);
+											currStageTxt.GetComponent<UnityEngine.UI.Text>().text = "";
+											return;
+										}
+
+
+
+										else{
+											_rumble = false;
+											_askCounter = 1;
+											_currQuestStage++;
+											currStageTxt.GetComponent<UnityEngine.UI.Text>().text = "Current Stage: "+ (_currQuestStage+1).ToString();
+											if(_currQuestStage >= numStages){
+												statusPrompt("YOU HAVE WON!");
+												for(int i = 0 ; i < _playersIn.Count ; i++){
+													_players[_playersIn[i]].AddShields(numStages);
+												}
+												reset();
+												nextTurn(false,false);
+												return;
+											}
+										}
+									}	
 									else{
-										statusPrompt("You Have Perished R.I.P");
+										_rumble = true;
+										_askCounter = 1;
 									}
 								}
+
+								if(_rumble == true){
+									nextTurnQuest();
+									if(didYouSurvive(playArea.GetComponent<CardArea>().cards)){		//YOU WON THE STAGE
+										statusPrompt("You Lived!");
+										//Let Player setup for next stage
+										//If last stage pay his shields 
+										//RANK UP ?
+ 									}
+									else{
+										statusPrompt("You Have Perished R.I.P");					//YOU DIED 
+										for(int i = 0 ; i < _playersIn.Count; i++){
+											if(_playersIn[i] == _turnId){
+												_deadPlayers.Add(_playersIn[i]);
+											}
+										}
+									}
+								}
+
+							 
 								else{										//SETUP
 									updateHand(_turnId);
 									nextTurnQuest();
@@ -304,26 +361,15 @@ public class Game : MonoBehaviour {
 								statusPrompt("Play Zone is Not Valid");
 							}
 						}
+						else{
+							//reset();
+							//nextTurn(false,false);
+						}
 					}
 				}
 				if(_sponsorId == -1){ 			//Find A Sponsor
 					prompt(_turnId, "sponsor");
 				}
-					//TODO: Quest is already sponsored, move on to next player, if it is the last player then let the sponsor do any final actions
-					//prompt(_turnId,"playQuest");
-
-					/*
-					for (int i = 0; i < _playersIn.Count; i++) {
-						if (_playersIn [i] == _questeeTurnId) {
-							if (i == _playersIn.Count - 1) {
-								//TODO: SPONSOR'S TURN
-							} else {
-								_questeeTurnId = _playersIn [i + 1];
-							}
-							break;
-						}
-					}*/
-				 
 				else {
 					//TODO: Check if quest pile is successfully filled and if it is then sponsor
 
@@ -427,12 +473,16 @@ public class Game : MonoBehaviour {
 
 	//Reset Values
 	public void reset(){
+		_deadPlayers = new List<int>();
 		_playersIn = new List<int>(); //Reset Players In
 		_questReady = false;
 		_questInPlay = false;
+		_rumble = false;
 		_sponsorId = -1;
 		_questeeTurnId = -1;
 		_currQuestStage = -1;
+		_questCard = null;
+		numStages = -1;	
 		// Clean the stages..
 		for (int i = 0; i < Stages.Count; i++) {
 			Stages[i].SetActive(true);
@@ -481,22 +531,23 @@ public class Game : MonoBehaviour {
 				_playersIn.Add(_turnId);					//Add if Player to _playersIn
 
 				if(_askCounter < (_numPlayers - 1)){				//Continue Asking
-					Debug.Log("Here3");
+					//Debug.Log("Here3");
 					nextTurn(false,false); 		
 				}	
 				else{										//Done Asking
 					//Change To QuesteeTurns
 					_askCounter = 1;
 					statusPrompt("Setup your Weapons");
-					Debug.Log("Here4");
+					_currQuestStage = 0;
+					currStageTxt.GetComponent<UnityEngine.UI.Text>().text = "Current Stage: "+ (_currQuestStage+1).ToString();
+					//Debug.Log("Here4");
 					nextTurnQuest();
 					Prompt.SetActive(false);
-					_currQuestStage = 0;
 				}		
 			}
 			else if(answer == 2){							//No
 				if(_askCounter < (_numPlayers - 1)){				//Continue asking
-					Debug.Log("Here5");
+					//Debug.Log("Here5");
 					nextTurn(false,false); 		
 				}	
 				else{										//Done Asking
@@ -513,10 +564,11 @@ public class Game : MonoBehaviour {
 						//Change To QuesteeTurns
 						_askCounter = 1;
 						statusPrompt("Setup your Weapons");
-						Debug.Log("Here4");
+						_currQuestStage = 0;
+						currStageTxt.GetComponent<UnityEngine.UI.Text>().text = "Current Stage: "+ (_currQuestStage+1).ToString();
+						//Debug.Log("Here4");
 						nextTurnQuest();
 						Prompt.SetActive(false);
-						_currQuestStage = 0;
 					}
 					Prompt.SetActive(false);				//Turn The Prompt Off
 				}
@@ -549,13 +601,15 @@ public class Game : MonoBehaviour {
 		_discardPileAdventure = new Deck ("");
 		_discardPileStory = new Deck ("");
 
+		_deadPlayers = new List<int>();
 		_turnId = 0;
-		_numPlayers = 3;
+		_numPlayers = _players.Count;
 		_running = true;
 		_drawn = false;
 		_standardTurn = true;
 		_canEnd = false;
 		_questInPlay = false;
+		_rumble = false;
 
 		_sponsorId = -1;
 		_questeeTurnId = -1;
