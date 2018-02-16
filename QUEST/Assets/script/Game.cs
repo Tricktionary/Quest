@@ -167,10 +167,11 @@ public class Game : MonoBehaviour {
 	}
 
 	public bool playAreaValidQuest(List<Card> cards){
+
 		for(int i = 0 ; i < cards.Count ; i++){
-			if(cards[i].GetType() != typeof(WeaponCard)){
+			if(cards[i].GetType() == typeof(FoeCard)){
 				return false;
-			}
+			} 
 		}
 		return true;
 	}
@@ -237,6 +238,10 @@ public class Game : MonoBehaviour {
 				WeaponCard currWeapon = (WeaponCard)cards[i];	
 				power = power + currWeapon.power;
 			}
+			if(cards[i].GetType() == typeof(AllyCard)){
+				AllyCard currAlly = (AllyCard)cards[i];
+				power = power + currAlly.power;
+			}
 		}
 		if(_players[_turnId].rank == 0 ){
 			power = power + 5;
@@ -257,6 +262,28 @@ public class Game : MonoBehaviour {
 		}
 	}
 	
+	private void clearWeapons(){
+		List<Card> oldCards = playArea.GetComponent<CardArea>().cards;
+		List<Card> filteredCards = new List<Card>();
+		
+		for(int i = 0 ; i < oldCards.Count ; i++){
+			if(oldCards[i].GetType() != typeof(WeaponCard)){
+				filteredCards.Add(oldCards[i]);
+			}
+			else{
+				_discardPileAdventure.Discard(oldCards[i]);
+			}
+		}
+		
+		playArea.GetComponent<CardArea>().cards = new List<Card>();
+		
+		for(int i =0 ; i < filteredCards.Count ;i++){
+			playArea.GetComponent<CardArea>().addCard(filteredCards[i]);
+		}
+
+		Debug.Log("Clears Weapons");
+	}
+
 	//End Turn
 	public void EndTurn() {
 		//Debug.Log(_canEnd);
@@ -271,13 +298,16 @@ public class Game : MonoBehaviour {
 						if(checkQuest()){	
 							_questReady = true;
 
+							int cardsUsed; //Get the number of cards used per stage
+
+
 							// Flip the staged cards.
-							
+							/*
 							List<Card> stagedCards = getStagedCards();
 							for (int i = 0; i < stagedCards.Count; i++) {
 								stagedCards[i].flipCard(true);
 							}
-							
+							*/
 							//Get the ammount of cards used in this stage and refund to sponsor
 
 							updateHand(_turnId); 		 //Update Sponsor Hand based off of the UI
@@ -299,33 +329,35 @@ public class Game : MonoBehaviour {
 								_askCounter++;	
 								if(_askCounter > _playersIn.Count){
 									if(_rumble == true){	//Done Checking all Questees go back to setup
-										
-										//Removing Dead players
-										for(int i = 0 ; i < _deadPlayers.Count; i++){
+									 
+										for(int i = 0 ; i < _deadPlayers.Count; i++){				//Removing Dead players
 											_playersIn.Remove(_deadPlayers[i]);
 										}
-
-										if(_playersIn.Count <= 0){ //Everyone is dead
+										if(_playersIn.Count <= 0){ 									//Everyone is dead So reset
+											clearWeapons();
+											updateHand(_turnId);
 											reset();
 											nextTurn(false,false);
+											_askCounter = 0;
 											currStageTxt.GetComponent<UnityEngine.UI.Text>().text = "";
 											return;
 										}
-
-
-
-										else{
+										else{														//Continue
 											_rumble = false;
 											_askCounter = 1;
 											_currQuestStage++;
 											currStageTxt.GetComponent<UnityEngine.UI.Text>().text = "Current Stage: "+ (_currQuestStage+1).ToString();
-											if(_currQuestStage >= numStages){
-												statusPrompt("YOU HAVE WON!");
+											if(_currQuestStage >= numStages){	//Quest is Over
+												currStageTxt.GetComponent<UnityEngine.UI.Text>().text = "";
+												statusPrompt("Quest Was Done successfully");
 												for(int i = 0 ; i < _playersIn.Count ; i++){
 													_players[_playersIn[i]].AddShields(numStages);
 												}
+												clearWeapons();
+												updateHand(_turnId);
 												reset();
 												nextTurn(false,false);
+												_askCounter = 0;
 												return;
 											}
 										}
@@ -340,18 +372,20 @@ public class Game : MonoBehaviour {
 									nextTurnQuest();
 									if(didYouSurvive(playArea.GetComponent<CardArea>().cards)){		//YOU WON THE STAGE
 										statusPrompt("You Lived!");
-										//Let Player setup for next stage
-										//If last stage pay his shields 
-										//RANK UP ?
+										clearWeapons();
+										updateHand(_turnId);
  									}
 									else{
 										statusPrompt("You Have Perished R.I.P");					//YOU DIED 
+										clearWeapons();
+										updateHand(_turnId);
 										for(int i = 0 ; i < _playersIn.Count; i++){
 											if(_playersIn[i] == _turnId){
 												_deadPlayers.Add(_playersIn[i]);
 											}
 										}
 									}
+									 
 								}
 
 							 
@@ -409,6 +443,9 @@ public class Game : MonoBehaviour {
 	public void nextTurn(bool drawn, bool canEnd){
 		//Clear Old Hand
 		foreach (Transform child in Hand.transform) {	
+			GameObject.Destroy (child.gameObject);
+		}
+		foreach (Transform child in playArea.transform) {	
 			GameObject.Destroy (child.gameObject);
 		}
 
@@ -690,6 +727,13 @@ public class Game : MonoBehaviour {
 				CardUI = Instantiate (AllyCard);
 				CardUI.GetComponent<AllyCard>().name    = currAlly.name;
 				CardUI.GetComponent<AllyCard>().asset   = currAlly.asset;
+				CardUI.GetComponent<AllyCard>().special = currAlly.special;
+				CardUI.GetComponent<AllyCard>().power   = currAlly.power;
+				CardUI.GetComponent<AllyCard>().bid     = currAlly.bid;
+				CardUI.GetComponent<AllyCard>().bonusPower = currAlly.bonusPower;
+				CardUI.GetComponent<AllyCard>().bonusBid  =  currAlly.bonusBid;
+				CardUI.GetComponent<AllyCard>().questCondition = currAlly.questCondition;
+				CardUI.GetComponent<AllyCard>().allyCondition  = currAlly.allyCondition;
 			}
 				
 			Sprite card = Resources.Load<Sprite>(currCard.asset); //Card Sprite
