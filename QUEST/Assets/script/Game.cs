@@ -34,34 +34,30 @@ public class Game : MonoBehaviour {
 	private Deck _discardPileAdventure;
 	private Deck _discardPileStory;
 
-	//CURRENT TURN
-	private bool _running;
+	//GENERAL
 	private bool _drawn;
+	private bool _canEnd;
+	public int promptAnswer;
+	public int _askCounter;  //How many people you asked this prompt to
 
+	//QUEST RELATED 
 	private QuestCard _questCard;
-	private List<List<Card>> _Quest;
 	private int _sponsorId;
 	private int _questeeTurnId;
 	private List<int> _playersIn; //We are using this to store questees in the quest and before the quest is sponsored, who is next to decide to sponsor
 	private List<int> _deadPlayers;
 	private string featFoe;       //Could be unused
 	private int numStages;
-
-	//if the user can end their turn
-	private bool _standardTurn;
-	private bool _canEnd;
-
-
-
-	public int promptAnswer;
-	public int _askCounter;  //How many people you asked this prompt to
-
 	private bool _questInPlay;
 	private bool _questReady;
 	private int _currQuestStage;
 	private List<int> _stagePower;
 	private bool _rumble;
 	
+	//TOURNAMENT RELATED
+	private bool _tournamentInPlay;
+	private TournamentCard _tournamentCard;
+	 
 
 	//Draws Card 
 	public void DrawCard(){
@@ -89,12 +85,16 @@ public class Game : MonoBehaviour {
 				_canEnd = true;
 				_questCard = (QuestCard)currCard;
 				numStages = _questCard.stages;				//Stages of the Quest
-				/*
-				for (int i = 0; i < _numPlayers; i++) {
-					//all questees in
-					_playersIn.Add ((_turnId + i) % _numPlayers);
-				}
-				*/
+			}
+
+			if(currCard.GetType() == typeof(TournamentCard)){
+				storyCard = Instantiate(QuestCard);
+				//Debug.Log("TournamentCard");
+				_tournamentInPlay = true;
+				_tournamentCard = (TournamentCard)currCard;
+				_canEnd = true;
+
+
 			}
 
 			storyCard.gameObject.GetComponent<Image>().sprite = card;
@@ -291,7 +291,7 @@ public class Game : MonoBehaviour {
 		//Debug.Log(_sponsorId);
 		//Debug.Log(_questReady);
 		if (_canEnd) {
-			if (_questInPlay) {			//Quest Currently in plays
+			if (_questInPlay) {				//Quest Currently in plays
 				if (_sponsorId >= 0) {  //There is a sponsor
 					
 					if(_questReady == false){			//Quest is not Ready
@@ -428,7 +428,11 @@ public class Game : MonoBehaviour {
 					*/
 				}
 			}
-			else {	//No Quest In Play
+
+			else if(_tournamentInPlay){		//Tournament is in play
+				prompt(_turnId,"playTournament");
+			}
+			else {						//Other
 				nextTurn(false,false);
 			}
 		}
@@ -505,6 +509,10 @@ public class Game : MonoBehaviour {
 			Prompt.SetActive(true);
 			promptTxt.GetComponent<UnityEngine.UI.Text>().text = "Do You Want To Join the Quest?";
 		}
+		if(messageType == "playTournament"){
+			Prompt.SetActive(true);
+			promptTxt.GetComponent<UnityEngine.UI.Text>().text = "Do You Want To Join This Tournament?";
+		}
 	}
 
 	//User Status Prompt
@@ -523,6 +531,8 @@ public class Game : MonoBehaviour {
 		_questeeTurnId = -1;
 		_currQuestStage = -1;
 		_questCard = null;
+		_tournamentCard = null;
+		_tournamentInPlay = false;
 		numStages = -1;	
 		// Clean the stages..
 		for (int i = 0; i < Stages.Count; i++) {
@@ -550,7 +560,7 @@ public class Game : MonoBehaviour {
 			}
 			if(answer == 2){							//No
 				if(_askCounter < _numPlayers){
-					nextTurn(false,false);
+					nextTurn(true,false);
 				}
 				else{									//No Sponsor
 					_askCounter = 0;
@@ -571,9 +581,9 @@ public class Game : MonoBehaviour {
 			if(answer == 1){								//Yes
 				_playersIn.Add(_turnId);					//Add if Player to _playersIn
 
-				if(_askCounter < (_numPlayers - 1)){				//Continue Asking
+				if(_askCounter < (_numPlayers - 1)){		//Continue Asking
 					//Debug.Log("Here3");
-					nextTurn(false,false); 		
+					nextTurn(true,false);					//True Because player shouldn't be able to draw cards 		
 				}	
 				else{										//Done Asking
 					//Change To QuesteeTurns
@@ -587,9 +597,9 @@ public class Game : MonoBehaviour {
 				}		
 			}
 			else if(answer == 2){							//No
-				if(_askCounter < (_numPlayers - 1)){				//Continue asking
+				if(_askCounter < (_numPlayers - 1)){		//Continue asking
 					//Debug.Log("Here5");
-					nextTurn(false,false); 		
+					nextTurn(true,false); 		
 				}	
 				else{										//Done Asking
 					_askCounter = 0;
@@ -613,6 +623,15 @@ public class Game : MonoBehaviour {
 					}
 					Prompt.SetActive(false);				//Turn The Prompt Off
 				}
+			}
+		}
+		if(type == "playTournament"){
+			_askCounter++;
+			if(answer == 1){
+				nextTurn(true,false);
+			}
+			else if(answer == 2){
+				nextTurn(false,true);
 			}
 		}
 	}
@@ -645,17 +664,17 @@ public class Game : MonoBehaviour {
 		_deadPlayers = new List<int>();
 		_turnId = 0;
 		_numPlayers = _players.Count;
-		_running = true;
 		_drawn = false;
-		_standardTurn = true;
 		_canEnd = false;
 		_questInPlay = false;
 		_rumble = false;
+		_tournamentInPlay = false;
 
 		_sponsorId = -1;
 		_questeeTurnId = -1;
 		_askCounter = 0;
 		_currQuestStage = -1;	
+		promptAnswer = -1;
 
 		//Populates Player Hands
 		for(int i = 0; i < _players.Count ; i++){
@@ -778,29 +797,29 @@ public class Game : MonoBehaviour {
 	//click function that changed the value of sponsorOrNot 
 	//and calls the sponsorPrompt function which closes the prompt window and calls createQuest
 	public void YesButton_Click(){
+		promptAnswer = 1;
 		if(promptTxt.GetComponent<UnityEngine.UI.Text>().text == "Do You Want To Sponsor This Quest?"){
-			//Debug.Log("clicked the Yes button in Sponsor");
-			promptAnswer = 1;
 			promptReceiv(promptAnswer,"sponsor");
 		}
 		if(promptTxt.GetComponent<UnityEngine.UI.Text>().text == "Do You Want To Join the Quest?"){
-			//Debug.Log("clicked the Yes button in joinQuest");
-			promptAnswer = 1;
 			promptReceiv(promptAnswer,"playQuest");
+		}
+		if(promptTxt.GetComponent<UnityEngine.UI.Text>().text == "Do You Want To Join This Tournament?"){
+			promptReceiv(promptAnswer,"playTournament");
 		}
 	}
 
 	//click function that changed the value of sponsorOrNot 
 	public void NoButton_Click(){
-		if(promptTxt.GetComponent<UnityEngine.UI.Text>().text == "Do You Want To Sponsor This Quest?"){
-			//Debug.Log("clicked the No button in Sponsor");
-			promptAnswer = 2;
+		promptAnswer = 2;
+		if(promptTxt.GetComponent<UnityEngine.UI.Text>().text == "Do You Want To Sponsor This Quest?"){			 
 			promptReceiv(promptAnswer,"sponsor");
 		}
 		if(promptTxt.GetComponent<UnityEngine.UI.Text>().text == "Do You Want To Join the Quest?"){
-			//Debug.Log("clicked the No button in joinQuest");
-			promptAnswer = 2;
 			promptReceiv(promptAnswer,"playQuest");
+		}
+		if(promptTxt.GetComponent<UnityEngine.UI.Text>().text == "Do You Want To Join the Quest?"){
+			promptReceiv(promptAnswer,"playTournament");
 		}
 	}
 		
