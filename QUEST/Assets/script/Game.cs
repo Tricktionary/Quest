@@ -57,7 +57,8 @@ public class Game : MonoBehaviour {
 	//TOURNAMENT RELATED
 	private bool _tournamentInPlay;
 	private TournamentCard _tournamentCard;
-	 
+	private bool _tournamentPrompt;
+	private int _tourneeID;
 
 	//Draws Card 
 	public void DrawCard(){
@@ -281,7 +282,7 @@ public class Game : MonoBehaviour {
 			playArea.GetComponent<CardArea>().addCard(filteredCards[i]);
 		}
 
-		Debug.Log("Clears Weapons");
+		//Debug.Log("Clears Weapons");
 	}
 
 	//End Turn
@@ -290,6 +291,8 @@ public class Game : MonoBehaviour {
 		//Debug.Log(_questInPlay);
 		//Debug.Log(_sponsorId);
 		//Debug.Log(_questReady);
+		//Debug.Log(_playersIn.Count);
+
 		if (_canEnd) {
 			if (_questInPlay) {				//Quest Currently in plays
 				if (_sponsorId >= 0) {  //There is a sponsor
@@ -408,36 +411,53 @@ public class Game : MonoBehaviour {
 				if(_sponsorId == -1){ 			//Find A Sponsor
 					prompt(_turnId, "sponsor");
 				}
-				else {
-					//TODO: Check if quest pile is successfully filled and if it is then sponsor
-
-					//TODO: Set questeeId turn, run init quest code here
-					/*
-					if (checkQuest ()) {
-						initQuest ();
-						loadHand (_questeeTurnId);
-					} else {
-						//TODO: Prompt here. if no then:
-						//remove [0] from _playersIn
-						//load _player[0] (the next player's hand
-						_drawn = true;
-						_canEnd = true;
-					}
-					_drawn = false;
-					_canEnd = false;
-					*/
-				}
 			}
 
 			else if(_tournamentInPlay){		//Tournament is in play
-				prompt(_turnId,"playTournament");
+				if(_tournamentPrompt == false){
+					prompt(_turnId,"playTournament");
+				}
+				else if (_tournamentPrompt == true){
+					if(_playersIn.Count > 1 ){		//Players Have joined
+						_askCounter++;
+						nextTurnTournament();
+					}
+				}
 			}
 			else {						//Other
 				nextTurn(false,false);
 			}
 		}
 	}
+	/*
+		Tournament
+	*/
+	public void nextTurnTournament(){
+		foreach (Transform child in Hand.transform) {	
+			GameObject.Destroy (child.gameObject);
+		}
+		
+		foreach (Transform child in playArea.transform) {	
+			GameObject.Destroy (child.gameObject);
+		}
 
+
+
+		if(_tourneeID == -1){ //Instantiate
+			_tourneeID = 0;
+		}
+		else{
+			_tourneeID++;
+		}
+		if(_tourneeID >= _playersIn.Count){
+			_tourneeID = 0;
+		}
+
+		_turnId =  _playersIn[_tourneeID]; 
+		loadHand(_turnId);
+		_drawn = true;	//Can't Draw cards while in quest
+		_canEnd = true; //Can End turn
+	}
 
 /*
 	Funtion : Litterally Itterates to the next turn 
@@ -469,7 +489,7 @@ public class Game : MonoBehaviour {
 
 */
 	public void nextTurnQuest(){
-		bool revealStage;
+		
 		
 		foreach (Transform child in Hand.transform) {	
 			GameObject.Destroy (child.gameObject);
@@ -534,6 +554,8 @@ public class Game : MonoBehaviour {
 		_tournamentCard = null;
 		_tournamentInPlay = false;
 		numStages = -1;	
+		_tournamentPrompt = false;
+		_tourneeID = -1;
 		// Clean the stages..
 		for (int i = 0; i < Stages.Count; i++) {
 			Stages[i].SetActive(true);
@@ -571,13 +593,14 @@ public class Game : MonoBehaviour {
 					}
 					nextTurn(false,false);
 					Prompt.SetActive(false);
-					Debug.Log(_turnId);
+					//Debug.Log(_turnId);
 				}
 			}
 		}
 
 		if(type == "playQuest"){
 			_askCounter++;
+
 			if(answer == 1){								//Yes
 				_playersIn.Add(_turnId);					//Add if Player to _playersIn
 
@@ -597,10 +620,12 @@ public class Game : MonoBehaviour {
 				}		
 			}
 			else if(answer == 2){							//No
+				
 				if(_askCounter < (_numPlayers - 1)){		//Continue asking
 					//Debug.Log("Here5");
 					nextTurn(true,false); 		
 				}	
+				
 				else{										//Done Asking
 					_askCounter = 0;
 					_turnId++;								//Skip Sponsor
@@ -625,20 +650,61 @@ public class Game : MonoBehaviour {
 				}
 			}
 		}
+
 		if(type == "playTournament"){
 			_askCounter++;
+			
 			if(answer == 1){
+				
+				_playersIn.Add(_turnId);
 				nextTurn(true,false);
+				
+				if(_askCounter >= _numPlayers){	//Asked all the players
+					if(_playersIn.Count <= 1){	//Not Enough Players
+						if(_playersIn.Count == 1){
+							_players[_playersIn[0]].AddShields(_tournamentCard.shields);
+						}
+						_askCounter = 0;
+						reset();
+						nextTurn(false,false);
+						Prompt.SetActive(false); 
+					}
+					else{
+						_askCounter = 0;
+						_tournamentPrompt = true;
+						Prompt.SetActive(false); 
+						nextTurnTournament();
+						statusPrompt("Setup Your Weapons");
+					}
+				}
 			}
-			else if(answer == 2){
-				nextTurn(false,true);
+
+			else if(answer == 2){	
+				nextTurn(true,false);
+				if(_askCounter >= _numPlayers){	//Asked all the players
+					if(_playersIn.Count <= 1){	//Not Enough Players
+						if(_playersIn.Count == 1){
+							_players[_playersIn[0]].AddShields(_tournamentCard.shields);
+						}
+						nextTurn(false,false);
+						_askCounter = 0;
+						reset();
+						Prompt.SetActive(false); 
+					}
+					else{
+						_askCounter = 0;
+						_tournamentPrompt = true;
+						Prompt.SetActive(false);
+						nextTurnTournament();
+						statusPrompt("Setup Your Weapons");
+					}
+				}
 			}
 		}
 	}
 	
 	//changes the number of stages based on numStages on the quest card
 	public void createQuest(int sponsor){
-		_playersIn = new List<int> ();
 		_sponsorId = sponsor;
 		_questReady = false;	//Quest is not ready yet
 		Debug.Log("numStages " + numStages);
@@ -651,6 +717,7 @@ public class Game : MonoBehaviour {
 	// Use this for initialization
 	void Awake() {
 		//assume 3 players
+
 		_players.Add(new Player(1));
 		_players.Add(new Player(2));
 		_players.Add(new Player(3));
@@ -661,7 +728,9 @@ public class Game : MonoBehaviour {
 		_discardPileAdventure = new Deck ("");
 		_discardPileStory = new Deck ("");
 
+		_playersIn = new List<int> ();
 		_deadPlayers = new List<int>();
+
 		_turnId = 0;
 		_numPlayers = _players.Count;
 		_drawn = false;
@@ -675,6 +744,8 @@ public class Game : MonoBehaviour {
 		_askCounter = 0;
 		_currQuestStage = -1;	
 		promptAnswer = -1;
+
+		_tourneeID = -1;
 
 		//Populates Player Hands
 		for(int i = 0; i < _players.Count ; i++){
@@ -818,7 +889,7 @@ public class Game : MonoBehaviour {
 		if(promptTxt.GetComponent<UnityEngine.UI.Text>().text == "Do You Want To Join the Quest?"){
 			promptReceiv(promptAnswer,"playQuest");
 		}
-		if(promptTxt.GetComponent<UnityEngine.UI.Text>().text == "Do You Want To Join the Quest?"){
+		if(promptTxt.GetComponent<UnityEngine.UI.Text>().text == "Do You Want To Join This Tournament?"){
 			promptReceiv(promptAnswer,"playTournament");
 		}
 	}
