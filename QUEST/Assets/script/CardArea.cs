@@ -79,4 +79,7 @@ public class CardArea :  MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 	public void OnPointerExit(PointerEventData eventData){
 	}
 
+	
+
+
 }

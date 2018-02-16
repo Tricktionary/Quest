@@ -6,6 +6,7 @@ using UnityEngine.UI;
  
 public abstract class Card : MonoBehaviour {
 
+	
 	public Transform oldPosition = null;     //Old Position of the card on the board
 
 	protected string _asset;
@@ -48,6 +49,8 @@ public abstract class Card : MonoBehaviour {
 			this._flipped = value;
 		}
 	}
+
+	
 
 	// Flip a card over.
 	public void flipCard(bool f){

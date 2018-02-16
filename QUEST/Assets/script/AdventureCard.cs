@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public abstract class AdventureCard : Card,IBeginDragHandler,IDragHandler, IEndDragHandler
+public abstract class AdventureCard : Card, IBeginDragHandler,IDragHandler, IEndDragHandler
 {
 	//Action that occurs when you begin to drag
 	public void OnBeginDrag(PointerEventData eventData){
@@ -12,8 +12,10 @@ public abstract class AdventureCard : Card,IBeginDragHandler,IDragHandler, IEndD
 		 
 		oldPosition = this.transform.parent;
 		this.transform.SetParent(this.transform.parent.parent);
+		transform.localScale += new Vector3(1.2F, 1.2f, 1.2f);
 		GetComponent<CanvasGroup>().blocksRaycasts = false;
 		CardArea[] zone = GameObject.FindObjectsOfType<CardArea>(); //Find Drop Zones
+
 	}
 
 	//Action beginnning onDrag
@@ -27,8 +29,11 @@ public abstract class AdventureCard : Card,IBeginDragHandler,IDragHandler, IEndD
 	public void OnEndDrag(PointerEventData eventData){
 		//Debug.Log("OnEndDrag");
 		this.transform.SetParent(oldPosition);
+		transform.localScale = new Vector3(1F, 1f, 1f);
 		//this.transform.parent.GetComponent<CardArea>().removeCard(this);
 		GetComponent<CanvasGroup>().blocksRaycasts = true;
 	}
+
+
 
 }
