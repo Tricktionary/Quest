@@ -59,7 +59,7 @@ public class Game : MonoBehaviour {
 	private TournamentCard _tournamentCard;
 	private bool _tournamentPrompt;
 	private int _tourneeID;
-	private int _tourneeWinner;
+	private List<int> _tourneeWinners;
 
 	//Draws Card 
 	public void DrawCard(){
@@ -287,34 +287,55 @@ public class Game : MonoBehaviour {
 		//Debug.Log("Clears Weapons");
 	}
 
-	private int calculateTournamentWinner(){
+	private List<int> calculateTournamentWinner(){
 		List<Card> currHand = new List<Card>();
 		
 		int currMax = 0;
 		int currPower = 0;
-		int winnerId = 0;
+		List<int> powerLevels = new List<int>();
+		List<int> winnersId = new List<int>();
 
-		for(int i = 0; i < _playersIn.Count; i++ ){
-			currHand = _players[_playersIn[i]].hand;
-			for(int x = 0 ; x < currHand.Count ; x++){
-				if(currHand[i].GetType() == typeof(WeaponCard)){
-					WeaponCard currWeapon = (WeaponCard)currHand[i];
+		for(int i = 0; i < _playersIn.Count; i++ ){				//Looping Through all players
+			
+			currHand = _players[_playersIn[i]].inPlay;			//Gets players Hand
+			currPower = currPower + _players[_playersIn[i]].bp; // Rank Power
+			
+
+			for(int x = 0 ; x < currHand.Count ; x++){			//Loop Players Hand
+				
+				if(currHand[x].GetType() == typeof(WeaponCard)){
+					WeaponCard currWeapon = (WeaponCard)currHand[x];
+					//Debug.Log(currWeapon.power);
 					currPower = currWeapon.power + currPower;
 				}	
-				if(currHand[i].GetType() == typeof(AllyCard)){
-					AllyCard currAlly = (AllyCard)currHand[i];
+				
+				if(currHand[x].GetType() == typeof(AllyCard)){
+					AllyCard currAlly = (AllyCard)currHand[x];
 					currPower = currAlly.power + currPower ; 
 				}
-				currPower = currPower + _players[_playersIn[i]].bp;
+				
+
 			}
-			if(currPower > currMax){
-				currMax = currPower;
-				winnerId = _playersIn[i];
-				currPower = 0;
+			//Debug.Log(currPower);
+			powerLevels.Add(currPower);
+			currPower = 0;
+		}
+
+		for(int i = 0 ; i < powerLevels.Count ; i++){
+			Debug.Log(powerLevels[i]);
+			if(powerLevels[i] > currMax){
+				currMax = powerLevels[i];			//Gets current max
 			}
 		}
-		Debug.Log(winnerId);
-		return winnerId;
+
+		for(int i = 0 ; i < powerLevels.Count ; i++){
+			if(powerLevels[i] == currMax){
+				winnersId.Add(_playersIn[i]);
+				//Debug.Log(_playersIn[i]);
+			}
+		}
+
+		return winnersId;
 	}
 
 	//End Turn
@@ -324,7 +345,7 @@ public class Game : MonoBehaviour {
 		//Debug.Log(_sponsorId);
 		//Debug.Log(_questReady);
 		//Debug.Log(_playersIn.Count);
-
+		//Debug.Log(_askCounter);
 		if (_canEnd) {
 			if (_questInPlay) {				//Quest Currently in plays
 				if (_sponsorId >= 0) {  //There is a sponsor
@@ -456,16 +477,16 @@ public class Game : MonoBehaviour {
 				else if (_tournamentPrompt == true){
 					if(_playersIn.Count > 1 ){					//Players Have joined
 						if(_askCounter >= _playersIn.Count){	//Everyone has setup their weapons
-							if(_rumble == false){  
+							if(_rumble == false){  				
 								_rumble = true;
 								updateHand(_turnId);
-								_tourneeWinner = calculateTournamentWinner();
+								_tourneeWinners = calculateTournamentWinner();
 								_askCounter = 0;
 							}
 						}
 						if(_rumble == false){
 							if(playAreaValid(playArea.GetComponent<CardArea>().cards)){
-								statusPrompt("");
+								statusPrompt("Setup Your Weapons");
 								updateHand(_turnId);
 								_askCounter++;
 								nextTurnTournament();
@@ -475,17 +496,26 @@ public class Game : MonoBehaviour {
 
 							}
 						}
-						else{
+						else{										//Fight
 							nextTurnTournament();
-							if(_askCounter>= _playersIn.Count){
+							bool win = false;
+							for(int i = 0 ; i < _tourneeWinners.Count ; i++){
+								if(_tourneeWinners[i] == _turnId){
+									win = true;
+									break;
+								}
+							}
+							//Debug.Log(_turnId);
+							if(_askCounter >= _playersIn.Count){
 								statusPrompt("");
 								reset();
 								_askCounter = 0;
 								nextTurn(false,false);
 							}
-							if(_turnId == _tourneeWinner){
+							else if(win){
 								_askCounter++;
 								statusPrompt("Winner");
+								Debug.Log(_turnId);
 								_players[_turnId].AddShields(_tournamentCard.shields + _playersIn.Count);
 							}
 							else{
@@ -646,7 +676,7 @@ public class Game : MonoBehaviour {
 		numStages = -1;	
 		_tournamentPrompt = false;
 		_tourneeID = -1;
-		_tourneeWinner = -1;
+		_tourneeWinners = new List<int>();
 		// Clean the stages..
 		for (int i = 0; i < Stages.Count; i++) {
 			Stages[i].SetActive(true);
