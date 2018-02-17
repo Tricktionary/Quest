@@ -59,6 +59,7 @@ public class Game : MonoBehaviour {
 	private TournamentCard _tournamentCard;
 	private bool _tournamentPrompt;
 	private int _tourneeID;
+	private int _tourneeWinner;
 
 	//Draws Card 
 	public void DrawCard(){
@@ -167,8 +168,7 @@ public class Game : MonoBehaviour {
 		return stagedCards;
 	}
 
-	public bool playAreaValidQuest(List<Card> cards){
-
+	public bool playAreaValid(List<Card> cards){
 		for(int i = 0 ; i < cards.Count ; i++){
 			if(cards[i].GetType() == typeof(FoeCard)){
 				return false;
@@ -176,6 +176,8 @@ public class Game : MonoBehaviour {
 		}
 		return true;
 	}
+
+
 
 	// Get a list of all the stages.
 	public List<List<Card>> getStages() {
@@ -285,6 +287,36 @@ public class Game : MonoBehaviour {
 		//Debug.Log("Clears Weapons");
 	}
 
+	private int calculateTournamentWinner(){
+		List<Card> currHand = new List<Card>();
+		
+		int currMax = 0;
+		int currPower = 0;
+		int winnerId = 0;
+
+		for(int i = 0; i < _playersIn.Count; i++ ){
+			currHand = _players[_playersIn[i]].hand;
+			for(int x = 0 ; x < currHand.Count ; x++){
+				if(currHand[i].GetType() == typeof(WeaponCard)){
+					WeaponCard currWeapon = (WeaponCard)currHand[i];
+					currPower = currWeapon.power + currPower;
+				}	
+				if(currHand[i].GetType() == typeof(AllyCard)){
+					AllyCard currAlly = (AllyCard)currHand[i];
+					currPower = currAlly.power + currPower ; 
+				}
+				currPower = currPower + _players[_playersIn[i]].bp;
+			}
+			if(currPower > currMax){
+				currMax = currPower;
+				winnerId = _playersIn[i];
+				currPower = 0;
+			}
+		}
+		Debug.Log(winnerId);
+		return winnerId;
+	}
+
 	//End Turn
 	public void EndTurn() {
 		//Debug.Log(_canEnd);
@@ -326,7 +358,7 @@ public class Game : MonoBehaviour {
 						if(_playersIn.Count > 0){		//If people are participating
 							
 
-							if(playAreaValidQuest(playArea.GetComponent<CardArea>().cards)){	//PlayZone is valid
+							if(playAreaValid(playArea.GetComponent<CardArea>().cards)){	//PlayZone is valid
 								updateHand(_turnId);
 								statusPrompt("");
 								_askCounter++;	
@@ -414,13 +446,52 @@ public class Game : MonoBehaviour {
 			}
 
 			else if(_tournamentInPlay){		//Tournament is in play
+				
+
 				if(_tournamentPrompt == false){
 					prompt(_turnId,"playTournament");
 				}
+
 				else if (_tournamentPrompt == true){
-					if(_playersIn.Count > 1 ){		//Players Have joined
-						_askCounter++;
-						nextTurnTournament();
+					if(_playersIn.Count > 1 ){					//Players Have joined
+						if(_askCounter >= _playersIn.Count){	//Everyone has setup their weapons
+							if(_rumble == false){  
+								_rumble = true;
+								updateHand(_turnId);
+								_tourneeWinner = calculateTournamentWinner();
+								_askCounter = 0;
+							}
+						}
+						if(_rumble == false){
+							if(playAreaValid(playArea.GetComponent<CardArea>().cards)){
+								statusPrompt("");
+								updateHand(_turnId);
+								_askCounter++;
+								nextTurnTournament();
+							}
+							else{
+								statusPrompt("Play Area is not valid");
+
+							}
+						}
+						else{
+							nextTurnTournament();
+							if(_askCounter>= _playersIn.Count){
+								statusPrompt("");
+								reset();
+								_askCounter = 0;
+								nextTurn(false,false);
+							}
+							if(_turnId == _tourneeWinner){
+								_askCounter++;
+								statusPrompt("Winner");
+								_players[_turnId].AddShields(_tournamentCard.shields + _playersIn.Count);
+							}
+							else{
+								_askCounter++;
+								statusPrompt("Lmao you lost");
+							}
+						}
 					}
 				}
 			}
@@ -556,6 +627,7 @@ public class Game : MonoBehaviour {
 		numStages = -1;	
 		_tournamentPrompt = false;
 		_tourneeID = -1;
+		_tourneeWinner = -1;
 		// Clean the stages..
 		for (int i = 0; i < Stages.Count; i++) {
 			Stages[i].SetActive(true);
@@ -670,7 +742,7 @@ public class Game : MonoBehaviour {
 						Prompt.SetActive(false); 
 					}
 					else{
-						_askCounter = 0;
+						_askCounter = 1;
 						_tournamentPrompt = true;
 						Prompt.SetActive(false); 
 						nextTurnTournament();
@@ -692,7 +764,7 @@ public class Game : MonoBehaviour {
 						Prompt.SetActive(false); 
 					}
 					else{
-						_askCounter = 0;
+						_askCounter = 1;
 						_tournamentPrompt = true;
 						Prompt.SetActive(false);
 						nextTurnTournament();
