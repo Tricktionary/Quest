@@ -109,7 +109,7 @@ public class Deck{
 		} else if (type.Equals ("Story")) {
 			//WHEN ADDING FEATURED FOE * means all
 			// Fill the deck with story cards.
-			/*
+
 			addQuest("Search for the Holy Grail", 5, "*", "card_image/quest/questCard9", 1);
 			addQuest("Test of the Green Knight", 4, "Green Knight", "card_image/quest/questCard10", 1);
 			addQuest("Search for the Questing Beast", 4, "", "card_image/quest/questCard5", 1);
@@ -120,7 +120,7 @@ public class Deck{
 			addQuest("Slay the Dragon", 3, "Dragon", "card_image/quest/questCard7", 1);
 			addQuest("Boar Hunt", 2, "Boar", "card_image/quest/questCard4", 2);
 			addQuest("Repel the Saxxon Raiders", 2, "Saxon", "card_image/quest/questCard3", 2);
-			*/
+
 			//Tournemant
 			addTournament("Tournament at Camelot",3,"card_image/tournament/TournamentCard",1);
 			addTournament("Tournament at Orkney",2,"card_image/tournament/TournamentCard1",1);
