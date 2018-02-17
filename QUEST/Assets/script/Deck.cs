@@ -125,7 +125,11 @@ public class Deck{
 			addEvent("Pox", "All players except player drawing this card lose 1 shield", "card_image/events/eventCard2", 1);		
 			addEvent("Plague", "Drawer loses 2 shields if possible", "card_image/events/eventCard3", 1);
 			addEvent("King's Recognition", "The next player(s) to complete a quest will receive 2 extra shields", "card_image/events/eventCard4", 2);
-			addEvent("Queen's Favor", "The lowest ranked player(s) immediately receives 2 Adventure cards", "card_image/events/eventCard5", 8);
+			addEvent("Queen's Favor", "The lowest ranked player(s) immediately receives 2 Adventure cards", "card_image/events/eventCard5", 2);
+			addEvent("Court Called to Camelot", "All Allies in play must be discarded", "card_image/events/eventCard6", 2);
+			addEvent("King's Call to Arms", "Highest ranked player(s) must discard 1 weapon, if unable 2 foe cards must be discarded", "card_image/events/eventCard7", 1);
+			addEvent("Prosperity Throughout the Realm", "All players may immediately draw 2 adventure Cards", "card_image/events/eventCard8", 1);
+			
 			// Shuffe the deck of cards after adding.
 			this.Shuffle();
 		}

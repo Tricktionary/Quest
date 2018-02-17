@@ -145,7 +145,18 @@ public class Game : MonoBehaviour {
 					bonusQuestPoints = true;
 					EndTurn();
 				}
-				//else if(_eventCard.conditions == "The next player(s) to complete a quest will receive 2 extra shields"){
+				else if(_eventCard.conditions == "The lowest ranked player(s) immediately receives 2 Adventure cards"){
+				//need to implement draw adventure  
+				}
+				else if(_eventCard.conditions == "All Allies in play must be discarded"){
+			
+				}
+				else if(_eventCard.conditions == "Highest ranked player(s) must discard 1 weapon, if unable 2 foe cards must be discarded"){
+				//need to implement discard 
+				}
+				else if(_eventCard.conditions == "All players may immediately draw 2 adventure Cards"){
+				//need to implement draw adventure
+				}
 
 
 
