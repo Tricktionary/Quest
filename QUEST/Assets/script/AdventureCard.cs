@@ -12,6 +12,7 @@ public abstract class AdventureCard : Card,IBeginDragHandler,IDragHandler, IEndD
 		 
 		oldPosition = this.transform.parent;
 		this.transform.SetParent(this.transform.parent.parent);
+		transform.localScale += new Vector3(1.3F, 1.3f, 1.3f);
 		GetComponent<CanvasGroup>().blocksRaycasts = false;
 		CardArea[] zone = GameObject.FindObjectsOfType<CardArea>(); //Find Drop Zones
 	}
@@ -27,6 +28,7 @@ public abstract class AdventureCard : Card,IBeginDragHandler,IDragHandler, IEndD
 	public void OnEndDrag(PointerEventData eventData){
 		//Debug.Log("OnEndDrag");
 		this.transform.SetParent(oldPosition);
+		transform.localScale = new Vector3(1F, 1f, 1f);
 		//this.transform.parent.GetComponent<CardArea>().removeCard(this);
 		GetComponent<CanvasGroup>().blocksRaycasts = true;
 	}

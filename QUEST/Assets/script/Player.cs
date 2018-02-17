@@ -117,6 +117,25 @@ public class Player {
 		_shieldCounter += s;
 	}
 
+
+	//calculates sum of ranks and shields in terms of shields 
+	public int calcRankShields(){
+		int sumPoints = 0;
+		if(this.rank == 1){
+			sumPoints += this.shieldCounter;
+		}
+		else if(this.rank == 2){
+			sumPoints += 5;
+			sumPoints += this.shieldCounter;
+		}
+		else if(this.rank == 3){
+			sumPoints += 12;
+			sumPoints += this.shieldCounter;
+		}
+		return sumPoints;
+	}
+
+
 /* 
 	Rank-up:
 		Squire = 5 BP

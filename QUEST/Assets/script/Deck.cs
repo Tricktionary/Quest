@@ -109,7 +109,7 @@ public class Deck{
 		} else if (type.Equals ("Story")) {
 			//WHEN ADDING FEATURED FOE * means all
 			// Fill the deck with story cards.
-
+			
 			addQuest("Search for the Holy Grail", 5, "*", "card_image/quest/questCard9", 1);
 			addQuest("Test of the Green Knight", 4, "Green Knight", "card_image/quest/questCard10", 1);
 			addQuest("Search for the Questing Beast", 4, "", "card_image/quest/questCard5", 1);
@@ -126,7 +126,20 @@ public class Deck{
 			addTournament("Tournament at Orkney",2,"card_image/tournament/TournamentCard1",1);
 			addTournament("Tournament at Tintagel",1,"card_image/tournament/TournamentCard2",1);
 			addTournament("Tournament at York",0,"card_image/tournament/TournamentCard3",1);
+			
+			//add event Cards 
+			addEvent("Chivalrous Deed", "lowest rank and shield receives 3 shields", "card_image/events/eventCard1", 5);
+			//addEvent("Pox", "All players except player drawing this card lose 1 shield", "card_image/events/eventCard2", 1);
+			//addEvent("Plague", "Drawer loses 2 shields if possible", "card_image/events/eventCard3", 1);
+			//addEvent("King's Recognition", "The next player(s) to complete a quest will receive 2 extra shields", "card_image/events/eventCard4", 2);
+			//addEvent("Queen's Favor", "The lowest ranked player(s) immediately receives 2 Adventure cards", "card_image/events/eventCard5", 2);
+			//addEvent("Court Called to Camelot", "All Allies in play must be discarded", "card_image/events/eventCard6", 2);
+			//addEvent("King's Call to Arms", "Highest ranked player(s) must discard 1 weapon, if unable 2 foe cards must be discarded", "card_image/events/eventCard7", 1);
+			//addEvent("Prosperity Throughout the Realm", "All players may immediately draw 2 adventure Cards", "card_image/events/eventCard8", 1);
+
+
 			// Shuffe the deck of cards after adding.
+
 			this.Shuffle();
 		}
 	}
@@ -135,6 +148,13 @@ public class Deck{
 	void addWeapon(string name, int power, string asset, int copies){
 		for (int i = 0; i < copies; i++) {
 			_cards.Add(new WeaponCard(name, power, asset));
+		}
+	}
+
+	//Add event card
+	void addEvent(string name, string conditions, string asset, int copies){
+		for(int i = 0; i<copies; i++){
+			_cards.Add(new EventCard(name, conditions, asset));
 		}
 	}
 
@@ -165,6 +185,8 @@ public class Deck{
 			_cards.Add(new QuestCard(name, stages, featuredFoe, asset));
 		}
 	}
+
+
 
 	// Use this for initialization
 	void Start () {
