@@ -352,6 +352,7 @@ public class Game : MonoBehaviour {
 						}
 						else{
 							statusPrompt("Quest is Not Valid");
+							prompt (_turnId, "sponsor");
 						}
 					}
 					if(_questReady == true){			//Quest is Ready
@@ -500,6 +501,24 @@ public class Game : MonoBehaviour {
 			}
 		}
 	}
+
+	//reclaimPlaced cards
+	private void reclaimCards() {
+		List<List<Card>> stages = getStages();
+		for (int i = 0; i < stages.Count; i++) {
+			for (int j = 0; j < stages [i].Count; j++) {
+				_players [_turnId].addCard (stages [i] [j]);
+			}
+		}
+		for (int z = 0; z < Stages.Count; z++) {
+			Stages[z].GetComponent<CardArea>().cards = new List<Card>();
+			// Clears out draw card area.
+			foreach (Transform child in Stages[z].transform) {
+				GameObject.Destroy(child.gameObject);
+			}
+		}
+	}
+
 	/*
 		Tournament
 	*/
@@ -654,6 +673,7 @@ public class Game : MonoBehaviour {
 			}
 			if(answer == 2){							//No
 				if(_askCounter < _numPlayers){
+					reclaimCards ();
 					nextTurn(true,false);
 				}
 				else{									//No Sponsor
