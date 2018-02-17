@@ -117,6 +117,7 @@ public class Player {
 		_shieldCounter += s;
 	}
 
+	//calculates sum of ranks and shields in terms of shields 
 	public int calcRankShields(){
 		int sumPoints = 0;
 		if(this.rank == 1){

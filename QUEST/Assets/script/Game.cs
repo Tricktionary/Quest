@@ -54,7 +54,7 @@ public class Game : MonoBehaviour {
 	private bool _canEnd;
 
 
-
+	public bool bonusQuestPoints = false; //used for event card "King's Recognition"
 	public int promptAnswer;
 	public int _askCounter;  //How many people you asked this prompt to
 
@@ -68,6 +68,8 @@ public class Game : MonoBehaviour {
 	//Draws Card 
 	public void DrawCard(){
 		//_storyDeck
+		Debug.Log("_turnId: " + _turnId);
+		
 
 		if (_drawn == false) {
 
@@ -106,17 +108,47 @@ public class Game : MonoBehaviour {
 				_eventCard = (EventCard)currCard;
 				//Debug.Log(_eventCard.conditions);
 
+				//condition for "lowest rank and shield receives 3 shields" event 
 				if(_eventCard.conditions == "lowest rank and shield receives 3 shields"){
-					Debug.Log("inside conditions");
-					int lowestVal;
-
-
-					
-					Debug.Log(playerVal);
+					//Debug.Log("inside conditions");
+					int lowestVal = 30;
+					int lowestPlayer = -1;		
+					//compares all players to find the player with lowest value
 					for(int i = 0; i<3; i++){
-						if(player[i].calcRankShields())
+						if(_players[i].calcRankShields() < lowestVal){
+							lowestVal = _players[i].calcRankShields(); //calculates the sum of rank and shields in terms of shields 
+							lowestPlayer = i; //to keep track of lowest player 
+						}
 					}
+					Debug.Log("lowestVal: " + lowestVal);
+					_players[lowestPlayer].shieldCounter += 3; //adds 3 shields to player with "lowestVal"
+					_canEnd = true;
+					EndTurn();
 				}
+				else if(_eventCard.conditions == "All players except player drawing this card lose 1 shield"){//condition for "lowest rank and shield receives 3 shields" event 
+					for(int i = 0; i<3; i++){
+						if(_players[i] != _players[_turnId]){ //checks that player isnt current player 
+							if(_players[i].shieldCounter != 0){ //checks that player has at least 1 shield
+								_players[i].shieldCounter--;
+							}
+						}
+					}
+					EndTurn();
+				}
+				else if(_eventCard.conditions == "Drawer loses 2 shields if possible"){
+					if(_players[_turnId].shieldCounter >= 2){
+						_players[_turnId].shieldCounter = _players[_turnId].shieldCounter-2;
+					}
+					EndTurn();
+				}
+				else if(_eventCard.conditions == "The next player(s) to complete a quest will receive 2 extra shields"){
+					bonusQuestPoints = true;
+					EndTurn();
+				}
+				//else if(_eventCard.conditions == "The next player(s) to complete a quest will receive 2 extra shields"){
+
+
+
 
 			}
 
@@ -374,7 +406,13 @@ public class Game : MonoBehaviour {
 												currStageTxt.GetComponent<UnityEngine.UI.Text>().text = "";
 												statusPrompt("Quest Was Done successfully");
 												for(int i = 0 ; i < _playersIn.Count ; i++){
+													if(bonusQuestPoints == true){
+														_players[_playersIn[i]].AddShields(numStages+2);
+														bonusQuestPoints = false;
+													}
+													else{
 													_players[_playersIn[i]].AddShields(numStages);
+													}
 												}
 												clearWeapons();
 												updateHand(_turnId);
@@ -455,6 +493,10 @@ public class Game : MonoBehaviour {
 				nextTurn(false,false);
 			}
 		}
+		else{
+			nextTurn(false, false);
+		}
+
 	}
 
 

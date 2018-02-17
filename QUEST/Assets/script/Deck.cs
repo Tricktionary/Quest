@@ -121,9 +121,11 @@ public class Deck{
 			addQuest("Repel the Saxxon Raiders", 2, "Saxon", "card_image/quest/questCard3", 2);
 
 			//adding event cards
-			addEvent("Chivalrous Deed", "lowest rank and shield receives 3 shields", "card_image/events/eventCard1", 10);
-			//addEvent("Chivalrous Deed", "All players except player drawing this card lose 1 shield", "card_image/events/eventCard2", 5);
-
+			addEvent("Chivalrous Deed", "lowest rank and shield receives 3 shields", "card_image/events/eventCard1", 1);
+			addEvent("Pox", "All players except player drawing this card lose 1 shield", "card_image/events/eventCard2", 1);		
+			addEvent("Plague", "Drawer loses 2 shields if possible", "card_image/events/eventCard3", 1);
+			addEvent("King's Recognition", "The next player(s) to complete a quest will receive 2 extra shields", "card_image/events/eventCard4", 2);
+			addEvent("Queen's Favor", "The lowest ranked player(s) immediately receives 2 Adventure cards", "card_image/events/eventCard5", 8);
 			// Shuffe the deck of cards after adding.
 			this.Shuffle();
 		}
