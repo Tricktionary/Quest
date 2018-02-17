@@ -16,10 +16,15 @@ public class EventCard : StoryCard
 			this._conditions = value;
 		}
 	}
+	
     
-    public EventCard(string conditions){
-        conditions = _conditions;
-    }
+     public EventCard(string name, string conditions, string asset){
+     	_name = name;
+   	    _conditions = conditions;
+	    _asset = asset;
+	}
+
+
 
 	// ToString Override for nicer printing.
 	public override string ToString(){
