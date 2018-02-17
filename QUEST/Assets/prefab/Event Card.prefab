@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224603696376591560}
   - component: {fileID: 222893759909405584}
+  - component: {fileID: 114261600353256236}
   - component: {fileID: 114814603837809134}
   m_Layer: 5
   m_Name: Event Card
@@ -28,6 +29,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114261600353256236
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1428669453579582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cfcfadec27064833af474d430939644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  oldPosition: {fileID: 0}
 --- !u!114 &114814603837809134
 MonoBehaviour:
   m_ObjectHideFlags: 1
