@@ -1445,6 +1445,7 @@ MonoBehaviour:
   FoeCard: {fileID: 1115157619569266, guid: 674b3aed3fde8421d8933860e8745e98, type: 2}
   AllyCard: {fileID: 1097128100082594, guid: 52d4c5c17bf384c5fa0399609cfc88d2, type: 2}
   QuestCard: {fileID: 1251235100696200, guid: 9dcc0839dcfff4e018c3d4f3f62d4abe, type: 2}
+  EventCard: {fileID: 1428669453579582, guid: e8cfbe5e1e4f7472c9ee81877823732c, type: 2}
   playArea: {fileID: 1814199544}
   Stages:
   - {fileID: 1710249156}
@@ -1462,6 +1463,7 @@ MonoBehaviour:
   shieldCounterTxt: {fileID: 1762925163}
   promptAnswer: 0
   _askCounter: 0
+  bonusQuestPoints: 0
 --- !u!1 &924288325
 GameObject:
   m_ObjectHideFlags: 0
