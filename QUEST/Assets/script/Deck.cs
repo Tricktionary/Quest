@@ -120,9 +120,14 @@ public class Deck{
 			addQuest("Boar Hunt", 2, "Boar", "card_image/quest/questCard4", 2);
 			addQuest("Repel the Saxxon Raiders", 2, "Saxon", "card_image/quest/questCard3", 2);
 
+			//adding event cards
+			addEvent("Chivalrous Deed", "lowest rank and shield receives 3 shields", "card_image/events/eventCard1", 10);
+			//addEvent("Chivalrous Deed", "All players except player drawing this card lose 1 shield", "card_image/events/eventCard2", 5);
+
 			// Shuffe the deck of cards after adding.
 			this.Shuffle();
 		}
+
 	}
 
 	// Add a given amount of a weapon to the deck.
@@ -150,6 +155,12 @@ public class Deck{
 	void addQuest(string name, int stages, string featuredFoe, string asset, int copies){
 		for (int i = 0; i < copies; i++) {
 			_cards.Add(new QuestCard(name, stages, featuredFoe, asset));
+		}
+	}
+
+	void addEvent(string name, string conditions, string asset, int copies){
+		for(int i = 0; i<copies; i++){
+			_cards.Add(new EventCard(name, conditions, asset));
 		}
 	}
 

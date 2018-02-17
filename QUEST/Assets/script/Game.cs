@@ -10,6 +10,7 @@ public class Game : MonoBehaviour {
 	public GameObject FoeCard;								//Foe Card Prefab
 	public GameObject AllyCard;								//Ally Card Prefab
 	public GameObject QuestCard;
+	public GameObject EventCard;
 
 	public GameObject playArea;								//Play Zone
 
@@ -39,6 +40,7 @@ public class Game : MonoBehaviour {
 	private bool _drawn;
 
 	private QuestCard _questCard;
+	private EventCard _eventCard;
 	private List<List<Card>> _Quest;
 	private int _sponsorId;
 	private int _questeeTurnId;
@@ -68,13 +70,16 @@ public class Game : MonoBehaviour {
 		//_storyDeck
 
 		if (_drawn == false) {
+
+
 			 
 			foreach (Transform child in drawCardArea.transform) {	//Clears out drawCardArea
 				GameObject.Destroy (child.gameObject);
 			}
 
 			Card currCard = _storyDeck.Draw (); //We need discard pile
-			
+			Debug.Log(currCard.GetType());
+
 			_discardPileStory.Discard(currCard);
 			
 			string currCardAsset = currCard.asset; //Pulls the card asset
@@ -95,6 +100,24 @@ public class Game : MonoBehaviour {
 					_playersIn.Add ((_turnId + i) % _numPlayers);
 				}
 				*/
+			}
+			else if (currCard.GetType() == typeof(EventCard)){
+				storyCard = Instantiate (EventCard);
+				_eventCard = (EventCard)currCard;
+				//Debug.Log(_eventCard.conditions);
+
+				if(_eventCard.conditions == "lowest rank and shield receives 3 shields"){
+					Debug.Log("inside conditions");
+					int lowestVal;
+
+
+					
+					Debug.Log(playerVal);
+					for(int i = 0; i<3; i++){
+						if(player[i].calcRankShields())
+					}
+				}
+
 			}
 
 			storyCard.gameObject.GetComponent<Image>().sprite = card;
