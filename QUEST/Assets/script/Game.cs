@@ -116,12 +116,10 @@ public class Game : MonoBehaviour {
 					for(int i = 0; i<3; i++){
 						
 							if(_players[i].calcRankShields() <= lowestVal){
-								if(i != currPlayer){
 									lowestVal = _players[i].calcRankShields();
 									Debug.Log("lowest being added: " + lowestVal + " to player " + i);
 									//Debug.Log("currPlayer: " +currPlayer);
 									lowestPlayers.Add(i); 
-								}
 							}
 						
 					}
@@ -145,20 +143,45 @@ public class Game : MonoBehaviour {
 						}
 					}
 				
-				
+					_canEnd = true;
 				}
 				else if(_eventCard.conditions == "Drawer loses 2 shields if possible"){
 					if(_players[_turnId].shieldCounter >= 2){
 						_players[_turnId].shieldCounter = _players[_turnId].shieldCounter-2;
 					}
-					
+					_canEnd = true;
 				}
 				else if(_eventCard.conditions == "The next player(s) to complete a quest will receive 2 extra shields"){
 					bonusQuestPoints = true;
-					EndTurn();
+					_canEnd = true;
 				}
 				else if(_eventCard.conditions == "The lowest ranked player(s) immediately receives 2 Adventure cards"){
-					//need to implement draw adventure  
+					//same implementation as "chivalrous deed" to find lowest players 
+					int lowestVal = 30; 
+					int lowerCount = 0;
+					int currPlayer = _turnId;
+					//Debug.Log("currPlayer: " + currPlayer);
+					List<int> lowestPlayers = new List<int>();	
+					//compares all players to find the players with lowest value
+
+					for(int i = 0; i<3; i++){					
+							if(_players[i].calcRankShields() <= lowestVal){
+									lowestVal = _players[i].calcRankShields();
+									Debug.Log("lowest being added: " + lowestVal + " to player " + i);
+									//Debug.Log("currPlayer: " +currPlayer);
+									lowestPlayers.Add(i); 						
+							}
+						
+					}
+
+					for(int i = 0; i < lowestPlayers.Count ; i++){
+						Debug.Log("lowest player: " + lowestPlayers[i]); 
+						for(int x = 0 ; x < 2 ; x++){
+							_players[i].addCard((_adventureDeck.Draw()));
+						}
+					}
+
+					_canEnd = true;
 				}
 				else if(_eventCard.conditions == "All Allies in play must be discarded"){
 		
@@ -167,7 +190,13 @@ public class Game : MonoBehaviour {
 					//need to implement discard 
 				}
 				else if(_eventCard.conditions == "All players may immediately draw 2 adventure Cards"){
-					//need to implement draw adventure
+					for(int i = 0; i < _players.Count ; i++){
+						for(int x = 0 ; x < 3 ; x++){
+							_players[i].addCard((_adventureDeck.Draw()));
+						}
+					}
+
+					_canEnd = true;
 				}
 
 
@@ -487,12 +516,13 @@ public class Game : MonoBehaviour {
 												for(int i = 0 ; i < _playersIn.Count ; i++){
 													if(bonusQuestPoints == true){
 														_players[_playersIn[i]].AddShields(numStages+2);
-														bonusQuestPoints = false;
+														
 													}
 													else{
 													_players[_playersIn[i]].AddShields(numStages);
 													}
 												}
+												bonusQuestPoints = false;
 												clearWeapons();
 												updateHand(_turnId);
 												reset();
@@ -594,16 +624,22 @@ public class Game : MonoBehaviour {
 								statusPrompt("");
 								reset();
 								_askCounter = 0;
+								clearWeapons();
+								updateHand(_turnId);
 								nextTurn(false,false);
 							}
 							else if(win){
 								_askCounter++;
 								statusPrompt("Winner");
 								Debug.Log(_turnId);
+								clearWeapons();
+								updateHand(_turnId);
 								_players[_turnId].AddShields(_tournamentCard.shields + _playersIn.Count);
 							}
 							else{
 								_askCounter++;
+								clearWeapons();
+								updateHand(_turnId);
 								statusPrompt("Lmao you lost");
 							}
 						}
