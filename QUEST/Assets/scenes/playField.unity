@@ -413,10 +413,9 @@ GameObject:
   m_Component:
   - component: {fileID: 439337567}
   - component: {fileID: 439337572}
-  - component: {fileID: 439337571}
-  - component: {fileID: 439337570}
-  - component: {fileID: 439337569}
   - component: {fileID: 439337568}
+  - component: {fileID: 439337571}
+  - component: {fileID: 439337569}
   m_Layer: 5
   m_Name: DiscardPile
   m_TagString: Untagged
@@ -446,13 +445,12 @@ RectTransform:
 --- !u!114 &439337568
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114648787044770890, guid: 82b17814389e3419d9d3a4693b2c9071,
-    type: 2}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 439337566}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 2c2832d02000443a5a43e12749dba1cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &439337569
@@ -478,18 +476,6 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
---- !u!114 &439337570
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114557360583338224, guid: 82b17814389e3419d9d3a4693b2c9071,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 439337566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &439337571
 MonoBehaviour:
   m_ObjectHideFlags: 0
