@@ -20,6 +20,7 @@ public class Game : MonoBehaviour {
 	public GameObject promptTxt;
 	public GameObject gameStatus;
 	public GameObject currStageTxt;
+	public GameObject discardPile;
 
 	public GameObject drawCardArea;							//DrawCardArea
 	public GameObject Hand; 								//Play Area Hand Reference
@@ -446,6 +447,17 @@ public class Game : MonoBehaviour {
 		return winnersId;
 	}
 
+	private void discardCard(){
+		List<Card> cards = discardPile.GetComponent<CardArea>().cards;
+		for(int i = 0 ; i <cards.Count ; i++){
+			_discardPileAdventure.Discard(cards[i]);
+		}
+		discardPile.GetComponent<CardArea>().cards = new List<Card>();
+
+		foreach (Transform child in discardPile.transform) {	
+			GameObject.Destroy (child.gameObject);
+		}
+	}
 	//End Turn
 	public void EndTurn() {
 		//Debug.Log(_canEnd);
@@ -454,7 +466,14 @@ public class Game : MonoBehaviour {
 		//Debug.Log(_questReady);
 		//Debug.Log(_playersIn.Count);
 		//Debug.Log(_askCounter);
-		if (_canEnd) {
+		if(discardPile.GetComponent<CardArea>().cards.Count > 0){
+			discardCard();
+			updateHand(_turnId);
+		}
+		if(Hand.GetComponent<CardArea>().cards.Count >= 13 ){
+			statusPrompt("Too Many Cards, Please Discard or use");
+		}
+		else if (_canEnd) {
 			if (_questInPlay) {				//Quest Currently in plays
 				if (_sponsorId >= 0) {  //There is a sponsor
 					
@@ -994,7 +1013,7 @@ public class Game : MonoBehaviour {
 
 		//Populates Player Hands
 		for(int i = 0; i < _players.Count ; i++){
-			for(int x = 0 ; x < 12 ; x++){
+			for(int x = 0 ; x < 13 ; x++){
 				_players[i].addCard((_adventureDeck.Draw()));
 			}
 		}
