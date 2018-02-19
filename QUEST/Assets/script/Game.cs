@@ -164,20 +164,22 @@ public class Game : MonoBehaviour {
 					List<int> lowestPlayers = new List<int>();	
 					//compares all players to find the players with lowest value
 
-					for(int i = 0; i<3; i++){					
+					for(int i = 0; i<_numPlayers; i++){					
 							if(_players[i].calcRankShields() <= lowestVal){
 									lowestVal = _players[i].calcRankShields();
 									Debug.Log("lowest being added: " + lowestVal + " to player " + i);
 									//Debug.Log("currPlayer: " +currPlayer);
 									lowestPlayers.Add(i); 						
-							}
-						
+							}		
 					}
+
+					Debug.Log("lowestPlayers count: " + lowestPlayers.Count);
+					//for(int i = 0; i<lowestPlayers.Count )
 
 					for(int i = 0; i < lowestPlayers.Count ; i++){
 						Debug.Log("lowest player: " + lowestPlayers[i]); 
 						for(int x = 0 ; x < 2 ; x++){
-							_players[i].addCard((_adventureDeck.Draw()));
+							_players[lowestPlayers[i]].addCard((_adventureDeck.Draw()));
 						}
 					}
 
@@ -191,7 +193,7 @@ public class Game : MonoBehaviour {
 				}
 				else if(_eventCard.conditions == "All players may immediately draw 2 adventure Cards"){
 					for(int i = 0; i < _players.Count ; i++){
-						for(int x = 0 ; x < 3 ; x++){
+						for(int x = 0 ; x < 2 ; x++){
 							_players[i].addCard((_adventureDeck.Draw()));
 						}
 					}
