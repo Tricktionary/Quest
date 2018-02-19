@@ -491,8 +491,12 @@ public class Game : MonoBehaviour {
 								stagedCards[i].flipCard(true);
 							}
 							*/
-							//Get the ammount of cards used in this stage and refund to sponsor
-
+							 
+							int count = getStagedCards().Count;		//Get the ammount of cards used in this stage and refund to sponsor
+							for(int x = 0 ; x < count ; x++){
+								Hand.GetComponent<CardArea>().addCard(_adventureDeck.Draw());
+								//_players[_turnId].addCard((_adventureDeck.Draw()));
+							}
 							updateHand(_turnId); 		 //Update Sponsor Hand based off of the UI
 							nextTurn(true,false);
 							prompt(_turnId,"playQuest"); //Start Asking if other players want to play
@@ -1013,7 +1017,7 @@ public class Game : MonoBehaviour {
 
 		//Populates Player Hands
 		for(int i = 0; i < _players.Count ; i++){
-			for(int x = 0 ; x < 13 ; x++){
+			for(int x = 0 ; x < 12 ; x++){
 				_players[i].addCard((_adventureDeck.Draw()));
 			}
 		}
