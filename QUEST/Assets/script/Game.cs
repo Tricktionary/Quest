@@ -531,9 +531,10 @@ public class Game : MonoBehaviour {
 											_askCounter = 1;
 											_currQuestStage++;
 											currStageTxt.GetComponent<UnityEngine.UI.Text>().text = "Current Stage: "+ (_currQuestStage+1).ToString();
-											if(_currQuestStage >= numStages){	//Quest is Over
+											if(_currQuestStage >= numStages) {	//Quest is Over
 												currStageTxt.GetComponent<UnityEngine.UI.Text>().text = "";
 												statusPrompt("Quest Was Done successfully");
+												//award shields
 												for(int i = 0 ; i < _playersIn.Count ; i++){
 													if(bonusQuestPoints == true){
 														_players[_playersIn[i]].AddShields(numStages+2);
@@ -542,6 +543,13 @@ public class Game : MonoBehaviour {
 													else{
 													_players[_playersIn[i]].AddShields(numStages);
 													}
+												}
+												int totalCards = 1;
+												for (int i = 0; i < Stages.Count; i++) {
+													//TODO: Add 1 to totalCards for each card in each stage
+												}
+												for (int i = 0; i < totalCards; i++) {
+													_players [_sponsorId].addCard (_adventureDeck.Draw ());
 												}
 												bonusQuestPoints = false;
 												clearWeapons();
@@ -1013,7 +1021,7 @@ public class Game : MonoBehaviour {
 
 		//Populates Player Hands
 		for(int i = 0; i < _players.Count ; i++){
-			for(int x = 0 ; x < 13 ; x++){
+			for(int x = 0 ; x < 12 ; x++){
 				_players[i].addCard((_adventureDeck.Draw()));
 			}
 		}
