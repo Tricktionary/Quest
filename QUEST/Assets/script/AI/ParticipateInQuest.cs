@@ -1,6 +1,12 @@
+using System.Collections.Generic;
 public class ParticipateInQuest: AIBehaviour{
 
-	//List<Card> play(List<Card> cards,int storyCard, List<Player> players){
+	List<Card> play(int id,int storyCard, List<Player> players) {
 		
-	//}
+		Player ai = players [id];
+		for (int i = 0; i < ai.hand.Count; i++) {
+			
+		}
+		return null;
+	}
 }
