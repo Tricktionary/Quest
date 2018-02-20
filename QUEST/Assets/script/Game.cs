@@ -44,6 +44,10 @@ public class Game : MonoBehaviour {
 	private EventCard _eventCard;
 	public bool bonusQuestPoints = false; //used for event card "King's Recognition"
 
+	//AI
+	private List<AIPlayer> Observers;
+
+
 	//QUEST RELATED 
 	private QuestCard _questCard;
 	private int _sponsorId;
@@ -847,7 +851,7 @@ public class Game : MonoBehaviour {
 				_drawn = true;
 				_askCounter = 0;
 			}
-			if(answer == 2){							//No
+			if(answer == 2) {							//No
 				if(_askCounter < _numPlayers){
 					reclaimCards ();
 					nextTurn(true,false);
