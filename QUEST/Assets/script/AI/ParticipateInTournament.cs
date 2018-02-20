@@ -1,22 +1,16 @@
 using System.Collections.Generic;
 public class ParticipateInTournament: AIBehaviour{
 
-
 	//Strategy 1
-	bool join(int id,StoryCard storyCard, List<Player> players){
-		int value = ((TournamentCard)storyCard).shields;
-		int[] requirements = new int[]{ 5, 7, 10 };
-		for (int playerId = 0; playerId < players.Count; playerId++) {
-			Player currPlayer = players [playerId];
-			if (currPlayer.shieldCounter + value >= requirements [currPlayer.rank]) {
-				return true;
-			}
+	public bool join1(bool couldWin){
+		if (couldWin) {
+			return true;
 		}
 		return false;
 	}
 
 	//Strategy 1
-	List<Card> play(int aiId,TournamentCard storyCard, List<Player> players){
+	public List<Card> play1(int aiId,TournamentCard storyCard, List<Player> players){
 		Player ai = players [aiId];
 
 		int value = storyCard.shields;
@@ -60,5 +54,30 @@ public class ParticipateInTournament: AIBehaviour{
 			}
 			return playCards;
 		}
+	}
+
+	public bool join2(bool couldWin){
+		return true;
+	}
+
+	//Strategy 2: Just the strongest possible hand
+	public List<Card> play2(int aiId,TournamentCard storyCard, List<Player> players){
+		Player ai = players [aiId];
+		Dictionary<Card,int> cards = new Dictionary<Card, int>();
+		List<Card> keys = new List<Card>();
+
+		//filter weapon cards
+		for (int i = 0; i < ai.hand.Count; i++) {
+			if (ai.hand [i] is WeaponCard) {
+				if (cards.ContainsKey(ai.hand[i])) {
+					int amount = cards [ai.hand [i]] + 1;
+					cards.Add (ai.hand[i], amount);
+				} else {
+					cards.Add (ai.hand[i], 1);
+					keys.Add (ai.hand [i]);
+				}
+			}
+		}
+		return keys;
 	}
 }
