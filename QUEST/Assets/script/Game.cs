@@ -492,7 +492,7 @@ public class Game : MonoBehaviour {
 							}
 							*/
 							 
-							int count = getStagedCards().Count;		//Get the ammount of cards used in this stage and refund to sponsor
+							int count = getStagedCards().Count + 1;		//Get the ammount of cards used in this stage and refund to sponsor
 							for(int x = 0 ; x < count ; x++){
 								Hand.GetComponent<CardArea>().addCard(_adventureDeck.Draw());
 								//_players[_turnId].addCard((_adventureDeck.Draw()));
