@@ -32,6 +32,7 @@ public class ParticipateInTournament: AIBehaviour{
 		}
 
 		Dictionary<Card,int> cards = new Dictionary<Card, int>();
+		List<Card> keys = new List<Card>();
 
 		//filter weapon cards
 		for (int i = 0; i < ai.hand.Count; i++) {
@@ -41,23 +42,20 @@ public class ParticipateInTournament: AIBehaviour{
 					cards.Add (ai.hand[i], amount);
 				} else {
 					cards.Add (ai.hand[i], 1);
+					keys.Add (ai.hand [i]);
 				}
 			}
 		}
 		if (strongest) {
 			//play strongest
-			List<Card> returnPlayCards = new List<Card>();
-			if (cards.Keys.Count > 0) {
-				returnPlayCards.AddRange (cards.Keys);
-			}
-			return returnPlayCards;
+			return keys;
 		} else {
 			//play only duplicates
 			List<Card> playCards = new List<Card>();
 
-			for (int i = 0; i < cards.Keys.Count; i++) {
-				if (cards [cards.Keys [i]] > 1) {
-					playCards.Add (cards.Keys [i]);
+			for (int i = 0; i < keys.Count; i++) {
+				if (cards [keys [i]] > 1) {
+					playCards.Add (keys [i]);
 				}
 			}
 			return playCards;
