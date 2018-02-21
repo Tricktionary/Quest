@@ -13,7 +13,24 @@ public class SponsorQuest: AIBehaviour {
 	}
 
 	private bool canSponsor(int stages, Player ai) {
-		//TODO: An algorithm that checks if the AI has enough cards to sponsor (weapons and foes)
+		List<WeaponCard> weaponCards = new List<WeaponCard>();
+		List<FoeCard> foeCards = new List<FoeCard>();
+		List<Card> hand = ai.hand;
+
+		for(i = 0 ; i < hand.Count ; i++){
+			if(hand[i].GetType() == typeof(WeaponCard)){
+				WeaponCard currWeapon = (WeaponCard)hand[i];
+				weaponCards.Add(currWeapon);
+			}
+			if(hand[i].GetType() == typeof(FoeCard)){
+				FoeCard currFoe = (FoeCard)hand[i];
+				foeCards.Add(currFoe);
+			}
+		}
+
+		if(FoeCard.Count > stages ){
+			true;
+		}
 		return false;
 	}
 
@@ -27,6 +44,29 @@ public class SponsorQuest: AIBehaviour {
 		//Stack up last monster to be highest possible
 		//going backwards to the first stage, equip each foe with the highest duplicate weapon if possible
 		//quest setup is finished, return List<List<Card>>
+
+		List<WeaponCard> weaponCards = new List<WeaponCard>();
+		List<FoeCard> foeCards = new List<FoeCard>();
+		List<Card> hand = ai.hand;
+
+		for(i = 0 ; i < hand.Count ; i++){
+			if(hand[i].GetType() == typeof(WeaponCard)){
+				WeaponCard currWeapon = (WeaponCard)hand[i];
+				weaponCards.Add(currWeapon);
+			}
+			if(hand[i].GetType() == typeof(FoeCard)){
+				FoeCard currFoe = (FoeCard)hand[i];
+				foeCards.Add(currFoe);
+			}
+		}
+
+
+		//Sort and just POP the last one into each stage  Foe
+
+
+
+
+		
 		return null;
 	}
 
@@ -40,6 +80,27 @@ public class SponsorQuest: AIBehaviour {
 		//Stack up last monster to be highest possible and replace last foe with strongest one if applicable
 		//since you already selected the weakest monsters with minimal weapons, this is already implemented
 		//quest setup is finished, return List<List<Card>>
+
+		List<WeaponCard> weaponCards = new List<WeaponCard>();
+		List<FoeCard> foeCards = new List<FoeCard>();
+		List<Card> hand = ai.hand;
+
+		for(i = 0 ; i < hand.Count ; i++){
+			if(hand[i].GetType() == typeof(WeaponCard)){
+				WeaponCard currWeapon = (WeaponCard)hand[i];
+				weaponCards.Add(currWeapon);
+			}
+			if(hand[i].GetType() == typeof(FoeCard)){
+				FoeCard currFoe = (FoeCard)hand[i];
+				foeCards.Add(currFoe);
+			}
+		}
+
+
+		//Sort
+
+
+
 		return null;
 	}
 }
