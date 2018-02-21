@@ -38,6 +38,8 @@ public class ParticipateInTournament: AIBehaviour{
 					cards.Add (ai.hand[i], 1);
 					keys.Add (ai.hand [i]);
 				}
+			} else if (ai.hand [i] is AllyCard) {
+				keys.Add(ai.hand[i]);
 			}
 		}
 		if (strongest) {
@@ -69,13 +71,15 @@ public class ParticipateInTournament: AIBehaviour{
 		//filter weapon cards
 		for (int i = 0; i < ai.hand.Count; i++) {
 			if (ai.hand [i] is WeaponCard) {
-				if (cards.ContainsKey(ai.hand[i])) {
+				if (cards.ContainsKey (ai.hand [i])) {
 					int amount = cards [ai.hand [i]] + 1;
-					cards.Add (ai.hand[i], amount);
+					cards.Add (ai.hand [i], amount);
 				} else {
-					cards.Add (ai.hand[i], 1);
+					cards.Add (ai.hand [i], 1);
 					keys.Add (ai.hand [i]);
 				}
+			} else if (ai.hand [i] is AllyCard) {
+				keys.Add(ai.hand[i]);
 			}
 		}
 		return keys;
