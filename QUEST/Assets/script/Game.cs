@@ -11,13 +11,17 @@ public class Game : MonoBehaviour {
 	public GameObject AllyCard;								//Ally Card Prefab
 	public GameObject QuestCard;
 	public GameObject AmourCard;
+	public GameObject TestCard;
 
 	public GameObject EventCard;
 	public GameObject RankCard;
+	public GameObject playerPanel;
 
 	public GameObject playArea;								//Play Zone
 
 	public List<GameObject> Stages;
+	public List<GameObject> playerActive;
+	public List<GameObject> numCardText;
 
 	public GameObject Prompt;								//Prompter
 	public GameObject promptTxt;
@@ -235,8 +239,34 @@ public class Game : MonoBehaviour {
 		int foeCount = 0; 
 		Card currCard = null;
 		int power = 0;
-		List<WeaponCard> weapons = new List<WeaponCard>();
+		/*
+		int testCounter = 0;
+		bool test = false;
+		//Test checking
+		for(int i = 0 ; i < currStage.Count ; i++){
+			if(currStage[i].GetType() == typeof(TestCard)){
+				test = true;
+				power = 69;
+				testCounter++;
+			}
+			if(testCounter > 1){
+				return - 1;
+			}
+		}
 
+		if(test == true){
+			for(int i = 0 ; i < currStage.Count ; i++){
+				if(currStage[i].GetType() == typeof(WeaponCard)){
+					return -1;
+				}
+				if(currStage[i].GetType() == typeof(FoeCard)){
+					return -1;
+				}
+			}
+			return power;
+		}
+		*/
+		List<WeaponCard> weapons = new List<WeaponCard>();
 		for(int i = 0 ; i < currStage.Count ; i++) {
 			currCard = currStage[i];
 			if(currCard.GetType() == typeof(WeaponCard)){
@@ -311,7 +341,7 @@ public class Game : MonoBehaviour {
 
 	public bool checkQuest() {
 		List<int> powerLevels = new List<int>();
-
+		//int testCounter = 0;
 		int currPower = 0;
 		List<List<Card>> stages = getStages();
 
@@ -323,13 +353,29 @@ public class Game : MonoBehaviour {
 				powerLevels.Add(currPower);
 			}
 		} 
+		/*
+		Debug.Log(powerLevels);
+
+		for(int i = 0; i < powerLevels.Count; i++){
+			if(powerLevels[i] == 69){
+				testCounter++;
+			}
+		}
+		if(testCounter > 1){
+			return false;
+		}
+
+		for(int i = 0 ; i < powerLevels.Count; i++){
+			powerLevels.Remove(69);
+		}*/
+
 
 		// Check ascending power level.
 		for(int i = 0; i < powerLevels.Count - 1; i++){
 			if(powerLevels[i] >= powerLevels[i + 1]){ return false; }	//Can't be equal
 		}
-
 		_stagePower = powerLevels;		//Get Calculated stage powers if valid
+		
 		return true;
 	}
 
@@ -1044,6 +1090,7 @@ public class Game : MonoBehaviour {
 		_players.Add(new Player(1));
 		_players.Add(new Player(2));
 		_players.Add(new Player(3));
+		_players.Add(new Player(4));
 
 		//Set up the decks
 		_adventureDeck = new Deck("Adventure");
@@ -1184,6 +1231,13 @@ public class Game : MonoBehaviour {
 				CardUI.GetComponent<AmourCard>().power = currAmour.power;
 				CardUI.GetComponent<AmourCard>().bid = currAmour.bid;
 			}
+			if(currCard.GetType () == typeof(TestCard)){
+				TestCard currTest = (TestCard)currCard;
+				CardUI = Instantiate (TestCard);
+				CardUI.GetComponent<TestCard>().name = currTest.name;
+				CardUI.GetComponent<TestCard>().asset = currTest.asset;
+				CardUI.GetComponent<TestCard>().minBids = currTest.minBids;
+			}
 				
 			Sprite card = Resources.Load<Sprite>(currCard.asset); //Card Sprite
 
@@ -1264,7 +1318,28 @@ public class Game : MonoBehaviour {
 	void ThreePlayerMode() {
 
 	}
+	/*
+	public List<GameObject> playerActive;
+	public List<GameObject> numCardText;
+	*/
+	public void OpenShowPlayer(){
+		playerPanel.SetActive(true);
+		for(int i = 0 ; i < numCardText.Count ; i++){
+			numCardText[i].GetComponent<UnityEngine.UI.Text>().text = "NumCard: "+ _players[i].hand.Count.ToString();
+		}
+		for(int i = 0 ; i < playerActive.Count ; i++){
+			loadCards(_players[i].inPlay,playerActive[i]);
+		}
+	}
 
+	public void CloseShowPlayer(){
+		playerPanel.SetActive(false);
 
+		for(int i = 0 ; i < playerActive.Count ; i++){
+			foreach (Transform child in playerActive[i].transform) {	
+				GameObject.Destroy (child.gameObject);
+			}
+		}
+	}
 
 }
