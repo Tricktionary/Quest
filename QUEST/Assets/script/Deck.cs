@@ -105,6 +105,14 @@ public class Deck{
 			// NOTE: Make an addArmour method for loading these.
 			addArmour("Amour",10,1, "card_image/special/specialCard3",8);
 
+			//Test
+			/*
+			addTestCard("Test of the Questing Beast",4,"card_image/tests/testCard",10);
+			addTestCard("Test of Temptation",0,"card_image/tests/testCard1",10);
+			addTestCard("Test of Valor",0,"card_image/tests/testCard2",2);
+			addTestCard("Test of the Morgan Le Fey",4,"card_image/tests/testCard3",2);
+			*/
+
 			// Shuffe the deck of cards after adding.
 			this.Shuffle();
 		} else if (type.Equals ("Story")) {
@@ -144,6 +152,13 @@ public class Deck{
 			this.Shuffle();
 		}
 	}
+
+	void addTestCard(string name, int minBid, string asset, int copies){
+		for(int i = 0 ; i < copies ; i++){
+			_cards.Add(new TestCard(name, minBid, asset));
+		}
+	}
+
 	void addArmour(string name, int power, int bid , string asset, int copies){
 		for(int i = 0 ; i < copies ; i++){
 			_cards.Add(new AmourCard(name,power,bid,asset));
