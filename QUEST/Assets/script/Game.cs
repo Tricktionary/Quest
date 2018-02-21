@@ -152,7 +152,7 @@ public class Game : MonoBehaviour {
 			
 				}
 				else if(_eventCard.conditions == "All players except player drawing this card lose 1 shield"){//condition for "lowest rank and shield receives 3 shields" event 
-					for(int i = 0; i<3; i++){
+					for(int i = 0; i < _numPlayers; i++){
 						if(_players[i] != _players[_turnId]){ //checks that player isnt current player 
 							if(_players[i].shieldCounter != 0){ //checks that player has at least 1 shield
 								_players[i].shieldCounter--;
