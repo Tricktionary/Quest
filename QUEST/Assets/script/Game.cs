@@ -43,6 +43,7 @@ public class Game : MonoBehaviour {
 	public int _askCounter;  //How many people you asked this prompt to
 	private EventCard _eventCard;
 	public bool bonusQuestPoints = false; //used for event card "King's Recognition"
+	private int nextTurnID;
 
 	//AI
 	private List<AIPlayer> Observers;
@@ -91,6 +92,7 @@ public class Game : MonoBehaviour {
 			GameObject storyCard = null;
 
 			if (currCard.GetType () == typeof(QuestCard)){	//Instantiate Quest Card Prefab
+				nextTurnID = _turnId;
 				storyCard = Instantiate (QuestCard);
 				_questInPlay = true;
 				_canEnd = true;
@@ -98,6 +100,7 @@ public class Game : MonoBehaviour {
 				numStages = _questCard.stages;				//Stages of the Quest
 			}
 			else if(currCard.GetType() == typeof(TournamentCard)){
+				nextTurnID = _turnId;
 				storyCard = Instantiate(QuestCard);
 				//Debug.Log("TournamentCard");
 				_tournamentInPlay = true;
@@ -529,6 +532,7 @@ public class Game : MonoBehaviour {
 											clearWeapons();
 											updateHand(_turnId);
 											reset();
+											_turnId = nextTurnID;
 											nextTurn(false,false);
 											_askCounter = 0;
 											currStageTxt.GetComponent<UnityEngine.UI.Text>().text = "";
@@ -555,6 +559,7 @@ public class Game : MonoBehaviour {
 												clearWeapons();
 												updateHand(_turnId);
 												reset();
+												_turnId = nextTurnID;
 												nextTurn(false,false);
 												_askCounter = 0;
 												return;
@@ -651,10 +656,12 @@ public class Game : MonoBehaviour {
 							//Debug.Log(_turnId);
 							if(_askCounter >= _playersIn.Count){
 								statusPrompt("");
+
 								reset();
 								_askCounter = 0;
 								clearWeapons();
 								updateHand(_turnId);
+								_turnId = nextTurnID;
 								nextTurn(false,false);
 							}
 							else if(win){
@@ -785,6 +792,7 @@ public class Game : MonoBehaviour {
 		_drawn = true;	//Can't Draw cards while in quest
 		_canEnd = true; //Can End turn
 	}
+ 
 /*
 	Prompt User
 	Input: turnID-> Integer The turn ID we are prompting (Not really being used)
@@ -863,6 +871,7 @@ public class Game : MonoBehaviour {
 					if (_turnId >= 3) {
 						_turnId = 0;
 					}
+					_turnId = nextTurnID;
 					nextTurn(false,false);
 					Prompt.SetActive(false);
 					//Debug.Log(_turnId);
@@ -906,6 +915,7 @@ public class Game : MonoBehaviour {
 					}
 					if(_playersIn.Count <= 0){				//No on joined so reset
 						reset();
+						_turnId = nextTurnID;
 						nextTurn(false,false);
 					}
 					else{									//Someone joined
@@ -938,6 +948,7 @@ public class Game : MonoBehaviour {
 						}
 						_askCounter = 0;
 						reset();
+						_turnId = nextTurnID;
 						nextTurn(false,false);
 						Prompt.SetActive(false); 
 					}
@@ -958,6 +969,7 @@ public class Game : MonoBehaviour {
 						if(_playersIn.Count == 1){
 							_players[_playersIn[0]].AddShields(_tournamentCard.shields);
 						}
+						_turnId = nextTurnID;
 						nextTurn(false,false);
 						_askCounter = 0;
 						reset();
@@ -1010,6 +1022,7 @@ public class Game : MonoBehaviour {
 		_questInPlay = false;
 		_rumble = false;
 		_tournamentInPlay = false;
+		nextTurnID = -1;
 
 		_sponsorId = -1;
 		_questeeTurnId = -1;
