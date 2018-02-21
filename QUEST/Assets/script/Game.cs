@@ -10,7 +10,10 @@ public class Game : MonoBehaviour {
 	public GameObject FoeCard;								//Foe Card Prefab
 	public GameObject AllyCard;								//Ally Card Prefab
 	public GameObject QuestCard;
+	public GameObject AmourCard;
+
 	public GameObject EventCard;
+	public GameObject RankCard;
 
 	public GameObject playArea;								//Play Zone
 
@@ -21,6 +24,8 @@ public class Game : MonoBehaviour {
 	public GameObject gameStatus;
 	public GameObject currStageTxt;
 	public GameObject discardPile;
+	public GameObject rankCardArea;
+
 
 	public GameObject drawCardArea;							//DrawCardArea
 	public GameObject Hand; 								//Play Area Hand Reference
@@ -321,12 +326,14 @@ public class Game : MonoBehaviour {
 
 		// Check ascending power level.
 		for(int i = 0; i < powerLevels.Count - 1; i++){
-			if(powerLevels[i] > powerLevels[i + 1]){ return false; }
+			if(powerLevels[i] >= powerLevels[i + 1]){ return false; }	//Can't be equal
 		}
 
 		_stagePower = powerLevels;		//Get Calculated stage powers if valid
 		return true;
 	}
+
+
 
 	//Update The hand of turn ID based off of the user interface
 	public void updateHand(int turnID){
@@ -360,6 +367,10 @@ public class Game : MonoBehaviour {
 			if(cards[i].GetType() == typeof(AllyCard)){
 				AllyCard currAlly = (AllyCard)cards[i];
 				power = power + currAlly.power;
+			}
+			if(cards[i].GetType() == typeof(AmourCard)){
+				AmourCard currAmour = (AmourCard)cards[i];
+				power = power + currAmour.power;
 			}
 		}
 		if(_players[_turnId].rank == 0 ){
@@ -402,6 +413,23 @@ public class Game : MonoBehaviour {
 
 		//Debug.Log("Clears Weapons");
 	}
+	private void clearAmour(){
+		List<Card> oldCards = playArea.GetComponent<CardArea>().cards;
+		List<Card> filteredCards = new List<Card>();
+		for(int i = 0 ; i < oldCards.Count ; i++){
+			if(oldCards[i].GetType() != typeof(AmourCard)){
+				filteredCards.Add(oldCards[i]);
+			}
+			else{
+				_discardPileAdventure.Discard(oldCards[i]);
+			}
+		}
+		playArea.GetComponent<CardArea>().cards = new List<Card>();
+		
+		for(int i =0 ; i < filteredCards.Count ;i++){
+			playArea.GetComponent<CardArea>().addCard(filteredCards[i]);
+		}
+	}
 
 	private List<int> calculateTournamentWinner(){
 		List<Card> currHand = new List<Card>();
@@ -424,7 +452,12 @@ public class Game : MonoBehaviour {
 					//Debug.Log(currWeapon.power);
 					currPower = currWeapon.power + currPower;
 				}	
-				
+				if(currHand[x].GetType() == typeof(AmourCard)){
+					AmourCard currAmour = (AmourCard)currHand[x];
+					//Debug.Log(currWeapon.power);
+					currPower = currAmour.power + currPower;
+				}	
+
 				if(currHand[x].GetType() == typeof(AllyCard)){
 					AllyCard currAlly = (AllyCard)currHand[x];
 					currPower = currAlly.power + currPower ; 
@@ -465,6 +498,9 @@ public class Game : MonoBehaviour {
 			GameObject.Destroy (child.gameObject);
 		}
 	}
+
+
+
 	//End Turn
 	public void EndTurn() {
 		//Debug.Log(_canEnd);
@@ -530,6 +566,7 @@ public class Game : MonoBehaviour {
 										}
 										if(_playersIn.Count <= 0){ 									//Everyone is dead So reset
 											clearWeapons();
+											clearAmour();
 											updateHand(_turnId);
 											reset();
 											_turnId = nextTurnID;
@@ -557,6 +594,7 @@ public class Game : MonoBehaviour {
 												}
 												bonusQuestPoints = false;
 												clearWeapons();
+												clearAmour();
 												updateHand(_turnId);
 												reset();
 												_turnId = nextTurnID;
@@ -660,6 +698,7 @@ public class Game : MonoBehaviour {
 								reset();
 								_askCounter = 0;
 								clearWeapons();
+								clearAmour();
 								updateHand(_turnId);
 								_turnId = nextTurnID;
 								nextTurn(false,false);
@@ -1045,6 +1084,9 @@ public class Game : MonoBehaviour {
 	//Functionality : Loads player hand onto the UI
 	void loadHand(int playerId){
 		
+		foreach (Transform child in rankCardArea.transform) {	
+			GameObject.Destroy (child.gameObject);
+		}
 
 		playArea.GetComponent<CardArea>().cards =  new List<Card>();
 		Hand.GetComponent<CardArea>().cards =  new List<Card>();
@@ -1053,6 +1095,7 @@ public class Game : MonoBehaviour {
 
 		//Set Player ID text
 		playerIdTxt.GetComponent<UnityEngine.UI.Text>().text = "Player ID : "+ (playerId+1).ToString(); //For User Friendly
+
 
 		//Get current players shield
 		int currPlayerShield = _players[playerId].shieldCounter;
@@ -1064,6 +1107,26 @@ public class Game : MonoBehaviour {
 		loadCards(currHand,Hand);
 		loadCards(currPlay,playArea);
 
+
+		GameObject cardUI = Instantiate(RankCard);
+
+		int rank = _players[playerId].rank;
+		string rankAsset = null;
+
+		if(rank == 0){
+			rankAsset = "card_image/rank/rankCard1";
+		}
+		if(rank == 1){
+			rankAsset = "card_image/rank/rankCard2";
+		}
+		if(rank == 2){
+			rankAsset = "card_image/rank/rankCard3";
+		}
+
+
+		Sprite rankCard = Resources.Load<Sprite>(rankAsset); //Card Assets
+		cardUI.gameObject.GetComponent<Image>().sprite = rankCard;
+		cardUI.transform.SetParent(rankCardArea.transform);
 	}
 
 	void loadCards(List<Card> cards, GameObject area){
@@ -1109,6 +1172,17 @@ public class Game : MonoBehaviour {
 				CardUI.GetComponent<AllyCard>().bonusBid  =  currAlly.bonusBid;
 				CardUI.GetComponent<AllyCard>().questCondition = currAlly.questCondition;
 				CardUI.GetComponent<AllyCard>().allyCondition  = currAlly.allyCondition;
+			}
+
+
+			if (currCard.GetType () == typeof(AmourCard)) {
+
+				AmourCard currAmour = (AmourCard)currCard;
+				CardUI = Instantiate (AmourCard);
+				CardUI.GetComponent<AmourCard>().name = currAmour.name;
+				CardUI.GetComponent<AmourCard>().asset = currAmour.asset;
+				CardUI.GetComponent<AmourCard>().power = currAmour.power;
+				CardUI.GetComponent<AmourCard>().bid = currAmour.bid;
 			}
 				
 			Sprite card = Resources.Load<Sprite>(currCard.asset); //Card Sprite

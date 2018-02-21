@@ -103,6 +103,7 @@ public class Deck{
 
 			/* Amour load */
 			// NOTE: Make an addArmour method for loading these.
+			addArmour("Amour",10,1, "card_image/special/specialCard3",8);
 
 			// Shuffe the deck of cards after adding.
 			this.Shuffle();
@@ -141,6 +142,11 @@ public class Deck{
 			// Shuffe the deck of cards after adding.
 
 			this.Shuffle();
+		}
+	}
+	void addArmour(string name, int power, int bid , string asset, int copies){
+		for(int i = 0 ; i < copies ; i++){
+			_cards.Add(new AmourCard(name,power,bid,asset));
 		}
 	}
 
