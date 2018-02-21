@@ -17,7 +17,7 @@ public class SponsorQuest: AIBehaviour {
 		List<FoeCard> foeCards = new List<FoeCard>();
 		List<Card> hand = ai.hand;
 
-		for(i = 0 ; i < hand.Count ; i++){
+		for(int i = 0 ; i < hand.Count ; i++){
 			if(hand[i].GetType() == typeof(WeaponCard)){
 				WeaponCard currWeapon = (WeaponCard)hand[i];
 				weaponCards.Add(currWeapon);
@@ -28,8 +28,8 @@ public class SponsorQuest: AIBehaviour {
 			}
 		}
 
-		if(FoeCard.Count > stages ){
-			true;
+		if(foeCards.Count > stages ){
+			return true;
 		}
 		return false;
 	}
@@ -49,7 +49,7 @@ public class SponsorQuest: AIBehaviour {
 		List<FoeCard> foeCards = new List<FoeCard>();
 		List<Card> hand = ai.hand;
 
-		for(i = 0 ; i < hand.Count ; i++){
+		for(int i = 0 ; i < hand.Count ; i++){
 			if(hand[i].GetType() == typeof(WeaponCard)){
 				WeaponCard currWeapon = (WeaponCard)hand[i];
 				weaponCards.Add(currWeapon);
@@ -85,7 +85,7 @@ public class SponsorQuest: AIBehaviour {
 		List<FoeCard> foeCards = new List<FoeCard>();
 		List<Card> hand = ai.hand;
 
-		for(i = 0 ; i < hand.Count ; i++){
+		for(int i = 0 ; i < hand.Count ; i++){
 			if(hand[i].GetType() == typeof(WeaponCard)){
 				WeaponCard currWeapon = (WeaponCard)hand[i];
 				weaponCards.Add(currWeapon);
