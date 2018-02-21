@@ -333,7 +333,7 @@ public class Game : MonoBehaviour {
 		return true;
 	}
 
-	
+
 
 	//Update The hand of turn ID based off of the user interface
 	public void updateHand(int turnID){
@@ -499,9 +499,7 @@ public class Game : MonoBehaviour {
 		}
 	}
 
-	private void overHand(){
 
-	}
 
 	//End Turn
 	public void EndTurn() {

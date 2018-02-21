@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public abstract class AdventureCard : Card,IBeginDragHandler,IDragHandler, IEndDragHandler
 {
+	
 	//Action that occurs when you begin to drag
 	public void OnBeginDrag(PointerEventData eventData){
 		//Debug.Log("OnBeginDrag");
