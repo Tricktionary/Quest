@@ -130,7 +130,7 @@ public class Game : MonoBehaviour {
 					//Debug.Log("currPlayer: " + currPlayer);
 					List<int> lowestPlayers = new List<int>();	
 					//compares all players to find the players with lowest value
-					for(int i = 0; i<3; i++){
+					for(int i = 0; i< _numPlayers; i++){
 						
 							if(_players[i].calcRankShields() <= lowestVal){
 									lowestVal = _players[i].calcRankShields();
@@ -341,7 +341,7 @@ public class Game : MonoBehaviour {
 
 	public bool checkQuest() {
 		List<int> powerLevels = new List<int>();
-		//int testCounter = 0;
+		int testCounter = 0;
 		int currPower = 0;
 		List<List<Card>> stages = getStages();
 
@@ -837,7 +837,7 @@ public class Game : MonoBehaviour {
 
 
 		_turnId++;
-		if (_turnId >= 3) {
+		if (_turnId >= _numPlayers) {
 			_turnId = 0;
 		}
 
@@ -953,7 +953,7 @@ public class Game : MonoBehaviour {
 					_askCounter = 0;
 					reset();
 					_turnId++;							//Skip The original draw turn
-					if (_turnId >= 3) {
+					if (_turnId >= _numPlayers) {
 						_turnId = 0;
 					}
 					_turnId = nextTurnID;
@@ -995,7 +995,7 @@ public class Game : MonoBehaviour {
 				else{										//Done Asking
 					_askCounter = 0;
 					_turnId++;								//Skip Sponsor
-					if (_turnId >= 3) {
+					if (_turnId >= _numPlayers) {
 						_turnId = 0;
 					}
 					if(_playersIn.Count <= 0){				//No on joined so reset
@@ -1085,7 +1085,7 @@ public class Game : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake() {
-		//assume 3 players
+		//assume 4 players
 
 		_players.Add(new Player(1));
 		_players.Add(new Player(2));
