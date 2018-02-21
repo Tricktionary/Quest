@@ -83,7 +83,7 @@ public class Player {
 	//Constructor 
 	public Player(int id){
 		_playerId = id;
-		_rank = 1;
+		_rank = 0;
 		_shieldCounter = 0;
 		_bp = 5;
 		_hand = new List<Card>();
@@ -94,7 +94,7 @@ public class Player {
 	//AI
 	public Player(){
 		_playerId = -1;
-		_rank = 1;
+		_rank = 0;
 		_shieldCounter = 0;
 		_bp = 5;
 		_hand = new List<Card>();
@@ -121,10 +121,10 @@ public class Player {
 	//calculates sum of ranks and shields in terms of shields 
 	public int calcRankShields(){
 		int sumPoints = 0;
-		if(this.rank == 1){
+		if(this.rank == 0){
 			sumPoints += this.shieldCounter;
 		}
-		else if(this.rank == 2){
+		else if(this.rank == 1){
 			sumPoints += 5;
 			sumPoints += this.shieldCounter;
 		}
