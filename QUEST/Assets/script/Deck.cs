@@ -176,7 +176,6 @@ public class Deck{
 
 
 			// Shuffe the deck of cards after adding.
-
 			this.Shuffle();
 		}
 	}
@@ -234,8 +233,6 @@ public class Deck{
 			_cards.Add(new QuestCard(name, stages, featuredFoe, asset));
 		}
 	}
-
-
 
 	// Use this for initialization
 	void Start () {
