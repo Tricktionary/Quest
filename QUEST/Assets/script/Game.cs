@@ -586,14 +586,11 @@ public class Game : MonoBehaviour {
 
 							int cardsUsed; //Get the number of cards used per stage
 
-
 							// Flip the staged cards.
-							/*
 							List<Card> stagedCards = getStagedCards();
 							for (int i = 0; i < stagedCards.Count; i++) {
 								stagedCards[i].flipCard(true);
 							}
-							*/
 							
 							for(int i = 0 ; i < numStages ;i++){
 								TurnOffDraggable(Stages[i]);
@@ -640,7 +637,16 @@ public class Game : MonoBehaviour {
 										else{														//Continue
 											_rumble = false;
 											_askCounter = 1;
+
+											// Flip cards in the revealed stage.
+											Debug.Log("Flipping Stage: " + _currQuestStage);
+											List<List<Card>> currStages = getStages();
+											for (int i = 0; i < currStages[_currQuestStage].Count; i++) {
+												currStages[_currQuestStage][i].flipCard(false);	
+											}
+
 											_currQuestStage++;
+
 											currStageTxt.GetComponent<UnityEngine.UI.Text>().text = "Current Stage: "+ (_currQuestStage+1).ToString();
 											if(_currQuestStage >= numStages){	//Quest is Over
 												currStageTxt.GetComponent<UnityEngine.UI.Text>().text = "";
