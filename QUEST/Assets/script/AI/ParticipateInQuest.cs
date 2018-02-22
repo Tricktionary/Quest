@@ -26,9 +26,9 @@ public class ParticipateInQuest: AIBehaviour{
 		return false;
 	}
 
-	public List<Card> play1(int aiId,bool isTest, bool isLastStage, List<Player> players) {
+	public List<Card> play1(int aiId,int testBid, bool isLastStage, List<Player> players) {
 
-		if (isTest) {
+		if (testBid>0) {
 			//TODO:Test
 		} else {
 			Player ai = players [aiId];
