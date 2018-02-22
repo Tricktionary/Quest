@@ -56,6 +56,7 @@ public class FoeCard : AdventureCard
 		_hiPower = hiPower;
 		_special = special;
 		_asset = asset;
+		_draggable = true;
 	}
 
 	// ToString Override for nicer printing.

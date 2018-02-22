@@ -545,8 +545,6 @@ public class Game : MonoBehaviour {
 		}
 	}
 
-
-
 	//End Turn
 	public void EndTurn() {
 		//Debug.Log(_canEnd);
@@ -562,6 +560,7 @@ public class Game : MonoBehaviour {
 		if(Hand.GetComponent<CardArea>().cards.Count >= 13 ){
 			statusPrompt("Too Many Cards, Please Discard or use");
 		}
+
 		else if (_canEnd) {
 			if (_questInPlay) {				//Quest Currently in plays
 				if (_sponsorId >= 0) {  //There is a sponsor
@@ -580,7 +579,11 @@ public class Game : MonoBehaviour {
 								stagedCards[i].flipCard(true);
 							}
 							*/
-							 
+							
+							for(int i = 0 ; i < numStages ;i++){
+								TurnOffDraggable(Stages[i]);
+							}
+							
 							int count = getStagedCards().Count + 1;		//Get the ammount of cards used in this stage and refund to sponsor
 							for(int x = 0 ; x < count ; x++){
 								Hand.GetComponent<CardArea>().addCard(_adventureDeck.Draw());
@@ -593,10 +596,9 @@ public class Game : MonoBehaviour {
 						}
 						else{
 							statusPrompt("Quest is Not Valid");
-							prompt (_turnId, "sponsor");
 						}
 					}
-					if(_questReady == true){			//Quest is Ready
+					else if(_questReady == true){			//Quest is Ready
 						if(_playersIn.Count > 0){		//If people are participating
 							
 
@@ -694,7 +696,7 @@ public class Game : MonoBehaviour {
 						}
 					}
 				}
-				if(_sponsorId == -1){ 			//Find A Sponsor
+				else if(_sponsorId == -1){ 			//Find A Sponsor
 					prompt(_turnId, "sponsor");
 				}
 			}
@@ -905,6 +907,9 @@ public class Game : MonoBehaviour {
 
 	//Reset Values
 	public void reset(){
+		for(int i = 0 ; i < numStages ;i++){
+			TurnOnDraggable(Stages[i]);
+		}
 		_deadPlayers = new List<int>();
 		_playersIn = new List<int>(); //Reset Players In
 		_questReady = false;
@@ -929,6 +934,7 @@ public class Game : MonoBehaviour {
 				GameObject.Destroy(child.gameObject);
 			}
 		}
+		 
 	}
 
 
@@ -1318,10 +1324,23 @@ public class Game : MonoBehaviour {
 	void ThreePlayerMode() {
 
 	}
-	/*
-	public List<GameObject> playerActive;
-	public List<GameObject> numCardText;
-	*/
+	
+	void TurnOffDraggable(GameObject area){
+		
+
+		area.GetComponent<CardArea>().acceptObj = false;
+		/*
+		List<Card> cardList = area.GetComponent<CardArea>().cards;
+		for(int i = 0 ; i < cardList.Count ;i++){
+			cardList[i].obj.GetComponent<Card>().draggable = false;
+		} */
+
+	}
+
+	void TurnOnDraggable(GameObject area){
+		area.GetComponent<CardArea>().acceptObj = true;
+	}
+
 	public void OpenShowPlayer(){
 		playerPanel.SetActive(true);
 		for(int i = 0 ; i < numCardText.Count ; i++){

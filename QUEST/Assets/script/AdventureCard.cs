@@ -28,10 +28,12 @@ public abstract class AdventureCard : Card,IBeginDragHandler,IDragHandler, IEndD
 	//Action that occurs at the end of the drag
 	public void OnEndDrag(PointerEventData eventData){
 		//Debug.Log("OnEndDrag");
+		 
 		this.transform.SetParent(oldPosition);
 		transform.localScale = new Vector3(1F, 1f, 1f);
 		//this.transform.parent.GetComponent<CardArea>().removeCard(this);
 		GetComponent<CanvasGroup>().blocksRaycasts = true;
-	}
+		
+	}	
 
 }
