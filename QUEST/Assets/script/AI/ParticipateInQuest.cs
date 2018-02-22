@@ -70,6 +70,7 @@ public class ParticipateInQuest: AIBehaviour{
 			Dictionary<Card,int> cards = new Dictionary<Card, int>();
 			List<Card> keys = new List<Card>();
 			bool amour = true;
+			int played = 0;
 			if (isLastStage) {
 				for (int i = 0; i < sortedList.Count; i++) {
 					if (sortedList[i] is WeaponCard) {
@@ -89,14 +90,16 @@ public class ParticipateInQuest: AIBehaviour{
 				}
 				return keys;
 			} else {
-				int played = 0;
-
 				for (int i = 0; i < sortedList.Count; i++) {
 					if (sortedList[i] is AllyCard) {
 						keys.Add(sortedList[i]);
+						sortedList.RemoveAt (i);
+						i--;
 						played += 1;
 					} else if (sortedList[i] is AmourCard && amour) {
 						keys.Add(sortedList[i]);
+						sortedList.RemoveAt (i);
+						i--;
 						played += 1;
 						amour = false;
 					}
@@ -105,9 +108,18 @@ public class ParticipateInQuest: AIBehaviour{
 					}
 				}
 			}
-
-
-
+			played = 0;
+			List<Card> weapons = new List<Card>();
+			for (int i = sortedList.Count-1; i >= 0; i--) {
+				if (sortedList [i] is WeaponCard) {
+					weapons.Add (sortedList [i]);
+					played += 1;
+				}
+				if (played == 2) {
+					keys.AddRange (weapons);
+					return keys;
+				}
+			}
 		}
 		return null;
 	}
