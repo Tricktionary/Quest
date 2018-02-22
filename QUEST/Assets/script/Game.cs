@@ -18,6 +18,8 @@ public class Game : MonoBehaviour {
 	public GameObject playerPanel;
 
 	public GameObject playArea;								//Play Zone
+	public GameObject Menu;
+
 
 	public List<GameObject> Stages;
 	public List<GameObject> playerActive;
@@ -797,6 +799,7 @@ public class Game : MonoBehaviour {
 		Tournament
 	*/
 	public void nextTurnTournament(){
+		rankUpPlayers();
 		foreach (Transform child in Hand.transform) {	
 			GameObject.Destroy (child.gameObject);
 		}
@@ -829,6 +832,7 @@ public class Game : MonoBehaviour {
 	Input: canEnd -> Can the player end their current turn
 */
 	public void nextTurn(bool drawn, bool canEnd){
+		rankUpPlayers();
 		//Clear Old Hand
 		foreach (Transform child in Hand.transform) {	
 			GameObject.Destroy (child.gameObject);
@@ -854,7 +858,7 @@ public class Game : MonoBehaviour {
 */
 	public void nextTurnQuest(){
 		
-		
+		rankUpPlayers();
 		foreach (Transform child in Hand.transform) {	
 			GameObject.Destroy (child.gameObject);
 		}
@@ -1313,17 +1317,6 @@ public class Game : MonoBehaviour {
 		}
 	}
 		
-	// Update is called once per frame
-	void Update () {
-	}
-
-	void TwoPlayerMode() {
-		
-	}
-
-	void ThreePlayerMode() {
-
-	}
 	
 	void TurnOffDraggable(GameObject area){
 		
@@ -1359,6 +1352,153 @@ public class Game : MonoBehaviour {
 				GameObject.Destroy (child.gameObject);
 			}
 		}
+	}
+
+	public void rankUpPlayers(){
+		for(int i = 0 ; i <_players.Count ; i++){
+			_players[i].Rankup();
+		}
+	}
+
+	public void NormalMode(){
+		Menu.SetActive(false);
+	}
+
+	public void QuestOnlyMode(){
+		Menu.SetActive(false);
+		foreach (Transform child in Hand.transform) {	
+			GameObject.Destroy (child.gameObject);
+		}
+		_players = new List<Player>();
+		_players.Add(new Player(1));
+		_players.Add(new Player(2));
+		_players.Add(new Player(3));
+		_players.Add(new Player(4));
+		//Set up the decks
+		_adventureDeck = new Deck("Adventure");
+		_storyDeck = new Deck("QuestOnly");
+		_discardPileAdventure = new Deck ("");
+		_discardPileStory = new Deck ("");
+
+		_playersIn = new List<int> ();
+		_deadPlayers = new List<int>();
+
+		_turnId = 0;
+		_numPlayers = _players.Count;
+		_drawn = false;
+		_canEnd = false;
+		_questInPlay = false;
+		_rumble = false;
+		_tournamentInPlay = false;
+		nextTurnID = -1;
+
+		_sponsorId = -1;
+		_questeeTurnId = -1;
+		_askCounter = 0;
+		_currQuestStage = -1;	
+		promptAnswer = -1;
+
+		_tourneeID = -1;
+
+		//Populates Player Hands
+		for(int i = 0; i < _players.Count ; i++){
+			for(int x = 0 ; x < 12 ; x++){
+				_players[i].addCard((_adventureDeck.Draw()));
+			}
+		}
+		loadHand(_turnId);
+	}
+
+	public void TournamentOnlyMode(){
+		Menu.SetActive(false);
+		foreach (Transform child in Hand.transform) {	
+			GameObject.Destroy (child.gameObject);
+		}
+		//Set up the decks
+		_players = new List<Player>();
+		_players.Add(new Player(1));
+		_players.Add(new Player(2));
+		_players.Add(new Player(3));
+		_players.Add(new Player(4));
+
+		_adventureDeck = new Deck("Adventure");
+		_storyDeck = new Deck("TournamentOnly");
+		_discardPileAdventure = new Deck ("");
+		_discardPileStory = new Deck ("");
+
+		_playersIn = new List<int> ();
+		_deadPlayers = new List<int>();
+
+		_turnId = 0;
+		_numPlayers = _players.Count;
+		_drawn = false;
+		_canEnd = false;
+		_questInPlay = false;
+		_rumble = false;
+		_tournamentInPlay = false;
+		nextTurnID = -1;
+
+		_sponsorId = -1;
+		_questeeTurnId = -1;
+		_askCounter = 0;
+		_currQuestStage = -1;	
+		promptAnswer = -1;
+
+		_tourneeID = -1;
+
+		//Populates Player Hands
+		for(int i = 0; i < _players.Count ; i++){
+			for(int x = 0 ; x < 12 ; x++){
+				_players[i].addCard((_adventureDeck.Draw()));
+			}
+		}
+		loadHand(_turnId);
+	}
+
+	public void EventModeOnly(){
+		Menu.SetActive(false);
+		foreach (Transform child in Hand.transform) {	
+			GameObject.Destroy (child.gameObject);
+		}
+		//Set up the decks
+		_players = new List<Player>();
+		_players.Add(new Player(1));
+		_players.Add(new Player(2));
+		_players.Add(new Player(3));
+		_players.Add(new Player(4));
+
+		_adventureDeck = new Deck("Adventure");
+		_storyDeck = new Deck("EventOnly");
+		_discardPileAdventure = new Deck ("");
+		_discardPileStory = new Deck ("");
+
+		_playersIn = new List<int> ();
+		_deadPlayers = new List<int>();
+
+		_turnId = 0;
+		_numPlayers = _players.Count;
+		_drawn = false;
+		_canEnd = false;
+		_questInPlay = false;
+		_rumble = false;
+		_tournamentInPlay = false;
+		nextTurnID = -1;
+
+		_sponsorId = -1;
+		_questeeTurnId = -1;
+		_askCounter = 0;
+		_currQuestStage = -1;	
+		promptAnswer = -1;
+
+		_tourneeID = -1;
+
+		//Populates Player Hands
+		for(int i = 0; i < _players.Count ; i++){
+			for(int x = 0 ; x < 12 ; x++){
+				_players[i].addCard((_adventureDeck.Draw()));
+			}
+		}
+		loadHand(_turnId);
 	}
 
 }
