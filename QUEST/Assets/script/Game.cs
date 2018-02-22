@@ -464,21 +464,31 @@ public class Game : MonoBehaviour {
 
 		//Debug.Log("Clears Weapons");
 	}
-	private void clearAmour(){
+	private void clearQuestCards(){
 		List<Card> oldCards = playArea.GetComponent<CardArea>().cards;
-		List<Card> filteredCards = new List<Card>();
+		List<Card> filteredCards1 = new List<Card>();
+		List<Card> filteredCards2 = new List<Card>();
 		for(int i = 0 ; i < oldCards.Count ; i++){
 			if(oldCards[i].GetType() != typeof(AmourCard)){
-				filteredCards.Add(oldCards[i]);
+				filteredCards1.Add(oldCards[i]);
 			}
 			else{
 				_discardPileAdventure.Discard(oldCards[i]);
 			}
 		}
+		for(int i = 0 ; i < filteredCards1.Count ; i++){
+			if(filteredCards1[i].GetType() != typeof(WeaponCard)){
+				filteredCards2.Add(oldCards[i]);
+			}
+			else{
+				_discardPileAdventure.Discard(filteredCards1[i]);
+			}
+		}
+
 		playArea.GetComponent<CardArea>().cards = new List<Card>();
 		
-		for(int i =0 ; i < filteredCards.Count ;i++){
-			playArea.GetComponent<CardArea>().addCard(filteredCards[i]);
+		for(int i =0 ; i < filteredCards2.Count ;i++){
+			playArea.GetComponent<CardArea>().addCard(filteredCards2[i]);
 		}
 	}
 
@@ -618,8 +628,7 @@ public class Game : MonoBehaviour {
 											_playersIn.Remove(_deadPlayers[i]);
 										}
 										if(_playersIn.Count <= 0){ 									//Everyone is dead So reset
-											clearWeapons();
-											clearAmour();
+											clearQuestCards();
 											updateHand(_turnId);
 											reset();
 											_turnId = nextTurnID;
@@ -646,8 +655,7 @@ public class Game : MonoBehaviour {
 													}
 												}
 												bonusQuestPoints = false;
-												clearWeapons();
-												clearAmour();
+												clearQuestCards();
 												updateHand(_turnId);
 												reset();
 												_turnId = nextTurnID;
@@ -673,7 +681,7 @@ public class Game : MonoBehaviour {
  									}
 									else{
 										statusPrompt("You Have Perished R.I.P");					//YOU DIED 
-										clearWeapons();
+										clearQuestCards();
 										updateHand(_turnId);
 										for(int i = 0 ; i < _playersIn.Count; i++){
 											if(_playersIn[i] == _turnId){
@@ -750,8 +758,7 @@ public class Game : MonoBehaviour {
 
 								reset();
 								_askCounter = 0;
-								clearWeapons();
-								clearAmour();
+								clearQuestCards();
 								updateHand(_turnId);
 								_turnId = nextTurnID;
 								nextTurn(false,false);
