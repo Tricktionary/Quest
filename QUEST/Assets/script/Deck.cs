@@ -173,11 +173,10 @@ public class Deck{
 			//addEvent("Court Called to Camelot", "All Allies in play must be discarded", "card_image/events/eventCard6", 2);
 			//addEvent("King's Call to Arms", "Highest ranked player(s) must discard 1 weapon, if unable 2 foe cards must be discarded", "card_image/events/eventCard7", 1);
 			addEvent("Prosperity Throughout the Realm", "All players may immediately draw 2 adventure Cards", "card_image/events/eventCard8", 1);
-
-
-			// Shuffe the deck of cards after adding.
-			this.Shuffle();
 		}
+
+		// Shuffe the deck of cards after adding.
+		this.Shuffle();
 	}
 
 	void addTestCard(string name, int minBid, string asset, int copies){
