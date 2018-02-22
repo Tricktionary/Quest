@@ -1,17 +1,26 @@
 ﻿using System.Collections.Generic;
 public class AIPlayer : Player {
 
+	SponsorQuest sponsorQuestBehaviour;
 	ParticipateInQuest participateQuestBehaviour;
 	ParticipateInTournament participateTournamentBehaviour;
 
 	public AIPlayer (int playerId) : base(playerId) {
+		sponsorQuestBehaviour = new SponsorQuest ();
 		participateQuestBehaviour = new ParticipateInQuest ();
 		participateTournamentBehaviour = new ParticipateInTournament ();
 	}
 
-	bool playTournament(TournamentCard storyCard, List<Player> players) {
-		participateTournamentBehaviour.play1 (_playerId, storyCard, players);
-		return false;
+	List<List<Card>> sponsorQuest(QuestCard questCard, List<Player> players) {
+		if (sponsorQuestBehaviour.sponsor(_playerId,someoneCouldWin(questCard.stages, players), players, questCard.stages)) {
+			return sponsorQuestBehaviour.setup1 (questCard, this);
+		}
+		return null;
+	}
+
+	List<Card> playTournament(TournamentCard storyCard, List<Player> players) {
+		return participateTournamentBehaviour.play1 (_playerId, storyCard, players);
+
 	}
 
 	bool joinTournament(TournamentCard storyCard, List<Player> players) {
@@ -19,11 +28,14 @@ public class AIPlayer : Player {
 		bool couldWin = someoneCouldWin (value, players);
 		return participateTournamentBehaviour.join1 (couldWin);
 	}
+		
 
+	bool joinQuest(QuestCard storyCard, List<Player> players) {
+		return participateQuestBehaviour.join1 (_playerId, storyCard.stages, players);
+	}
 
-	bool playQuest(TournamentCard storyCard, List<Player> players) {
-		//participateQuestBehaviour.play (_playerId, storyCard, players);
-		return false;
+		List<Card> playQuest(List<Player> players, int testBid, bool isLastStage) {
+		return participateQuestBehaviour.play1 (_playerId, testBid, isLastStage, players);
 	}
 
 	bool someoneCouldWin(int value, List<Player> players) {
