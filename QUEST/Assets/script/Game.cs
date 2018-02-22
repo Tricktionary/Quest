@@ -1396,6 +1396,19 @@ public class Game : MonoBehaviour {
 		Menu.SetActive(false);
 	}
 
+	public void AIMode(int AIs) {
+		Menu.SetActive(false);
+		//Add AI Players
+		_players = new List<Player>();
+		for (int i = 0; i < 4 - AIs; i++) {
+			_players.Add (new Player (i));
+		}
+		for (int i = 4 - AIs -1; i < AIs; i++) {
+			_players.Add (new AIPlayer (i));
+		}
+
+	}
+
 	public void QuestOnlyMode(){
 		Menu.SetActive(false);
 		foreach (Transform child in Hand.transform) {	
