@@ -12,7 +12,16 @@ public abstract class Card : MonoBehaviour {
 	protected string _name;
 	protected bool _flipped = false;
 	protected GameObject _obj;
+	protected bool _draggable = false;
 
+	public bool draggable{
+		get {
+			return this._draggable;
+		}
+		set{
+			this._draggable = value;
+		}
+	}
 	public GameObject obj {
 		get{
 			return this._obj;

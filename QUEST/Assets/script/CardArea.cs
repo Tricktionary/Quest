@@ -7,10 +7,7 @@ public class CardArea :  MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 
 	//Current Cards in this area
 	private List<Card> _cards = new List<Card>();
-	private bool _isStoryArea;
-	private bool _isAdventureArea;
-	private bool _isHand;
-	private bool _inPlay;
+	private bool _acceptObj = true;
 
 	public List<Card> cards{
 		get{
@@ -20,21 +17,14 @@ public class CardArea :  MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 			this._cards = value;
 		}
 	}
-	public bool isStoryArea{
-		get;
-		set;
-	} 
-	public bool isAdventureArea{
-		get;
-		set;
-	}
-	public bool isHand{
-		get;
-		set;
-	}
-	public bool inPlay{
-		get;
-		set;
+
+	public bool acceptObj {
+		get{
+			return this._acceptObj;
+		}
+		set{
+			this._acceptObj = value;
+		}
 	}
 
 	public void removeCard(Card card){
@@ -60,15 +50,17 @@ public class CardArea :  MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 	//When a card is dropped
 	public void OnDrop(PointerEventData eventData){
 		//Debug.Log(eventData.pointerDrag.name + " Drop to "+ gameObject.name);
-		Card currCard = eventData.pointerDrag.GetComponent<Card>();
-		if(currCard!=null){
-			_cards.Add(currCard);
-			//Debug.Log(_cards.Count);
-			///for(int i = 0 ; i < _cards.Count; i++){
-			//	Debug.Log(_cards[i].name);
-			//}
-			currCard.oldPosition.GetComponent<CardArea>().removeCard(currCard);
-			currCard.oldPosition= this.transform;
+		if(acceptObj == true){
+			Card currCard = eventData.pointerDrag.GetComponent<Card>();
+			if(currCard!=null){
+				_cards.Add(currCard);
+				//Debug.Log(_cards.Count);
+				///for(int i = 0 ; i < _cards.Count; i++){
+				//	Debug.Log(_cards[i].name);
+				//}
+				currCard.oldPosition.GetComponent<CardArea>().removeCard(currCard);
+				currCard.oldPosition= this.transform;
+			}
 		}
 	}
 
