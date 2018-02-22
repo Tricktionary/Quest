@@ -24,6 +24,9 @@ public class Game : MonoBehaviour {
 	public List<GameObject> Stages;
 	public List<GameObject> playerActive;
 	public List<GameObject> numCardText;
+	public List<GameObject> shieldCounterList;
+	public List<GameObject> rankTextList;
+
 
 	public GameObject Prompt;								//Prompter
 	public GameObject promptTxt;
@@ -1334,11 +1337,33 @@ public class Game : MonoBehaviour {
 		area.GetComponent<CardArea>().acceptObj = true;
 	}
 
+	/*
+	public List<GameObject> playerActive;
+	public List<GameObject> numCardText;
+	public List<GameObject> shieldCounterList;
+	public List<GameObject> rankTextList;
+	*/
 	public void OpenShowPlayer(){
 		playerPanel.SetActive(true);
 		for(int i = 0 ; i < numCardText.Count ; i++){
-			numCardText[i].GetComponent<UnityEngine.UI.Text>().text = "NumCard: "+ _players[i].hand.Count.ToString();
+			numCardText[i].GetComponent<UnityEngine.UI.Text>().text = "#Card: "+ _players[i].hand.Count.ToString();
 		}
+		for(int i = 0 ; i < shieldCounterList.Count ; i++){
+			shieldCounterList[i].GetComponent<UnityEngine.UI.Text>().text = "#Shield: "+ _players[i].shieldCounter.ToString();
+		}
+		for(int i = 0 ; i < rankTextList.Count ; i++){
+			int currRank = _players[i].rank;
+			if(currRank == 0 ){
+				rankTextList[i].GetComponent<UnityEngine.UI.Text>().text = "Rank : Squire";
+			}
+			else if(currRank == 1 ){
+				rankTextList[i].GetComponent<UnityEngine.UI.Text>().text = "Rank : Knight";
+			}
+			else if(currRank == 2 ){
+				rankTextList[i].GetComponent<UnityEngine.UI.Text>().text = "Rank : Champion Knight";
+			}
+		}
+			 
 		for(int i = 0 ; i < playerActive.Count ; i++){
 			loadCards(_players[i].inPlay,playerActive[i]);
 		}
