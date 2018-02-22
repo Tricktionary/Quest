@@ -106,12 +106,12 @@ public class Deck{
 			addArmour("Amour",10,1, "card_image/special/specialCard3",8);
 
 			//Test
-			/*
+			
 			addTestCard("Test of the Questing Beast",4,"card_image/tests/testCard",10);
 			addTestCard("Test of Temptation",0,"card_image/tests/testCard1",10);
 			addTestCard("Test of Valor",0,"card_image/tests/testCard2",2);
 			addTestCard("Test of the Morgan Le Fey",4,"card_image/tests/testCard3",2);
-			*/
+			
 
 			// Shuffe the deck of cards after adding.
 			this.Shuffle();
@@ -126,12 +126,14 @@ public class Deck{
 			addQuest("Slay the Dragon", 3, "Dragon", "card_image/quest/questCard7", 1);
 			addQuest("Boar Hunt", 2, "Boar", "card_image/quest/questCard4", 2);
 			addQuest("Repel the Saxxon Raiders", 2, "Saxon", "card_image/quest/questCard3", 2);
+			this.Shuffle();
 		}
 		else if (type.Equals ("TournamentOnly")) {
 			addTournament("Tournament at Camelot",3,"card_image/tournament/TournamentCard",10);
 			addTournament("Tournament at Orkney",2,"card_image/tournament/TournamentCard1",10);
 			addTournament("Tournament at Tintagel",1,"card_image/tournament/TournamentCard2",10);
 			addTournament("Tournament at York",0,"card_image/tournament/TournamentCard3",10);
+			this.Shuffle();
 		}
 		else if (type.Equals ("EventOnly")) {
 			addEvent("Chivalrous Deed", "lowest rank and shield receives 3 shields", "card_image/events/eventCard1", 1); //working/tested
@@ -142,6 +144,7 @@ public class Deck{
 			//addEvent("Court Called to Camelot", "All Allies in play must be discarded", "card_image/events/eventCard6", 2);
 			//addEvent("King's Call to Arms", "Highest ranked player(s) must discard 1 weapon, if unable 2 foe cards must be discarded", "card_image/events/eventCard7", 1);
 			addEvent("Prosperity Throughout the Realm", "All players may immediately draw 2 adventure Cards", "card_image/events/eventCard8", 1);
+			this.Shuffle();
 		}
 		else if (type.Equals ("Story")) {
 			//WHEN ADDING FEATURED FOE * means all
