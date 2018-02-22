@@ -76,7 +76,10 @@ public class Game : MonoBehaviour {
 	private int _currQuestStage;
 	private List<int> _stagePower;
 	private bool _rumble;
-
+	private int testStage;
+	private bool _testStagePlay;
+	private bool _testTime;
+	private List<int> _testWinners;
 	
 	//TOURNAMENT RELATED
 	private bool _tournamentInPlay;
@@ -244,71 +247,65 @@ public class Game : MonoBehaviour {
 		int foeCount = 0; 
 		Card currCard = null;
 		int power = 0;
-		/*
 		int testCounter = 0;
-		bool test = false;
-		//Test checking
+		bool testStage = false;
+
 		for(int i = 0 ; i < currStage.Count ; i++){
-			if(currStage[i].GetType() == typeof(TestCard)){
-				test = true;
-				power = 69;
-				testCounter++;
-			}
-			if(testCounter > 1){
-				return - 1;
+			currCard = currStage[i];
+			if(currCard.GetType() == typeof(TestCard)){
+				testStage = true;
+				break;
 			}
 		}
+		
+		if(testStage){
+			if(currStage.Count == 1){
+				return 1;
+			}
+			else{
+				return -1;
+			}
+		}
+		else {
+			List<WeaponCard> weapons = new List<WeaponCard>();
+			for(int i = 0 ; i < currStage.Count ; i++) {
+				currCard = currStage[i];
+				if(currCard.GetType() == typeof(WeaponCard)){
+					WeaponCard currWeapon = (WeaponCard)currCard;	
+					for(int x = 0 ; x < weapons.Count; x++){	//Duplicate Weapons Logic
+						if(currWeapon.name == weapons[x].name){
+							return -1;
+						}
+					}
+					weapons.Add(currWeapon);
+					power = power + currWeapon.power;
 
-		if(test == true){
-			for(int i = 0 ; i < currStage.Count ; i++){
-				if(currStage[i].GetType() == typeof(WeaponCard)){
-					return -1;
 				}
-				if(currStage[i].GetType() == typeof(FoeCard)){
-					return -1;
+				else if(currCard.GetType() == typeof(FoeCard)){
+					FoeCard currFoe = (FoeCard)currCard;
+
+					if(_questCard.featuredFoe == currFoe.type){	//Feature Foe Logic 
+						power = power + currFoe.hiPower;
+					}
+					else if(_questCard.featuredFoe == "*"){
+						power = power + currFoe.hiPower;
+					}
+					else{
+						power = power + currFoe.loPower;
+					}
+					foeCount++;
 				}
+				else{ 			//Not Valid if you use anything other than weapons and foes (FOR NOW)
+					return -1;   
+				}
+			}
+
+			if(foeCount > 1 || foeCount <= 0){
+				return -1;
 			}
 			return power;
 		}
-		*/
-		List<WeaponCard> weapons = new List<WeaponCard>();
-		for(int i = 0 ; i < currStage.Count ; i++) {
-			currCard = currStage[i];
-			if(currCard.GetType() == typeof(WeaponCard)){
-				WeaponCard currWeapon = (WeaponCard)currCard;	
-				for(int x = 0 ; x < weapons.Count; x++){	//Duplicate Weapons Logic
-					if(currWeapon.name == weapons[x].name){
-						return -1;
-					}
-				}
-				weapons.Add(currWeapon);
-				power = power + currWeapon.power;
-
-			}
-			else if(currCard.GetType() == typeof(FoeCard)){
-				FoeCard currFoe = (FoeCard)currCard;
-
-				if(_questCard.featuredFoe == currFoe.type){	//Feature Foe Logic 
-					power = power + currFoe.hiPower;
-				}
-				else if(_questCard.featuredFoe == "*"){
-					power = power + currFoe.hiPower;
-				}
-				else{
-					power = power + currFoe.loPower;
-				}
-				foeCount++;
-			}
-			else{ 			//Not Valid if you use anything other than weapons and foes (FOR NOW)
-				return -1;   
-			}
-		}
-
-		if(foeCount > 1 || foeCount <= 0){
-			return -1;
-		}
-
-		return power;
+ 
 	}
 
 	
@@ -349,38 +346,44 @@ public class Game : MonoBehaviour {
 		int testCounter = 0;
 		int currPower = 0;
 		List<List<Card>> stages = getStages();
+		int pTestStage = -1 ;
 
 		for (int i = 0; i < stages.Count; i++) {
 			currPower = stageValid (stages [i]);
 			if(currPower == -1){
+				Debug.Log("Break1");
 				return false;
 			} else {
 				powerLevels.Add(currPower);
 			}
 		} 
-		/*
-		Debug.Log(powerLevels);
-
+		
 		for(int i = 0; i < powerLevels.Count; i++){
-			if(powerLevels[i] == 69){
+			if(powerLevels[i] == 1){
+				pTestStage = i;
 				testCounter++;
+				if(testCounter > 1){
+					Debug.Log("Break2");
+					return false;
+				}
 			}
 		}
-		if(testCounter > 1){
-			return false;
-		}
+		testStage = pTestStage;
 
 		for(int i = 0 ; i < powerLevels.Count; i++){
-			powerLevels.Remove(69);
-		}*/
+			powerLevels.Remove(1);
+		}
 
 
 		// Check ascending power level.
 		for(int i = 0; i < powerLevels.Count - 1; i++){
-			if(powerLevels[i] >= powerLevels[i + 1]){ return false; }	//Can't be equal
+			if(powerLevels[i] >= powerLevels[i + 1]){ Debug.Log("Break3"); return false; }	//Can't be equal
 		}
 		_stagePower = powerLevels;		//Get Calculated stage powers if valid
 		
+		for(int i = 0 ; i < _stagePower.Count ; i++){
+			Debug.Log(_stagePower[i]);
+		}
 		return true;
 	}
 
@@ -548,6 +551,14 @@ public class Game : MonoBehaviour {
 		return winnersId;
 	}
 
+	private List<int> calculateTestWinners(){
+		List<int> winnersId = new List<int>();
+		winnersId.Add(0);
+		winnersId.Add(1);
+		winnersId.Add(2);
+		return winnersId;
+	}
+
 	private void discardCard(){
 		List<Card> cards = discardPile.GetComponent<CardArea>().cards;
 		for(int i = 0 ; i <cards.Count ; i++){
@@ -577,8 +588,8 @@ public class Game : MonoBehaviour {
 		}
 
 		else if (_canEnd) {
-			if (_questInPlay) {				//Quest Currently in plays
-				if (_sponsorId >= 0) {  //There is a sponsor
+			if (_questInPlay) {					//Quest Currently in plays
+				if (_sponsorId >= 0) {  		//There is a sponsor
 					
 					if(_questReady == false){			//Quest is not Ready
 						if(checkQuest()){	
@@ -613,11 +624,62 @@ public class Game : MonoBehaviour {
 							statusPrompt("Quest is Not Valid");
 						}
 					}
-					else if(_questReady == true){			//Quest is Ready
-						if(_playersIn.Count > 0){		//If people are participating
-							
+					else if(_questReady == true){						//Quest is Ready
+						if(_playersIn.Count > 0){						//If people are participating
+							_askCounter++;								
+							if(_testStagePlay){							//TEST IS IN PLAY
+								if(_testTime == false){					//Bidding 
+									if(_askCounter > _playersIn.Count){
+										_testWinners = calculateTestWinners();
+										_askCounter = 0;
+										_testTime = true;
+									}
+									else{
+										updateHand(_turnId);
+										nextTurnQuest();
+									}
+								}
+								if(_testTime == true){
+									if(_askCounter > _playersIn.Count - 1){
+										//kill players that didnt make it
+										for(int i = 0 ; i < _deadPlayers.Count; i++){				//Removing Dead players
+											_playersIn.Remove(_deadPlayers[i]);
+										} 
+										statusPrompt("Setup Your Weapons");
+										_rumble = false;
+										_askCounter = 1;
+										_currQuestStage++;
+										_testTime = false;
+										_testStagePlay = false;
+										nextTurnQuest();
+									}
+									else{
+										bool win = false;
+										for(int i = 0 ; i < _testWinners.Count ; i++){
+											if(_testWinners[i] == _turnId){
+												win = true;
+												break;
+											}
+										}
+										if(win == true){
+											statusPrompt("You Won the Bid");
+											nextTurnQuest();
+										}
+										else{
+											statusPrompt("You Lost bid");
+											for(int i = 0 ; i < _playersIn.Count; i++){
+											if(_playersIn[i] == _turnId){
+													_deadPlayers.Add(_playersIn[i]);
+												}
+											}
+											nextTurnQuest();
+										}
 
-							if(playAreaValid(playArea.GetComponent<CardArea>().cards)){	//PlayZone is valid
+									}
+								}
+
+							}							
+							else if(playAreaValid(playArea.GetComponent<CardArea>().cards)){	//PlayZone is valid
 								updateHand(_turnId);
 								statusPrompt("");
 								_askCounter++;	
@@ -642,13 +704,15 @@ public class Game : MonoBehaviour {
 											_askCounter = 1;
 											_currQuestStage++;
 											currStageTxt.GetComponent<UnityEngine.UI.Text>().text = "Current Stage: "+ (_currQuestStage+1).ToString();
-											if(_currQuestStage >= numStages){	//Quest is Over
+											if(_currQuestStage == testStage){
+												_testStagePlay = true;
+											}
+											else if(_currQuestStage >= numStages){	//Quest is Over
 												currStageTxt.GetComponent<UnityEngine.UI.Text>().text = "";
 												statusPrompt("Quest Was Done successfully");
 												for(int i = 0 ; i < _playersIn.Count ; i++){
 													if(bonusQuestPoints == true){
-														_players[_playersIn[i]].AddShields(numStages+2);
-														
+														_players[_playersIn[i]].AddShields(numStages+2);			
 													}
 													else{
 													_players[_playersIn[i]].AddShields(numStages);
@@ -939,6 +1003,8 @@ public class Game : MonoBehaviour {
 		_tournamentPrompt = false;
 		_tourneeID = -1;
 		_tourneeWinners = new List<int>();
+		_testStagePlay = false;
+		_testTime = false;
 		// Clean the stages..
 		for (int i = 0; i < Stages.Count; i++) {
 			Stages[i].SetActive(true);
@@ -991,17 +1057,24 @@ public class Game : MonoBehaviour {
 				_playersIn.Add(_turnId);					//Add if Player to _playersIn
 
 				if(_askCounter < (_numPlayers - 1)){		//Continue Asking
-					//Debug.Log("Here3");
 					nextTurn(true,false);					//True Because player shouldn't be able to draw cards 		
 				}	
 				else{										//Done Asking
 					//Change To QuesteeTurns
 					_askCounter = 1;
-					statusPrompt("Setup your Weapons");
 					_currQuestStage = 0;
-					currStageTxt.GetComponent<UnityEngine.UI.Text>().text = "Current Stage: "+ (_currQuestStage+1).ToString();
-					//Debug.Log("Here4");
+					if(testStage == _currQuestStage){
+						_testStagePlay = true;
+						statusPrompt("It's TEST TIME !!!!");
+						currStageTxt.GetComponent<UnityEngine.UI.Text>().text = "Current Stage: "+ (_currQuestStage+1).ToString();
+					
+					}
+					else{
+						statusPrompt("Setup your Weapons");
+						currStageTxt.GetComponent<UnityEngine.UI.Text>().text = "Current Stage: "+ (_currQuestStage+1).ToString();
+					}
 					nextTurnQuest();
+
 					Prompt.SetActive(false);
 				}		
 			}
@@ -1120,6 +1193,7 @@ public class Game : MonoBehaviour {
 
 		_playersIn = new List<int> ();
 		_deadPlayers = new List<int>();
+		_testWinners = new List<int>();
 
 		_turnId = 0;
 		_numPlayers = _players.Count;
@@ -1137,6 +1211,9 @@ public class Game : MonoBehaviour {
 		promptAnswer = -1;
 
 		_tourneeID = -1;
+		testStage = -1;
+		_testStagePlay = false;
+		_testTime = false;
 
 		//Populates Player Hands
 		for(int i = 0; i < _players.Count ; i++){
@@ -1412,26 +1489,6 @@ public class Game : MonoBehaviour {
 		_discardPileAdventure = new Deck ("");
 		_discardPileStory = new Deck ("");
 
-		_playersIn = new List<int> ();
-		_deadPlayers = new List<int>();
-
-		_turnId = 0;
-		_numPlayers = _players.Count;
-		_drawn = false;
-		_canEnd = false;
-		_questInPlay = false;
-		_rumble = false;
-		_tournamentInPlay = false;
-		nextTurnID = -1;
-
-		_sponsorId = -1;
-		_questeeTurnId = -1;
-		_askCounter = 0;
-		_currQuestStage = -1;	
-		promptAnswer = -1;
-
-		_tourneeID = -1;
-
 		//Populates Player Hands
 		for(int i = 0; i < _players.Count ; i++){
 			for(int x = 0 ; x < 12 ; x++){
@@ -1458,25 +1515,6 @@ public class Game : MonoBehaviour {
 		_discardPileAdventure = new Deck ("");
 		_discardPileStory = new Deck ("");
 
-		_playersIn = new List<int> ();
-		_deadPlayers = new List<int>();
-
-		_turnId = 0;
-		_numPlayers = _players.Count;
-		_drawn = false;
-		_canEnd = false;
-		_questInPlay = false;
-		_rumble = false;
-		_tournamentInPlay = false;
-		nextTurnID = -1;
-
-		_sponsorId = -1;
-		_questeeTurnId = -1;
-		_askCounter = 0;
-		_currQuestStage = -1;	
-		promptAnswer = -1;
-
-		_tourneeID = -1;
 
 		//Populates Player Hands
 		for(int i = 0; i < _players.Count ; i++){
@@ -1504,25 +1542,6 @@ public class Game : MonoBehaviour {
 		_discardPileAdventure = new Deck ("");
 		_discardPileStory = new Deck ("");
 
-		_playersIn = new List<int> ();
-		_deadPlayers = new List<int>();
-
-		_turnId = 0;
-		_numPlayers = _players.Count;
-		_drawn = false;
-		_canEnd = false;
-		_questInPlay = false;
-		_rumble = false;
-		_tournamentInPlay = false;
-		nextTurnID = -1;
-
-		_sponsorId = -1;
-		_questeeTurnId = -1;
-		_askCounter = 0;
-		_currQuestStage = -1;	
-		promptAnswer = -1;
-
-		_tourneeID = -1;
 
 		//Populates Player Hands
 		for(int i = 0; i < _players.Count ; i++){
