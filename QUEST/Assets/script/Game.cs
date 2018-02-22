@@ -251,7 +251,7 @@ public class Game : MonoBehaviour {
 		for(int i = 0 ; i < currStage.Count ; i++){
 			if(currStage[i].GetType() == typeof(TestCard)){
 				test = true;
-				power = 69;
+				power = 1;
 				testCounter++;
 			}
 			if(testCounter > 1){
@@ -637,14 +637,6 @@ public class Game : MonoBehaviour {
 										else{														//Continue
 											_rumble = false;
 											_askCounter = 1;
-
-											// Flip cards in the revealed stage.
-											Debug.Log("Flipping Stage: " + _currQuestStage);
-											List<List<Card>> currStages = getStages();
-											for (int i = 0; i < currStages[_currQuestStage].Count; i++) {
-												currStages[_currQuestStage][i].flipCard(false);	
-											}
-
 											_currQuestStage++;
 
 											currStageTxt.GetComponent<UnityEngine.UI.Text>().text = "Current Stage: "+ (_currQuestStage+1).ToString();
@@ -653,8 +645,7 @@ public class Game : MonoBehaviour {
 												statusPrompt("Quest Was Done successfully");
 												for(int i = 0 ; i < _playersIn.Count ; i++){
 													if(bonusQuestPoints == true){
-														_players[_playersIn[i]].AddShields(numStages+2);
-														
+														_players[_playersIn[i]].AddShields(numStages+2);	
 													}
 													else{
 													_players[_playersIn[i]].AddShields(numStages);
@@ -674,6 +665,10 @@ public class Game : MonoBehaviour {
 									else{
 										_rumble = true;
 										_askCounter = 1;
+										List<List<Card>> currStages = getStages();
+											for (int i = 0; i < currStages[_currQuestStage].Count; i++) {
+												currStages[_currQuestStage][i].flipCard(false);	
+										}
 									}
 
 								}
