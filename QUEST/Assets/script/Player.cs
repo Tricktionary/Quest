@@ -142,11 +142,21 @@ public class Player {
 		Knight = 10 BP
 		Champion Knight = 20 BP
 */
-	void Rankup () {
+	public void Rankup () {
 		int[] requirements = new int[]{ 5, 7, 10 };
 		if (_rank == 3) {
 			//end game
 		}
+		if(_rank == 0 ){
+			_bp = 5;
+		}
+		if(_rank == 1 ){
+			_bp = 10;
+		}
+		if(_rank == 2 ){
+			_bp = 20;
+		}
+
 		while (_shieldCounter >= requirements [_rank]) {
 			_shieldCounter -= requirements [_rank];
 			_rank++;
