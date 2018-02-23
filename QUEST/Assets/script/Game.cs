@@ -493,7 +493,9 @@ public class Game : MonoBehaviour {
 					for (int i = 0; i < stagedCards.Count; i++) {
 						stagedCards [i].flipCard (true);
 					}
-
+					for (int i = 0; i < stagedCards.Count; i++) {
+						stagedCards [i].flipCard (true);
+					}
 					// Turn off draggagle for all the stages.
 					for (int i = 0; i < numStages; i++) {
 						setDraggable (Stages[i], false);
@@ -579,11 +581,13 @@ public class Game : MonoBehaviour {
 						statusPrompt ("Winner");
 						Debug.Log (_turnId);
 						clearWeapons ();
+						clearQuestCards ();
 						updateHand (_turnId);
 						_players [_turnId].AddShields (_tournamentCard.shields + _playersIn.Count);
 					} else {
 						_askCounter++;
 						clearWeapons ();
+						clearQuestCards ();
 						updateHand (_turnId);
 						statusPrompt ("Lmao you lost");
 					}
