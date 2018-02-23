@@ -51,7 +51,7 @@ public class Game : MonoBehaviour {
 	public GameObject shieldCounterTxt;
 
 	// List of players.
-	private List<Player> _players = new List<Player>();
+	public List<Player> _players = new List<Player>();
 
 	// TODO: remove this...
 	private int _numPlayers;
@@ -420,12 +420,7 @@ public class Game : MonoBehaviour {
 									_rumble = false;
 									_askCounter = 1;
 
-									// Flip cards in the revealed stage.`
-									List<List<Card>> currStages = getStages ();
-									for (int i = 0; i < currStages [_currQuestStage].Count; i++) {
-										currStages [_currQuestStage] [i].flipCard (false);	
-									}
-
+									
 									_currQuestStage++;
 
 									currStageTxt.GetComponent<UnityEngine.UI.Text> ().text = "Current Stage: " + (_currQuestStage + 1).ToString ();
@@ -453,6 +448,12 @@ public class Game : MonoBehaviour {
 							} else {
 								_rumble = true;
 								_askCounter = 1;
+								// Flip cards in the revealed stage.`
+								List<List<Card>> currStages = getStages ();
+								for (int i = 0; i < currStages [_currQuestStage].Count; i++) {
+									currStages [_currQuestStage] [i].flipCard (false);	
+								}
+
 							}
 
 						}
