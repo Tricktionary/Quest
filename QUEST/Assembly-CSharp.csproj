@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\script\AdventureCard.cs" />
      <Compile Include="Assets\script\AI\AbstractAI.cs" />
      <Compile Include="Assets\script\AI\AIBehaviour.cs" />
      <Compile Include="Assets\script\AI\Backout.cs" />
@@ -58,23 +59,22 @@
      <Compile Include="Assets\script\AI\ParticipateInTournament.cs" />
      <Compile Include="Assets\script\AI\SponsorQuest.cs" />
      <Compile Include="Assets\script\AIPlayer.cs" />
+     <Compile Include="Assets\script\AllyCard.cs" />
+     <Compile Include="Assets\script\AmourCard.cs" />
+     <Compile Include="Assets\script\Card.cs" />
      <Compile Include="Assets\script\CardArea.cs" />
-     <Compile Include="Assets\script\Cards\AdventureCard.cs" />
-     <Compile Include="Assets\script\Cards\AllyCard.cs" />
-     <Compile Include="Assets\script\Cards\AmourCard.cs" />
-     <Compile Include="Assets\script\Cards\Card.cs" />
-     <Compile Include="Assets\script\Cards\EventCard.cs" />
-     <Compile Include="Assets\script\Cards\FoeCard.cs" />
-     <Compile Include="Assets\script\Cards\QuestCard.cs" />
-     <Compile Include="Assets\script\Cards\StoryCard.cs" />
-     <Compile Include="Assets\script\Cards\TestCard.cs" />
-     <Compile Include="Assets\script\Cards\TournamentCard.cs" />
-     <Compile Include="Assets\script\Cards\WeaponCard.cs" />
      <Compile Include="Assets\script\Deck.cs" />
+     <Compile Include="Assets\script\EventCard.cs" />
+     <Compile Include="Assets\script\FoeCard.cs" />
      <Compile Include="Assets\script\Game.cs" />
      <Compile Include="Assets\script\MainMenu.cs" />
      <Compile Include="Assets\script\Player.cs" />
      <Compile Include="Assets\script\popUp.cs" />
+     <Compile Include="Assets\script\QuestCard.cs" />
+     <Compile Include="Assets\script\StoryCard.cs" />
+     <Compile Include="Assets\script\TestCard.cs" />
+     <Compile Include="Assets\script\TournamentCard.cs" />
+     <Compile Include="Assets\script\WeaponCard.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
