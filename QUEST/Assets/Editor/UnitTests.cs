@@ -61,6 +61,19 @@ public class UnitTests {
 		}
 		Assert.AreEqual(player1.hand.Count , 12 );
 		Assert.AreEqual(player2.hand.Count , 12 );
+
+		player1.AddShields(10);
+
+		Assert.AreEqual(player1.shieldCounter,10);
+		player1.Rankup();
+
+		Assert.AreEqual(player1.rank ,1);
+		Assert.AreEqual(player1.bp ,10);
+		Assert.AreEqual(player1.shieldCounter,5);
+
+		player1.addPlayCard(deck.Draw());
+
+		Assert.AreEqual(player1.inPlay.Count,1);
 	}
 
 	[Test]
@@ -120,11 +133,18 @@ public class UnitTests {
 	}
 
 	[Test]
-	public void Test_Game(){
+	public void Test_Amour(){
+		//public AmourCard(string name, int power, int bid, string asset){
 
+		AmourCard amourCard = new AmourCard("amour",10,10,"amour.png");
 
+		Assert.AreEqual(amourCard.name,"amour");
+		Assert.AreEqual(amourCard.power,10);
+		Assert.AreEqual(amourCard.bid,10);
+		Assert.AreEqual(amourCard.asset,"amour.png");
 
 	}
+	
 	// A UnityTest behaves like a coroutine in PlayMode
 	// and allows you to yield null to skip a frame in EditMode
 	[UnityTest]
