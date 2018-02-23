@@ -21,8 +21,9 @@ public class Game : MonoBehaviour {
 	public GameObject playArea;
 	public GameObject Menu;
 
-
+	// Stages.
 	public List<GameObject> Stages;
+
 	public List<GameObject> playerActive;
 	public List<GameObject> numCardText;
 	public List<GameObject> shieldCounterList;
@@ -1009,11 +1010,11 @@ public class Game : MonoBehaviour {
 				nextTurn(true, false);
 
 				// Asked all the players.
-				if(_askCounter >= _numPlayers){
+				if (_askCounter >= _numPlayers) {
 					// Not enough players.
 					if (_playersIn.Count <= 1) {
 						if (_playersIn.Count == 1) {
-							_players [_playersIn [0]].AddShields(_tournamentCard.shields);
+							_players [_playersIn [0]].AddShields (_tournamentCard.shields);
 						}
 						_askCounter = 0;
 						reset ();
@@ -1025,29 +1026,29 @@ public class Game : MonoBehaviour {
 						_tournamentPrompt = true;
 						Prompt.SetActive (false); 
 						nextTurnTournament ();
-						statusPrompt("Setup your weapons.");
+						statusPrompt ("Setup your weapons.");
 					}
-				} else {
-					nextTurn(true, false);
-					// Asked all the players.
-					if(_askCounter >= _numPlayers){
-						// Not enough players.
-						if (_playersIn.Count <= 1) {
-							if (_playersIn.Count == 1) {
-								_players [_playersIn [0]].AddShields (_tournamentCard.shields);
-							}
-							_turnId = nextTurnID;
-							nextTurn (false, false);
-							_askCounter = 0;
-							reset ();
-							Prompt.SetActive(false); 
-						} else {
-							_askCounter = 1;
-							_tournamentPrompt = true;
-							Prompt.SetActive (false);
-							nextTurnTournament();
-							statusPrompt("Setup your weapons.");
+				}
+			} else {
+				nextTurn(true, false);
+				// Asked all the players.
+				if(_askCounter >= _numPlayers){
+					// Not enough players.
+					if (_playersIn.Count <= 1) {
+						if (_playersIn.Count == 1) {
+							_players [_playersIn [0]].AddShields (_tournamentCard.shields);
 						}
+						_turnId = nextTurnID;
+						nextTurn (false, false);
+						_askCounter = 0;
+						reset ();
+						Prompt.SetActive(false); 
+					} else {
+						_askCounter = 1;
+						_tournamentPrompt = true;
+						Prompt.SetActive (false);
+						nextTurnTournament();
+						statusPrompt("Setup your weapons.");
 					}
 				}
 			}
