@@ -59,9 +59,11 @@ public class UnitTests {
 			player1.addCard(deck.Draw());
 			player2.addCard(deck.Draw());
 		}
+		//Check hands add
 		Assert.AreEqual(player1.hand.Count , 12 );
 		Assert.AreEqual(player2.hand.Count , 12 );
 
+		//Test Rankup procedure
 		player1.AddShields(10);
 
 		Assert.AreEqual(player1.shieldCounter,10);
@@ -71,9 +73,19 @@ public class UnitTests {
 		Assert.AreEqual(player1.bp ,10);
 		Assert.AreEqual(player1.shieldCounter,5);
 
-		player1.addPlayCard(deck.Draw());
 
+		//Receiving Card Test
+		player1.addPlayCard(deck.Draw());
 		Assert.AreEqual(player1.inPlay.Count,1);
+
+		Player player3 = new Player(3);
+		FoeCard foeCard = new FoeCard("FoeCard","Foe",0,10,false,"/GG.png");
+
+		player3.addCard(foeCard);
+
+		 
+		Assert.AreEqual(player3.hand[0].name,"FoeCard");
+
 	}
 
 	[Test]
@@ -82,6 +94,7 @@ public class UnitTests {
 
 		FoeCard foeCard = new FoeCard("FoeCard","Foe",0,10,false,"/GG.png");
 
+		//Basic Card Test
 		Assert.AreEqual(foeCard.name,"FoeCard");
 		Assert.AreEqual(foeCard.type,"Foe");
 		Assert.AreEqual(foeCard.loPower,0);
@@ -96,6 +109,7 @@ public class UnitTests {
 
 		QuestCard questCard = new QuestCard("Quest",5,"Jim","gg.png");
 
+		//Basic Card Test
 		Assert.AreEqual(questCard.name,"Quest");
 		Assert.AreEqual(questCard.stages, 5);
 		Assert.AreEqual(questCard.featuredFoe, "Jim");
@@ -108,6 +122,7 @@ public class UnitTests {
 
 		TestCard testCard = new TestCard("Test",20,"img.png");
 
+		//Basic Card Test
 		Assert.AreEqual(testCard.name,"Test");
 		Assert.AreEqual(testCard.minBids,20);
 		Assert.AreEqual(testCard.asset,"img.png");
@@ -117,6 +132,7 @@ public class UnitTests {
 		//public TournamentCard(string name, int shields, string asset) {
 		TournamentCard tourneyCard = new TournamentCard("Tourney",10,"Test.png");
 		
+		//Basic Card Test
 		Assert.AreEqual(tourneyCard.name,"Tourney");
 		Assert.AreEqual(tourneyCard.shields,10);
 		Assert.AreEqual(tourneyCard.asset,"Test.png");
@@ -127,6 +143,7 @@ public class UnitTests {
 
 		WeaponCard weaponCard = new WeaponCard("Sword",100,"test.png");
 
+		//Basic Card Test
 		Assert.AreEqual(weaponCard.name,"Sword");
 		Assert.AreEqual(weaponCard.power,100);
 		Assert.AreEqual(weaponCard.asset,"test.png");
@@ -138,6 +155,7 @@ public class UnitTests {
 
 		AmourCard amourCard = new AmourCard("amour",10,10,"amour.png");
 
+		//Basic Card Test
 		Assert.AreEqual(amourCard.name,"amour");
 		Assert.AreEqual(amourCard.power,10);
 		Assert.AreEqual(amourCard.bid,10);
