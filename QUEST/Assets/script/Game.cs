@@ -292,7 +292,6 @@ public class Game : MonoBehaviour {
 					}
 
 					Debug.Log("lowestPlayers count: " + lowestPlayers.Count);
-					//for(int i = 0; i<lowestPlayers.Count )
 
 					for(int i = 0; i < lowestPlayers.Count ; i++){
 						Debug.Log("lowest player: " + lowestPlayers[i]); 
@@ -477,7 +476,7 @@ public class Game : MonoBehaviour {
 						} else {										//SETUP
 							updateHand (_turnId);
 							nextTurnQuest ();
-							statusPrompt ("Setup Your Weapons");
+							statusPrompt ("Setup your weapons.");
 						}
 					} else {						//Not Valid
 						statusPrompt ("Play Zone is Not Valid");
@@ -617,13 +616,17 @@ public class Game : MonoBehaviour {
 			if (_questInPlay) {
 
 				// Handle the quest turn.
-				handleQuestInPlay();
+				handleQuestInPlay ();
 
 				// Tournament currently in play.
 			} else if (_tournamentInPlay) {
 
 				// Handle the tournament turn.
-				handleTournamentInPlay();
+				handleTournamentInPlay ();
+			} else {
+				
+				// It's an event card, so just continue on.
+				nextTurn(false, false);
 			}
 		}
 	}
@@ -996,9 +999,8 @@ public class Game : MonoBehaviour {
 						statusPrompt("Setup your weapons.");
 						_currQuestStage = 0;
 						currStageTxt.GetComponent<UnityEngine.UI.Text> ().text = "Current Stage: " + (_currQuestStage + 1).ToString ();
-						//Debug.Log("Here4");
 						nextTurnQuest ();
-						Prompt.SetActive (false);
+						Prompt.SetActive(false);
 					}
 					// Turn off the prompt.
 					Prompt.SetActive (false);
