@@ -147,14 +147,6 @@ public class Player {
 		if (_rank == 3) {
 			//end game
 		}
-		while (_shieldCounter >= requirements [_rank]) {
-			_shieldCounter -= requirements [_rank];
-			_rank++;
-			if (_rank == 3) {
-				//END GAME HERE
-				break;
-			}
-		}
 		if(_rank == 0 ){
 			_bp = 5;
 		}
@@ -163,6 +155,15 @@ public class Player {
 		}
 		if(_rank == 2 ){
 			_bp = 20;
+		}
+
+		while (_shieldCounter >= requirements [_rank]) {
+			_shieldCounter -= requirements [_rank];
+			_rank++;
+			if (_rank == 3) {
+				//END GAME HERE
+				break;
+			}
 		}
 	}
 
