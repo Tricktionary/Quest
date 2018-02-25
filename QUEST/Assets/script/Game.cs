@@ -294,8 +294,8 @@ public class Game : MonoBehaviour {
 			*/
 			else if(activeStoryCard == true){
 				if (_storyCard.GetType() == typeof(QuestCard)) {
-					Prompt.PromptManager.promptYes();
-					/*
+					//Prompt.PromptManager.promptYes();
+
 					bool answer = currAi.joinQuest((QuestCard)_storyCard,_players);
 					if(answer){
 						Debug.Log("AI JOINED");
@@ -304,11 +304,10 @@ public class Game : MonoBehaviour {
 					else{
 						Debug.Log("AI DENIED");
 						Prompt.PromptManager.promptNo();
-					}*/
+					}
 				}
 				else if (_storyCard.GetType() == typeof(TournamentCard)) {
-					Prompt.PromptManager.promptYes();
-					/*
+					//Prompt.PromptManager.promptYes();
 					bool answer = currAi.joinTournament((TournamentCard)_storyCard,_players);
 					if(answer){
 							Debug.Log("AI JOINED");
@@ -318,7 +317,7 @@ public class Game : MonoBehaviour {
 						Debug.Log("AI DENIED");
 						Prompt.PromptManager.promptNo();
 					}
-					*/
+
 				}
 			}
 		}
@@ -827,7 +826,7 @@ public class Game : MonoBehaviour {
 
 		// Setup players.
 		_players = new List<Player>();
-		_players.Add(new Player(1));
+		_players.Add(new AIPlayer(1));
 		_players.Add(new Player(2));
 		_players.Add(new Player(3));
 		_players.Add(new Player(4));
@@ -840,7 +839,7 @@ public class Game : MonoBehaviour {
 
 		// Populate the players hands.
 		for(int i = 0; i < _players.Count ; i++){
-			for(int x = 0 ; x < 13 ; x++){
+			for(int x = 0 ; x < 12 ; x++){
 				_players[i].addCard((_adventureDeck.Draw()));
 			}
 		}
