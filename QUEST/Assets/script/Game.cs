@@ -235,7 +235,95 @@ public class Game : MonoBehaviour {
 		}
 
 		Prompt.PromptManager.statusPrompt("It's your turn to draw a story card!");
+		//AI Logic
+		if(_players[_currentPlayer].GetType() == typeof(AIPlayer)){
+			AILogicResponse(_currentPlayer);
+		}
 	}
+
+
+		//AI Response to prompts
+		public void AILogicResponse(int turnId){
+			//Current AI
+			AIPlayer currAi = (AIPlayer)_players[turnId];
+			/*
+				AI Draws so he can either
+					-Sponsor Quest
+					-Join Tournament
+					-Draw Event Card
+			*/
+			if(activeStoryCard == false){
+				DrawCard();
+				//need to sponsor
+				if (_storyCard.GetType() == typeof(QuestCard)) {
+					Prompt.PromptManager.promptNo();
+				}
+				//Join Tournament
+				else if (_storyCard.GetType() == typeof(TournamentCard)) {
+					//Prompt.PromptManager.promptYes();
+
+					bool answer = currAi.joinTournament((TournamentCard)_storyCard,_players);
+					if(answer){
+						Debug.Log("AI JOINED");
+						Prompt.PromptManager.promptYes();
+					}
+					else{
+						Debug.Log("AI DENIED");
+						Prompt.PromptManager.promptNo();
+					}
+
+				}
+				// A event card has been drawn.
+				else if (_storyCard.GetType() == typeof(EventCard)) {
+					EndTurn();
+				}
+			}
+			/*
+				AI Didn't Draw the Card
+					-Join Quest
+					-Join Tournament
+			*/
+			else if(activeStoryCard == true){
+				if (_storyCard.GetType() == typeof(QuestCard)) {
+					bool answer = currAi.joinQuest((QuestCard)_storyCard,_players);
+					if(answer){
+						Debug.Log("AI JOINED");
+						Prompt.PromptManager.promptYes();
+					}
+					else{
+						Debug.Log("AI DENIED");
+						Prompt.PromptManager.promptNo();
+					}
+				}
+				else if (_storyCard.GetType() == typeof(TournamentCard)) {
+					bool answer = currAi.joinTournament((TournamentCard)_storyCard,_players);
+					if(answer){
+							Debug.Log("AI JOINED");
+						Prompt.PromptManager.promptYes();
+					}
+					else{
+						Debug.Log("AI DENIED");
+						Prompt.PromptManager.promptNo();
+					}
+				}
+			}
+		}
+
+		//AI Playing Cards
+		public List<Card> AILogicPlayCards(int turnId){
+			List<Card> playCards = null;
+			//Current AI
+			AIPlayer currAi = (AIPlayer)_players[turnId];
+
+			if (_storyCard.GetType() == typeof(QuestCard)) {
+				playCards = currAi.playQuest(_players,0,false);
+			}
+			else if (_storyCard.GetType() == typeof(TournamentCard)) {
+				Debug.Log("here");
+				playCards = currAi.playTournament((TournamentCard)_storyCard,_players);
+			}
+			return(playCards);
+		}
 
 	// Sets up the stages based on the story card.
 	public void setupStages(){
@@ -334,6 +422,16 @@ public class Game : MonoBehaviour {
 		}
 	}
 
+	//Set AI play cards
+	public void setInPlayAI(int player_id, List<Card> cards){
+		_players[player_id].inPlay = cards;
+
+		for(int i = 0 ; i < cards.Count ; i++){
+			removeCardByName(player_id,cards[i].name);
+		}
+
+	}
+
 	// Get a players in play cards.
 	public List<Card> getInPlay(int player_id){
 		return _players[player_id].inPlay;
@@ -361,7 +459,7 @@ public class Game : MonoBehaviour {
 			}
 		}
 
-		//Filtered Hand 
+		//Filtered Hand
 		_players[player_id].inPlay = filteredHand2;
 	}
 
@@ -560,7 +658,7 @@ public class Game : MonoBehaviour {
 	}
 /*
 	Methods in here aren't being used, but might need to be.
-	
+
 	// NOTE: What does this do?
 	private void reclaimCards() {
 		List<List<Card>> stages = getStages(2);

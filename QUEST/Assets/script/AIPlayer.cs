@@ -18,23 +18,23 @@ public class AIPlayer : Player {
 		return null;
 	}
 
-	List<Card> playTournament(TournamentCard storyCard, List<Player> players) {
+	public List<Card> playTournament(TournamentCard storyCard, List<Player> players) {
 		return participateTournamentBehaviour.play1 (_playerId, storyCard, players);
 
 	}
 
-	bool joinTournament(TournamentCard storyCard, List<Player> players) {
+	public bool joinTournament(TournamentCard storyCard, List<Player> players) {
 		int value = storyCard.shields;
 		bool couldWin = someoneCouldWin (value, players);
 		return participateTournamentBehaviour.join1 (couldWin);
 	}
-		
 
-	bool joinQuest(QuestCard storyCard, List<Player> players) {
+
+	public bool joinQuest(QuestCard storyCard, List<Player> players) {
 		return participateQuestBehaviour.join1 (_playerId, storyCard.stages, players);
 	}
 
-		List<Card> playQuest(List<Player> players, int testBid, bool isLastStage) {
+	public List<Card> playQuest(List<Player> players, int testBid, bool isLastStage) {
 		return participateQuestBehaviour.play1 (_playerId, testBid, isLastStage, players);
 	}
 
@@ -50,4 +50,3 @@ public class AIPlayer : Player {
 	}
 
 }
-

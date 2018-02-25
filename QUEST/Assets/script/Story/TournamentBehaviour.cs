@@ -213,12 +213,30 @@ public class TournamentBehaviour : GameBehaviour {
 				participatingPlayers = _playersIn.Count;
 
 				Prompt.PromptManager.statusPrompt ("Setup your weapons!");
+				if(Game.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
+					Debug.Log("AI Setup Weapon");
+					/*
+					List<Card> aiPlayCard = Game.GameManager.AILogicPlayCards(_turnId);
+
+					for(int i = 0 ; i< aiPlayCard.Count ;i++){
+						Debug.Log(aiPlayCard[i]);
+					}
+					Game.GameManager.setInPlayAI(_turnId,aiPlayCard);
+					endTurn();
+					*/
+				}
+
 			}
 		}
 
 		else {
 			Prompt.PromptManager.promptMessage("tournament");
 			nextPlayer();
+			//AI Join?
+			if(Game.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
+				//Prompt.PromptManager.promptYes();
+				Game.GameManager.AILogicResponse(_turnId);
+			}
 		}
 
 		// Load the right player.
