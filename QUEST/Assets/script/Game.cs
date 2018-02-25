@@ -65,6 +65,7 @@ public class Game : MonoBehaviour {
 	// The current story card in play.
 	Card _storyCard;
 	bool activeStoryCard = false;
+	bool discardingCards = false;
 
 	//tempFix
 	bool allFlip = false;
@@ -81,12 +82,14 @@ public class Game : MonoBehaviour {
 	public void EndTurn() {
 
 		// If the discard pile has more than 0 cards.
-		if(discardPile.GetComponent<CardArea>().cards.Count > 0 || playArea.GetComponent<CardArea>().cards.Count > 0){
+		if(discardingCards){
 			discardCard();
+			discardingCards = false;
 		}
 		//If the hand has too many cards.
-		else if(Hand.GetComponent<CardArea>().cards.Count >= 13 ){
+		if(Hand.GetComponent<CardArea>().cards.Count >= 13 ){
 			Prompt.PromptManager.statusPrompt("Too many cards, please discard or use.");
+			discardingCards = true;
 		}
 
 		// Need's to be a story card in play to end a turn.
@@ -107,13 +110,16 @@ public class Game : MonoBehaviour {
 	// Draw a card (fires when the button is clicked).
 	public void DrawCard(){
 		// If the discard pile has more than 0 cards.
-		if(discardPile.GetComponent<CardArea>().cards.Count > 0 || playArea.GetComponent<CardArea>().cards.Count > 0){
+		if(discardingCards){
 			discardCard();
+			discardingCards = false;
 		}
 		//If the hand has too many cards.
-		else if(Hand.GetComponent<CardArea>().cards.Count >= 13 ){
+		if(Hand.GetComponent<CardArea>().cards.Count >= 13 ){
 			Prompt.PromptManager.statusPrompt("Too many cards, please discard or use.");
+			discardingCards = true;
 		}
+
 
 		// A story card exists, can't draw.
 		else if (activeStoryCard){
@@ -822,7 +828,7 @@ public class Game : MonoBehaviour {
 		// Setup players.
 		_players = new List<Player>();
 		_players.Add(new Player(1));
-		_players.Add(new AIPlayer(2));
+		_players.Add(new Player(2));
 		_players.Add(new Player(3));
 		_players.Add(new Player(4));
 
@@ -834,7 +840,7 @@ public class Game : MonoBehaviour {
 
 		// Populate the players hands.
 		for(int i = 0; i < _players.Count ; i++){
-			for(int x = 0 ; x < 12 ; x++){
+			for(int x = 0 ; x < 13 ; x++){
 				_players[i].addCard((_adventureDeck.Draw()));
 			}
 		}

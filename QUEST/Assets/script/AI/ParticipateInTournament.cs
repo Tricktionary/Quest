@@ -11,21 +11,6 @@ public class ParticipateInTournament: AIBehaviour{
 
 	//Strategy 1
 	public List<Card> play1(int aiId,TournamentCard storyCard, List<Player> players){
-		//Balls to the wall
-		List<Card> playCard = players[aiId].hand;
-		List<Card> weaponCards = new List<Card>();
-		
-		for(int i = 0 ; i < playCard.Count ; i++){
-			if(playCard[i] is WeaponCard){
-				weaponCards.Add(playCard[i]);
-			}
-		}
-
-
-		return weaponCards;
-
-
-		/*
 		Player ai = players [aiId];
 
 		int value = storyCard.shields;
@@ -48,7 +33,7 @@ public class ParticipateInTournament: AIBehaviour{
 			if (ai.hand [i] is WeaponCard) {
 				if (cards.ContainsKey(ai.hand[i])) {
 					int amount = cards [ai.hand [i]] + 1;
-					cards.Add (ai.hand[i], amount);
+					cards[ai.hand[i]] = amount;
 				} else {
 					cards.Add (ai.hand[i], 1);
 					keys.Add (ai.hand [i]);
@@ -70,7 +55,7 @@ public class ParticipateInTournament: AIBehaviour{
 				}
 			}
 			return playCards;
-		}*/
+		}
 
 	}
 
@@ -89,7 +74,7 @@ public class ParticipateInTournament: AIBehaviour{
 			if (ai.hand [i] is WeaponCard) {
 				if (cards.ContainsKey (ai.hand [i])) {
 					int amount = cards [ai.hand [i]] + 1;
-					cards.Add (ai.hand [i], amount);
+					cards [ai.hand [i]] = amount;
 				} else {
 					cards.Add (ai.hand [i], 1);
 					keys.Add (ai.hand [i]);
