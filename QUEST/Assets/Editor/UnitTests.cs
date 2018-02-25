@@ -1,4 +1,4 @@
-﻿ using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.TestTools;
 using NUnit.Framework;
@@ -6,10 +6,8 @@ using System.Collections;
 
 public class UnitTests {
 
-	 
-
-	[Test]
-	//This test have a small chance to fail. This is because it is testing shuffle which means in a very small chance it will shuffle unevenly
+	/*[Test]
+	//This test have a small chance to fail. This is because it is testing shuffle which means in a very small chance it will shuffle unevenly.
 	public void Test_Deck() {
 		int currentStoryCardTotal = 23;			//Total Cards
 		int currentAdventureCardTotal = 117;	//Total Cards
@@ -85,84 +83,94 @@ public class UnitTests {
 
 		 
 		Assert.AreEqual(player3.hand[0].name,"FoeCard");
+	}*/
 
+	// Game Logic Tests
+
+	// Test if pay sheilds properly pays out sheilds.
+	[Test]
+	public void Test_paySheilds() {
+		Player p = new Player(1);
+
+		Game gameTester = new Game();
+
+		gameTester.addPlayer(p);
+
+		int previousSheilds = p.shieldCounter;
+
+		// Give 4 shields to the first player.
+		gameTester.payShield(0, 4);
+
+		Assert.AreEqual (p.shieldCounter - previousSheilds, 4);
 	}
 
+	// Card Creation Tests
+
+	// Test the creation of a foe card.
 	[Test]
 	public void Test_FoeCard() {
-		//public FoeCard(string name, string type,  int loPower, int hiPower, bool special, string asset) {
-
 		FoeCard foeCard = new FoeCard("FoeCard","Foe",0,10,false,"/GG.png");
 
-		//Basic Card Test
 		Assert.AreEqual(foeCard.name,"FoeCard");
 		Assert.AreEqual(foeCard.type,"Foe");
 		Assert.AreEqual(foeCard.loPower,0);
 		Assert.AreEqual(foeCard.hiPower,10);
 		Assert.AreEqual(foeCard.special,false);
 		Assert.AreEqual(foeCard.asset,"/GG.png");
-
 	}
+
+	// Test the creation of a quest card.
 	[Test]
 	public void Test_QuestCard() {
-		//public QuestCard (string name, int stages, string featuredFoe, string asset) {
-
 		QuestCard questCard = new QuestCard("Quest",5,"Jim","gg.png");
 
-		//Basic Card Test
 		Assert.AreEqual(questCard.name,"Quest");
 		Assert.AreEqual(questCard.stages, 5);
 		Assert.AreEqual(questCard.featuredFoe, "Jim");
 		Assert.AreEqual(questCard.asset,"gg.png");
-
 	}
+
+	// Test the creation of a test card.
 	[Test]
 	public void Test_TestCard() {
-		//public TestCard(string name, int minBids, string asset) {
-
 		TestCard testCard = new TestCard("Test",20,"img.png");
 
-		//Basic Card Test
 		Assert.AreEqual(testCard.name,"Test");
 		Assert.AreEqual(testCard.minBids,20);
 		Assert.AreEqual(testCard.asset,"img.png");
 	}
+
+	// Test the creation of a tournament card.
 	[Test]
 	public void Test_TournamentCard() {
-		//public TournamentCard(string name, int shields, string asset) {
 		TournamentCard tourneyCard = new TournamentCard("Tourney",10,"Test.png");
-		
-		//Basic Card Test
+
 		Assert.AreEqual(tourneyCard.name,"Tourney");
 		Assert.AreEqual(tourneyCard.shields,10);
 		Assert.AreEqual(tourneyCard.asset,"Test.png");
 	}
+
+	// Test the creation of a weapon card.
 	[Test]
 	public void Test_WeaponCard() {
-		//public WeaponCard(string name, int power, string asset) {
-
 		WeaponCard weaponCard = new WeaponCard("Sword",100,"test.png");
 
-		//Basic Card Test
 		Assert.AreEqual(weaponCard.name,"Sword");
 		Assert.AreEqual(weaponCard.power,100);
 		Assert.AreEqual(weaponCard.asset,"test.png");
 	}
 
+	// Test the creation of an amour card.
 	[Test]
 	public void Test_Amour(){
-		//public AmourCard(string name, int power, int bid, string asset){
-
 		AmourCard amourCard = new AmourCard("amour",10,10,"amour.png");
 
-		//Basic Card Test
 		Assert.AreEqual(amourCard.name,"amour");
 		Assert.AreEqual(amourCard.power,10);
 		Assert.AreEqual(amourCard.bid,10);
 		Assert.AreEqual(amourCard.asset,"amour.png");
-
 	}
-	
+
 	// A UnityTest behaves like a coroutine in PlayMode
 	// and allows you to yield null to skip a frame in EditMode
 	[UnityTest]
