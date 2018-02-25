@@ -560,6 +560,7 @@ public class Game : MonoBehaviour {
 	}
 /*
 	Methods in here aren't being used, but might need to be.
+	
 	// NOTE: What does this do?
 	private void reclaimCards() {
 		List<List<Card>> stages = getStages(2);
@@ -576,13 +577,6 @@ public class Game : MonoBehaviour {
 			foreach (Transform child in Stages[z].transform) {
 				GameObject.Destroy(child.gameObject);
 			}
-		}
-	}
-
-	// Rank up players.
-	public void rankUpPlayers(){
-		for(int i = 0 ; i <_players.Count ; i++){
-			_players[i].Rankup();
 		}
 	}
 
