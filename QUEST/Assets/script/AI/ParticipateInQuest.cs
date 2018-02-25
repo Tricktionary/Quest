@@ -11,7 +11,7 @@ public class ParticipateInQuest: AIBehaviour{
 			if (ai.hand [i] is WeaponCard) {
 				weapons += 1;
 			} else if (ai.hand [i] is AllyCard) {
-				allies += 1;	
+				allies += 1;
 			} else if(ai.hand [i] is FoeCard) {
 				FoeCard foe = ((FoeCard)ai.hand [i]);
 				if (foe.loPower < 20) {
@@ -28,9 +28,29 @@ public class ParticipateInQuest: AIBehaviour{
 
 	public List<Card> play1(int aiId,int testBid, bool isLastStage, List<Player> players) {
 
-		if (testBid>0) {
+		//if (testBid>0) {
 			//TODO:Test
-		} else {
+		//}
+		//else {
+			//Balls to the wall
+			Player ai = players [aiId];
+
+			List<Card> playCard = players[aiId].hand;
+			List<Card> weaponCards = new List<Card>();
+
+			for(int i = 0 ; i < playCard.Count ; i++){
+				if(playCard[i] is WeaponCard){
+					weaponCards.Add(playCard[i]);
+				}
+			}
+
+
+			return weaponCards;
+		//}
+	}
+}
+
+			/*
 			Player ai = players [aiId];
 
 			Dictionary<Card,int> cardsWithPower = new Dictionary<Card, int>();
@@ -124,3 +144,4 @@ public class ParticipateInQuest: AIBehaviour{
 		return null;
 	}
 }
+*/

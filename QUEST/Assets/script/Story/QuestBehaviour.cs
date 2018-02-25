@@ -275,7 +275,6 @@ public class QuestBehaviour : GameBehaviour {
 
 		// The user doesn't want to sponsor the quest.
 		} else {
-
 			if(_asked >= Game.GameManager.getNumberOfPlayers() ){
 				endQuest();
 				return;
@@ -318,6 +317,16 @@ public class QuestBehaviour : GameBehaviour {
 				participatingPlayers = _playersIn.Count;
 
 				Prompt.PromptManager.statusPrompt("Setup your weapons!");
+
+				if(Game.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
+					Debug.Log("AI Setup Weapon");
+					List<Card> aiPlayCard = Game.GameManager.AILogicPlayCards(_turnId);
+					for(int i = 0 ; i< aiPlayCard.Count ;i++){
+						Debug.Log(aiPlayCard[i]);
+					}
+					Game.GameManager.setInPlayAI(_turnId,aiPlayCard);
+					endTurn();
+				}
 			}
 		}
 
@@ -325,6 +334,12 @@ public class QuestBehaviour : GameBehaviour {
 		else {
 			Prompt.PromptManager.promptMessage("quest");
 			nextPlayer();
+			//AI join quest
+			if(Game.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
+				Game.GameManager.AILogicResponse(_turnId);
+				_asked++;
+				nextPlayer();
+			}
 		}
 
 		// Load the right player.
