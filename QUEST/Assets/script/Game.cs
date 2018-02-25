@@ -65,6 +65,7 @@ public class Game : MonoBehaviour {
 	// The current story card in play.
 	Card _storyCard;
 	bool activeStoryCard = false;
+	bool discardingCards = false;
 
 	//tempFix
 	bool allFlip = false;
@@ -81,12 +82,14 @@ public class Game : MonoBehaviour {
 	public void EndTurn() {
 
 		// If the discard pile has more than 0 cards.
-		if(discardPile.GetComponent<CardArea>().cards.Count > 0){
+		if(discardingCards){
 			discardCard();
+			discardingCards = false;
 		}
 		//If the hand has too many cards.
 		if(Hand.GetComponent<CardArea>().cards.Count >= 13 ){
 			Prompt.PromptManager.statusPrompt("Too many cards, please discard or use.");
+			discardingCards = true;
 		}
 
 		// Need's to be a story card in play to end a turn.
@@ -107,13 +110,16 @@ public class Game : MonoBehaviour {
 	// Draw a card (fires when the button is clicked).
 	public void DrawCard(){
 		// If the discard pile has more than 0 cards.
-		if(discardPile.GetComponent<CardArea>().cards.Count > 0){
+		if(discardingCards){
 			discardCard();
+			discardingCards = false;
 		}
 		//If the hand has too many cards.
 		if(Hand.GetComponent<CardArea>().cards.Count >= 13 ){
 			Prompt.PromptManager.statusPrompt("Too many cards, please discard or use.");
+			discardingCards = true;
 		}
+
 
 		// A story card exists, can't draw.
 		else if (activeStoryCard){
@@ -288,6 +294,8 @@ public class Game : MonoBehaviour {
 			*/
 			else if(activeStoryCard == true){
 				if (_storyCard.GetType() == typeof(QuestCard)) {
+					//Prompt.PromptManager.promptYes();
+
 					bool answer = currAi.joinQuest((QuestCard)_storyCard,_players);
 					if(answer){
 						Debug.Log("AI JOINED");
@@ -299,6 +307,7 @@ public class Game : MonoBehaviour {
 					}
 				}
 				else if (_storyCard.GetType() == typeof(TournamentCard)) {
+					//Prompt.PromptManager.promptYes();
 					bool answer = currAi.joinTournament((TournamentCard)_storyCard,_players);
 					if(answer){
 							Debug.Log("AI JOINED");
@@ -308,6 +317,7 @@ public class Game : MonoBehaviour {
 						Debug.Log("AI DENIED");
 						Prompt.PromptManager.promptNo();
 					}
+
 				}
 			}
 		}
@@ -648,21 +658,42 @@ public class Game : MonoBehaviour {
 	// Discard a card.
 	private void discardCard(){
 		// Get the desicarded cards.
-		List<Card> cards = discardPile.GetComponent<CardArea>().cards;
+		List<Card> playCard = playArea.GetComponent<CardArea>().cards;
 
-		removeCards(_currentPlayer,cards);
+		bool onlyAllies = true;
 
-		// Discard.
-		for(int i = 0; i < cards.Count; i++){
-			_discardPileAdventure.Discard(cards[i]);
+		for(int i = 0 ; i < playCard.Count;i++ ){
+			if(playCard[i].GetType() != typeof(AllyCard)){
+				onlyAllies = false;
+				break;
+			}
 		}
 
-		// Create a new list.
-		discardPile.GetComponent<CardArea>().cards = new List<Card>();
-
-		foreach (Transform child in discardPile.transform) {
-			GameObject.Destroy (child.gameObject);
+		if(onlyAllies == false){
+			Prompt.PromptManager.statusPrompt("Only allies can be played");
+			return;
 		}
+		//Handle Play
+		setInPlay(_currentPlayer);
+
+		//Handle Discard
+		List<Card> disCards = discardPile.GetComponent<CardArea>().cards;
+
+		if (disCards.Count > 0){
+			removeCards(_currentPlayer,disCards);
+			// Discard.
+			for(int i = 0; i < disCards.Count; i++){
+				_discardPileAdventure.Discard(disCards[i]);
+			}
+
+			// Create a new list.
+			discardPile.GetComponent<CardArea>().cards = new List<Card>();
+
+			foreach (Transform child in discardPile.transform) {
+				GameObject.Destroy (child.gameObject);
+			}
+		}
+
 
 	}
 /*
@@ -795,8 +826,8 @@ public class Game : MonoBehaviour {
 
 		// Setup players.
 		_players = new List<Player>();
-		_players.Add(new Player(1));
-		_players.Add(new AIPlayer(2));
+		_players.Add(new AIPlayer(1));
+		_players.Add(new Player(2));
 		_players.Add(new Player(3));
 		_players.Add(new Player(4));
 

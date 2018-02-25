@@ -84,7 +84,8 @@ public class QuestBehaviour : GameBehaviour {
 					// End the quest.
 					endQuest();
 					return;
-				} else {
+				}
+				else {
 					// Move to the next stage (players have been eliminated if they died).
 					_currStage++;
 
@@ -110,6 +111,15 @@ public class QuestBehaviour : GameBehaviour {
 
 					// Return to setup weapons prompt.
 					Prompt.PromptManager.statusPrompt("Setup your weapons!");
+					if(Game.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
+						Debug.Log("AI Setup Weapon");
+						List<Card> aiPlayCard = Game.GameManager.AILogicPlayCards(_turnId);
+						if(aiPlayCard != null || aiPlayCard.Count > 0){
+							Game.GameManager.setInPlayAI(_turnId,aiPlayCard);
+						}
+						endTurn();
+					}
+
 				}
 			} else {
 				// Update _turnId.
@@ -132,13 +142,17 @@ public class QuestBehaviour : GameBehaviour {
 				if (Game.GameManager.playAreaValid ()) {
 
 					// Set the players cards that they have in play.
-					Game.GameManager.setInPlay (_turnId);
+					if(Game.GameManager.getPlayer(_turnId).GetType() != typeof(AIPlayer)){
+						Game.GameManager.setInPlay(_turnId);
+					}
 
 					// Fix prompt message (if they submited an invalid input).
 					Prompt.PromptManager.statusPrompt ("Setup your weapons!");
 
 					// Move to next player in _playersIn.
 					participatingPlayerIndex++;
+
+
 
 					// If we have finished checking all the participating players.
 					if (participatingPlayerIndex > (participatingPlayers - 1)) {
@@ -149,19 +163,24 @@ public class QuestBehaviour : GameBehaviour {
 
 						//Unflip Cards
 						//TODO : Unflip Cards
-						/*
-						List<Card> stagedCards = Game.GameManager.getStagedCards (_questCard.stages);
-						for(int x = 0 ; x < 4 ; x++){
-								stagedCards[_currStage].flipCard (true);
-						}*/
 
 						didYouSurvivePrompt();
 
 						// Clear the players inPlay list.
 						Game.GameManager.clearInPlay(_turnId);
 					} else {
+
 						// Update _turnId.
 						_turnId = _playersIn[participatingPlayerIndex];
+						if(Game.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
+							Debug.Log("AI Setup Weapon");
+							List<Card> aiPlayCard = Game.GameManager.AILogicPlayCards(_turnId);
+							if(aiPlayCard != null){
+								Game.GameManager.setInPlayAI(_turnId,aiPlayCard);
+							}
+							Debug.Log(aiPlayCard.Count);
+							endTurn();
+						}
 					}
 
 					// Load the new player.
@@ -221,6 +240,11 @@ public class QuestBehaviour : GameBehaviour {
 
 						// Ask if the next player wants to play.
 						Prompt.PromptManager.promptMessage ("quest");
+
+						//AI join quest
+						if(Game.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
+							Game.GameManager.AILogicResponse(_turnId);
+						}
 
 						// Clear the status prompt.
 						Prompt.PromptManager.statusPrompt ("");
@@ -321,10 +345,9 @@ public class QuestBehaviour : GameBehaviour {
 				if(Game.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
 					Debug.Log("AI Setup Weapon");
 					List<Card> aiPlayCard = Game.GameManager.AILogicPlayCards(_turnId);
-					for(int i = 0 ; i< aiPlayCard.Count ;i++){
-						Debug.Log(aiPlayCard[i]);
+					if(aiPlayCard != null){
+						Game.GameManager.setInPlayAI(_turnId,aiPlayCard);
 					}
-					Game.GameManager.setInPlayAI(_turnId,aiPlayCard);
 					endTurn();
 				}
 			}
@@ -337,8 +360,6 @@ public class QuestBehaviour : GameBehaviour {
 			//AI join quest
 			if(Game.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
 				Game.GameManager.AILogicResponse(_turnId);
-				_asked++;
-				nextPlayer();
 			}
 		}
 
