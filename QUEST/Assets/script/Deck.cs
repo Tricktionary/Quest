@@ -90,7 +90,7 @@ public class Deck{
 			addAlly("Merlin", 0, 0, 0, 0, null, null, true, "card_image/special/specialCard7", 1);
 
 			/* Queen Iseult */
-			addAlly("Queen Iseult", 0, 2, 0, 4, null, "Sir Tristan", false, "card_image/special/specialCard8", 1);            
+			addAlly("Queen Iseult", 0, 2, 0, 4, null, "Sir Tristan", false, "card_image/special/specialCard8", 1);
 
 			/* Sir Lancelot */
 			addAlly("Sir Lancelot", 15, 0, 25, 0, "Defend the Queen's Honor", null, false, "card_image/special/specialCard9", 1);
@@ -99,7 +99,7 @@ public class Deck{
 			addAlly("Galahad", 15, 0, 0, 0, null, null, false, "card_image/special/specialCard10", 1);
 
 			/* Sir Gawain */
-			addAlly("Sir Gawain", 10, 0, 20, 0, "Test of the Green Knight", null, false, "card_image/special/specialCard11", 1);        
+			addAlly("Sir Gawain", 10, 0, 20, 0, "Test of the Green Knight", null, false, "card_image/special/specialCard11", 1);
 
 			/* Amour load */
 			addArmour("Amour", 10, 1, "card_image/special/specialCard3", 8);
@@ -254,7 +254,7 @@ public class Deck{
 	// Use this for initialization
 	void Start () {
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 	}

@@ -1,3 +1,7 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 public class ParticipateInQuest: AIBehaviour{
 
@@ -33,6 +37,7 @@ public class ParticipateInQuest: AIBehaviour{
 		//}
 		//else {
 			//Balls to the wall
+			
 			Player ai = players [aiId];
 
 			List<Card> playCard = players[aiId].hand;
@@ -42,6 +47,11 @@ public class ParticipateInQuest: AIBehaviour{
 				if(playCard[i] is WeaponCard){
 					weaponCards.Add(playCard[i]);
 				}
+			}
+
+			Debug.Log(weaponCards.Count);
+			if(weaponCards.Count == 0){
+				return null;
 			}
 
 
