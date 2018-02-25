@@ -200,9 +200,10 @@ public class TournamentBehaviour : GameBehaviour {
 		// If we have asked all the players.
 		if (_asked >= (Game.GameManager.getNumberOfPlayers())) {
 			if(_playersIn.Count < 2){
+				// End the tournament.
 				endTournament();
-			}
-			else{
+				return;
+			} else {
 				_turnId = _playersIn[0];
 
 				// Everyone has had the option to join.

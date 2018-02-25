@@ -83,7 +83,6 @@ public class QuestBehaviour : GameBehaviour {
 					Prompt.PromptManager.statusPrompt("Oh no! Everyone died!");
 					// End the quest.
 					endQuest();
-
 					return;
 				} else {
 					// Move to the next stage (players have been eliminated if they died).
