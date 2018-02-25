@@ -66,6 +66,9 @@ public class Game : MonoBehaviour {
 	Card _storyCard;
 	bool activeStoryCard = false;
 
+	//tempFix
+	bool allFlip = false;
+
 	// Initialization.
 	void Awake(){
 		if(!_instance) {
@@ -260,8 +263,8 @@ public class Game : MonoBehaviour {
 				}
 				//Join Tournament
 				else if (_storyCard.GetType() == typeof(TournamentCard)) {
-					Prompt.PromptManager.promptYes();
-					/*
+					//Prompt.PromptManager.promptYes();
+
 					bool answer = currAi.joinTournament((TournamentCard)_storyCard,_players);
 					if(answer){
 						Debug.Log("AI JOINED");
@@ -271,7 +274,7 @@ public class Game : MonoBehaviour {
 						Debug.Log("AI DENIED");
 						Prompt.PromptManager.promptNo();
 					}
-					*/
+
 				}
 				// A event card has been drawn.
 				else if (_storyCard.GetType() == typeof(EventCard)) {
@@ -311,7 +314,7 @@ public class Game : MonoBehaviour {
 
 		//AI Playing Cards
 		public List<Card> AILogicPlayCards(int turnId){
-			List<Card> playCards = null;
+			List<Card> playCards = new List<Card>();
 			//Current AI
 			AIPlayer currAi = (AIPlayer)_players[turnId];
 
@@ -424,7 +427,11 @@ public class Game : MonoBehaviour {
 
 	//Set AI play cards
 	public void setInPlayAI(int player_id, List<Card> cards){
-		_players[player_id].inPlay = cards;
+		_players[player_id].inPlay = new List<Card>();
+
+		for(int i = 0 ; i < cards.Count ;i++){
+			_players[player_id].inPlay.Add(cards[i]);
+		}
 
 		for(int i = 0 ; i < cards.Count ; i++){
 			removeCardByName(player_id,cards[i].name);
@@ -556,6 +563,7 @@ public class Game : MonoBehaviour {
 		Sprite rankCard = Resources.Load<Sprite>(rankAsset);
 		cardUI.gameObject.GetComponent<Image>().sprite = rankCard;
 		cardUI.transform.SetParent(rankCardArea.transform);
+		allFlip = false;
 
 	}
 
@@ -564,6 +572,7 @@ public class Game : MonoBehaviour {
 		for(int i = 0 ; i < Hand.GetComponent<CardArea>().cards.Count; i++){
 			Hand.GetComponent<CardArea>().cards[i].flipCard(false);
 		}
+		allFlip = true;
 	}
 
 	// Load the cards up.
@@ -721,35 +730,37 @@ public class Game : MonoBehaviour {
 
 	// Open show player panel.
 	public void OpenShowPlayer(){
-		playerPanel.SetActive(true);
+		if(allFlip){
+			playerPanel.SetActive(true);
 
-		// Load the num card text.
-		for(int i = 0 ; i < numCardText.Count ; i++){
-			numCardText[i].GetComponent<UnityEngine.UI.Text>().text = "#Card: "+ _players[i].hand.Count.ToString();
-		}
-
-		// Load the shield counder list.
-		for(int i = 0 ; i < shieldCounterList.Count ; i++){
-			shieldCounterList[i].GetComponent<UnityEngine.UI.Text>().text = "#Shield: "+ _players[i].shieldCounter.ToString();
-		}
-
-		// Load the rank texts.
-		for(int i = 0 ; i < rankTextList.Count ; i++){
-			int currRank = _players[i].rank;
-			if(currRank == 0 ){
-				rankTextList[i].GetComponent<UnityEngine.UI.Text>().text = "Rank : Squire";
+			// Load the num card text.
+			for(int i = 0 ; i < numCardText.Count ; i++){
+				numCardText[i].GetComponent<UnityEngine.UI.Text>().text = "#Card: "+ _players[i].hand.Count.ToString();
 			}
-			else if(currRank == 1 ){
-				rankTextList[i].GetComponent<UnityEngine.UI.Text>().text = "Rank : Knight";
-			}
-			else if(currRank == 2 ){
-				rankTextList[i].GetComponent<UnityEngine.UI.Text>().text = "Rank : Champion Knight";
-			}
-		}
 
-		// Load the cards.
-		for(int i = 0 ; i < playerActive.Count ; i++){
-			loadCards(_players[i].inPlay,playerActive[i]);
+			// Load the shield counder list.
+			for(int i = 0 ; i < shieldCounterList.Count ; i++){
+				shieldCounterList[i].GetComponent<UnityEngine.UI.Text>().text = "#Shield: "+ _players[i].shieldCounter.ToString();
+			}
+
+			// Load the rank texts.
+			for(int i = 0 ; i < rankTextList.Count ; i++){
+				int currRank = _players[i].rank;
+				if(currRank == 0 ){
+					rankTextList[i].GetComponent<UnityEngine.UI.Text>().text = "Rank : Squire";
+				}
+				else if(currRank == 1 ){
+					rankTextList[i].GetComponent<UnityEngine.UI.Text>().text = "Rank : Knight";
+				}
+				else if(currRank == 2 ){
+					rankTextList[i].GetComponent<UnityEngine.UI.Text>().text = "Rank : Champion Knight";
+				}
+			}
+
+			// Load the cards.
+			for(int i = 0 ; i < playerActive.Count ; i++){
+				loadCards(_players[i].inPlay,playerActive[i]);
+			}
 		}
 	}
 
@@ -784,8 +795,8 @@ public class Game : MonoBehaviour {
 
 		// Setup players.
 		_players = new List<Player>();
-		_players.Add(new AIPlayer(1));
-		_players.Add(new Player(2));
+		_players.Add(new Player(1));
+		_players.Add(new AIPlayer(2));
 		_players.Add(new Player(3));
 		_players.Add(new Player(4));
 

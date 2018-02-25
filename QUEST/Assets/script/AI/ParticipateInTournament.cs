@@ -11,6 +11,21 @@ public class ParticipateInTournament: AIBehaviour{
 
 	//Strategy 1
 	public List<Card> play1(int aiId,TournamentCard storyCard, List<Player> players){
+		//Balls to the wall
+		List<Card> playCard = players[aiId].hand;
+		List<Card> weaponCards = new List<Card>();
+		
+		for(int i = 0 ; i < playCard.Count ; i++){
+			if(playCard[i] is WeaponCard){
+				weaponCards.Add(playCard[i]);
+			}
+		}
+
+
+		return weaponCards;
+
+
+		/*
 		Player ai = players [aiId];
 
 		int value = storyCard.shields;
@@ -55,7 +70,8 @@ public class ParticipateInTournament: AIBehaviour{
 				}
 			}
 			return playCards;
-		}
+		}*/
+
 	}
 
 	public bool join2(bool couldWin){
