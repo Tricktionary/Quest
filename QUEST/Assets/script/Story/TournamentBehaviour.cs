@@ -215,7 +215,7 @@ public class TournamentBehaviour : GameBehaviour {
 				Prompt.PromptManager.statusPrompt ("Setup your weapons!");
 				if(Game.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
 					Debug.Log("AI Setup Weapon");
-					/*
+
 					List<Card> aiPlayCard = Game.GameManager.AILogicPlayCards(_turnId);
 
 					for(int i = 0 ; i< aiPlayCard.Count ;i++){
@@ -223,7 +223,7 @@ public class TournamentBehaviour : GameBehaviour {
 					}
 					Game.GameManager.setInPlayAI(_turnId,aiPlayCard);
 					endTurn();
-					*/
+
 				}
 
 			}
@@ -234,8 +234,8 @@ public class TournamentBehaviour : GameBehaviour {
 			nextPlayer();
 			//AI Join?
 			if(Game.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
-				//Prompt.PromptManager.promptYes();
-				Game.GameManager.AILogicResponse(_turnId);
+				Prompt.PromptManager.promptYes();
+				//Game.GameManager.AILogicResponse(_turnId);
 			}
 		}
 

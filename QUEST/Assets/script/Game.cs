@@ -260,8 +260,8 @@ public class Game : MonoBehaviour {
 				}
 				//Join Tournament
 				else if (_storyCard.GetType() == typeof(TournamentCard)) {
-					//Prompt.PromptManager.promptYes();
-
+					Prompt.PromptManager.promptYes();
+					/*
 					bool answer = currAi.joinTournament((TournamentCard)_storyCard,_players);
 					if(answer){
 						Debug.Log("AI JOINED");
@@ -271,7 +271,7 @@ public class Game : MonoBehaviour {
 						Debug.Log("AI DENIED");
 						Prompt.PromptManager.promptNo();
 					}
-
+					*/
 				}
 				// A event card has been drawn.
 				else if (_storyCard.GetType() == typeof(EventCard)) {
@@ -784,7 +784,7 @@ public class Game : MonoBehaviour {
 
 		// Setup players.
 		_players = new List<Player>();
-		_players.Add(new Player(1));
+		_players.Add(new AIPlayer(1));
 		_players.Add(new Player(2));
 		_players.Add(new Player(3));
 		_players.Add(new Player(4));
