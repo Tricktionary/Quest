@@ -5,6 +5,20 @@ using UnityEngine.UI;
 
 public class Game : MonoBehaviour {
 
+	private static Game _instance;
+	public static Game GameManager { get { return _instance; } }
+
+	// Game behaviours.
+	public QuestBehaviour _questBehaviour;
+	public TournamentBehaviour _tournamentBehaviour;
+	public EventBehaviour _eventBehaviour;
+
+	// List of players.
+	private List<Player> _players = new List<Player>();
+
+	// Store the current player id (outside of quest, tournament, events).
+	public int _currentPlayer = -1;
+
 	// Prefabs.
 	public GameObject Card;
 	public GameObject WeaponCard;
@@ -15,6 +29,7 @@ public class Game : MonoBehaviour {
 	public GameObject TestCard;
 	public GameObject EventCard;
 	public GameObject RankCard;
+	public GameObject TournamentCard;
 
 	// Panels.
 	public GameObject playerPanel;
@@ -24,40 +39,22 @@ public class Game : MonoBehaviour {
 	// Stages.
 	public List<GameObject> Stages;
 
+	// Show player stuff.
 	public List<GameObject> playerActive;
 	public List<GameObject> numCardText;
 	public List<GameObject> shieldCounterList;
 	public List<GameObject> rankTextList;
 
 	// Misc GameObject's.
-	public GameObject gameStatus;
 	public GameObject currStageTxt;
 	public GameObject discardPile;
 	public GameObject rankCardArea;
 	public GameObject drawCardArea;
-
-	// Prompts.
-	public GameObject Prompt;
-	public GameObject promptTxt;
-	public string sponsorText = "Do you want To Sponsor This Quest?";
-	public string questText = "Do you want to join the Quest?";
-	public string tournamentText = "Do you Want To Join This Tournament?";
-
-	// Play area hand reference.
 	public GameObject Hand;
- 
+
 	// Text fields.
 	public GameObject playerIdTxt;
 	public GameObject shieldCounterTxt;
-
-	// List of players.
-	private List<Player> _players = new List<Player>();
-
-	// TODO: remove this...
-	private int _numPlayers;
-
-	// Id of player who is currently playing.
-	private int _turnId;
 
 	// Decks.
 	private Deck _adventureDeck;
@@ -65,626 +62,410 @@ public class Game : MonoBehaviour {
 	private Deck _discardPileAdventure;
 	private Deck _discardPileStory;
 
-	// General.
-	private bool _drawn;
-	private bool _canEnd;
-	public int promptAnswer;
-	public int _askCounter;
-	private EventCard _eventCard;
-
-	// Used for event card "King's Recognition".
-	public bool bonusQuestPoints = false;
-	private int nextTurnID;
-
-	// AI.
-	private List<AIPlayer> Observers;
-
-	// Quest related.
-	private QuestCard _questCard;
-	private int _sponsorId;
-	private int _questeeTurnId;
-	private List<int> _playersIn;
-	private List<int> _deadPlayers;
-	private string featFoe;
-	private int numStages;
-	private bool _questInPlay;
-	private bool _questReady;
-	private int _currQuestStage;
-	private List<int> _stagePower;
-	private bool _rumble;
-
-	// Tournament related.
-	private bool _tournamentInPlay;
-	private TournamentCard _tournamentCard;
-	private bool _tournamentPrompt;
-	private int _tourneeID;
-	private List<int> _tourneeWinners;
+	// The current story card in play.
+	Card _storyCard;
+	bool activeStoryCard = false;
 
 	// Initialization.
-	void Awake() {
-		// Create players.
-		_players.Add(new Player(1));
-		_players.Add(new Player(2));
-		_players.Add(new Player(3));
-		_players.Add(new Player(4));
-
-		// Set up the decks.
-		_adventureDeck = new Deck("Adventure");
-		_storyDeck = new Deck("Story");
-		_discardPileAdventure = new Deck ("");
-		_discardPileStory = new Deck ("");
-
-		_playersIn = new List<int> ();
-		_deadPlayers = new List<int>();
-
-		_turnId = 0;
-		_numPlayers = _players.Count;
-		_drawn = false;
-		_canEnd = false;
-		_questInPlay = false;
-		_rumble = false;
-		_tournamentInPlay = false;
-		nextTurnID = -1;
-
-		_sponsorId = -1;
-		_questeeTurnId = -1;
-		_askCounter = 0;
-		_currQuestStage = -1;	
-		promptAnswer = -1;
-
-		_tourneeID = -1;
-
-		//Populates Player Hands
-		for(int i = 0; i < _players.Count ; i++){
-			for(int x = 0 ; x < 12 ; x++){
-				_players[i].addCard((_adventureDeck.Draw()));
-			}
+	void Awake(){
+		if(!_instance) {
+			_instance = this;
 		}
-
-		loadHand(_turnId);
+		Debug.Log("Game running...");
 	}
 
-	// CORE GAME METHODS //
-	// ----------------- //
+	// End a turn (fires when the End Turn button is clicked).
+	public void EndTurn() {
 
-	// Reset the game.
-	public void reset(){
-		for(int i = 0 ; i < numStages ;i++){
-			setDraggable(Stages[i], true);
+		// If the discard pile has more than 0 cards.
+		if(discardPile.GetComponent<CardArea>().cards.Count > 0){
+			discardCard();
+		}
+		//If the hand has too many cards.
+		if(Hand.GetComponent<CardArea>().cards.Count >= 13 ){
+			Prompt.PromptManager.statusPrompt("Too many cards, please discard or use.");
 		}
 
-		_deadPlayers = new List<int>();
-		_playersIn = new List<int>(); //Reset Players In
-		_questReady = false;
-		_questInPlay = false;
-		_rumble = false;
-		_sponsorId = -1;
-		_questeeTurnId = -1;
-		_currQuestStage = -1;
-		_questCard = null;
-		_tournamentCard = null;
-		_tournamentInPlay = false;
-		numStages = -1;	
-		_tournamentPrompt = false;
-		_tourneeID = -1;
-		_tourneeWinners = new List<int>();
+		// Need's to be a story card in play to end a turn.
+		else if (activeStoryCard) {
+			// Use the correct behaviour to handle the ending of a turn.
+			if (_storyCard.GetType() == typeof(QuestCard)) {
+				_questBehaviour.endTurn();
+			} else if (_storyCard.GetType() == typeof(TournamentCard)) {
+				_tournamentBehaviour.endTurn();
+			} else {
+				_eventBehaviour.endTurn();
+			}
+		} else {
+			Debug.Log("You need to draw a card before ending your turn.");
+		}
+	}
+
+	// Draw a card (fires when the button is clicked).
+	public void DrawCard(){
+		// If the discard pile has more than 0 cards.
+		if(discardPile.GetComponent<CardArea>().cards.Count > 0){
+			discardCard();
+		}
+		//If the hand has too many cards.
+		if(Hand.GetComponent<CardArea>().cards.Count >= 13 ){
+			Prompt.PromptManager.statusPrompt("Too many cards, please discard or use.");
+		}
+
+		// A story card exists, can't draw.
+		else if (activeStoryCard){
+			Debug.Log ("Story card has been drawn, can't draw another.");
+
+			// Story card hasn't been drawn yet.
+		} else {
+			// Draw a story card.
+			_storyCard = _storyDeck.Draw();
+			Debug.Log(_storyCard);
+			GameObject storyCardObj = null;
+
+			// Discard.
+			_discardPileStory.Discard(_storyCard);
+
+			// Load the card sprite.
+			Sprite storySprite = Resources.Load<Sprite>(_storyCard.asset);
+
+			// A quest card has been drawn.
+			if (_storyCard.GetType() == typeof(QuestCard)) {
+				storyCardObj = Instantiate(QuestCard);
+				_questBehaviour.setCurrentTurn(_currentPlayer);
+				_questBehaviour.setCard(_storyCard);
+				// A tournament card been drawn.
+			} else if (_storyCard.GetType() == typeof(TournamentCard)) {
+				storyCardObj = Instantiate(TournamentCard);
+				_tournamentBehaviour.setCurrentTurn(_currentPlayer);
+				_tournamentBehaviour.setCard(_storyCard);
+				// A event card has been drawn.
+			} else if (_storyCard.GetType() == typeof(EventCard)) {
+				storyCardObj = Instantiate(EventCard);
+				_eventBehaviour.setCurrentTurn(_currentPlayer);
+				_eventBehaviour.setCard(_storyCard);
+			}
+
+			// Update the card.
+			storyCardObj.gameObject.GetComponent<Image>().sprite = storySprite;
+			storyCardObj.transform.SetParent(drawCardArea.transform);
+
+			// Indicate a story card is in play.
+			activeStoryCard = true;
+
+			Prompt.PromptManager.statusPrompt("");
+
+			// Auto end the turn to prompt.
+			EndTurn();
+		}
+	}
+
+	// Get player from a player id.
+	public Player getPlayer(int player_id){
+		return _players[player_id];
+	}
+
+	// Add a player (mainly used for testing).
+	public void addPlayer(Player p){
+		_players.Add(p);
+	}
+
+	// Load a player.
+	public void loadPlayer(int n){
+		Debug.Log("Loading player: " + n);
+		foreach (Transform child in Hand.transform) {
+			GameObject.Destroy(child.gameObject);
+		}
+
+		foreach (Transform child in playArea.transform) {
+			GameObject.Destroy(child.gameObject);
+		}
+
+		// Set Player ID text.
+		playerIdTxt.GetComponent<UnityEngine.UI.Text>().text = "Player ID: " + (n + 1);
+
+		// Get current players shield.
+		shieldCounterTxt.GetComponent<UnityEngine.UI.Text>().text = "# Shield: "+ (_players[n].shieldCounter);
+
+		// Load their hand.
+		loadHand(n);
+	}
+
+	// Rank up players.
+	public void rankUpPlayers(){
+		for(int i = 0 ; i <_players.Count ; i++){
+			_players[i].Rankup();
+		}
+	}
+
+	// Switch to the next gamewise player, and draw a new story card.
+	public void nextCardAndPlayer(){
+
+		//Rank Up player before next turn
+		rankUpPlayers();
+
+		// Move onto the next player.
+		_currentPlayer++;
+
+		// Wrap around.
+		if (_currentPlayer >= _players.Count) {
+			_currentPlayer = 0;
+		}
+
+		loadPlayer(_currentPlayer);
 
 		// Clean the stages.
 		for (int i = 0; i < Stages.Count; i++) {
-			Stages[i].SetActive(true);
-			Stages[i].GetComponent<CardArea>().cards = new List<Card>();
+			Stages[i].SetActive (true);
+			Stages[i].GetComponent<CardArea>().cards = new List<Card> ();
 
 			// Clears out draw card area.
 			foreach (Transform child in Stages[i].transform) {
-				GameObject.Destroy(child.gameObject);
+				GameObject.Destroy (child.gameObject);
 			}
 		}
 
-	}
+		// Reset the story card.
+		activeStoryCard = false;
+		_storyCard = null;
 
-	// Draw a card.
-	// TODO: Handle events outside of this (trigger an event handler).
-	public void DrawCard(){
-		
-		if (!_drawn){
-
-			// Clear out the draw card area.
-			foreach (Transform child in drawCardArea.transform) {
-				GameObject.Destroy(child.gameObject);
-			}
-
-			// Draw a card.
-			Card currCard = _storyDeck.Draw();
-
-			// Discard.
-			_discardPileStory.Discard(currCard);
-
-			// Load the card sprite.
-			string currCardAsset = currCard.asset;
-			Sprite card = Resources.Load<Sprite> (currCardAsset);
-
-			GameObject storyCard = null;
-
-			if (currCard.GetType () == typeof(QuestCard)){
-				nextTurnID = _turnId;
-				storyCard = Instantiate (QuestCard);
-				_questInPlay = true;
-				_canEnd = true;
-				_questCard = (QuestCard)currCard;
-				numStages = _questCard.stages;
-			} else if(currCard.GetType() == typeof(TournamentCard)){
-				nextTurnID = _turnId;
-				storyCard = Instantiate(QuestCard);
-				_tournamentInPlay = true;
-				_tournamentCard = (TournamentCard)currCard;
-				_canEnd = true;
-			} else if (currCard.GetType() == typeof(EventCard)){
-				storyCard = Instantiate (EventCard);
-				_eventCard = (EventCard)currCard;
-
-				//Debug.Log(_eventCard.conditions);
-				//condition for "lowest rank and shield receives 3 shields" event 
-				if(_eventCard.conditions == "lowest rank and shield receives 3 shields"){
-					int lowestVal = 30;
-					int lowerCount = 0;
-					int currPlayer = _turnId;
-					//Debug.Log("currPlayer: " + currPlayer);
-					List<int> lowestPlayers = new List<int>();	
-					//compares all players to find the players with lowest value
-					for(int i = 0; i < _numPlayers; i++){
-						
-							if(_players[i].calcRankShields() <= lowestVal){
-									lowestVal = _players[i].calcRankShields();
-									Debug.Log("lowest being added: " + lowestVal + " to player " + i);
-									//Debug.Log("currPlayer: " +currPlayer);
-									lowestPlayers.Add(i); 
-							}
-						
-					}
-
-					for(int i = 0; i<lowestPlayers.Count; i++){
-						Debug.Log("lowest players: " + lowestPlayers[i]);
-						_players[lowestPlayers[i]].shieldCounter += 3; //adds 3 shields to players with "lowestVal"
-					}
-
-					//Debug.Log("lowestVal: " + lowestVal);
-					//_players[lowestPlayer].shieldCounter += 3; //adds 3 shields to player with "lowestVal"
-					_canEnd = true;
-			
-				}
-				else if(_eventCard.conditions == "All players except player drawing this card lose 1 shield"){//condition for "lowest rank and shield receives 3 shields" event 
-					for(int i = 0; i < _numPlayers; i++){
-						if(_players[i] != _players[_turnId]){ //checks that player isnt current player 
-							if(_players[i].shieldCounter != 0){ //checks that player has at least 1 shield
-								_players[i].shieldCounter--;
-							}
-						}
-					}
-				
-					_canEnd = true;
-				}
-				else if(_eventCard.conditions == "Drawer loses 2 shields if possible"){
-					if(_players[_turnId].shieldCounter >= 2){
-						_players[_turnId].shieldCounter = _players[_turnId].shieldCounter-2;
-					}
-					_canEnd = true;
-				}
-				else if(_eventCard.conditions == "The next player(s) to complete a quest will receive 2 extra shields"){
-					bonusQuestPoints = true;
-					_canEnd = true;
-				}
-				else if(_eventCard.conditions == "The lowest ranked player(s) immediately receives 2 Adventure cards"){
-					//same implementation as "chivalrous deed" to find lowest players 
-					int lowestVal = 30; 
-					int lowerCount = 0;
-					int currPlayer = _turnId;
-					//Debug.Log("currPlayer: " + currPlayer);
-					List<int> lowestPlayers = new List<int>();	
-					//compares all players to find the players with lowest value
-
-					for(int i = 0; i<_numPlayers; i++){					
-							if(_players[i].calcRankShields() <= lowestVal){
-									lowestVal = _players[i].calcRankShields();
-									Debug.Log("lowest being added: " + lowestVal + " to player " + i);
-									//Debug.Log("currPlayer: " +currPlayer);
-									lowestPlayers.Add(i); 						
-							}		
-					}
-
-					Debug.Log("lowestPlayers count: " + lowestPlayers.Count);
-
-					for(int i = 0; i < lowestPlayers.Count ; i++){
-						Debug.Log("lowest player: " + lowestPlayers[i]); 
-						for(int x = 0 ; x < 2 ; x++){
-							_players[lowestPlayers[i]].addCard((_adventureDeck.Draw()));
-						}
-					}
-
-					_canEnd = true;
-				}
-				else if(_eventCard.conditions == "All Allies in play must be discarded"){
-		
-				}
-				else if(_eventCard.conditions == "Highest ranked player(s) must discard 1 weapon, if unable 2 foe cards must be discarded"){
-					//need to implement discard 
-				}
-				else if(_eventCard.conditions == "All players may immediately draw 2 adventure Cards"){
-					for(int i = 0; i < _players.Count ; i++){
-						for(int x = 0 ; x < 2 ; x++){
-							_players[i].addCard((_adventureDeck.Draw()));
-						}
-					}
-
-					_canEnd = true;
-				}
-			}
-
-			storyCard.gameObject.GetComponent<Image>().sprite = card;
-			storyCard.transform.SetParent (drawCardArea.transform);
-			_drawn = true;
+		// Clear out the draw card area.
+		foreach (Transform child in drawCardArea.transform) {
+			GameObject.Destroy(child.gameObject);
 		}
-	}
-		
-	// Create a quest and setup the stages.
-	public void createQuest(int sponsor){
-		_sponsorId = sponsor;
-		_questReady = false;
 
-		for (int i = 0; i < (5 - numStages); i++) {
+		Prompt.PromptManager.statusPrompt("It's your turn to draw a story card!");
+	}
+
+	// Sets up the stages based on the story card.
+	public void setupStages(){
+		// Get the number of stages for the quest.
+		QuestCard questCard = (QuestCard)_storyCard;
+
+		// Setup the stages.
+		for (int i = 0; i < (5 - questCard.stages); i++) {
 			Stages[4-i].SetActive(false);
 		}
 	}
 
-	// Update The hand of turn ID based off of the user interface.
-	public void updateHand(int turnID){
-		
-		// Update the players Hand.
-		List<Card> tempHand = new List<Card>();
-		tempHand = Hand.GetComponent<CardArea>().cards;
-		_players[_turnId].hand  = new List<Card>();	
-		for(int i = 0 ; i < tempHand.Count ;i++){
-			_players[_turnId].addCard(tempHand[i]);
+	// Get a list of all the stages.
+	public List<List<Card>> getStages(int n) {
+		List<List<Card>> stages = new List<List<Card>> ();
+		for (int i = 0; i < n; i++) {
+			stages.Add(Stages[i].GetComponent<CardArea> ().cards);
 		}
-
-		// Update the players play area.
-		List<Card> tempPlay = new List<Card>();
-		tempPlay = playArea.GetComponent<CardArea>().cards;
-		_players[_turnId].inPlay = new List<Card>();
-		for(int i = 0 ; i < tempPlay.Count ;i++){
-			_players[_turnId].addPlayCard(tempPlay[i]);
-		}	
+		return stages;
 	}
 
-	// Discard a card.
-	private void discardCard(){
-		// Get the desicarded cards.
-		List<Card> cards = discardPile.GetComponent<CardArea>().cards;
+	// Get all the staged cards objects.
+	public List<Card> getStagedCards(int n){
+		List<Card> stagedCards = new List<Card>();
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < Stages[i].GetComponent<CardArea>().cards.Count; j++) {
+				stagedCards.Add(Stages[i].GetComponent<CardArea>().cards[j]);
+			}
+		}
+		return stagedCards;
+	}
 
-		// Discard.
+	// Draws an adventure card.
+	public Card drawAdventureCard(){
+		return _adventureDeck.Draw();
+	}
+
+	// Adds a list of cards to the players hand.
+	public void addCardsToPlayerHand(int player_id, List<Card> cards){
+		for (int i = 0; i < cards.Count; i++) {
+			_players[player_id].addCard(cards[i]);
+		}
+	}
+
+	public int getNumberOfPlayers(){
+		return _players.Count;
+	}
+
+	// Determine if the cards in the play area are valid.
+	public bool playAreaValid(){
+		List<Card>cards = playArea.GetComponent<CardArea>().cards;
+		int amourCardCounter = 0;
 		for(int i = 0; i < cards.Count; i++){
-			_discardPileAdventure.Discard(cards[i]);
+			// Return false if there are any foe cards.
+			if(cards[i].GetType() == typeof(FoeCard)){
+				return false;
+			}
+			if(cards[i].GetType() == typeof(AmourCard)){
+				amourCardCounter++;
+			}
 		}
+		if(amourCardCounter > 1){
+			return false;
+		}
+		return true;
+	}
 
-		// Create a new list.
-		discardPile.GetComponent<CardArea>().cards = new List<Card>();
+	// Remove a card from a players hand by name.
+	public void removeCardByName(int player_id, string name){
+		int ind = 0;
+		for (int i = 0; i < _players [player_id].hand.Count; i++) {
+			if (_players [player_id].hand [i].name == name) {
+				ind = i;
+			}
+		}
+		_players[player_id].hand.RemoveAt(ind);
+	}
 
-		foreach (Transform child in discardPile.transform) {	
-			GameObject.Destroy (child.gameObject);
+	// Set a players in play cards.
+	public void setInPlay(int player_id){
+		List<Card> playedCards = playArea.GetComponent<CardArea>().cards;
+
+		// Set the cards to inPlay.
+		_players[player_id].inPlay = playedCards;
+
+		// Remove the cards from the players hand.
+		for(int i = 0; i < playedCards.Count; i++){
+			removeCardByName(player_id, playedCards[i].name);
 		}
 	}
 
-	// Handler for when a turn is ended when a quest is in play.
-	public void handleQuestInPlay(){
-		// If there is a sponsor.
-		if (_sponsorId >= 0) {
-
-			// Quest has been set up, people are now participating.
-			if (_questReady) {
-
-				// If people are participating.
-				if (_playersIn.Count > 0) {
-
-					// Check if the play area is valid.
-					if (playAreaValid (playArea.GetComponent<CardArea> ().cards)) {
-
-						// Update the players hand.
-						updateHand (_turnId);
-
-						statusPrompt ("");
-
-						// Increment the number of players asked.
-						_askCounter++;	
-
-						// If we have checked all the questees.
-						if (_askCounter > _playersIn.Count) {
-
-							// If everyone has setup their weapons.
-							if (_rumble) {
-
-								// Remove dead players.
-								for (int i = 0; i < _deadPlayers.Count; i++) {
-									_playersIn.Remove (_deadPlayers [i]);
-								}
-
-								// If everyone is dead, reset.
-								if (_playersIn.Count <= 0) {
-									clearQuestCards();
-									updateHand (_turnId);
-									reset ();
-									_turnId = nextTurnID;
-									nextTurn(false, false);
-									_askCounter = 0;
-									currStageTxt.GetComponent<UnityEngine.UI.Text> ().text = "";
-									return;
-								} else {
-									_rumble = false;
-									_askCounter = 1;
-
-									_currQuestStage++;
-
-									currStageTxt.GetComponent<UnityEngine.UI.Text> ().text = "Current Stage: " + (_currQuestStage + 1).ToString ();
-									if (_currQuestStage >= numStages) {	//Quest is Over
-										currStageTxt.GetComponent<UnityEngine.UI.Text> ().text = "";
-										statusPrompt ("Quest Was Done successfully");
-										for (int i = 0; i < _playersIn.Count; i++) {
-											if (bonusQuestPoints == true) {
-												_players [_playersIn [i]].AddShields (numStages + 2);
-
-											} else {
-												_players [_playersIn [i]].AddShields (numStages);
-											}
-										}
-										bonusQuestPoints = false;
-										clearQuestCards ();
-										updateHand (_turnId);
-										reset ();
-										_turnId = nextTurnID;
-										nextTurn (false, false);
-										_askCounter = 0;
-										return;
-									}
-								}
-							} else {
-								_rumble = true;
-								_askCounter = 1;
-								// Flip cards in the revealed stage.`
-									List<List<Card>> currStages = getStages ();
-									for (int i = 0; i < currStages [_currQuestStage].Count; i++) {
-										currStages [_currQuestStage] [i].flipCard (false);	
-									}
-							}
-
-						}
-
-						if (_rumble == true) {
-							nextTurnQuest ();
-							if (didYouSurvive (playArea.GetComponent<CardArea> ().cards)) {		//YOU WON THE STAGE
-								statusPrompt ("You Lived!");
-								clearWeapons ();
-								updateHand (_turnId);
-							} else {
-								statusPrompt ("You Have Perished R.I.P");					//YOU DIED 
-								clearQuestCards ();
-								updateHand (_turnId);
-								for (int i = 0; i < _playersIn.Count; i++) {
-									if (_playersIn [i] == _turnId) {
-										_deadPlayers.Add (_playersIn [i]);
-									}
-								}
-							}
-						} else {										//SETUP
-							updateHand (_turnId);
-							nextTurnQuest ();
-							statusPrompt ("Setup your weapons.");
-						}
-					} else {						//Not Valid
-						statusPrompt ("Play Zone is Not Valid");
-					}
-				}
-
-				// Quest still needs to be setup.
-			} else {
-				_questReady = checkQuest ();
-
-				// Quest has now been initialized.
-				if (_questReady) {
-					// Flip the staged cards.
-					List<Card> stagedCards = getStagedCards ();
-					for (int i = 0; i < stagedCards.Count; i++) {
-						stagedCards [i].flipCard (true);
-					}
-					for (int i = 0; i < stagedCards.Count; i++) {
-						stagedCards [i].flipCard (true);
-					}
-					// Turn off draggagle for all the stages.
-					for (int i = 0; i < numStages; i++) {
-						setDraggable (Stages[i], false);
-					}
-
-					// Draw and add an adventure card.
-					for (int x = 0; x < (stagedCards.Count + 1); x++) {
-						Hand.GetComponent<CardArea> ().addCard (_adventureDeck.Draw ());
-					}
-
-					// Update sponsor hand based off of the UI.
-					updateHand (_turnId);
-
-					// Call next turn.
-					nextTurn (true, false);
-
-					// Start asking if other players want to play.
-					prompt("quest");
-					statusPrompt("");
-
-					// Quest is not correctly setup.
-				} else {
-					// Quest is not yet ready.
-					statusPrompt("Quest is not valid!");
-				}
-			}
-
-		// Find a sponsor.
-		} else if(_sponsorId == -1) {
-			prompt("sponsor");
+	//Remove Cards from player hand
+	public void removeCards(int playerid , List<Card> cards){
+		for(int i = 0; i < cards.Count; i++){
+			removeCardByName(playerid, cards[i].name);
 		}
 	}
 
-	// Handler for when a turn is ended and a tournament is in play.
-	public void handleTournamentInPlay(){
-		// If the player has already been prompted to join the tournament.
-		if (_tournamentPrompt) {
+	// Get a players in play cards.
+	public List<Card> getInPlay(int player_id){
+		return _players[player_id].inPlay;
+	}
 
-			// Atleast one player has joined.
-			if (_playersIn.Count > 1) {
+	// Clear a players in play cards.
+	public void clearInPlay(int player_id){
+		List<Card> currInPlay = new List<Card>();
+		List<Card> filteredHand1 = new List<Card>();
+		List<Card> filteredHand2 = new List<Card>();
 
-				// Everyone has setup their weapons.
-				if (_askCounter >= _playersIn.Count) {
+		currInPlay = _players[player_id].inPlay;
 
-					if (!_rumble) {  				
-						_rumble = true;
-						updateHand (_turnId);
-						_tourneeWinners = calculateTournamentWinner ();
-						_askCounter = 0;
-					}
-				}
-
-				if (!_rumble) {
-					// If the play area is valid.
-					if (playAreaValid (playArea.GetComponent<CardArea> ().cards)) {
-						statusPrompt ("Setup Your Weapons");
-						updateHand (_turnId);
-						_askCounter++;
-						nextTurnTournament ();
-					} else {
-						statusPrompt ("Play Area is not valid");
-					}
-				} else {
-					nextTurnTournament();
-					bool win = false;
-					for (int i = 0; i < _tourneeWinners.Count; i++) {
-						if (_tourneeWinners [i] == _turnId) {
-							win = true;
-							break;
-						}
-					}
-
-					if (_askCounter >= _playersIn.Count) {
-						statusPrompt ("");
-						reset ();
-						_askCounter = 0;
-						clearQuestCards ();
-						updateHand (_turnId);
-						_turnId = nextTurnID;
-						nextTurn (false, false);
-					} else if (win) {
-						_askCounter++;
-						statusPrompt ("Winner");
-						Debug.Log (_turnId);
-						clearWeapons ();
-						clearQuestCards ();
-						updateHand (_turnId);
-						_players [_turnId].AddShields (_tournamentCard.shields + _playersIn.Count);
-					} else {
-						_askCounter++;
-						clearWeapons ();
-						clearQuestCards ();
-						updateHand (_turnId);
-						statusPrompt ("Lmao you lost");
-					}
-				}
+		//Filters out WeaponCard
+		for(int i = 0 ; i < currInPlay.Count ; i++){
+			if(currInPlay[i].GetType() != typeof(WeaponCard)){
+				filteredHand1.Add(currInPlay[i]);
 			}
-		} else {
-			// Prompt the play to join the tournament.
-			prompt("tournament");
+		}
+
+		//Filter Out amourCards
+		for(int i = 0;i < filteredHand1.Count ; i++){
+			if(filteredHand1[i].GetType() != typeof(AmourCard)){
+				filteredHand2.Add(filteredHand1[i]);
+			}
+		}
+
+		//Filtered Hand 
+		_players[player_id].inPlay = filteredHand2;
+	}
+
+	// Get the rank power for a specific rank.
+	public int getRankPower(int rank){
+		if(rank == 0){
+			return 5;
+		} else if(rank == 1) {
+			return 10;
+		} else if(rank == 2) {
+			return 20;
+		}
+		return 0;
+	}
+
+	// Get the rank asset for a specific rank.
+	public string getRankAsset(int rank){
+		if(rank == 0){
+			return "card_image/rank/rankCard1";
+		} else if(rank == 1) {
+			return "card_image/rank/rankCard2";
+		} else if(rank == 2) {
+			return "card_image/rank/rankCard3";
+		}
+		return null;
+	}
+
+	// Get power from card.
+	public int getPowerFromCard(Card c){
+		if(c.GetType() == typeof(WeaponCard)){
+			WeaponCard currWeapon = (WeaponCard)c;
+			return currWeapon.power;
+		}
+
+		if(c.GetType() == typeof(AmourCard)){
+			AmourCard currAmour = (AmourCard)c;
+			return currAmour.power;
+		}
+
+		if(c.GetType() == typeof(AllyCard)){
+			AllyCard currAlly = (AllyCard)c;
+			return currAlly.power;
+		}
+
+		return 0;
+	}
+
+	// Clear weapons from the play area.
+	public void clearWeapons(){
+		List<Card> oldCards = playArea.GetComponent<CardArea>().cards;
+		List<Card> filteredCards = new List<Card>();
+
+		// Filter the cards.
+		for(int i = 0; i < oldCards.Count; i++){
+			if(oldCards[i].GetType() != typeof(WeaponCard)){
+				filteredCards.Add(oldCards[i]);
+			}
+			else{
+				_discardPileAdventure.Discard(oldCards[i]);
+			}
+		}
+
+		// Empty the card list.
+		playArea.GetComponent<CardArea>().cards = new List<Card>();
+
+		// Repopulate the card list.
+		for(int i =0 ; i < filteredCards.Count ;i++){
+			playArea.GetComponent<CardArea>().addCard(filteredCards[i]);
 		}
 	}
 
-	// Runs when the end turn button is clicked.
-	public void EndTurn() {
-		// If the discard pile has more than 0 cards.
-		if(discardPile.GetComponent<CardArea>().cards.Count > 0){
-			discardCard();
-			updateHand(_turnId);
-		}
-
-		// If the hand has too many cards.
-		if(Hand.GetComponent<CardArea>().cards.Count >= 13 ){
-			statusPrompt("Too Many Cards, Please Discard or use");
-		}
-			
-		// If you can end the turn.
-		if (_canEnd) {
-
-			// Quest currently in play.
-			if (_questInPlay) {
-
-				// Handle the quest turn.
-				handleQuestInPlay ();
-
-				// Tournament currently in play.
-			} else if (_tournamentInPlay) {
-
-				// Handle the tournament turn.
-				handleTournamentInPlay ();
-			} else {
-				
-				// It's an event card, so just continue on.
-				nextTurn(false, false);
-			}
-		}
-	}
-
-	// NOTE: What does this do?
-	private void reclaimCards() {
-		List<List<Card>> stages = getStages();
-
-		for (int i = 0; i < stages.Count; i++) {
-			for (int j = 0; j < stages [i].Count; j++) {
-				_players[_turnId].addCard(stages[i][j]);
-			}
-		}
-
-		for (int z = 0; z < Stages.Count; z++) {
-			Stages[z].GetComponent<CardArea>().cards = new List<Card>();
-			// Clears out draw card area.
-			foreach (Transform child in Stages[z].transform) {
-				GameObject.Destroy(child.gameObject);
-			}
-		}
-	}
-	
 	// Load the players hand onto the UI.
 	void loadHand(int playerId){
-		
-		foreach (Transform child in rankCardArea.transform) {	
+		foreach (Transform child in rankCardArea.transform) {
 			GameObject.Destroy(child.gameObject);
 		}
 
-		playArea.GetComponent<CardArea>().cards =  new List<Card>();
-		Hand.GetComponent<CardArea>().cards =  new List<Card>();
+		playArea.GetComponent<CardArea>().cards = new List<Card>();
+		Hand.GetComponent<CardArea>().cards = new List<Card>();
 
-		// Set Player ID text.
-		playerIdTxt.GetComponent<UnityEngine.UI.Text>().text = "Player ID : "+ (playerId+1).ToString();
+		loadCards(_players[playerId].hand, Hand);
+		loadCards(_players[playerId].inPlay, playArea);
 
-		// Get current players shield.
-		int currPlayerShield = _players[playerId].shieldCounter;
-		shieldCounterTxt.GetComponent<UnityEngine.UI.Text>().text = "# Shield: "+ (currPlayerShield).ToString();
-
-		List<Card> currHand = _players[playerId].hand;
-		List<Card> currPlay = _players[playerId].inPlay;
-		
-		loadCards(currHand, Hand);
-		loadCards(currPlay, playArea);
+		for(int i = 0 ; i < Hand.GetComponent<CardArea>().cards.Count; i++){
+			Hand.GetComponent<CardArea>().cards[i].flipCard(true);
+		}
 
 		GameObject cardUI = Instantiate(RankCard);
 
 		// Get the rank asset.
-		string rankAsset = getRankAsset(_players [playerId].rank);
+		string rankAsset = getRankAsset(_players[playerId].rank);
 
 		// Set the rank asset.
 		Sprite rankCard = Resources.Load<Sprite>(rankAsset);
 		cardUI.gameObject.GetComponent<Image>().sprite = rankCard;
 		cardUI.transform.SetParent(rankCardArea.transform);
+
+	}
+
+	//Unflip the hands
+	public void unflipHand(){
+		for(int i = 0 ; i < Hand.GetComponent<CardArea>().cards.Count; i++){
+			Hand.GetComponent<CardArea>().cards[i].flipCard(false);
+		}
 	}
 
 	// Load the cards up.
@@ -696,7 +477,7 @@ public class Game : MonoBehaviour {
 			currCard = cards[i];
 
 			area.GetComponent<CardArea>().addCard(currCard);
-			GameObject CardUI = null; 
+			GameObject CardUI = null;
 
 			// TODO: Clean this up.
 			if (currCard.GetType () == typeof(WeaponCard)) {
@@ -740,7 +521,7 @@ public class Game : MonoBehaviour {
 				CardUI.GetComponent<TestCard>().asset = currTest.asset;
 				CardUI.GetComponent<TestCard>().minBids = currTest.minBids;
 			}
-				
+
 			// Load the card sprite.
 			Sprite card = Resources.Load<Sprite>(currCard.asset);
 			CardUI.gameObject.GetComponent<Image>().sprite = card;
@@ -751,88 +532,97 @@ public class Game : MonoBehaviour {
 		}
 	}
 
-
-	// TURN METHODS //
-	// ------------ //
-
-	// 
-	public void nextTurn(bool drawn, bool canEnd){
-		rankUpPlayers();
-		//Clear Old Hand
-		foreach (Transform child in Hand.transform) {	
-			GameObject.Destroy (child.gameObject);
-		}
-		foreach (Transform child in playArea.transform) {	
-			GameObject.Destroy (child.gameObject);
-		}
-
-		_turnId++;
-		if (_turnId >= _numPlayers) {
-			_turnId = 0;
-		}
-
-		loadHand(_turnId);
-		_drawn = drawn;
-		_canEnd = canEnd;
+	//Pay the player shields
+	public void payShield(int playerId,int shields){
+		_players[playerId].AddShields(shields);
 	}
 
-	// 
-	public void nextTurnTournament(){
-		rankUpPlayers();
-		foreach (Transform child in Hand.transform) {	
+
+	// Discard a card.
+	private void discardCard(){
+		// Get the desicarded cards.
+		List<Card> cards = discardPile.GetComponent<CardArea>().cards;
+
+		removeCards(_currentPlayer,cards);
+
+		// Discard.
+		for(int i = 0; i < cards.Count; i++){
+			_discardPileAdventure.Discard(cards[i]);
+		}
+
+		// Create a new list.
+		discardPile.GetComponent<CardArea>().cards = new List<Card>();
+
+		foreach (Transform child in discardPile.transform) {
 			GameObject.Destroy (child.gameObject);
 		}
 
-		foreach (Transform child in playArea.transform) {	
-			GameObject.Destroy (child.gameObject);
+	}
+/*
+	Methods in here aren't being used, but might need to be.
+	// NOTE: What does this do?
+	private void reclaimCards() {
+		List<List<Card>> stages = getStages(2);
+
+		for (int i = 0; i < stages.Count; i++) {
+			for (int j = 0; j < stages [i].Count; j++) {
+				_players[_turnId].addCard(stages[i][j]);
+			}
 		}
 
-		if(_tourneeID == -1){ //Instantiate
-			_tourneeID = 0;
-		} else {
-			_tourneeID++;
+		for (int z = 0; z < Stages.Count; z++) {
+			Stages[z].GetComponent<CardArea>().cards = new List<Card>();
+			// Clears out draw card area.
+			foreach (Transform child in Stages[z].transform) {
+				GameObject.Destroy(child.gameObject);
+			}
 		}
-
-		if(_tourneeID >= _playersIn.Count){
-			_tourneeID = 0;
-		}
-
-		_turnId =  _playersIn[_tourneeID]; 
-		loadHand(_turnId);
-		_drawn = true;	//Can't Draw cards while in quest
-		_canEnd = true; //Can End turn
 	}
 
-	// 
-	public void nextTurnQuest(){
-
-		rankUpPlayers();
-		foreach (Transform child in Hand.transform) {	
-			GameObject.Destroy (child.gameObject);
+	// Rank up players.
+	public void rankUpPlayers(){
+		for(int i = 0 ; i <_players.Count ; i++){
+			_players[i].Rankup();
 		}
-
-		foreach (Transform child in playArea.transform) {	
-			GameObject.Destroy (child.gameObject);
-		}
-
-		if(_questeeTurnId == -1){ //Instantiate
-			_questeeTurnId = 0;
-		}
-		else{
-			_questeeTurnId++;
-		}
-
-		if(_questeeTurnId >= _playersIn.Count){
-			_questeeTurnId = 0;
-		}
-
-		_turnId =  _playersIn[_questeeTurnId]; 
-		loadHand(_turnId);
-		// Can't draw cards while in quest.
-		_drawn = true;
-		// Can end turn.
-		_canEnd = true;
 	}
+
+	// Clear quest cards.
+	private void clearQuestCards(){
+		List<Card> oldCards = playArea.GetComponent<CardArea>().cards;
+		List<Card> filteredCards1 = new List<Card>();
+		List<Card> filteredCards2 = new List<Card>();
+
+		// Filter amour cards.
+		for(int i = 0 ; i < oldCards.Count ; i++){
+			if(oldCards[i].GetType() != typeof(AmourCard)){
+				filteredCards1.Add(oldCards[i]);
+			}
+			else{
+				_discardPileAdventure.Discard(oldCards[i]);
+			}
+		}
+
+		// Filter weapon cards.
+		for(int i = 0 ; i < filteredCards1.Count ; i++){
+			if(filteredCards1[i].GetType() != typeof(WeaponCard)){
+				filteredCards2.Add(oldCards[i]);
+			}
+			else{
+				_discardPileAdventure.Discard(filteredCards1[i]);
+			}
+		}
+
+		// Empty the list.
+		playArea.GetComponent<CardArea>().cards = new List<Card>();
+
+		// Repopulate the list.
+		for(int i =0 ; i < filteredCards2.Count ;i++){
+			playArea.GetComponent<CardArea>().addCard(filteredCards2[i]);
+		}
+	}
+
+	*/
+
 
 	// PLAYER PANEL METHODS //
 	// -------------------- //
@@ -876,203 +666,29 @@ public class Game : MonoBehaviour {
 		playerPanel.SetActive(false);
 
 		for(int i = 0 ; i < playerActive.Count ; i++){
-			foreach (Transform child in playerActive[i].transform) {	
+			foreach (Transform child in playerActive[i].transform) {
 				GameObject.Destroy(child.gameObject);
 			}
 		}
 	}
-		
-
-	// PROMPT METHODS //
-	// -------------- //
-
-	// Spawn a prompt.
-	public void prompt(string messageType){
-		Prompt.SetActive (true);
-		if(messageType == "sponsor"){
-			promptTxt.GetComponent<UnityEngine.UI.Text>().text = sponsorText;
-		} else if (messageType == "quest"){
-			promptTxt.GetComponent<UnityEngine.UI.Text>().text = questText;
-		} else if (messageType == "tournament"){
-			promptTxt.GetComponent<UnityEngine.UI.Text>().text = tournamentText;
-		}
-	}
-
-	// User status prompt.
-	public void statusPrompt(string message){
-		gameStatus.GetComponent<UnityEngine.UI.Text>().text = message;
-	}
-
-	// Calls the promptActionHanlder to handle the yes.
-	public void YesButton_Click(){
-		if(promptTxt.GetComponent<UnityEngine.UI.Text>().text == sponsorText){
-			promptActionHandler(true, "sponsor");
-		} else if(promptTxt.GetComponent<UnityEngine.UI.Text>().text == questText){
-			promptActionHandler(true, "quest");
-		} else if(promptTxt.GetComponent<UnityEngine.UI.Text>().text == tournamentText){
-			promptActionHandler(true, "tournament");
-		}
-	}
-
-	// Calls the promptActionHandler to handle the no.
-	public void NoButton_Click(){
-		if (promptTxt.GetComponent<UnityEngine.UI.Text> ().text == sponsorText) {			 
-			promptActionHandler(false, "sponsor");
-		} else if (promptTxt.GetComponent<UnityEngine.UI.Text> ().text == questText) {
-			promptActionHandler(false, "quest");
-		} else if(promptTxt.GetComponent<UnityEngine.UI.Text>().text == tournamentText){
-			promptActionHandler(false, "tournament");
-		}
-	}
-
-	// Set draggable on an area.
-	void setDraggable(GameObject area, bool drag){
-		area.GetComponent<CardArea>().acceptObj = drag;
-	}
-
-	// Handles prompt actions.
-	// TODO: This could really use a good cleaning.
-	public void promptActionHandler(bool answer, string type){
-		_askCounter++;
-		if (type == "sponsor") {
-			if (answer) {
-				Prompt.SetActive (false);
-				statusPrompt ("Please set up the Quest.");
-				createQuest (_turnId);
-				_canEnd = true;
-				_drawn = true;
-				_askCounter = 0;
-			} else {
-				if (_askCounter < _numPlayers) {
-					reclaimCards ();
-					nextTurn (true, false);
-					// No sponsor.
-				} else {
-					_askCounter = 0;
-					reset ();
-					// Skip the original draw turn.
-					_turnId++;
-					if (_turnId >= _numPlayers) {
-						_turnId = 0;
-					}
-					_turnId = nextTurnID;
-					nextTurn (false, false);
-					Prompt.SetActive (false);
-				}
-			}
-		} else if (type == "quest") {
-			if (answer) {
-				// Add the player into the quest.
-				_playersIn.Add (_turnId);
-
-				// Continue asking.
-				if (_askCounter < (_numPlayers - 1)) {
-					// True because the player shouldn't be able to draw cards.
-					nextTurn (true, false);	
-
-					// Done asking.
-				} else {
-					_askCounter = 1;
-					statusPrompt ("Setup your weapons.");
-					_currQuestStage = 0;
-					currStageTxt.GetComponent<UnityEngine.UI.Text> ().text = "Current Stage: " + (_currQuestStage + 1).ToString ();
-					nextTurnQuest ();
-					Prompt.SetActive (false);
-				}		
-			} else {
-				// Continue asking.
-				if (_askCounter < (_numPlayers - 1)) {
-					nextTurn (true, false); 
-					// Done asking.
-				} else {
-					_askCounter = 0;
-					// Skip sponsor.
-					_turnId++;
-					if (_turnId >= _numPlayers) {
-						_turnId = 0;
-					}
-
-					// Nobody joined, reset.
-					if (_playersIn.Count <= 0) {
-						reset ();
-						_turnId = nextTurnID;
-						nextTurn (false, false);
-					} else {
-						_askCounter = 1;
-						statusPrompt("Setup your weapons.");
-						_currQuestStage = 0;
-						currStageTxt.GetComponent<UnityEngine.UI.Text> ().text = "Current Stage: " + (_currQuestStage + 1).ToString ();
-						nextTurnQuest ();
-						Prompt.SetActive(false);
-					}
-					// Turn off the prompt.
-					Prompt.SetActive (false);
-				}
-			}
-		} else if (type == "tournament") {
-			if (answer) {
-				_playersIn.Add(_turnId);
-				nextTurn(true, false);
-
-				// Asked all the players.
-				if (_askCounter >= _numPlayers) {
-					// Not enough players.
-					if (_playersIn.Count <= 1) {
-						if (_playersIn.Count == 1) {
-							_players [_playersIn [0]].AddShields (_tournamentCard.shields);
-						}
-						_askCounter = 0;
-						reset ();
-						_turnId = nextTurnID;
-						nextTurn (false, false);
-						Prompt.SetActive (false); 
-					} else {
-						_askCounter = 1;
-						_tournamentPrompt = true;
-						Prompt.SetActive (false); 
-						nextTurnTournament ();
-						statusPrompt ("Setup your weapons.");
-					}
-				}
-			} else {
-				nextTurn(true, false);
-				// Asked all the players.
-				if(_askCounter >= _numPlayers){
-					// Not enough players.
-					if (_playersIn.Count <= 1) {
-						if (_playersIn.Count == 1) {
-							_players [_playersIn [0]].AddShields (_tournamentCard.shields);
-						}
-						_turnId = nextTurnID;
-						nextTurn (false, false);
-						_askCounter = 0;
-						reset ();
-						Prompt.SetActive(false); 
-					} else {
-						_askCounter = 1;
-						_tournamentPrompt = true;
-						Prompt.SetActive (false);
-						nextTurnTournament();
-						statusPrompt("Setup your weapons.");
-					}
-				}
-			}
-		}
-	}
-
 
 	// MODE METHODS //
 	// ------------ //
 
 	// Setup non-AI modes.
-	public void genericModeSetup(){
+	public void genericModeSetup(string storyDeckType){
 		// Hide menu.
 		Menu.SetActive(false);
 
 		// Clear hand.
-		foreach (Transform child in Hand.transform) {	
+		foreach (Transform child in Hand.transform) {
 			GameObject.Destroy(child.gameObject);
 		}
+
+		// Create the game behvaiours.
+		_questBehaviour = new QuestBehaviour();
+		_tournamentBehaviour = new TournamentBehaviour();
+		_eventBehaviour = new EventBehaviour();
 
 		// Setup players.
 		_players = new List<Player>();
@@ -1083,29 +699,9 @@ public class Game : MonoBehaviour {
 
 		// Setup decks.
 		_adventureDeck = new Deck("Adventure");
-		//_storyDeck = new Deck("QuestOnly");
+		_storyDeck = new Deck(storyDeckType);
 		_discardPileAdventure = new Deck ("");
 		_discardPileStory = new Deck ("");
-
-		_playersIn = new List<int> ();
-		_deadPlayers = new List<int>();
-
-		_turnId = 0;
-		_numPlayers = _players.Count;
-		_drawn = false;
-		_canEnd = false;
-		_questInPlay = false;
-		_rumble = false;
-		_tournamentInPlay = false;
-		nextTurnID = -1;
-
-		_sponsorId = -1;
-		_questeeTurnId = -1;
-		_askCounter = 0;
-		_currQuestStage = -1;	
-		promptAnswer = -1;
-
-		_tourneeID = -1;
 
 		// Populate the players hands.
 		for(int i = 0; i < _players.Count ; i++){
@@ -1114,13 +710,28 @@ public class Game : MonoBehaviour {
 			}
 		}
 
-		// Load the first players hand.
-		loadHand(_turnId);
+		// Load up the first player.
+		nextCardAndPlayer();
 	}
 
 	// Runs if the user selects Play PVP.
 	public void NormalMode(){
-		Menu.SetActive(false);
+		genericModeSetup("Story");
+	}
+
+	// Runs if the user selects Quest Only Mode.
+	public void QuestOnlyMode(){
+		genericModeSetup("QuestOnly");
+	}
+
+	// Runs if the user selects Tournament Only Mode.
+	public void TournamentOnlyMode(){
+		genericModeSetup("TournamentOnly");
+	}
+
+	// Runs if the user selects Event Only Mode.
+	public void EventModeOnly(){
+		genericModeSetup("EventOnly");
 	}
 
 	// Runs if the user selects Play AI.
@@ -1130,314 +741,12 @@ public class Game : MonoBehaviour {
 		// Add human players.
 		_players = new List<Player>();
 		for (int i = 0; i < 4 - AIs; i++) {
-			_players.Add (new Player (i));
+			_players.Add (new Player(i));
 		}
 
 		// Add AI players.
 		for (int i = 4 - AIs -1; i < AIs; i++) {
-			_players.Add (new AIPlayer (i));
+			_players.Add (new AIPlayer(i));
 		}
-	}
-
-	// Runs if the user selects Quest Only Mode.
-	public void QuestOnlyMode(){
-		genericModeSetup();
-		_storyDeck = new Deck("QuestOnly");
-	}
-
-	// Runs if the user selects Tournament Only Mode.
-	public void TournamentOnlyMode(){
-		genericModeSetup();
-		_storyDeck = new Deck("TournamentOnly");
-	}
-
-	// Runs if the user selects Event Only Mode.
-	public void EventModeOnly(){
-		genericModeSetup();
-		_storyDeck = new Deck("EventOnly");
-	}
-
-
-	// HELPER METHODS //
-	// -------------- //
-
-
-	// Check if a player survived the stage.
-	public bool didYouSurvive(List<Card> cards){
-		int power = 0;
-		for(int i = 0 ; i < cards.Count ; i++){
-			power += getPowerFromCard(cards[i]);
-		}
-
-		// Add the rank bonus.
-		power += getRankPower(_players [_turnId].rank);
-
-		return power > _stagePower[_currQuestStage];
-	}
-
-	// Clear weapons from the play area.
-	private void clearWeapons(){
-		List<Card> oldCards = playArea.GetComponent<CardArea>().cards;
-		List<Card> filteredCards = new List<Card>();
-
-		// Filter the cards.
-		for(int i = 0; i < oldCards.Count; i++){
-			if(oldCards[i].GetType() != typeof(WeaponCard)){
-				filteredCards.Add(oldCards[i]);
-			}
-			else{
-				_discardPileAdventure.Discard(oldCards[i]);
-			}
-		}
-
-		// Empty the card list.
-		playArea.GetComponent<CardArea>().cards = new List<Card>();
-
-		// Repopulate the card list.
-		for(int i =0 ; i < filteredCards.Count ;i++){
-			playArea.GetComponent<CardArea>().addCard(filteredCards[i]);
-		}
-	}
-
-	// Clear quest cards.
-	private void clearQuestCards(){
-		List<Card> oldCards = playArea.GetComponent<CardArea>().cards;
-		List<Card> filteredCards1 = new List<Card>();
-		List<Card> filteredCards2 = new List<Card>();
-
-		// Filter amour cards.
-		for(int i = 0 ; i < oldCards.Count ; i++){
-			if(oldCards[i].GetType() != typeof(AmourCard)){
-				filteredCards1.Add(oldCards[i]);
-			}
-			else{
-				_discardPileAdventure.Discard(oldCards[i]);
-			}
-		}
-
-		// Filter weapon cards.
-		for(int i = 0 ; i < filteredCards1.Count ; i++){
-			if(filteredCards1[i].GetType() != typeof(WeaponCard)){
-				filteredCards2.Add(oldCards[i]);
-			}
-			else{
-				_discardPileAdventure.Discard(filteredCards1[i]);
-			}
-		}
-
-		// Empty the list.
-		playArea.GetComponent<CardArea>().cards = new List<Card>();
-
-		// Repopulate the list.
-		for(int i =0 ; i < filteredCards2.Count ;i++){
-			playArea.GetComponent<CardArea>().addCard(filteredCards2[i]);
-		}
-	}
-
-	// Find the winner of the tournament.
-	private List<int> calculateTournamentWinner(){
-		List<Card> currHand = new List<Card>();
-
-		int currMax = 0;
-		int currPower = 0;
-		List<int> powerLevels = new List<int>();
-		List<int> winnersId = new List<int>();
-
-		// Loop through all participating players.
-		for(int i = 0; i < _playersIn.Count; i++ ){
-
-			// Get the players hank.
-			currHand = _players[_playersIn[i]].inPlay;
-
-			// Apply player battle points.
-			currPower += _players[_playersIn[i]].bp;
-
-			// Loop through the players hand.
-			for(int x = 0; x < currHand.Count; x++){
-				currPower += getPowerFromCard(currHand[x]);
-			}
-
-			// Add to power levels and reset.
-			powerLevels.Add(currPower);
-			currPower = 0;
-		}
-
-		// Find the max power level.
-		for(int i = 0 ; i < powerLevels.Count ; i++){
-			if(powerLevels[i] > currMax){
-				currMax = powerLevels[i];
-			}
-		}
-
-		// Find the player is corresponds too.
-		for(int i = 0 ; i < powerLevels.Count ; i++){
-			if(powerLevels[i] == currMax){
-				winnersId.Add(_playersIn[i]);
-			}
-		}
-
-		return winnersId;
-	}
-
-	// Rank up players.
-	public void rankUpPlayers(){
-		for(int i = 0 ; i <_players.Count ; i++){
-			_players[i].Rankup();
-		}
-	}
-
-	// Get all the staged cards objects.
-	public List<Card> getStagedCards() {
-		List<Card> stagedCards = new List<Card> ();
-		for (int i = 0; i < numStages; i++) {
-			for (int j = 0; j < Stages[i].GetComponent<CardArea>().cards.Count; j++) {
-				stagedCards.Add(Stages[i].GetComponent<CardArea>().cards[j]);
-			}
-		}
-		return stagedCards;
-	}
-
-	// Get a list of all the stages.
-	public List<List<Card>> getStages() {
-		List<List<Card>> stages = new List<List<Card>> ();
-		for (int i = 0; i < numStages; i++) {
-			stages.Add(Stages[i].GetComponent<CardArea> ().cards);
-		}
-		return stages;
-	}
-
-
-	// Check to make sure a stage is valid.
-	public int stageValid(List<Card> currStage){
-		bool check = false;
-		int foeCount = 0; 
-		Card currCard = null;
-		int power = 0;
-
-		List<WeaponCard> weapons = new List<WeaponCard>();
-		for(int i = 0; i < currStage.Count; i++) {
-			currCard = currStage[i];
-
-			// If the card is a weapon card.
-			if(currCard.GetType() == typeof(WeaponCard)){
-
-				WeaponCard currWeapon = (WeaponCard)currCard;	
-				for(int x = 0 ; x < weapons.Count; x++){	//Duplicate Weapons Logic
-					if(currWeapon.name == weapons[x].name){
-						return -1;
-					}
-				}
-				weapons.Add(currWeapon);
-				power = power + currWeapon.power;
-
-				// Otherwise, it's a foe card.
-			} else if(currCard.GetType() == typeof(FoeCard)){
-				FoeCard currFoe = (FoeCard)currCard;
-
-				// Handle feature foe.
-				if(_questCard.featuredFoe == currFoe.type){
-					power += currFoe.hiPower;
-				} else if(_questCard.featuredFoe == "*") {
-					power += currFoe.hiPower;
-				} else {
-					power += currFoe.loPower;
-				}
-				foeCount++;
-
-				// Invalid card.
-			} else {
-				return -1;   
-			}
-		}
-
-		if(foeCount > 1 || foeCount <= 0){
-			return -1;
-		}
-
-		return power;
-	}
-
-	// Determine if the cards in the play area are valid.
-	public bool playAreaValid(List<Card> cards){
-		for(int i = 0; i < cards.Count; i++){
-			// Return false if there are any foe cards.
-			if(cards[i].GetType() == typeof(FoeCard)){
-				return false;
-			} 
-		}
-		return true;
-	}
-
-	// Check if a quest is valid.
-	public bool checkQuest() {
-		List<int> powerLevels = new List<int>();
-		int testCounter = 0;
-		int currPower = 0;
-		List<List<Card>> stages = getStages();
-
-		// Grab the power levels from all the cards within the stages.
-		for (int i = 0; i < stages.Count; i++) {
-			currPower = stageValid (stages [i]);
-			if(currPower == -1){
-				return false;
-			} else {
-				powerLevels.Add(currPower);
-			}
-		} 
-
-		// Check ascending power level.
-		for(int i = 0; i < powerLevels.Count - 1; i++){
-			if(powerLevels[i] >= powerLevels[i + 1]){
-				return false;
-			}
-		}
-		// Get calculated stage powers if valid.
-		_stagePower = powerLevels;
-
-		return true;
-	}
-
-	// Get the rank power for a specific rank.
-	public int getRankPower(int rank){
-		if(rank == 0){
-			return 5;
-		} else if(rank == 1) {
-			return 10;
-		} else if(rank == 2) {
-			return 20;
-		}
-		return 0;
-	}
-
-	// Get the rank asset for a specific rank.
-	public string getRankAsset(int rank){
-		if(rank == 0){
-			return "card_image/rank/rankCard1";
-		} else if(rank == 1) {
-			return "card_image/rank/rankCard2";
-		} else if(rank == 2) {
-			return "card_image/rank/rankCard3";
-		}
-		return null;
-	}
-
-	// Get power from card.
-	private int getPowerFromCard(Card c){
-		if(c.GetType() == typeof(WeaponCard)){
-			WeaponCard currWeapon = (WeaponCard)c;
-			return currWeapon.power;
-		}
-
-		if(c.GetType() == typeof(AmourCard)){
-			AmourCard currAmour = (AmourCard)c;
-			return currAmour.power;
-		}
-
-		if(c.GetType() == typeof(AllyCard)){
-			AllyCard currAlly = (AllyCard)c;
-			return currAlly.power;
-		}
-
-		return 0;
 	}
 }
