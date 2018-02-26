@@ -69,6 +69,11 @@ public class QuestBehaviour : GameBehaviour {
 			// If we have finished handling all participating players.
 			if (participatingPlayerIndex > (participatingPlayers - 1)){
 
+				//Remove AmourCard
+				for(int i = 0 ;i <_deadPlayers.Count;i++){
+					Game.GameManager.clearInPlayEnd(_deadPlayers[i]);
+				}
+
 				// Update the _playersIn list.
 				for(int i = 0; i < _deadPlayers.Count; i++){
 					_playersIn.Remove(_deadPlayers [i]);
@@ -98,6 +103,10 @@ public class QuestBehaviour : GameBehaviour {
 							Game.GameManager.payShield(_playersIn[i],_questCard.stages);
 						}
 						// End the quest.
+						//Remove AmourCard
+						for(int i = 0 ;i <_playersIn.Count;i++){
+							Game.GameManager.clearInPlayEnd(_playersIn[i]);
+						}
 						endQuest();
 					}
 

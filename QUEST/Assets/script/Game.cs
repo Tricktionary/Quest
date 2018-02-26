@@ -467,7 +467,7 @@ public class Game : MonoBehaviour {
 	}
 
 	// Clear a players in play cards.
-	public void clearInPlay(int player_id){
+	public void clearInPlayEnd(int player_id){
 		List<Card> currInPlay = new List<Card>();
 		List<Card> filteredHand1 = new List<Card>();
 		List<Card> filteredHand2 = new List<Card>();
@@ -490,6 +490,23 @@ public class Game : MonoBehaviour {
 
 		//Filtered Hand
 		_players[player_id].inPlay = filteredHand2;
+	}
+
+	// Clear a players in play cards.
+	public void clearInPlay(int player_id){
+		List<Card> currInPlay = new List<Card>();
+		List<Card> filteredHand1 = new List<Card>();
+
+		currInPlay = _players[player_id].inPlay;
+
+		//Filters out WeaponCard
+		for(int i = 0 ; i < currInPlay.Count ; i++){
+			if(currInPlay[i].GetType() != typeof(WeaponCard)){
+				filteredHand1.Add(currInPlay[i]);
+			}
+		}
+		//Filtered Hand
+		_players[player_id].inPlay = filteredHand1;
 	}
 
 	// Get the rank power for a specific rank.
