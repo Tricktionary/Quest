@@ -246,13 +246,13 @@ public class Game : MonoBehaviour {
 		Prompt.PromptManager.statusPrompt("It's your turn to draw a story card!");
 		//AI Logic
 		if(_players[_currentPlayer].GetType() == typeof(AIPlayer)){
-			AILogicResponse(_currentPlayer);
+			AILogicResponse(_currentPlayer,"");
 		}
 	}
 
 
 		//AI Response to prompts
-		public void AILogicResponse(int turnId){
+		public void AILogicResponse(int turnId,string type){
 			//Current AI
 			AIPlayer currAi = (AIPlayer)_players[turnId];
 			/*
@@ -295,15 +295,19 @@ public class Game : MonoBehaviour {
 			else if(activeStoryCard == true){
 				if (_storyCard.GetType() == typeof(QuestCard)) {
 					//Prompt.PromptManager.promptYes();
-
-					bool answer = currAi.joinQuest((QuestCard)_storyCard,_players);
-					if(answer){
-						Debug.Log("AI JOINED");
-						Prompt.PromptManager.promptYes();
-					}
-					else{
-						Debug.Log("AI DENIED");
+					if(type == "sponsor"){
 						Prompt.PromptManager.promptNo();
+					}
+					if(type == "quest"){
+						bool answer = currAi.joinQuest((QuestCard)_storyCard,_players);
+						if(answer){
+							Debug.Log("AI JOINED");
+							Prompt.PromptManager.promptYes();
+						}
+						else{
+							Debug.Log("AI DENIED");
+							Prompt.PromptManager.promptNo();
+						}
 					}
 				}
 				else if (_storyCard.GetType() == typeof(TournamentCard)) {

@@ -240,7 +240,7 @@ public class TournamentBehaviour : GameBehaviour {
 			//AI Join?
 			if(Game.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
 				//Prompt.PromptManager.promptYes();
-				Game.GameManager.AILogicResponse(_turnId);
+				Game.GameManager.AILogicResponse(_turnId,"");
 			}
 		}
 
