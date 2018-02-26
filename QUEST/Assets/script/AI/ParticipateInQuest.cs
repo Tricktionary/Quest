@@ -1,3 +1,7 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 public class ParticipateInQuest: AIBehaviour{
 
@@ -118,5 +122,3 @@ public class ParticipateInQuest: AIBehaviour{
 		return null;
 	}
 }
-
-

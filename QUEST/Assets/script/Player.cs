@@ -80,7 +80,7 @@ public class Player {
 		}
 	}
 
-	//Constructor 
+	//Constructor
 	public Player(int id){
 		_playerId = id;
 		_rank = 0;
@@ -90,7 +90,7 @@ public class Player {
 		_allies = new List<Card>();
 		_inPlay = new List<Card>();
 	}
-	
+
 	//AI
 	public Player(){
 		_playerId = -1;
@@ -99,7 +99,7 @@ public class Player {
 		_bp = 5;
 		_hand = new List<Card>();
 		_allies = new List<Card>();
-		_inPlay = new List<Card>();	
+		_inPlay = new List<Card>();
 	}
 
 
@@ -107,18 +107,18 @@ public class Player {
 	public void addCard(Card card){
 		_hand.Add(card);	//Adds card to hand
 	}
-	
+
 	public void addPlayCard(Card card){
 		_inPlay.Add(card);
 	}
-	
+
 	//s as number of shields to add, should we force rank up?
 	public void AddShields (int s) {
 		_shieldCounter += s;
 	}
 
 
-	//calculates sum of ranks and shields in terms of shields 
+	//calculates sum of ranks and shields in terms of shields
 	public int calcRankShields(){
 		int sumPoints = 0;
 		if(this.rank == 0){
@@ -136,7 +136,7 @@ public class Player {
 	}
 
 
-/* 
+/*
 	Rank-up:
 		Squire = 5 BP
 		Knight = 10 BP
@@ -145,9 +145,10 @@ public class Player {
 	public void Rankup () {
 		int[] requirements = new int[]{ 5, 7, 10 };
 		if (_rank == 3) {
-			//end game
+			//end game;
+			return;
 		}
- 
+
 
 		while (_shieldCounter >= requirements [_rank]) {
 			_shieldCounter -= requirements [_rank];
@@ -170,6 +171,6 @@ public class Player {
 
 	//Game should draw and assign the cards
 	void DrawCards(List<Card> cards) {
-		
+
 	}
 }

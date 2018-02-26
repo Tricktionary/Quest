@@ -51,6 +51,8 @@ public class Game : MonoBehaviour {
 	public GameObject rankCardArea;
 	public GameObject drawCardArea;
 	public GameObject Hand;
+	public GameObject winScreen;
+	public GameObject winScreenTxt;
 
 	// Text fields.
 	public GameObject playerIdTxt;
@@ -65,6 +67,7 @@ public class Game : MonoBehaviour {
 	// The current story card in play.
 	Card _storyCard;
 	bool activeStoryCard = false;
+	bool discardingCards = false;
 
 	//tempFix
 	bool allFlip = false;
@@ -81,12 +84,14 @@ public class Game : MonoBehaviour {
 	public void EndTurn() {
 
 		// If the discard pile has more than 0 cards.
-		if(discardPile.GetComponent<CardArea>().cards.Count > 0){
+		if(discardingCards){
 			discardCard();
+			discardingCards = false;
 		}
 		//If the hand has too many cards.
 		if(Hand.GetComponent<CardArea>().cards.Count >= 13 ){
 			Prompt.PromptManager.statusPrompt("Too many cards, please discard or use.");
+			discardingCards = true;
 		}
 
 		// Need's to be a story card in play to end a turn.
@@ -107,13 +112,16 @@ public class Game : MonoBehaviour {
 	// Draw a card (fires when the button is clicked).
 	public void DrawCard(){
 		// If the discard pile has more than 0 cards.
-		if(discardPile.GetComponent<CardArea>().cards.Count > 0){
+		if(discardingCards){
 			discardCard();
+			discardingCards = false;
 		}
 		//If the hand has too many cards.
 		if(Hand.GetComponent<CardArea>().cards.Count >= 13 ){
 			Prompt.PromptManager.statusPrompt("Too many cards, please discard or use.");
+			discardingCards = true;
 		}
+
 
 		// A story card exists, can't draw.
 		else if (activeStoryCard){
@@ -207,6 +215,9 @@ public class Game : MonoBehaviour {
 		//Rank Up player before next turn
 		rankUpPlayers();
 
+		//Check if anyone won
+		checkWinner();
+
 		// Move onto the next player.
 		_currentPlayer++;
 
@@ -240,13 +251,13 @@ public class Game : MonoBehaviour {
 		Prompt.PromptManager.statusPrompt("It's your turn to draw a story card!");
 		//AI Logic
 		if(_players[_currentPlayer].GetType() == typeof(AIPlayer)){
-			AILogicResponse(_currentPlayer);
+			AILogicResponse(_currentPlayer,"");
 		}
 	}
 
 
 		//AI Response to prompts
-		public void AILogicResponse(int turnId){
+		public void AILogicResponse(int turnId,string type){
 			//Current AI
 			AIPlayer currAi = (AIPlayer)_players[turnId];
 			/*
@@ -260,6 +271,7 @@ public class Game : MonoBehaviour {
 				//need to sponsor
 				if (_storyCard.GetType() == typeof(QuestCard)) {
 					Prompt.PromptManager.promptNo();
+					Debug.Log("AI declined to sponsor quest");
 				}
 				//Join Tournament
 				else if (_storyCard.GetType() == typeof(TournamentCard)) {
@@ -267,11 +279,11 @@ public class Game : MonoBehaviour {
 
 					bool answer = currAi.joinTournament((TournamentCard)_storyCard,_players);
 					if(answer){
-						Debug.Log("AI JOINED");
+						Debug.Log("AI has Joined Tournement");
 						Prompt.PromptManager.promptYes();
 					}
 					else{
-						Debug.Log("AI DENIED");
+						Debug.Log("AI has denied Tournament entry");
 						Prompt.PromptManager.promptNo();
 					}
 
@@ -288,26 +300,35 @@ public class Game : MonoBehaviour {
 			*/
 			else if(activeStoryCard == true){
 				if (_storyCard.GetType() == typeof(QuestCard)) {
-					bool answer = currAi.joinQuest((QuestCard)_storyCard,_players);
-					if(answer){
-						Debug.Log("AI JOINED");
-						Prompt.PromptManager.promptYes();
-					}
-					else{
-						Debug.Log("AI DENIED");
+					//Prompt.PromptManager.promptYes();
+					if(type == "sponsor"){
 						Prompt.PromptManager.promptNo();
+						Debug.Log("AI declined to sponsor quest");
+					}
+					if(type == "quest"){
+						bool answer = currAi.joinQuest((QuestCard)_storyCard,_players);
+						if(answer){
+							Debug.Log("AI Joined Quest");
+							Prompt.PromptManager.promptYes();
+						}
+						else{
+							Debug.Log("AI Denied to Join Quest");
+							Prompt.PromptManager.promptNo();
+						}
 					}
 				}
 				else if (_storyCard.GetType() == typeof(TournamentCard)) {
+					//Prompt.PromptManager.promptYes();
 					bool answer = currAi.joinTournament((TournamentCard)_storyCard,_players);
 					if(answer){
-							Debug.Log("AI JOINED");
+							Debug.Log("AI Joined Tournement");
 						Prompt.PromptManager.promptYes();
 					}
 					else{
-						Debug.Log("AI DENIED");
+						Debug.Log("AI Denied to join tournament");
 						Prompt.PromptManager.promptNo();
 					}
+
 				}
 			}
 		}
@@ -320,10 +341,11 @@ public class Game : MonoBehaviour {
 
 			if (_storyCard.GetType() == typeof(QuestCard)) {
 				playCards = currAi.playQuest(_players,0,false);
+				Debug.Log("AI Played Quest Cards");
 			}
 			else if (_storyCard.GetType() == typeof(TournamentCard)) {
-				Debug.Log("here");
 				playCards = currAi.playTournament((TournamentCard)_storyCard,_players);
+				Debug.Log("AI Played Tournament Cards");
 			}
 			return(playCards);
 		}
@@ -445,7 +467,7 @@ public class Game : MonoBehaviour {
 	}
 
 	// Clear a players in play cards.
-	public void clearInPlay(int player_id){
+	public void clearInPlayEnd(int player_id){
 		List<Card> currInPlay = new List<Card>();
 		List<Card> filteredHand1 = new List<Card>();
 		List<Card> filteredHand2 = new List<Card>();
@@ -468,6 +490,23 @@ public class Game : MonoBehaviour {
 
 		//Filtered Hand
 		_players[player_id].inPlay = filteredHand2;
+	}
+
+	// Clear a players in play cards.
+	public void clearInPlay(int player_id){
+		List<Card> currInPlay = new List<Card>();
+		List<Card> filteredHand1 = new List<Card>();
+
+		currInPlay = _players[player_id].inPlay;
+
+		//Filters out WeaponCard
+		for(int i = 0 ; i < currInPlay.Count ; i++){
+			if(currInPlay[i].GetType() != typeof(WeaponCard)){
+				filteredHand1.Add(currInPlay[i]);
+			}
+		}
+		//Filtered Hand
+		_players[player_id].inPlay = filteredHand1;
 	}
 
 	// Get the rank power for a specific rank.
@@ -648,21 +687,42 @@ public class Game : MonoBehaviour {
 	// Discard a card.
 	private void discardCard(){
 		// Get the desicarded cards.
-		List<Card> cards = discardPile.GetComponent<CardArea>().cards;
+		List<Card> playCard = playArea.GetComponent<CardArea>().cards;
 
-		removeCards(_currentPlayer,cards);
+		bool onlyAllies = true;
 
-		// Discard.
-		for(int i = 0; i < cards.Count; i++){
-			_discardPileAdventure.Discard(cards[i]);
+		for(int i = 0 ; i < playCard.Count;i++ ){
+			if(playCard[i].GetType() != typeof(AllyCard)){
+				onlyAllies = false;
+				break;
+			}
 		}
 
-		// Create a new list.
-		discardPile.GetComponent<CardArea>().cards = new List<Card>();
-
-		foreach (Transform child in discardPile.transform) {
-			GameObject.Destroy (child.gameObject);
+		if(onlyAllies == false){
+			Prompt.PromptManager.statusPrompt("Only allies can be played");
+			return;
 		}
+		//Handle Play
+		setInPlay(_currentPlayer);
+
+		//Handle Discard
+		List<Card> disCards = discardPile.GetComponent<CardArea>().cards;
+
+		if (disCards.Count > 0){
+			removeCards(_currentPlayer,disCards);
+			// Discard.
+			for(int i = 0; i < disCards.Count; i++){
+				_discardPileAdventure.Discard(disCards[i]);
+			}
+
+			// Create a new list.
+			discardPile.GetComponent<CardArea>().cards = new List<Card>();
+
+			foreach (Transform child in discardPile.transform) {
+				GameObject.Destroy (child.gameObject);
+			}
+		}
+
 
 	}
 /*
@@ -796,7 +856,7 @@ public class Game : MonoBehaviour {
 		// Setup players.
 		_players = new List<Player>();
 		_players.Add(new Player(1));
-		_players.Add(new AIPlayer(2));
+		_players.Add(new Player(2));
 		_players.Add(new Player(3));
 		_players.Add(new Player(4));
 
@@ -841,15 +901,57 @@ public class Game : MonoBehaviour {
 	public void AIMode(int AIs) {
 		Menu.SetActive(false);
 
-		// Add human players.
-		_players = new List<Player>();
-		for (int i = 0; i < 4 - AIs; i++) {
-			_players.Add (new Player(i));
+		// Clear hand.
+		foreach (Transform child in Hand.transform) {
+			GameObject.Destroy(child.gameObject);
 		}
 
-		// Add AI players.
-		for (int i = 4 - AIs -1; i < AIs; i++) {
-			_players.Add (new AIPlayer(i));
+		// Create the game behvaiours.
+		_questBehaviour = new QuestBehaviour();
+		_tournamentBehaviour = new TournamentBehaviour();
+		_eventBehaviour = new EventBehaviour();
+
+		// Add human players.
+		_players = new List<Player>();
+		if(AIs == 1){
+			// Setup players.
+			_players.Add(new AIPlayer(1));
+			_players.Add(new Player(2));
+			_players.Add(new Player(3));
+			_players.Add(new Player(4));
+		}
+		else if(AIs == 2){
+			// Setup players.
+			_players.Add(new AIPlayer(1));
+			_players.Add(new AIPlayer(2));
+			_players.Add(new Player(3));
+			_players.Add(new Player(4));
+		}
+
+		// Setup decks.
+		_adventureDeck = new Deck("Adventure");
+		_storyDeck = new Deck("Story");
+		_discardPileAdventure = new Deck ("");
+		_discardPileStory = new Deck ("");
+
+		// Populate the players hands.
+		for(int i = 0; i < _players.Count ; i++){
+			for(int x = 0 ; x < 12 ; x++){
+				_players[i].addCard((_adventureDeck.Draw()));
+			}
+		}
+
+		// Load up the first player.
+		nextCardAndPlayer();
+	}
+
+	public void checkWinner(){
+		for(int i = 0 ; i < _players.Count ; i++){
+			if(_players[i].rank  == 3){
+				winScreen.SetActive(true);
+				winScreenTxt.GetComponent<UnityEngine.UI.Text>().text = "The Winning Player is "+ _players[i].playerId;
+				break;
+			}
 		}
 	}
 }
