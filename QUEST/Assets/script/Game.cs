@@ -183,7 +183,7 @@ public class Game : MonoBehaviour {
 
 	// Load a player.
 	public void loadPlayer(int n){
-		Debug.Log("Loading player: " + n);
+		//Debug.Log("Loading player: " + n);
 		foreach (Transform child in Hand.transform) {
 			GameObject.Destroy(child.gameObject);
 		}
