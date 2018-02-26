@@ -209,6 +209,12 @@ public class TournamentBehaviour : GameBehaviour {
 		// If we have asked all the players.
 		if (_asked >= (Game.GameManager.getNumberOfPlayers())) {
 			if(_playersIn.Count < 2){
+
+				//Pay the one player that joined the tournament
+				for(int i = 0 ; i < _playersIn.Count;i++){
+					Game.GameManager.getPlayer(_playersIn[i]).AddShields(_tournamentCard.shields);
+				}
+
 				// End the tournament.
 				endTournament();
 				return;
