@@ -12,7 +12,7 @@ public class AIPlayer : Player {
 	}
 
 	List<List<Card>> sponsorQuest(QuestCard questCard, List<Player> players) {
-		if (sponsorQuestBehaviour.sponsor(_playerId,someoneCouldWin(questCard.stages, players), players, questCard.stages)) {
+		if (sponsorQuestBehaviour.sponsor(_playerId,someoneCouldWin(questCard.stages, players), players, questCard)) {
 			return sponsorQuestBehaviour.setup1 (questCard, this);
 		}
 		return null;
