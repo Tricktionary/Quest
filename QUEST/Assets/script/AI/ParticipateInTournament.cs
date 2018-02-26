@@ -33,7 +33,7 @@ public class ParticipateInTournament: AIBehaviour{
 			if (ai.hand [i] is WeaponCard) {
 				if (cards.ContainsKey(ai.hand[i])) {
 					int amount = cards [ai.hand [i]] + 1;
-					cards.Add (ai.hand[i], amount);
+					cards[ai.hand[i]] = amount;
 				} else {
 					cards.Add (ai.hand[i], 1);
 					keys.Add (ai.hand [i]);
@@ -56,6 +56,7 @@ public class ParticipateInTournament: AIBehaviour{
 			}
 			return playCards;
 		}
+
 	}
 
 	public bool join2(bool couldWin){
@@ -73,7 +74,7 @@ public class ParticipateInTournament: AIBehaviour{
 			if (ai.hand [i] is WeaponCard) {
 				if (cards.ContainsKey (ai.hand [i])) {
 					int amount = cards [ai.hand [i]] + 1;
-					cards.Add (ai.hand [i], amount);
+					cards [ai.hand [i]] = amount;
 				} else {
 					cards.Add (ai.hand [i], 1);
 					keys.Add (ai.hand [i]);

@@ -57,8 +57,9 @@ public class TournamentBehaviour : GameBehaviour {
 			if (Game.GameManager.playAreaValid ()) {
 
 				// Set the players cards that they have in play.
-				Game.GameManager.setInPlay(_turnId);
-
+				if(Game.GameManager.getPlayer(_turnId).GetType() != typeof(AIPlayer)){
+					Game.GameManager.setInPlay(_turnId);
+				}
 				// Fix prompt message (if they submited an invalid input).
 				Prompt.PromptManager.statusPrompt ("Setup your weapons!");
 
@@ -90,6 +91,14 @@ public class TournamentBehaviour : GameBehaviour {
 				} else {
 					// Update _turnId.
 					_turnId = _playersIn[participatingPlayerIndex];
+					//AI Logic
+					if(Game.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
+						Debug.Log("AI Setup Weapon");
+
+						List<Card> aiPlayCard = Game.GameManager.AILogicPlayCards(_turnId);
+						Game.GameManager.setInPlayAI(_turnId,aiPlayCard);
+						endTurn();
+					}
 				}
 
 				// Load the new player.
@@ -213,12 +222,26 @@ public class TournamentBehaviour : GameBehaviour {
 				participatingPlayers = _playersIn.Count;
 
 				Prompt.PromptManager.statusPrompt ("Setup your weapons!");
+				if(Game.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
+					Debug.Log("AI Setup Weapon");
+
+					List<Card> aiPlayCard = Game.GameManager.AILogicPlayCards(_turnId);
+					Game.GameManager.setInPlayAI(_turnId,aiPlayCard);
+					endTurn();
+
+				}
+
 			}
 		}
 
 		else {
 			Prompt.PromptManager.promptMessage("tournament");
 			nextPlayer();
+			//AI Join?
+			if(Game.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
+				//Prompt.PromptManager.promptYes();
+				Game.GameManager.AILogicResponse(_turnId,"");
+			}
 		}
 
 		// Load the right player.
