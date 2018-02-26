@@ -6,13 +6,13 @@ using UnityEngine.UI;
 
 public class QuestCard : StoryCard
 {
-    
+
     private int[] _playerId = new int[3];  //Do we need the players or just their ID?
     private int _stages;
     private string _featuredFoe;
 
 
-    //getters and setters 
+    //getters and setters
     public int[] playerId{ //not sure about get/set for array
 		get{
 			return this._playerId;

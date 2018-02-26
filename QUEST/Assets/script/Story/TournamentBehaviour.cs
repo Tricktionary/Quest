@@ -168,7 +168,7 @@ public class TournamentBehaviour : GameBehaviour {
 				maxPower = powerLevels[i];
 			}
 		}
-
+		
 		// Find the player is corresponds too.
 		for(int i = 0; i < powerLevels.Count; i++){
 			if(powerLevels[i] == maxPower){
@@ -209,11 +209,22 @@ public class TournamentBehaviour : GameBehaviour {
 		// If we have asked all the players.
 		if (_asked >= (Game.GameManager.getNumberOfPlayers())) {
 			if(_playersIn.Count < 2){
+
+				//Pay the one player that joined the tournament
+				for(int i = 0 ; i < _playersIn.Count;i++){
+					Game.GameManager.getPlayer(_playersIn[i]).AddShields(1);
+				}
+
 				// End the tournament.
 				endTournament();
 				return;
 			} else {
 				_turnId = _playersIn[0];
+
+				//Pay everyone that join 1 adventure Card
+				for(int i = 0 ; i<_playersIn.Count ; i++){
+					Game.GameManager.giveCard(_playersIn[i]);
+				}
 
 				// Everyone has had the option to join.
 				_joinedUp = true;
