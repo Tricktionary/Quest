@@ -3135,7 +3135,8 @@ MonoBehaviour:
   rankCardArea: {fileID: 111733145}
   drawCardArea: {fileID: 402292197}
   Hand: {fileID: 1004303694}
-  winScreen: {fileID: 0}
+  winScreen: {fileID: 2135371926}
+  winScreenTxt: {fileID: 1618824192}
   playerIdTxt: {fileID: 1465051566}
   shieldCounterTxt: {fileID: 1762925163}
 --- !u!114 &913053429
@@ -6725,7 +6726,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2135371927
 RectTransform:
   m_ObjectHideFlags: 0
