@@ -212,7 +212,7 @@ public class TournamentBehaviour : GameBehaviour {
 
 				//Pay the one player that joined the tournament
 				for(int i = 0 ; i < _playersIn.Count;i++){
-					Game.GameManager.getPlayer(_playersIn[i]).AddShields(_tournamentCard.shields);
+					Game.GameManager.getPlayer(_playersIn[i]).AddShields(1);
 				}
 
 				// End the tournament.
@@ -220,6 +220,11 @@ public class TournamentBehaviour : GameBehaviour {
 				return;
 			} else {
 				_turnId = _playersIn[0];
+
+				//Pay everyone that join 1 adventure Card
+				for(int i = 0 ; i<_playersIn.Count ; i++){
+					Game.GameManager.giveCard(_playersIn[i]);
+				}
 
 				// Everyone has had the option to join.
 				_joinedUp = true;

@@ -945,6 +945,11 @@ public class Game : MonoBehaviour {
 		nextCardAndPlayer();
 	}
 
+	//Give card to player
+	public void giveCard(int id){
+		_players[id].addCard((_adventureDeck.Draw()));
+	}
+
 	public void checkWinner(){
 		for(int i = 0 ; i < _players.Count ; i++){
 			if(_players[i].rank  == 3){
