@@ -243,7 +243,7 @@ public class QuestBehaviour : GameBehaviour {
 
 						//AI join quest
 						if(Game.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
-							Game.GameManager.AILogicResponse(_turnId);
+							Game.GameManager.AILogicResponse(_turnId,"quest");
 						}
 
 						// Clear the status prompt.
@@ -312,6 +312,10 @@ public class QuestBehaviour : GameBehaviour {
 
 			// Load the next player.
 			Game.GameManager.loadPlayer(_turnId);
+
+			if(Game.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
+				Game.GameManager.AILogicResponse(_turnId,"sponsor");
+			}
 		}
 	}
 
@@ -359,7 +363,7 @@ public class QuestBehaviour : GameBehaviour {
 			nextPlayer();
 			//AI join quest
 			if(Game.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
-				Game.GameManager.AILogicResponse(_turnId);
+				Game.GameManager.AILogicResponse(_turnId,"quest");
 			}
 		}
 
