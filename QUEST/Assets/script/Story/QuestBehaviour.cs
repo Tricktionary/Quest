@@ -178,7 +178,7 @@ public class QuestBehaviour : GameBehaviour {
 							if(aiPlayCard != null){
 								Game.GameManager.setInPlayAI(_turnId,aiPlayCard);
 							}
-							Debug.Log(aiPlayCard.Count);
+							//Debug.Log(aiPlayCard.Count);
 							endTurn();
 						}
 					}
