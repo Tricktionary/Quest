@@ -51,6 +51,8 @@ public class Game : MonoBehaviour {
 	public GameObject rankCardArea;
 	public GameObject drawCardArea;
 	public GameObject Hand;
+	public GameObject winScreen;
+	public GameObject winScreenTxt;
 
 	// Text fields.
 	public GameObject playerIdTxt;
@@ -212,6 +214,9 @@ public class Game : MonoBehaviour {
 
 		//Rank Up player before next turn
 		rankUpPlayers();
+
+		//Check if anyone won
+		checkWinner();
 
 		// Move onto the next player.
 		_currentPlayer++;
@@ -921,5 +926,15 @@ public class Game : MonoBehaviour {
 
 		// Load up the first player.
 		nextCardAndPlayer();
+	}
+
+	public void checkWinner(){
+		for(int i = 0 ; i < _players.Count ; i++){
+			if(_players[i].rank  == 3){
+				winScreen.SetActive(true);
+				winScreenTxt.GetComponent<UnityEngine.UI.Text>().text = "The Winning Player is "+ _players[i].playerId;
+				break;
+			}
+		}
 	}
 }
