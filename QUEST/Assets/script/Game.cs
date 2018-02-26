@@ -547,7 +547,37 @@ public class Game : MonoBehaviour {
 
 		if(c.GetType() == typeof(AllyCard)){
 			AllyCard currAlly = (AllyCard)c;
-			return currAlly.power;
+
+			int currAllyPower = currAlly.power;
+
+			//Quest Condition
+			if(_storyCard.GetType() == typeof(QuestCard)){
+				QuestCard currQuest = (QuestCard)_storyCard;
+				//Same Quest
+				if(currAlly.questCondition == currQuest.name){
+					currAllyPower += currAlly.bonusPower;
+				}
+			}
+
+			//Ally Condition
+			if(currAlly.allyCondition != null){
+				//Go Through The Players
+				for(int x = 0 ; x < _players.Count ; x++){
+
+					List<Card> currInPlay = _players[x].inPlay;
+					for(int i = 0 ; i < currInPlay.Count; i++){
+						//If ally card
+						if(currInPlay[i].GetType() == typeof(AllyCard)){
+							AllyCard compareAlly = (AllyCard)currInPlay[i];
+							if(currAlly.allyCondition == compareAlly.name){
+								currAllyPower+=currAlly.bonusPower;
+								return currAllyPower;
+							}
+						}
+					}
+				}
+			}
+			return currAllyPower ;
 		}
 
 		return 0;

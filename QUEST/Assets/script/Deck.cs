@@ -72,7 +72,7 @@ public class Deck{
 
 			/* Ally load */
 			/* Sir Pellinore */
-			addAlly("Sir Pellinore",10,0,0,4,"Search for the Questing Beast", null, false, "card_image/special/specialCard1", 1);
+			addAlly("King Pellinore",10,0,0,4,"Search for the Questing Beast", null, false, "card_image/special/specialCard1", 1);
 
 			/* Sir Percival */
 			addAlly("Sir Percival",5,0,20,0,"Search for the Holy Grail", null, false, "card_image/special/specialCard2", 1);
