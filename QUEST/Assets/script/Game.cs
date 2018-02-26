@@ -257,101 +257,108 @@ public class Game : MonoBehaviour {
 
 
 		//AI Response to prompts
-		public void AILogicResponse(int turnId,string type){
-			//Current AI
-			AIPlayer currAi = (AIPlayer)_players[turnId];
-			/*
-				AI Draws so he can either
-					-Sponsor Quest
-					-Join Tournament
-					-Draw Event Card
-			*/
-			if(activeStoryCard == false){
-				DrawCard();
-				//need to sponsor
-				if (_storyCard.GetType() == typeof(QuestCard)) {
+	public void AILogicResponse(int turnId,string type){
+		//Current AI
+		AIPlayer currAi = (AIPlayer)_players[turnId];
+		/*
+			AI Draws so he can either
+				-Sponsor Quest
+				-Join Tournament
+				-Draw Event Card
+		*/
+		if(activeStoryCard == false){
+			DrawCard();
+			//need to sponsor
+			if (_storyCard.GetType() == typeof(QuestCard)) {
+				List<List<Card>> questStages = currAi.sponsorQuest ((QuestCard)_storyCard, _players);
+				if (questStages == null) {
 					Prompt.PromptManager.promptNo();
 					Debug.Log("AI declined to sponsor quest");
-				}
-				//Join Tournament
-				else if (_storyCard.GetType() == typeof(TournamentCard)) {
-					//Prompt.PromptManager.promptYes();
-
-					bool answer = currAi.joinTournament((TournamentCard)_storyCard,_players);
-					if(answer){
-						Debug.Log("AI has Joined Tournement");
-						Prompt.PromptManager.promptYes();
-					}
-					else{
-						Debug.Log("AI has denied Tournament entry");
-						Prompt.PromptManager.promptNo();
-					}
-
-				}
-				// A event card has been drawn.
-				else if (_storyCard.GetType() == typeof(EventCard)) {
-					EndTurn();
+				} else {
+					Prompt.PromptManager.promptYes ();
 				}
 			}
-			/*
-				AI Didn't Draw the Card
-					-Join Quest
-					-Join Tournament
-			*/
-			else if(activeStoryCard == true){
-				if (_storyCard.GetType() == typeof(QuestCard)) {
-					//Prompt.PromptManager.promptYes();
-					if(type == "sponsor"){
+			//Join Tournament
+			else if (_storyCard.GetType() == typeof(TournamentCard)) {
+				//Prompt.PromptManager.promptYes();
+			
+				bool answer = currAi.joinTournament((TournamentCard)_storyCard,_players);
+				if(answer){
+					Debug.Log("AI has Joined Tournement");
+					Prompt.PromptManager.promptYes();
+				}
+				else{
+					Debug.Log("AI has denied Tournament entry");
+					Prompt.PromptManager.promptNo();
+				}
+			
+			}
+			// A event card has been drawn.
+			else if (_storyCard.GetType() == typeof(EventCard)) {
+				EndTurn();
+			}
+		}
+		/*
+			AI Didn't Draw the Card
+				-Join Quest
+				-Join Tournament
+		*/
+		else if(activeStoryCard == true) {
+			if (_storyCard.GetType() == typeof(QuestCard)) {
+				//Prompt.PromptManager.promptYes();
+				if(type == "sponsor") {
+					List<List<Card>> questStages = currAi.sponsorQuest ((QuestCard)_storyCard, _players);
+					if (questStages == null) {
 						Prompt.PromptManager.promptNo();
 						Debug.Log("AI declined to sponsor quest");
-					}
-					if(type == "quest"){
-						bool answer = currAi.joinQuest((QuestCard)_storyCard,_players);
-						if(answer){
-							Debug.Log("AI Joined Quest");
-							Prompt.PromptManager.promptYes();
-						}
-						else{
-							Debug.Log("AI Denied to Join Quest");
-							Prompt.PromptManager.promptNo();
-						}
+					} else {
+						Prompt.PromptManager.promptYes ();
 					}
 				}
-				else if (_storyCard.GetType() == typeof(TournamentCard)) {
-					//Prompt.PromptManager.promptYes();
-					bool answer = currAi.joinTournament((TournamentCard)_storyCard,_players);
-					if(answer){
-							Debug.Log("AI Joined Tournement");
+				if(type == "quest"){
+					bool answer = currAi.joinQuest((QuestCard)_storyCard,_players);
+					if(answer) {
+						Debug.Log("AI Joined Quest");
 						Prompt.PromptManager.promptYes();
-					}
-					else{
-						Debug.Log("AI Denied to join tournament");
+					} else {
+						Debug.Log("AI Denied to Join Quest");
 						Prompt.PromptManager.promptNo();
 					}
-
+				}
+			}
+			else if (_storyCard.GetType() == typeof(TournamentCard)) {
+				//Prompt.PromptManager.promptYes();
+				bool answer = currAi.joinTournament((TournamentCard)_storyCard,_players);
+				if(answer) {
+					Debug.Log("AI Joined Tournement");
+					Prompt.PromptManager.promptYes();
+				} else {
+					Debug.Log("AI Denied to join tournament");
+					Prompt.PromptManager.promptNo();
 				}
 			}
 		}
+	}
 
-		//AI Playing Cards
-		public List<Card> AILogicPlayCards(int turnId){
-			List<Card> playCards = new List<Card>();
-			//Current AI
-			AIPlayer currAi = (AIPlayer)_players[turnId];
-
-			if (_storyCard.GetType() == typeof(QuestCard)) {
-				playCards = currAi.playQuest(_players,0,false);
-				Debug.Log("AI Played Quest Cards");
-			}
-			else if (_storyCard.GetType() == typeof(TournamentCard)) {
-				playCards = currAi.playTournament((TournamentCard)_storyCard,_players);
-				Debug.Log("AI Played Tournament Cards");
-			}
-			return(playCards);
+	//AI Playing Cards
+	public List<Card> AILogicPlayCards(int turnId) {
+		List<Card> playCards = new List<Card>();
+		//Current AI
+		AIPlayer currAi = (AIPlayer)_players[turnId];
+	
+		if (_storyCard.GetType() == typeof(QuestCard)) {
+			playCards = currAi.playQuest(_players,0,false);
+			Debug.Log("AI Played Quest Cards");
 		}
+		else if (_storyCard.GetType() == typeof(TournamentCard)) {
+			playCards = currAi.playTournament((TournamentCard)_storyCard,_players);
+			Debug.Log("AI Played Tournament Cards");
+		}
+		return(playCards);
+	}
 
 	// Sets up the stages based on the story card.
-	public void setupStages(){
+	public void setupStages() {
 		// Get the number of stages for the quest.
 		QuestCard questCard = (QuestCard)_storyCard;
 

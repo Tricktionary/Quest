@@ -11,7 +11,7 @@ public class AIPlayer : Player {
 		participateTournamentBehaviour = new ParticipateInTournament ();
 	}
 
-	List<List<Card>> sponsorQuest(QuestCard questCard, List<Player> players) {
+	public List<List<Card>> sponsorQuest(QuestCard questCard, List<Player> players) {
 		if (sponsorQuestBehaviour.sponsor(_playerId,someoneCouldWin(questCard.stages, players), players, questCard)) {
 			return sponsorQuestBehaviour.setup1 (questCard, this);
 		}
