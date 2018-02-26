@@ -266,6 +266,7 @@ public class Game : MonoBehaviour {
 				//need to sponsor
 				if (_storyCard.GetType() == typeof(QuestCard)) {
 					Prompt.PromptManager.promptNo();
+					Debug.Log("AI declined to sponsor quest");
 				}
 				//Join Tournament
 				else if (_storyCard.GetType() == typeof(TournamentCard)) {
@@ -273,11 +274,11 @@ public class Game : MonoBehaviour {
 
 					bool answer = currAi.joinTournament((TournamentCard)_storyCard,_players);
 					if(answer){
-						Debug.Log("AI JOINED");
+						Debug.Log("AI has Joined Tournement");
 						Prompt.PromptManager.promptYes();
 					}
 					else{
-						Debug.Log("AI DENIED");
+						Debug.Log("AI has denied Tournament entry");
 						Prompt.PromptManager.promptNo();
 					}
 
@@ -297,15 +298,16 @@ public class Game : MonoBehaviour {
 					//Prompt.PromptManager.promptYes();
 					if(type == "sponsor"){
 						Prompt.PromptManager.promptNo();
+						Debug.Log("AI declined to sponsor quest");
 					}
 					if(type == "quest"){
 						bool answer = currAi.joinQuest((QuestCard)_storyCard,_players);
 						if(answer){
-							Debug.Log("AI JOINED");
+							Debug.Log("AI Joined Quest");
 							Prompt.PromptManager.promptYes();
 						}
 						else{
-							Debug.Log("AI DENIED");
+							Debug.Log("AI Denied to Join Quest");
 							Prompt.PromptManager.promptNo();
 						}
 					}
@@ -314,11 +316,11 @@ public class Game : MonoBehaviour {
 					//Prompt.PromptManager.promptYes();
 					bool answer = currAi.joinTournament((TournamentCard)_storyCard,_players);
 					if(answer){
-							Debug.Log("AI JOINED");
+							Debug.Log("AI Joined Tournement");
 						Prompt.PromptManager.promptYes();
 					}
 					else{
-						Debug.Log("AI DENIED");
+						Debug.Log("AI Denied to join tournament");
 						Prompt.PromptManager.promptNo();
 					}
 
@@ -334,10 +336,11 @@ public class Game : MonoBehaviour {
 
 			if (_storyCard.GetType() == typeof(QuestCard)) {
 				playCards = currAi.playQuest(_players,0,false);
+				Debug.Log("AI Played Quest Cards");
 			}
 			else if (_storyCard.GetType() == typeof(TournamentCard)) {
-				Debug.Log("here");
 				playCards = currAi.playTournament((TournamentCard)_storyCard,_players);
+				Debug.Log("AI Played Tournament Cards");
 			}
 			return(playCards);
 		}
@@ -830,7 +833,7 @@ public class Game : MonoBehaviour {
 
 		// Setup players.
 		_players = new List<Player>();
-		_players.Add(new AIPlayer(1));
+		_players.Add(new Player(1));
 		_players.Add(new Player(2));
 		_players.Add(new Player(3));
 		_players.Add(new Player(4));
@@ -876,15 +879,47 @@ public class Game : MonoBehaviour {
 	public void AIMode(int AIs) {
 		Menu.SetActive(false);
 
-		// Add human players.
-		_players = new List<Player>();
-		for (int i = 0; i < 4 - AIs; i++) {
-			_players.Add (new Player(i));
+		// Clear hand.
+		foreach (Transform child in Hand.transform) {
+			GameObject.Destroy(child.gameObject);
 		}
 
-		// Add AI players.
-		for (int i = 4 - AIs -1; i < AIs; i++) {
-			_players.Add (new AIPlayer(i));
+		// Create the game behvaiours.
+		_questBehaviour = new QuestBehaviour();
+		_tournamentBehaviour = new TournamentBehaviour();
+		_eventBehaviour = new EventBehaviour();
+
+		// Add human players.
+		_players = new List<Player>();
+		if(AIs == 1){
+			// Setup players.
+			_players.Add(new AIPlayer(1));
+			_players.Add(new Player(2));
+			_players.Add(new Player(3));
+			_players.Add(new Player(4));
 		}
+		else if(AIs == 2){
+			// Setup players.
+			_players.Add(new AIPlayer(1));
+			_players.Add(new AIPlayer(2));
+			_players.Add(new Player(3));
+			_players.Add(new Player(4));
+		}
+
+		// Setup decks.
+		_adventureDeck = new Deck("Adventure");
+		_storyDeck = new Deck("Story");
+		_discardPileAdventure = new Deck ("");
+		_discardPileStory = new Deck ("");
+
+		// Populate the players hands.
+		for(int i = 0; i < _players.Count ; i++){
+			for(int x = 0 ; x < 12 ; x++){
+				_players[i].addCard((_adventureDeck.Draw()));
+			}
+		}
+
+		// Load up the first player.
+		nextCardAndPlayer();
 	}
 }
