@@ -47,6 +47,13 @@ public class FoeCard : AdventureCard
 		}
 	}
 
+	public int power(QuestCard quest) {
+		if (!quest.featuredFoe.Equals ("") && _name.Contains(quest.featuredFoe) || quest.featuredFoe.Equals ("*")) {
+			return _hiPower;
+		}
+		return _loPower;
+	}
+
 
 
 	public FoeCard(string name, string type,  int loPower, int hiPower, bool special, string asset) {

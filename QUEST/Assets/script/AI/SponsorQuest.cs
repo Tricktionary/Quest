@@ -2,17 +2,17 @@ using System.Collections.Generic;
 public class SponsorQuest: AIBehaviour {
 
 	//Strategy 1
-	public bool sponsor(int aiId, bool couldwin, List<Player> players, int stages){
+	public bool sponsor(int aiId, bool couldwin, List<Player> players, QuestCard questCard){
 		if (couldwin) {
 			return false;
-		} else if (canSponsor(stages, players[aiId])){
+		} else if (canSponsor(players[aiId], questCard)){
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	private bool canSponsor(int stages, Player ai) {
+	private bool canSponsor(Player ai, QuestCard questCard) {
 		List<WeaponCard> weaponCards = new List<WeaponCard>();
 		List<FoeCard> foeCards = new List<FoeCard>();
 		List<Card> hand = ai.hand;
@@ -27,9 +27,18 @@ public class SponsorQuest: AIBehaviour {
 				foeCards.Add(currFoe);
 			}
 		}
-
-		if(foeCards.Count > stages ){
-			return true;
+		foeCards.Sort ((x, y) => x.power (questCard).CompareTo (y.power (questCard)));
+		foeCards.Reverse ();
+		int differentPower = 1;
+		for (int y = foeCards.Count -1; y >= 0; y--) {
+			if (y > 0) {
+				if (foeCards [y].power (questCard) != foeCards [y - 1].power (questCard)) {
+					differentPower += 1;
+					if (differentPower == questCard.stages) {
+						return true;
+					}
+				}
+			}
 		}
 		return false;
 	}
@@ -45,6 +54,7 @@ public class SponsorQuest: AIBehaviour {
 		//going backwards to the first stage, equip each foe with the highest duplicate weapon if possible
 		//quest setup is finished, return List<List<Card>>
 
+		List<List<Card>> returnedStages = new List<List<Card>> ();
 		List<WeaponCard> weaponCards = new List<WeaponCard>();
 		List<FoeCard> foeCards = new List<FoeCard>();
 		List<Card> hand = ai.hand;
@@ -54,7 +64,7 @@ public class SponsorQuest: AIBehaviour {
 				WeaponCard currWeapon = (WeaponCard)hand[i];
 				weaponCards.Add(currWeapon);
 			}
-			if(hand[i].GetType() == typeof(FoeCard)){
+			if(hand[i].GetType() == typeof(FoeCard)) {
 				FoeCard currFoe = (FoeCard)hand[i];
 				foeCards.Add(currFoe);
 			}
@@ -62,12 +72,67 @@ public class SponsorQuest: AIBehaviour {
 
 
 		//Sort and just POP the last one into each stage  Foe
-
-
-
-
+		weaponCards.Sort((x, y) => x.bp.CompareTo(y.bp));
+		weaponCards.Reverse ();
+		foeCards.Sort ((x, y) => x.power (questCard).CompareTo (y.power (questCard)));
+		foeCards.Reverse ();
+		//Add the stages
+		for (int i = questCard.stages - 1; i >= 0; i--) {
+			returnedStages.Add (new List<Card> ());
+			FoeCard currFoe = foeCards[foeCards.Count-1];
+			int index = foeCards.Count - 1;
+			if (returnedStages.Count > 1) {
+				//Find previous stage power
+				int stagePower = ((FoeCard)returnedStages[returnedStages.Count-2][0]).power(questCard);
+				//Does not beat previous stage
+				if (currFoe.power(questCard) >= stagePower) {
+					bool stageSet = false;
+					while (!stageSet) {
+						while(true) {
+							if (foeCards [0].power (questCard) < stagePower) {
+								currFoe = foeCards [0];
+								index = 0;
+								stageSet = true;
+								break;
+							} else {
+								foeCards.RemoveAt (0);
+							}
+						}
+					}
+				}
+			}
+			returnedStages [returnedStages.Count-1].Add (currFoe);
+			foeCards.RemoveAt(index);
+		}
+		int bossPower = ((FoeCard)returnedStages [0] [0]).power (questCard);
+		for (int i = 0; i < weaponCards.Count; i++) {
+			if (!returnedStages [0].Contains (weaponCards [i])) {
+				returnedStages [0].Add (weaponCards [i]);
+				bossPower += weaponCards [i].bp;
+				weaponCards.RemoveAt (i);
+				i--;
+			}
+			if (bossPower >= 50) {
+				break;
+			}
+		}
+		int previousFoePower = bossPower;
+		int currFoePower = 0;
+		for (int i = 1; i < returnedStages.Count; i++) {
+			currFoePower = ((FoeCard)returnedStages [i] [0]).power (questCard);
+			for (int j = 0; j < weaponCards.Count; j++) {
+				if (weaponCards [j].bp + currFoePower < previousFoePower) {
+					currFoePower += weaponCards [j].bp;
+					returnedStages [i].Add (weaponCards [j]);
+					weaponCards.RemoveAt (j);
+					break;
+				}
+			}
+			previousFoePower = currFoePower;
+		}
+		returnedStages.Reverse ();
 		
-		return null;
+		return returnedStages;
 	}
 
 	//TODO: when test is implemented put second last as test
@@ -95,9 +160,12 @@ public class SponsorQuest: AIBehaviour {
 				foeCards.Add(currFoe);
 			}
 		}
-
-
+			
 		//Sort
+		weaponCards.Sort((x, y) => x.bp.CompareTo(y.bp));
+		weaponCards.Reverse ();
+		foeCards.Sort ((x, y) => x.power (questCard).CompareTo (y.power (questCard)));
+		foeCards.Reverse ();
 
 
 
