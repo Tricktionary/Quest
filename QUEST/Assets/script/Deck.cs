@@ -122,13 +122,19 @@ public class Deck{
 			addBoarHunt();
 		}
 
-		// Shuffe the deck of cards after adding.
-		this.Shuffle();
+		//Boar Hunt is Prefix
+		if(type != "BoarHunt"){
+			// Shuffe the deck of cards after adding.
+			this.Shuffle();
+		}
 	}
 
 	void addBoarHunt(){
 		/* 2 Boar Hunt */
-		addQuest("Boar Hunt", 2, "Boar", "card_image/quest/questCard4", 20);
+		addQuest("Boar Hunt", 2, "Boar", "card_image/quest/questCard4", 1);
+
+		/* 1 Chivalrous Deed */
+		addEvent("Chivalrous Deed", "lowest rank and shield receives 3 shields", "card_image/events/eventCard1", 1);
 	}
 	void addQuestCards(){
 		/* 1 Search for the Holy Grail */

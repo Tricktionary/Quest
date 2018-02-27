@@ -58,6 +58,11 @@ public class QuestBehaviour : GameBehaviour {
 		_turnId = n;
 	}
 
+	// Get current turn.
+	public int getCurrentTurn(){
+		return _turnId;
+	}
+
 	// End turn method for when a Quest card is in play.
 	public void endTurn(){
 
@@ -85,29 +90,33 @@ public class QuestBehaviour : GameBehaviour {
 
 				// Check if there are still players.
 				if (participatingPlayers == 0) {
-					Prompt.PromptManager.statusPrompt("Oh no! Everyone died!");
+					Debug.Log("Oh no! Everyone died!");
+
 					// End the quest.
 					endQuest();
 					return;
-				}
-				else {
+
+				} else {
 					// Move to the next stage (players have been eliminated if they died).
 					_currStage++;
 
 					// If there are no more stages, we have winners.
 					if (_currStage >= _stagePower.Count){
-						Debug.Log ("We have winner(s), ending quest!");
+						Debug.Log ("We have winner(s)!");
+
 						// Payout winners.
-						// TODO: do something for the winners?
 						for(int i = 0 ; i < _playersIn.Count ; i++){
-							Game.GameManager.payShield(_playersIn[i],_questCard.stages);
+							Game.GameManager.payShield(_playersIn[i], _questCard.stages);
 						}
-						// End the quest.
-						//Remove AmourCard
+
+						// Remove AmourCard.
 						for(int i = 0 ;i <_playersIn.Count;i++){
 							Game.GameManager.clearInPlayEnd(_playersIn[i]);
 						}
+
+						// End the quest.
 						endQuest();
+						return;
 					}
 
 					// Return to setup weapons mode.
@@ -117,6 +126,11 @@ public class QuestBehaviour : GameBehaviour {
 					// Go back to the first player who is still alive.
 					participatingPlayerIndex = 0;
 					_turnId = _playersIn[0];
+
+					// Pay everyone 1 adventure card.
+					for(int i = 0; i < _playersIn.Count; i++){
+						Game.GameManager.giveCard(_playersIn[i]);
+					}
 
 					// Return to setup weapons prompt.
 					Prompt.PromptManager.statusPrompt("Setup your weapons!");
@@ -264,7 +278,8 @@ public class QuestBehaviour : GameBehaviour {
 
 					// Incorrect setup.
 					} else {
-						Prompt.PromptManager.statusPrompt ("Quest is invalid, setup correctly.");
+
+						Debug.Log("Quest is invalid, setup correctly.");
 					}
 				}
 			}
@@ -283,9 +298,6 @@ public class QuestBehaviour : GameBehaviour {
 		 _showResults = false;
 		participatingPlayerIndex = 0;
 		participatingPlayers = 0;
-
-		//Clear text
-		Prompt.PromptManager.statusPrompt("Please draw a Story Card");
 
 		// Proceed to the next player and story card in the game.
 		Game.GameManager.nextCardAndPlayer();
@@ -361,7 +373,7 @@ public class QuestBehaviour : GameBehaviour {
 			else{
 				_turnId = _playersIn[0];
 
-				//Pay everyone that join 1 adventure Card
+				// Pay everyone that join 1 adventure Card.
 				for(int i = 0 ; i<_playersIn.Count ; i++){
 					Game.GameManager.giveCard(_playersIn[i]);
 				}
@@ -446,6 +458,7 @@ public class QuestBehaviour : GameBehaviour {
 
 				for(int x = 0 ; x < weapons.Count; x++){
 					if(currWeapon.name == weapons[x].name){
+						Prompt.PromptManager.statusPrompt("Quest Invalid: Duplicate weapons.");
 						return -1;
 					}
 				}
@@ -474,6 +487,7 @@ public class QuestBehaviour : GameBehaviour {
 		}
 
 		if(foeCount > 1 || foeCount <= 0){
+			Prompt.PromptManager.statusPrompt("Quest Invalid: Each stage must exactly have 1 foe.");
 			return -1;
 		}
 
@@ -499,6 +513,7 @@ public class QuestBehaviour : GameBehaviour {
 		// Check ascending power level.
 		for(int i = 0; i < powerLevels.Count - 1; i++){
 			if(powerLevels[i] >= powerLevels[i + 1]){
+				Prompt.PromptManager.statusPrompt("Quest Invalid: Not ascending power.");
 				return false;
 			}
 		}

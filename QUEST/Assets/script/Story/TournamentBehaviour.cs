@@ -43,6 +43,11 @@ public class TournamentBehaviour : GameBehaviour {
 		_turnId = n;
 	}
 
+	// Get current turn.
+	public int getCurrentTurn(){
+		return _turnId;
+	}
+
 	// End turn method for when a Tournament card is in play.
 	public void endTurn(){
 
