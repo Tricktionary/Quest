@@ -6,7 +6,7 @@ using System.Collections;
 
 public class UnitTests {
 
-	/*[Test]
+	[Test]
 	//This test have a small chance to fail. This is because it is testing shuffle which means in a very small chance it will shuffle unevenly.
 	public void Test_Deck() {
 		int currentStoryCardTotal = 23;			//Total Cards
@@ -81,9 +81,9 @@ public class UnitTests {
 
 		player3.addCard(foeCard);
 
-		 
+
 		Assert.AreEqual(player3.hand[0].name,"FoeCard");
-	}*/
+	}
 
 	// Game Logic Tests
 

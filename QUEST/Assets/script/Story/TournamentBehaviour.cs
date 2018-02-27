@@ -43,6 +43,11 @@ public class TournamentBehaviour : GameBehaviour {
 		_turnId = n;
 	}
 
+	// Get current turn.
+	public int getCurrentTurn(){
+		return _turnId;
+	}
+
 	// End turn method for when a Tournament card is in play.
 	public void endTurn(){
 
@@ -168,7 +173,7 @@ public class TournamentBehaviour : GameBehaviour {
 				maxPower = powerLevels[i];
 			}
 		}
-		
+
 		// Find the player is corresponds too.
 		for(int i = 0; i < powerLevels.Count; i++){
 			if(powerLevels[i] == maxPower){
