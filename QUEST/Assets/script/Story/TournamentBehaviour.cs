@@ -168,7 +168,7 @@ public class TournamentBehaviour : GameBehaviour {
 				maxPower = powerLevels[i];
 			}
 		}
-		
+
 		// Find the player is corresponds too.
 		for(int i = 0; i < powerLevels.Count; i++){
 			if(powerLevels[i] == maxPower){

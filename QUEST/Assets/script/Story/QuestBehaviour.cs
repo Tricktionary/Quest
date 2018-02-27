@@ -361,6 +361,11 @@ public class QuestBehaviour : GameBehaviour {
 			else{
 				_turnId = _playersIn[0];
 
+				//Pay everyone that join 1 adventure Card
+				for(int i = 0 ; i<_playersIn.Count ; i++){
+					Game.GameManager.giveCard(_playersIn[i]);
+				}
+
 				// Move to setup weapon phase.
 				_setupWeapons = true;
 
@@ -514,7 +519,7 @@ public class QuestBehaviour : GameBehaviour {
 			currPower = stageValid(stages[i]);
 			powerLevels.Add(currPower);
 		}
-		
+
 		// Get calculated stage powers if valid.
 		_stagePower = powerLevels;
 	}
