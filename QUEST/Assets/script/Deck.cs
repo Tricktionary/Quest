@@ -118,11 +118,18 @@ public class Deck{
 			addTournamentCards();
 			addEventCards();
 		}
+		else if (type.Equals("BoarHunt")){
+			addBoarHunt();
+		}
 
 		// Shuffe the deck of cards after adding.
 		this.Shuffle();
 	}
 
+	void addBoarHunt(){
+		/* 2 Boar Hunt */
+		addQuest("Boar Hunt", 2, "Boar", "card_image/quest/questCard4", 20);
+	}
 	void addQuestCards(){
 		/* 1 Search for the Holy Grail */
 		addQuest("Search for the Holy Grail", 5, "*", "card_image/quest/questCard9", 1);
