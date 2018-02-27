@@ -256,7 +256,7 @@ public class Game : MonoBehaviour {
 	}
 
 
-		//AI Response to prompts
+	//AI Response to prompts
 	public void AILogicResponse(int turnId,string type){
 		//Current AI
 		AIPlayer currAi = (AIPlayer)_players[turnId];
@@ -270,18 +270,22 @@ public class Game : MonoBehaviour {
 			DrawCard();
 			//need to sponsor
 			if (_storyCard.GetType() == typeof(QuestCard)) {
+				Prompt.PromptManager.promptNo();
+				/*
 				List<List<Card>> questStages = currAi.sponsorQuest ((QuestCard)_storyCard, _players);
 				if (questStages == null) {
 					Prompt.PromptManager.promptNo();
 					Debug.Log("AI declined to sponsor quest");
 				} else {
 					Prompt.PromptManager.promptYes ();
+					Debug.Log("AI sponsors quest");
 				}
+				*/
 			}
 			//Join Tournament
 			else if (_storyCard.GetType() == typeof(TournamentCard)) {
 				//Prompt.PromptManager.promptYes();
-			
+
 				bool answer = currAi.joinTournament((TournamentCard)_storyCard,_players);
 				if(answer){
 					Debug.Log("AI has Joined Tournement");
@@ -291,7 +295,7 @@ public class Game : MonoBehaviour {
 					Debug.Log("AI has denied Tournament entry");
 					Prompt.PromptManager.promptNo();
 				}
-			
+
 			}
 			// A event card has been drawn.
 			else if (_storyCard.GetType() == typeof(EventCard)) {
@@ -307,13 +311,15 @@ public class Game : MonoBehaviour {
 			if (_storyCard.GetType() == typeof(QuestCard)) {
 				//Prompt.PromptManager.promptYes();
 				if(type == "sponsor") {
+					Prompt.PromptManager.promptNo();
+					/*
 					List<List<Card>> questStages = currAi.sponsorQuest ((QuestCard)_storyCard, _players);
 					if (questStages == null) {
 						Prompt.PromptManager.promptNo();
 						Debug.Log("AI declined to sponsor quest");
 					} else {
 						Prompt.PromptManager.promptYes ();
-					}
+					}*/
 				}
 				if(type == "quest"){
 					bool answer = currAi.joinQuest((QuestCard)_storyCard,_players);
@@ -345,7 +351,7 @@ public class Game : MonoBehaviour {
 		List<Card> playCards = new List<Card>();
 		//Current AI
 		AIPlayer currAi = (AIPlayer)_players[turnId];
-	
+
 		if (_storyCard.GetType() == typeof(QuestCard)) {
 			playCards = currAi.playQuest(_players,0,false);
 			Debug.Log("AI Played Quest Cards");
@@ -357,6 +363,11 @@ public class Game : MonoBehaviour {
 		return(playCards);
 	}
 
+	public List<List<Card>> AISponsorCards(int turnId){
+		AIPlayer currAi = (AIPlayer)_players[turnId];
+		List<List<Card>> questStages = currAi.sponsorQuest ((QuestCard)_storyCard, _players);
+		return questStages;
+	}
 	// Sets up the stages based on the story card.
 	public void setupStages() {
 		// Get the number of stages for the quest.
