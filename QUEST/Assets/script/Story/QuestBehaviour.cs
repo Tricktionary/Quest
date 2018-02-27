@@ -209,7 +209,11 @@ public class QuestBehaviour : GameBehaviour {
 
 					// The quest is sponsored.
 				} else {
-					_questReady = checkQuest ();
+
+					if(Game.GameManager.getPlayer(_turnId).GetType() != typeof(AIPlayer)){
+						_questReady = checkQuest ();
+					}
+
 					// Quest is setup correctly.
 					if (_questReady) {
 
@@ -305,6 +309,15 @@ public class QuestBehaviour : GameBehaviour {
 
 			//Rest asked
 			_asked = 0;
+
+			//AI sponsor
+			if(Game.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
+				_questReady = true;
+				List<List<Card>> AIcards = Game.GameManager.AISponsorCards(_turnId);
+				AIStageSetup(AIcards);
+				endTurn();
+			}
+
 
 		// The user doesn't want to sponsor the quest.
 		} else {
@@ -489,5 +502,20 @@ public class QuestBehaviour : GameBehaviour {
 		_stagePower = powerLevels;
 
 		return true;
+	}
+
+	public void AIStageSetup(List<List<Card>> stages){
+		List<int> powerLevels = new List<int>();
+		stages = Game.GameManager.getStages(_questCard.stages);
+		int currPower = 0;;
+
+		// Grab the power levels from all the cards within the stages.
+		for (int i = 0; i < stages.Count; i++) {
+			currPower = stageValid(stages[i]);
+			powerLevels.Add(currPower);
+		}
+		
+		// Get calculated stage powers if valid.
+		_stagePower = powerLevels;
 	}
 }
