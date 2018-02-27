@@ -79,8 +79,8 @@ public class SponsorQuest: AIBehaviour {
 		//Add the stages
 		for (int i = questCard.stages - 1; i >= 0; i--) {
 			returnedStages.Add (new List<Card> ());
-			FoeCard currFoe = foeCards[foeCards.Count-1];
-			int index = foeCards.Count - 1;
+			FoeCard currFoe = foeCards[0];
+			int index = 0;
 			if (returnedStages.Count > 1) {
 				//Find previous stage power
 				int stagePower = ((FoeCard)returnedStages[returnedStages.Count-2][0]).power(questCard);

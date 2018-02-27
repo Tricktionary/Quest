@@ -266,8 +266,6 @@ public class Game : MonoBehaviour {
 			DrawCard();
 			//need to sponsor
 			if (_storyCard.GetType() == typeof(QuestCard)) {
-				Prompt.PromptManager.promptNo();
-				/*
 				List<List<Card>> questStages = currAi.sponsorQuest ((QuestCard)_storyCard, _players);
 				if (questStages == null) {
 					Prompt.PromptManager.promptNo();
@@ -276,7 +274,6 @@ public class Game : MonoBehaviour {
 					Prompt.PromptManager.promptYes ();
 					Debug.Log("AI sponsors quest");
 				}
-				*/
 			}
 			//Join Tournament
 			else if (_storyCard.GetType() == typeof(TournamentCard)) {
@@ -307,15 +304,13 @@ public class Game : MonoBehaviour {
 			if (_storyCard.GetType() == typeof(QuestCard)) {
 				//Prompt.PromptManager.promptYes();
 				if(type == "sponsor") {
-					Prompt.PromptManager.promptNo();
-					/*
 					List<List<Card>> questStages = currAi.sponsorQuest ((QuestCard)_storyCard, _players);
 					if (questStages == null) {
 						Prompt.PromptManager.promptNo();
 						Debug.Log("AI declined to sponsor quest");
 					} else {
 						Prompt.PromptManager.promptYes ();
-					}*/
+					}
 				}
 				if(type == "quest"){
 					bool answer = currAi.joinQuest((QuestCard)_storyCard,_players);
