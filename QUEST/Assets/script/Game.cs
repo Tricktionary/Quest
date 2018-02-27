@@ -454,6 +454,17 @@ public class Game : MonoBehaviour {
 		}
 	}
 
+
+	public void setQuest(int player_id, List<List<Card>> stages) {
+		//Access each stage in the quest
+		//Set the stage to the next list
+		for (int i = 0; i < stages.Count; i++) {
+			for(int j = 0 ; j < stages[i].Count ; j++){
+				removeCardByName(player_id,stages[i][j].name);
+			}
+		}
+	}
+
 	//Set AI play cards
 	public void setInPlayAI(int player_id, List<Card> cards){
 		_players[player_id].inPlay = new List<Card>();
