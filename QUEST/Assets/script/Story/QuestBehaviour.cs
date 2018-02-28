@@ -211,7 +211,8 @@ public class QuestBehaviour : GameBehaviour {
 
 				// Weapon setup is not valid.
 				} else {
-					Prompt.PromptManager.statusPrompt("You can't submit foe/too many amours to the play area!");
+					Debug.Log("Play area is invalid");
+					//Prompt.PromptManager.statusPrompt("You can't submit foe/too many amours to the play area!");
 				}
 
 			// Otherwise, quest needs to be setup.

@@ -410,12 +410,30 @@ public class Game : MonoBehaviour {
 	public bool playAreaValid(){
 		List<Card>cards = playArea.GetComponent<CardArea>().cards;
 		int amourCardCounter = 0;
+		List<WeaponCard> weapons = new List<WeaponCard>();
+
 		for(int i = 0; i < cards.Count; i++){
 			// Return false if there are any foe cards.
 			if(cards[i].GetType() == typeof(FoeCard)){
+				Debug.Log("You can't submit foes to the play area!");
+				Prompt.PromptManager.statusPrompt("You can't submit foes to the play area!");
 				return false;
 			}
+
+			if(cards[i].GetType() == typeof(WeaponCard)){
+				WeaponCard currWeapon = (WeaponCard)cards[i];
+				for(int x = 0 ; x < weapons.Count; x++){
+					if(currWeapon.name == weapons[x].name){
+						Debug.Log("You Cannot Submit Duplicate weapons.");
+						Prompt.PromptManager.statusPrompt("You can't submit duplicate weapons.");
+						return false;
+					}
+				}
+				weapons.Add(currWeapon);
+
+			}
 			if(cards[i].GetType() == typeof(AmourCard)){
+				Debug.Log("Too Many Amour Cards.");
 				amourCardCounter++;
 			}
 		}
