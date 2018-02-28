@@ -110,7 +110,7 @@ public class TournamentBehaviour : GameBehaviour {
 				Game.GameManager.loadPlayer(_turnId);
 
 			} else {
-				Prompt.PromptManager.statusPrompt("You can't submit foes to the play area!");
+				//Prompt.PromptManager.statusPrompt("You can't submit foes to the play area!");
 			}
 
 		} else {

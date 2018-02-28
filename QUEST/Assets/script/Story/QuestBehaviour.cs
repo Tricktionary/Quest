@@ -211,7 +211,8 @@ public class QuestBehaviour : GameBehaviour {
 
 				// Weapon setup is not valid.
 				} else {
-					Prompt.PromptManager.statusPrompt("You can't submit foe/too many amours to the play area!");
+					Debug.Log("Play area is invalid");
+					//Prompt.PromptManager.statusPrompt("You can't submit foe/too many amours to the play area!");
 				}
 
 			// Otherwise, quest needs to be setup.
@@ -326,6 +327,13 @@ public class QuestBehaviour : GameBehaviour {
 			if(Game.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
 				_questReady = true;
 				List<List<Card>> AIcards = Game.GameManager.AISponsorCards(_turnId);
+
+				for(int i = 0 ; i < AIcards.Count ;i++){
+					for(int j = 0 ; j < AIcards[i].Count; j++){
+						Debug.Log(AIcards[i][j]);
+					}
+				}
+
 				AIStageSetup(AIcards);
 				endTurn();
 			}
