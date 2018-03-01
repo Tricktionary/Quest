@@ -329,14 +329,22 @@ public class QuestBehaviour : GameBehaviour {
 			if(Game.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
 				_questReady = true;
 				List<List<Card>> AIcards = Game.GameManager.AISponsorCards(_turnId);
+				AIStageSetup(AIcards);
+				List<GameObject> stages = Game.GameManager.Stages;
 
+				//Display Cards
+				for(int i = 0 ; i < _questCard.stages ; i++){
+					Game.GameManager.loadCards(AIcards[i],stages[i]);
+				}
+
+				//Remove Cards from AI HAND
 				for(int i = 0 ; i < AIcards.Count ;i++){
-					for(int j = 0 ; j < AIcards[i].Count; j++){
-						Debug.Log(AIcards[i][j]);
+					for(int j = 0 ; j < AIcards[i].Count;j++){
+						Game.GameManager.removeCardByName(_turnId,AIcards[i][j].name);
 					}
 				}
 
-				AIStageSetup(AIcards);
+
 				endTurn();
 			}
 

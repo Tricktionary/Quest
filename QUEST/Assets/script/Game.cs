@@ -699,7 +699,7 @@ public class Game : MonoBehaviour {
 	}
 
 	// Load the cards up.
-	void loadCards(List<Card> cards, GameObject area){
+	public void loadCards(List<Card> cards, GameObject area){
 		Card currCard;
 
 		// Create Card GameObject's.
@@ -974,63 +974,6 @@ public class Game : MonoBehaviour {
 	public void EventModeOnly(){
 		genericModeSetup("EventOnly");
 	}
-
-// Runs if the user selects Play AI.
-/*
-	public void AIMode(int AIs) {
-		Menu.SetActive(false);
-
-		// Clear hand.
-		foreach (Transform child in Hand.transform) {
-			GameObject.Destroy(child.gameObject);
-		}
-
-		// Create the game behvaiours.
-		_questBehaviour = new QuestBehaviour();
-		_tournamentBehaviour = new TournamentBehaviour();
-		_eventBehaviour = new EventBehaviour();
-
-		// Add human players.
-		_players = new List<Player>();
-		if(AIs == 1){
-			// Setup players.
-			_players.Add(new AIPlayer(1));
-			_players.Add(new Player(2));
-			_players.Add(new Player(3));
-			_players.Add(new Player(4));
-		}
-		else if(AIs == 2){
-			// Setup players.
-			_players.Add(new AIPlayer(1));
-			_players.Add(new AIPlayer(2));
-			_players.Add(new Player(3));
-			_players.Add(new Player(4));
-		}
-		else if(AIs == 3){
-			// Setup players.
-			_players.Add(new AIPlayer(1));
-			_players.Add(new AIPlayer(2));
-			_players.Add(new AIPlayer(3));
-			_players.Add(new Player(4));
-		}
-
-		// Setup decks.
-		_adventureDeck = new Deck("Adventure");
-		_storyDeck = new Deck("Story");
-		_discardPileAdventure = new Deck ("");
-		_discardPileStory = new Deck ("");
-
-		// Populate the players hands.
-		for(int i = 0; i < _players.Count ; i++){
-			for(int x = 0 ; x < 12 ; x++){
-				_players[i].addCard((_adventureDeck.Draw()));
-			}
-		}
-
-		// Load up the first player.
-		nextCardAndPlayer();
-	}
-*/
 
 	public void boarHunt(){
 		genericModeSetup("BoarHunt");
