@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 public class ParticipateInQuest: AIBehaviour{
 
 	//Strategy 1
@@ -33,26 +32,27 @@ public class ParticipateInQuest: AIBehaviour{
 	public List<Card> play1(int aiId,int testBid, bool isLastStage, List<Player> players) {
 		Player ai = players [aiId];
 
-		Dictionary<Card,int> cardsWithPower = new Dictionary<Card, int>();
+		Dictionary<string,int> cardsWithPower = new Dictionary<string, int>();
 		List<Card> cardPowerKeys = new List<Card> ();
 		List<Card> sortedList = new List<Card> ();
 
 		for (int i = 0; i < ai.hand.Count; i++) {
-			if (!cardsWithPower.ContainsKey (ai.hand [i])) {
+			if (!cardsWithPower.ContainsKey (ai.hand [i].name)) {
 				if (ai.hand [i] is WeaponCard) {
-					cardsWithPower [ai.hand [i]] = ((WeaponCard)ai.hand [i]).bp;
+					cardsWithPower [ai.hand [i].name] = ((WeaponCard)ai.hand [i]).bp;
 					cardPowerKeys.Add (ai.hand [i]);
 				} else if (ai.hand [i] is AllyCard) {
-					cardsWithPower [ai.hand [i]] = ((AllyCard)ai.hand [i]).power;
+					cardsWithPower [ai.hand [i].name] = ((AllyCard)ai.hand [i]).power;
 					cardPowerKeys.Add (ai.hand [i]);
 				} else if (ai.hand [i] is AmourCard) {
-					cardsWithPower [ai.hand [i]] = ((AmourCard)ai.hand [i]).power;
-				cardPowerKeys.Add (ai.hand [i]);
+					cardsWithPower [ai.hand [i].name] = ((AmourCard)ai.hand [i]).power;
+					cardPowerKeys.Add (ai.hand [i]);
 				}
 			}
 		}
 
 		//selectionSort
+		/*
 		int times = cardsWithPower.Count;
 		for (int z=0;z<times;z++) {
 			int highest=-1;
@@ -66,28 +66,18 @@ public class ParticipateInQuest: AIBehaviour{
 			sortedList.Add (cardPowerKeys [index]);
 			cardPowerKeys.RemoveAt(index);
 		}
+		*/
+
+		cardPowerKeys.Sort((x, y) => cardsWithPower[x.name].CompareTo(cardsWithPower[y.name]));
+		cardPowerKeys.Reverse ();
+		sortedList = cardPowerKeys;
+
 		Dictionary<Card,int> cards = new Dictionary<Card, int>();
 		List<Card> keys = new List<Card>();
 		bool amour = true;
 		int played = 0;
 		if (isLastStage) {
-			for (int i = 0; i < sortedList.Count; i++) {
-				if (sortedList[i] is WeaponCard) {
-					if (cards.ContainsKey(sortedList[i])) {
-						int amount = cards [sortedList[i]] + 1;
-						cards[sortedList[i]] = amount;
-					} else {
-						cards.Add (sortedList[i], 1);
-						keys.Add (sortedList[i]);
-					}
-				} else if (sortedList[i] is AllyCard) {
-					keys.Add(sortedList[i]);
-				} else if(sortedList[i] is AmourCard && amour) {
-					keys.Add (sortedList[i]);
-					amour = false;
-				}
-			}
-			return keys;
+			return sortedList;
 		} else {
 			for (int i = 0; i < sortedList.Count; i++) {
 				if (sortedList[i] is AllyCard) {
