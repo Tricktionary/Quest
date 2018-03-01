@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine.TestTools;
 using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 
 public class UnitTests {
 
@@ -39,6 +40,8 @@ public class UnitTests {
 		discard.Discard (deck.Draw ());
 		discard.Discard (deck.Draw ());
 		Assert.AreEqual (discard.GetSize(), 3);
+
+
 
 	}
 
@@ -169,6 +172,124 @@ public class UnitTests {
 		Assert.AreEqual(amourCard.power,10);
 		Assert.AreEqual(amourCard.bid,10);
 		Assert.AreEqual(amourCard.asset,"amour.png");
+	}
+
+	[Test]
+	public void Test_AI() {
+		AIPlayer ai = new AIPlayer (0);
+		List<Player> players = new List<Player> ();
+
+
+		FoeCard thieves = new FoeCard ("Thieves", "Thieves", 5, 5, false, "card_image/foe/foeCard4");
+		FoeCard thieves2 = new FoeCard ("Thieves", "Thieves", 5, 5, false, "card_image/foe/foeCard4");
+		FoeCard boar = new FoeCard ("Boar", "Boar", 5, 15, false, "card_image/foe/foeCard3");
+		WeaponCard excalibur = new WeaponCard ("Excalibur", 30, "card_image/weapons/weaponCard3");
+		WeaponCard excalibur2 = new WeaponCard ("Excalibur", 30, "card_image/weapons/weaponCard3");
+		AllyCard sirtristan = new AllyCard ("Sir Tristan", 10, 0, 20, 0, null, "Queen Iseult", false, "card_image/special/specialCard4");
+		WeaponCard lance = new WeaponCard ("Lance", 20, "card_image/weapons/weaponCard4");
+		WeaponCard lance2 = new WeaponCard ("Lance", 20, "card_image/weapons/weaponCard4");
+		WeaponCard dagger = new WeaponCard ("Dagger", 5, "card_image/weapons/weaponCard2");
+
+
+		players.Add (ai);
+		players.Add (new Player (1));
+		players.Add (new Player (2));
+
+		//SPONSOR QUEST
+		QuestCard quest = new QuestCard ("Boar Hunt", 2, "Boar", "card_image/quest/questCard4");
+		ai.addCard (thieves);
+		Assert.IsNull (ai.sponsorQuest (quest, players));
+		ai.addCard (thieves2);
+		Assert.IsNull (ai.sponsorQuest (quest, players));
+		ai.addCard (boar);
+		List<List<Card>> stages = ai.sponsorQuest (quest, players);
+		Assert.IsTrue(stages [0].Contains (thieves));
+		Assert.IsTrue(stages [1].Contains (boar));
+		ai.addCard (excalibur);
+		ai.addCard (excalibur2);
+		ai.addCard (lance);
+		stages = ai.sponsorQuest (quest, players);
+		Assert.IsTrue(stages [0].Contains (thieves));
+		Assert.IsTrue(stages [0].Contains (excalibur2));
+		Assert.AreEqual (stages [0].Count, 2);
+		Assert.IsTrue(stages [1].Contains (boar));
+		Assert.IsTrue(stages [1].Contains (excalibur));
+		Assert.IsTrue(stages [1].Contains (lance));
+		Assert.AreEqual (stages [1].Count, 3);
+		players [1].AddShields (3);
+		//2 shield to evolve
+		Assert.IsNull (ai.sponsorQuest (quest, players));
+		//reset player 1
+		players [1] = new Player (1);
+
+		//JOIN AND PLAY QUEST
+		ai = new AIPlayer(0);
+		players[0] = ai;
+		Assert.IsFalse (ai.joinQuest (quest, players));
+		ai.addCard (thieves);
+		ai.addCard (boar);
+		ai.addCard(lance);
+		ai.addCard(lance2);
+		ai.addCard(excalibur);
+		Assert.IsFalse (ai.joinQuest (quest, players));
+		ai.addCard(excalibur2);
+		//2 foe cards from the quest sponsor
+		Assert.IsTrue (ai.joinQuest (quest, players));
+		ai = new AIPlayer (0);
+		players [0] = ai;
+		ai.addCard (thieves);
+		ai.addCard (boar);
+		ai.addCard(excalibur);
+		ai.addCard (sirtristan);
+		Assert.IsFalse (ai.joinQuest (quest, players));
+		ai.addCard(lance);
+		Assert.IsTrue (ai.joinQuest (quest, players));
+
+		//will play lance and excalibur and sir tristan
+		ai.addCard(dagger);
+		List<Card> played = ai.playQuest (players, 0, true);
+		Assert.IsTrue (played.Contains (sirtristan));
+		Assert.IsTrue (played.Contains (excalibur));
+		Assert.IsTrue (played.Contains (lance));
+		Assert.IsTrue (played.Contains (dagger));
+		Assert.AreEqual (played.Count, 4);
+
+		ai = new AIPlayer (0);
+		players [0] = ai;
+		ai.addCard(excalibur);
+		ai.addCard (sirtristan);
+		ai.addCard(lance);
+		ai.addCard(dagger);
+		ai.addCard(excalibur2);
+		ai.addCard(lance2);
+
+		played = ai.playQuest (players, 0, false);
+		Assert.IsTrue (played.Contains (dagger));
+		Assert.IsTrue (played.Contains (lance));
+		Assert.IsTrue (played.Contains (sirtristan));
+		Assert.AreEqual (played.Count, 3);
+
+		//TOURNAMENT
+		TournamentCard tournament = new TournamentCard("Tournament at Camelot", 3, "card_image/tournament/TournamentCard");
+		Assert.IsFalse (ai.joinTournament (tournament, players));
+		players [1].AddShields (3);
+		Assert.IsTrue(ai.joinTournament (tournament, players));
+		//remove shields
+		players [1] = new Player (1);
+
+		played = ai.playTournament (tournament, players);
+		Assert.IsTrue (played.Contains (lance));
+		Assert.IsTrue (played.Contains (excalibur));
+		Assert.AreEqual (played.Count, 2);
+
+		players [1].AddShields (3);
+		played = ai.playTournament (tournament, players);
+		Assert.IsTrue (played.Contains (sirtristan));
+		Assert.IsTrue (played.Contains (excalibur));
+		Assert.IsTrue (played.Contains (lance));
+		Assert.IsTrue (played.Contains (dagger));
+		Assert.AreEqual (played.Count, 4);
+
 	}
 
 	// A UnityTest behaves like a coroutine in PlayMode

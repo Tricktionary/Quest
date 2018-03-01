@@ -1,10 +1,11 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
  
-public abstract class Card : MonoBehaviour {
+public abstract class Card : MonoBehaviour, IEquatable<Card> {
 
 	public Transform oldPosition = null;     //Old Position of the card on the board
 
@@ -68,6 +69,14 @@ public abstract class Card : MonoBehaviour {
 			card_image = Resources.Load<Sprite>(this.asset);
 		}
 		_obj.GetComponent<Image>().sprite = card_image;
+	}
+
+	public bool Equals(Card other) {
+		if (other.name.Equals (_name)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

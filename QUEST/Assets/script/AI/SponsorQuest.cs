@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 public class SponsorQuest: AIBehaviour {
 
 	//Strategy 1
@@ -131,7 +132,6 @@ public class SponsorQuest: AIBehaviour {
 			previousFoePower = currFoePower;
 		}
 		returnedStages.Reverse ();
-		
 		return returnedStages;
 	}
 

@@ -25,20 +25,20 @@ public class ParticipateInTournament: AIBehaviour{
 			}
 		}
 
-		Dictionary<Card,int> cards = new Dictionary<Card, int>();
+		Dictionary<string,int> cards = new Dictionary<string, int>();
 		List<Card> keys = new List<Card>();
 
 		//filter weapon cards
 		for (int i = 0; i < ai.hand.Count; i++) {
 			if (ai.hand [i] is WeaponCard) {
-				if (cards.ContainsKey(ai.hand[i])) {
-					int amount = cards [ai.hand [i]] + 1;
-					cards[ai.hand[i]] = amount;
+				if (cards.ContainsKey(ai.hand[i].name)) {
+					cards[ai.hand[i].name] += 1;
 				} else {
-					cards.Add (ai.hand[i], 1);
+					cards.Add (ai.hand[i].name, 1);
 					keys.Add (ai.hand [i]);
 				}
 			} else if (ai.hand [i] is AllyCard) {
+				cards.Add (ai.hand[i].name, 1);
 				keys.Add(ai.hand[i]);
 			}
 		}
@@ -50,7 +50,7 @@ public class ParticipateInTournament: AIBehaviour{
 			List<Card> playCards = new List<Card>();
 
 			for (int i = 0; i < keys.Count; i++) {
-				if (cards [keys [i]] > 1) {
+				if (cards [keys [i].name] > 1) {
 					playCards.Add (keys [i]);
 				}
 			}
