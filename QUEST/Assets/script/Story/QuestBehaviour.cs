@@ -435,7 +435,7 @@ public class QuestBehaviour : GameBehaviour {
 
 		// Add the rank bonus.
 		power += Game.GameManager.getRankPower(Game.GameManager.getPlayer(_turnId).rank);
-
+		Debug.Log("Current Stage PowerLevel: "+ _stagePower[_currStage]);
 		return power > _stagePower[_currStage];
 	}
 
@@ -532,18 +532,46 @@ public class QuestBehaviour : GameBehaviour {
 		return true;
 	}
 
+/* AI */
 	public void AIStageSetup(List<List<Card>> stages){
+		Debug.Log(stages.Count);
 		List<int> powerLevels = new List<int>();
-		stages = Game.GameManager.getStages(_questCard.stages);
-		int currPower = 0;;
+		int currPower = 0;
+
 
 		// Grab the power levels from all the cards within the stages.
 		for (int i = 0; i < stages.Count; i++) {
-			currPower = stageValid(stages[i]);
+			currPower = AIStagePower(stages[i]);
 			powerLevels.Add(currPower);
 		}
 
 		// Get calculated stage powers if valid.
 		_stagePower = powerLevels;
 	}
+
+	public int AIStagePower(List<Card> currStage){
+		Card currCard = null;
+		int power = 0;
+
+		for(int i = 0; i < currStage.Count; i++) {
+			currCard = currStage[i];
+			if(currCard.GetType() == typeof(WeaponCard)){
+				WeaponCard currWeapon = (WeaponCard)currCard;
+				power += currWeapon.power;
+			}
+			else if(currCard.GetType() == typeof(FoeCard)){
+				FoeCard currFoe = (FoeCard)currCard;
+				if(_questCard.featuredFoe == currFoe.type){
+					power += currFoe.hiPower;
+				} else if(_questCard.featuredFoe == "*") {
+					power += currFoe.hiPower;
+				} else {
+					power += currFoe.loPower;
+				}
+			}
+		}
+		return power;
+
+	}
+
 }
