@@ -40,8 +40,6 @@ public class EventBehaviour : GameBehaviour {
 						lowest = p.calcRankShields ();
 					}
 				}
-
-				Debug.Log ("Lowest is: " + lowest);
 		
 				// Find the players with the lowest.
 				for (int i = 0; i < numPlayers; i++) {
@@ -93,7 +91,7 @@ public class EventBehaviour : GameBehaviour {
 
 			} else if (name == "King's Recognition") {
 				Game.GameManager.bonusQuestPoints = true;
-				Prompt.PromptManager.statusPrompt("Next players to finish a quest will gain two extra shields");
+				Prompt.PromptManager.statusPrompt("Next players to finish a quest will gain two extra shields to lose shields");
 
 			} else if (name == "Queen's Favor") {
 				Player p;
@@ -103,18 +101,24 @@ public class EventBehaviour : GameBehaviour {
 
 				List<int> lowestPlayers = new List<int>();
 
+				//find the lowest
 				for(int i = 0; i < Game.GameManager.getNumberOfPlayers(); i++){
 					p = Game.GameManager.getPlayer(i);
 					if(p.shieldCounter <= lowestVal){
 						lowestVal = p.shieldCounter;
-						//Debug.Log("lowest being added: " + lowestVal + "to player");
+					}
+
+				}
+				//add players with shield value equal to lowest 
+				for(int i = 0; i < Game.GameManager.getNumberOfPlayers(); i++){
+					p = Game.GameManager.getPlayer(i);
+					if(p.shieldCounter <= lowestVal){
 						lowestPlayers.Add(i);
 					}
 
 				}
-
+				//give players two adventure cards 
 				for(int i = 0; i < lowestPlayers.Count; i++){
-					//Debug.Log("lowestPlayers: " + lowestPlayers[i]);
 					p = Game.GameManager.getPlayer(lowestPlayers[i]);
 					for(int j = 0; j < 2; j++){
 						p.addCard(Game.GameManager.drawAdventureCard());
