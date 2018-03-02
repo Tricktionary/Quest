@@ -338,11 +338,12 @@ public class QuestBehaviour : GameBehaviour {
 				}
 
 				//Remove Cards from AI HAND
+				/*
 				for(int i = 0 ; i < AIcards.Count ;i++){
 					for(int j = 0 ; j < AIcards[i].Count;j++){
 						Game.GameManager.removeCardByName(_turnId,AIcards[i][j].name);
 					}
-				}
+				}*/
 
 
 				endTurn();

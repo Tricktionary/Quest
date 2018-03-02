@@ -103,7 +103,8 @@ public class Deck{
 
 			/* Amour load */
 			addArmour("Amour", 10, 1, "card_image/special/specialCard3", 8);
-		}else if (type.Equals ("QuestOnly")) {
+		}
+		else if (type.Equals ("QuestOnly")) {
 			addQuestCards();
 		}
 		else if (type.Equals ("TournamentOnly")) {
@@ -121,9 +122,14 @@ public class Deck{
 		else if (type.Equals("BoarHunt")){
 			addBoarHunt();
 		}
+		else if (type.Equals("specialHand1")){
 
+		}
+		else if (type.Equals("specialHand2")){
+
+		}
 		//Boar Hunt is Prefix
-		if(type != "BoarHunt"){
+		if(type != "BoarHunt" || type != "specialHand1" || type != "specialHand2"){
 			// Shuffe the deck of cards after adding.
 			this.Shuffle();
 		}

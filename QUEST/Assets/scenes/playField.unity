@@ -1540,7 +1540,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 913053428}
-        m_MethodName: boarHunt
+        m_MethodName: Scenario2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3026,7 +3026,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 913053428}
-        m_MethodName: boarHunt
+        m_MethodName: Scenario3
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
