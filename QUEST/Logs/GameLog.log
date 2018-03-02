@@ -46,3 +46,19 @@
 2018-03-01T21:12:33.6048460-05:00 [INFO]: Ending the tournament!
 2018-03-01T21:12:33.6069520-05:00 [INFO]: Loading player: 2
 2018-03-01T21:12:33.7128530-05:00 [INFO]: Cleaning cards from stages.
+2018-03-01T21:39:32.1360250-05:00 [INFO]: Initializing Game object.
+2018-03-01T21:39:38.9354650-05:00 [INFO]: Loading player: 1
+2018-03-01T21:39:39.1599060-05:00 [INFO]: Cleaning cards from stages.
+2018-03-01T21:39:50.0540080-05:00 [INFO]: Drawing a story card...
+2018-03-01T21:39:50.0694670-05:00 [INFO]: A tournament card was drawn: Tournament at Camelot
+2018-03-01T21:39:50.0743650-05:00 [INFO]: Displaying join tournament prompt!
+2018-03-01T21:43:23.8684380-05:00 [INFO]: Initializing Game object.
+2018-03-01T21:43:26.2355100-05:00 [INFO]: Loading player: 1
+2018-03-01T21:43:26.3956890-05:00 [INFO]: Cleaning cards from stages.
+2018-03-01T21:43:27.4018770-05:00 [INFO]: Drawing a story card...
+2018-03-01T21:43:27.4077570-05:00 [INFO]: A quest card was drawn: Search for the Holy Grail
+2018-03-01T21:43:27.4119800-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-01T21:43:28.9492420-05:00 [INFO]: Player 1 decided to sponsor the quest.
+2018-03-01T21:43:28.9516840-05:00 [INFO]: Setting up stages for quest: Search for the Holy Grail
+2018-03-01T21:43:52.5608030-05:00 [WARN]: Quest setup is invalid: not ascending power level.
+2018-03-01T22:01:28.5976650-05:00 [INFO]: Initializing Game object.

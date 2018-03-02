@@ -15,94 +15,7 @@ public class Deck{
 	// Deck constructor.
 	public Deck(string type){
 		if (type.Equals ("Adventure")) {
-			// Create the adventure deck.
-
-			/* Weapon Load */
-			/* 2 Excaliburs */
-			addWeapon("Excalibur", 30, "card_image/weapons/weaponCard3", 2);
-
-			/* 6 Lances */
-			addWeapon("Lance", 20, "card_image/weapons/weaponCard4", 6);
-
-			/* 8 Battle Axe */
-			addWeapon("BattleAxe", 15, "card_image/weapons/weaponCard5", 8);
-
-			/* 16 Swords */
-			addWeapon("Sword", 10, "card_image/weapons/weaponCard1", 16);
-
-			/* 11 Horses */
-			addWeapon("Horse", 10, "card_image/weapons/weaponCard6", 11);
-
-			/* 6 Daggers */
-			addWeapon("Dagger", 5, "card_image/weapons/weaponCard2", 6);
-
-			/* Foe Load */
-			/* 7 Robber Knight */
-			addFoe("Robber Knight","Robber Knight", 15, 15, false, "card_image/foe/foeCard1", 7);
-
-			/* 5 Saxons */
-			addFoe("Saxons","Saxon", 10, 20, false, "card_image/foe/foeCard2", 5);
-
-			/* 4 Boar */
-			addFoe("Boar","Boar", 5, 15, false, "card_image/foe/foeCard3", 4);
-
-			/* 8 Thieves */
-			addFoe("Thieves","Thieves", 5, 5, false, "card_image/foe/foeCard4", 8);
-
-			/* 2 Green Knight */
-			addFoe("Green Knight","Green Knight", 25, 40, false, "card_image/foe/foeCard5", 2);
-
-			/* 3 Black Knight */
-			addFoe("Black Knight","Black Knight", 25, 35, false, "card_image/foe/foeCard6", 3);
-
-			/* 6 Evil Knight */
-			addFoe("Evil Knight","Evil Knight", 20, 30, false, "card_image/foe/foeCard7", 6);
-
-			/* 8 Saxon Knight */
-			addFoe("Saxon Knight","Saxon", 15, 25, false, "card_image/foe/foeCard8", 8);
-
-			/* 1 Dragon */
-			addFoe("Dragon","Dragon", 50, 70, false, "card_image/foe/foeCard9", 1);
-
-			/* 2 Giant */
-			addFoe("Giant","Giant", 40, 40, false, "card_image/foe/foeCard10", 2);
-
-			/* 4 Mordred */
-			addFoe("Mordred","Mordred", 30, 30, true, "card_image/foe/foeCard11", 4);
-
-			/* Ally load */
-			/* Sir Pellinore */
-			addAlly("King Pellinore",10,0,0,4,"Search for the Questing Beast", null, false, "card_image/special/specialCard1", 1);
-
-			/* Sir Percival */
-			addAlly("Sir Percival",5,0,20,0,"Search for the Holy Grail", null, false, "card_image/special/specialCard2", 1);
-
-			/* Sir Tristan */
-			addAlly("Sir Tristan", 10, 0, 20, 0, null, "Queen Iseult", false, "card_image/special/specialCard4", 1);
-
-			/* King Arthur */
-			addAlly("King Arthur", 10, 2, 0, 0, null, null, false, "card_image/special/specialCard5", 1);
-
-			/* Queen Guinevere */
-			addAlly("Queen Guinevere", 0, 3, 0, 0, null, null, false, "card_image/special/specialCard6", 1);
-
-			/* Merlin */
-			addAlly("Merlin", 0, 0, 0, 0, null, null, true, "card_image/special/specialCard7", 1);
-
-			/* Queen Iseult */
-			addAlly("Queen Iseult", 0, 2, 0, 4, null, "Sir Tristan", false, "card_image/special/specialCard8", 1);
-
-			/* Sir Lancelot */
-			addAlly("Sir Lancelot", 15, 0, 25, 0, "Defend the Queen's Honor", null, false, "card_image/special/specialCard9", 1);
-
-			/* Sir Galahad */
-			addAlly("Galahad", 15, 0, 0, 0, null, null, false, "card_image/special/specialCard10", 1);
-
-			/* Sir Gawain */
-			addAlly("Sir Gawain", 10, 0, 20, 0, "Test of the Green Knight", null, false, "card_image/special/specialCard11", 1);
-
-			/* Amour load */
-			addArmour("Amour", 10, 1, "card_image/special/specialCard3", 8);
+			addAdventureCard();
 		}
 		else if (type.Equals ("QuestOnly")) {
 			addQuestCards();
@@ -121,38 +34,135 @@ public class Deck{
 		}
 		else if (type.Equals ("scenario2")){
 			addScenario2();
+			addAdventureCard();
 		}
 		else if (type.Equals("BoarHunt")){
 			addBoarHunt();
 		}
 		else if (type.Equals("specialHand")){
 			specialHand();
-
+		}
+		else if (type.Equals("scenario3")){
+			addScenario3();
 		}
 		else if (type.Equals("specialHand3")){
-			specialHand3();		
+			specialHand3();
+
 		}
 		//Boar Hunt is Prefix
-		if(type != "BoarHunt" || type != "specialHand" ||type != "specialHand3" || type != "scenario3" || type != "scenario2"){
+		if(type != "BoarHunt" && type != "specialHand" && type != "specialHand3" && type != "scenario3" && type != "scenario2"){
 			// Shuffe the deck of cards after adding.
 			this.Shuffle();
 		}
 	}
 
+	void addAdventureCard(){
+		// Create the adventure deck.
+
+		/* Weapon Load */
+		/* 2 Excaliburs */
+		addWeapon("Excalibur", 30, "card_image/weapons/weaponCard3", 2);
+
+		/* 6 Lances */
+		addWeapon("Lance", 20, "card_image/weapons/weaponCard4", 6);
+
+		/* 8 Battle Axe */
+		addWeapon("BattleAxe", 15, "card_image/weapons/weaponCard5", 8);
+
+		/* 16 Swords */
+		addWeapon("Sword", 10, "card_image/weapons/weaponCard1", 16);
+
+		/* 11 Horses */
+		addWeapon("Horse", 10, "card_image/weapons/weaponCard6", 11);
+
+		/* 6 Daggers */
+		addWeapon("Dagger", 5, "card_image/weapons/weaponCard2", 6);
+
+		/* Foe Load */
+		/* 7 Robber Knight */
+		addFoe("Robber Knight","Robber Knight", 15, 15, false, "card_image/foe/foeCard1", 7);
+
+		/* 5 Saxons */
+		addFoe("Saxons","Saxon", 10, 20, false, "card_image/foe/foeCard2", 5);
+
+		/* 4 Boar */
+		addFoe("Boar","Boar", 5, 15, false, "card_image/foe/foeCard3", 4);
+
+		/* 8 Thieves */
+		addFoe("Thieves","Thieves", 5, 5, false, "card_image/foe/foeCard4", 8);
+
+		/* 2 Green Knight */
+		addFoe("Green Knight","Green Knight", 25, 40, false, "card_image/foe/foeCard5", 2);
+
+		/* 3 Black Knight */
+		addFoe("Black Knight","Black Knight", 25, 35, false, "card_image/foe/foeCard6", 3);
+
+		/* 6 Evil Knight */
+		addFoe("Evil Knight","Evil Knight", 20, 30, false, "card_image/foe/foeCard7", 6);
+
+		/* 8 Saxon Knight */
+		addFoe("Saxon Knight","Saxon", 15, 25, false, "card_image/foe/foeCard8", 8);
+
+		/* 1 Dragon */
+		addFoe("Dragon","Dragon", 50, 70, false, "card_image/foe/foeCard9", 1);
+
+		/* 2 Giant */
+		addFoe("Giant","Giant", 40, 40, false, "card_image/foe/foeCard10", 2);
+
+		/* 4 Mordred */
+		addFoe("Mordred","Mordred", 30, 30, true, "card_image/foe/foeCard11", 4);
+
+		/* Ally load */
+		/* Sir Pellinore */
+		addAlly("King Pellinore",10,0,0,4,"Search for the Questing Beast", null, false, "card_image/special/specialCard1", 1);
+
+		/* Sir Percival */
+		addAlly("Sir Percival",5,0,20,0,"Search for the Holy Grail", null, false, "card_image/special/specialCard2", 1);
+
+		/* Sir Tristan */
+		addAlly("Sir Tristan", 10, 0, 20, 0, null, "Queen Iseult", false, "card_image/special/specialCard4", 1);
+
+		/* King Arthur */
+		addAlly("King Arthur", 10, 2, 0, 0, null, null, false, "card_image/special/specialCard5", 1);
+
+		/* Queen Guinevere */
+		addAlly("Queen Guinevere", 0, 3, 0, 0, null, null, false, "card_image/special/specialCard6", 1);
+
+		/* Merlin */
+		addAlly("Merlin", 0, 0, 0, 0, null, null, true, "card_image/special/specialCard7", 1);
+
+		/* Queen Iseult */
+		addAlly("Queen Iseult", 0, 2, 0, 4, null, "Sir Tristan", false, "card_image/special/specialCard8", 1);
+
+		/* Sir Lancelot */
+		addAlly("Sir Lancelot", 15, 0, 25, 0, "Defend the Queen's Honor", null, false, "card_image/special/specialCard9", 1);
+
+		/* Sir Galahad */
+		addAlly("Galahad", 15, 0, 0, 0, null, null, false, "card_image/special/specialCard10", 1);
+
+		/* Sir Gawain */
+		addAlly("Sir Gawain", 10, 0, 20, 0, "Test of the Green Knight", null, false, "card_image/special/specialCard11", 1);
+
+		/* Amour load */
+		addArmour("Amour", 10, 1, "card_image/special/specialCard3", 8);
+	}
 	void addBoarHunt(){
 		/* 2 Boar Hunt */
 		addQuest("Boar Hunt", 2, "Boar", "card_image/quest/questCard4", 1);
 		/* 1 Chivalrous Deed */
 		addEvent("Chivalrous Deed", "lowest rank and shield receives 3 shields", "card_image/events/eventCard1", 1);
 	}
+
 	void specialHand(){
 		//Player 1 Hand
 		addAlly("Queen Iseult", 0, 2, 0, 4, null, "Sir Tristan", false, "card_image/special/specialCard8", 1);
-		addWeapon("Sword", 10, "card_image/weapons/weaponCard1", 2);
+		addFoe("Green Knight","Green Knight", 25, 40, false, "card_image/foe/foeCard5", 2);
 		addFoe("Saxon Knight","Saxon", 15, 25, false, "card_image/foe/foeCard8", 2);
 		addAlly("Sir Lancelot", 15, 0, 25, 0, "Defend the Queen's Honor", null, false, "card_image/special/specialCard9", 1);
-		addFoe("Mordred","Mordred", 30, 30, true, "card_image/foe/foeCard11", 2);
-		addFoe("Boar","Boar", 5, 15, false, "card_image/foe/foeCard3", 4);
+		addFoe("Mordred","Mordred", 30, 30, true, "card_image/foe/foeCard11", 1);
+		addFoe("Black Knight","Black Knight", 25, 35, false, "card_image/foe/foeCard6", 1);
+		addFoe("Boar","Boar", 5, 15, false, "card_image/foe/foeCard3", 2);
+
 
 		//Player 2 Hand
 		addAlly("King Pellinore",10,0,0,4,"Search for the Questing Beast", null, false, "card_image/special/specialCard1", 1);
@@ -166,6 +176,7 @@ public class Deck{
 		addAlly("Galahad", 15, 0, 0, 0, null, null, false, "card_image/special/specialCard10", 1);
 		addAlly("Sir Gawain", 10, 0, 20, 0, "Test of the Green Knight", null, false, "card_image/special/specialCard11", 1);
 		addArmour("Amour", 10, 1, "card_image/special/specialCard3", 2);
+
 
 		//Player 3 Hand
 		addFoe("Boar","Boar", 5, 15, false, "card_image/foe/foeCard3", 4);
@@ -190,6 +201,7 @@ public class Deck{
 		addAlly("Sir Lancelot", 15, 0, 25, 0, "Defend the Queen's Honor", null, false, "card_image/special/specialCard9", 1);
 		addFoe("Mordred","Mordred", 30, 30, true, "card_image/foe/foeCard11", 2);
 		addFoe("Boar","Boar", 5, 15, false, "card_image/foe/foeCard3", 4);
+
 
 		//Player 2 Hand
 		addAlly("King Pellinore",10,0,0,4,"Search for the Questing Beast", null, false, "card_image/special/specialCard1", 1);
@@ -220,17 +232,16 @@ public class Deck{
 		addAlly("Sir Gawain", 10, 0, 20, 0, "Test of the Green Knight", null, false, "card_image/special/specialCard11", 1);
 	}
 	void addScenario2(){
+		addQuest("Search for the Holy Grail", 5, "*", "card_image/quest/questCard9", 1);
 		addQuest("Boar Hunt", 2, "Boar", "card_image/quest/questCard4", 1);
 		addQuest("Test of the Green Knight", 4, "Green Knight", "card_image/quest/questCard10", 1);
-		addQuest("Search for the Holy Grail", 5, "*", "card_image/quest/questCard9", 1);
 		addEvent("Chivalrous Deed", "lowest rank and shield receives 3 shields", "card_image/events/eventCard1", 1);
 		addTournament("Tournament at Camelot", 3, "card_image/tournament/TournamentCard", 6);
-
 	}
+
 	void addScenario3(){
-		addQuest("Boar Hunt", 2, "Boar", "card_image/quest/questCard4", 1);
-		addQuest("Test of the Green Knight", 4, "Green Knight", "card_image/quest/questCard10", 1);
 		addQuest("Search for the Holy Grail", 5, "*", "card_image/quest/questCard9", 1);
+		addQuest("Test of the Green Knight", 4, "Green Knight", "card_image/quest/questCard10", 1);
 		addQuest("Vanquish King Arthur's Enemies", 3, "", "card_image/quest/questCard2", 2);
 		addEvent("Chivalrous Deed", "lowest rank and shield receives 3 shields", "card_image/events/eventCard1", 1);
 		addTournament("Tournament at Camelot", 3, "card_image/tournament/TournamentCard", 6);
