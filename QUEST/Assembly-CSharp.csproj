@@ -67,6 +67,7 @@
      <Compile Include="Assets\script\EventCard.cs" />
      <Compile Include="Assets\script\FoeCard.cs" />
      <Compile Include="Assets\script\Game.cs" />
+     <Compile Include="Assets\script\Logger.cs" />
      <Compile Include="Assets\script\MainMenu.cs" />
      <Compile Include="Assets\script\Player.cs" />
      <Compile Include="Assets\script\popUp.cs" />
@@ -131,6 +132,7 @@
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\LiberationSans - OFL.txt" />
+     <None Include="Assets\stepScenario3.txt" />
      <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Bangers - OFL.txt" />
  <Reference Include="UnityEngine.UIAutomation">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UIAutomation/UnityEngine.UIAutomation.dll</HintPath>

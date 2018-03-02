@@ -74,8 +74,10 @@ public class Game : MonoBehaviour {
 	Card _storyCard;
 	bool activeStoryCard = false;
 
+ 	public bool bonusQuestPoints = false;
 	//tempFix
 	bool allFlip = false;
+
 
 	// Initialization.
 	void Awake(){
@@ -105,6 +107,7 @@ public class Game : MonoBehaviour {
 				discardCard(_tournamentBehaviour.getCurrentTurn());
 				_tournamentBehaviour.endTurn();
 			} else {
+				discardCard(_eventBehaviour.getCurrentTurn());
 				_eventBehaviour.endTurn();
 			}
 		} else {
@@ -468,14 +471,63 @@ public class Game : MonoBehaviour {
 	// Remove a card from a players hand by name.
 	public void removeCardByName(int player_id, string name){
 		int ind = 0;
+		bool found = false;
 		for (int i = 0; i < _players [player_id].hand.Count; i++) {
 			if (_players [player_id].hand [i].name.Equals(name)) {
 				ind = i;
+				found = true;
+				break;
 			}
 		}
-		_players[player_id].hand.RemoveAt(ind);
+		if(found){
+			_players[player_id].hand.RemoveAt(ind);
+		}
 	}
 
+	// Remove a card from a players hand by name.
+	public void removeCardByNameInplay(int player_id, string name){
+		int ind = 0;
+		bool found = false;
+		for (int i = 0; i < _players [player_id].inPlay.Count; i++) {
+			if (_players [player_id].inPlay [i].name == name) {
+				ind = i;
+				found = true;
+				Debug.Log("inside remove all cards");
+				break;
+			}
+		}
+		if(found){
+			_players[player_id].inPlay.RemoveAt(ind);
+		}
+	}
+
+	public void removeAllAllies(){
+		List<Card> allAlly = new List<Card>();
+
+		//Get list of all allies
+		for(int i = 0 ; i < _players.Count ; i++){
+			for(int j = 0 ; j < _players[i].hand.Count; j++){
+				Card currCard = _players[i].hand[j];
+				if(currCard.GetType() == typeof(AllyCard)){
+					allAlly.Add(currCard);
+				}
+			}
+		}
+
+		for(int i = 0 ; i< allAlly.Count ; i++){
+			Debug.Log(allAlly[i]);
+		}
+
+		//Remove Ally from hand
+		for(int i = 0 ; i < _players.Count; i++){
+			for(int j = 0 ; j < allAlly.Count; j++){
+				removeCardByNameInplay(i,allAlly[j].name);
+			}
+		}
+
+	}
+
+	
 	// Set a players in play cards.
 	public void setInPlay(int player_id){
 		List<Card> playedCards = playArea.GetComponent<CardArea>().cards;
@@ -496,7 +548,7 @@ public class Game : MonoBehaviour {
 			//removeCardByName(playerid, cards[i].name);
 		}
 	}
-		
+
 	public void setQuest(int player_id, List<List<Card>> stages) {
 		//Access each stage in the quest
 		//Set the stage to the next list
@@ -812,64 +864,6 @@ public class Game : MonoBehaviour {
 			}
 		}
 	}
-/*
-	Methods in here aren't being used, but might need to be.
-
-	// NOTE: What does this do?
-	private void reclaimCards() {
-		List<List<Card>> stages = getStages(2);
-
-		for (int i = 0; i < stages.Count; i++) {
-			for (int j = 0; j < stages [i].Count; j++) {
-				_players[_turnId].addCard(stages[i][j]);
-			}
-		}
-
-		for (int z = 0; z < Stages.Count; z++) {
-			Stages[z].GetComponent<CardArea>().cards = new List<Card>();
-			// Clears out draw card area.
-			foreach (Transform child in Stages[z].transform) {
-				GameObject.Destroy(child.gameObject);
-			}
-		}
-	}
-
-	// Clear quest cards.
-	private void clearQuestCards(){
-		List<Card> oldCards = playArea.GetComponent<CardArea>().cards;
-		List<Card> filteredCards1 = new List<Card>();
-		List<Card> filteredCards2 = new List<Card>();
-
-		// Filter amour cards.
-		for(int i = 0 ; i < oldCards.Count ; i++){
-			if(oldCards[i].GetType() != typeof(AmourCard)){
-				filteredCards1.Add(oldCards[i]);
-			}
-			else{
-				_discardPileAdventure.Discard(oldCards[i]);
-			}
-		}
-
-		// Filter weapon cards.
-		for(int i = 0 ; i < filteredCards1.Count ; i++){
-			if(filteredCards1[i].GetType() != typeof(WeaponCard)){
-				filteredCards2.Add(oldCards[i]);
-			}
-			else{
-				_discardPileAdventure.Discard(filteredCards1[i]);
-			}
-		}
-
-		// Empty the list.
-		playArea.GetComponent<CardArea>().cards = new List<Card>();
-
-		// Repopulate the list.
-		for(int i =0 ; i < filteredCards2.Count ;i++){
-			playArea.GetComponent<CardArea>().addCard(filteredCards2[i]);
-		}
-	}
-
-	*/
 
 
 	// PLAYER PANEL METHODS //
@@ -979,6 +973,7 @@ public class Game : MonoBehaviour {
 		nextCardAndPlayer();
 	}
 
+
 	// Runs if the user selects Play PVP.
 	public void NormalMode(){
 		logger.info("Normal mode selected.");
@@ -1005,9 +1000,62 @@ public class Game : MonoBehaviour {
 
 	public void boarHunt(){
 		logger.info("Boar Hunt mode selected.");
-		genericModeSetup("BoarHunt");
+		genericModeSetup("scenario1");
 	}
 
+	public void Scenario2(){
+		rigged("scenario2","specialHand");
+	}
+
+	public void Scenario3(){
+		rigged("scenario3","specialHand3");
+	}
+
+	//Rig Hands and story deck
+	public void rigged(string storyDeckType, string adventureDeckType){
+		// Hide menu.
+		Menu.SetActive(false);
+
+		// Clear hand.
+		foreach (Transform child in Hand.transform) {
+			GameObject.Destroy(child.gameObject);
+		}
+
+		// Create the game behvaiours.
+		_questBehaviour = new QuestBehaviour();
+		_tournamentBehaviour = new TournamentBehaviour();
+		_eventBehaviour = new EventBehaviour();
+
+		// Setup players.
+		_players = new List<Player>();
+
+		for(int i = 0 ; i < playerChoice.Count; i++){
+			if (playerChoice[i].GetComponent<Dropdown> ().value == 0) { //huMAN
+				Debug.Log ("Normal Player ID: "+ (i+1));
+				_players.Add(new Player(i+1));
+			}
+			else if (playerChoice [i].GetComponent<Dropdown> ().value == 1) { //AI
+				Debug.Log ("AI Player ID: "+ (i+1));
+				_players.Add(new AIPlayer(i+1));
+			}
+		}
+
+		// Setup decks.
+		_adventureDeck = new Deck(adventureDeckType);
+		_storyDeck = new Deck(storyDeckType);
+		_discardPileAdventure = new Deck ("");
+		_discardPileStory = new Deck ("");
+
+		// Populate the players hands.
+		for(int i = 0; i < _players.Count ; i++){
+			for(int x = 0 ; x < 12 ; x++){
+				_players[i].addCard((_adventureDeck.Draw()));
+			}
+		}
+
+		// Load up the first player.
+		nextCardAndPlayer();
+	}
 
 	//Give card to player
 	public void giveCard(int id){
@@ -1025,4 +1073,6 @@ public class Game : MonoBehaviour {
 			}
 		}
 	}
+
+
 }

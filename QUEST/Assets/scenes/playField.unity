@@ -1540,7 +1540,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 913053428}
-        m_MethodName: boarHunt
+        m_MethodName: Scenario2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3026,7 +3026,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 913053428}
-        m_MethodName: boarHunt
+        m_MethodName: Scenario3
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4653,6 +4653,7 @@ MonoBehaviour:
   winScreenTxt: {fileID: 1618824192}
   playerIdTxt: {fileID: 1465051566}
   shieldCounterTxt: {fileID: 1762925163}
+  bonusQuestPoints: 0
 --- !u!114 &913053429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5611,6 +5612,8 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: AI
       m_Image: {fileID: 0}
+    - m_Text: None
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -6524,6 +6527,8 @@ MonoBehaviour:
     - m_Text: Player
       m_Image: {fileID: 0}
     - m_Text: AI
+      m_Image: {fileID: 0}
+    - m_Text: None
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8058,6 +8063,8 @@ MonoBehaviour:
     - m_Text: Player
       m_Image: {fileID: 0}
     - m_Text: AI
+      m_Image: {fileID: 0}
+    - m_Text: None
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -9971,6 +9978,8 @@ MonoBehaviour:
     - m_Text: Player
       m_Image: {fileID: 0}
     - m_Text: AI
+      m_Image: {fileID: 0}
+    - m_Text: None
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:

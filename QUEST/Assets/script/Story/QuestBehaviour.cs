@@ -107,7 +107,14 @@ public class QuestBehaviour : GameBehaviour {
 						// Payout winners.
 						for(int i = 0 ; i < _playersIn.Count ; i++){
 							Game.GameManager.logger.info("Player " + (_playersIn[i] + 1) + " won the quest!");
-							Game.GameManager.payShield(_playersIn[i], _questCard.stages);
+              
+							if(Game.GameManager.bonusQuestPoints){
+								Game.GameManager.payShield(_playersIn[i], _questCard.stages + 2);
+								Game.GameManager.logger.info("Player " + (_playersIn[i] + 1) + " recieved 2 extra shields because of King's Recognition.");
+							}
+							else{	
+								Game.GameManager.payShield(_playersIn[i], _questCard.stages);
+							}
 						}
 
 						// Remove AmourCard.
@@ -116,10 +123,11 @@ public class QuestBehaviour : GameBehaviour {
 						}
 
 						// End the quest.
+						Game.GameManager.bonusQuestPoints = false;
 						endQuest();
 						return;
 					}
-						
+
 					// Return to setup weapons mode.
 					_setupWeapons = true;
 					_showResults = false;
@@ -191,11 +199,12 @@ public class QuestBehaviour : GameBehaviour {
 
 						// Unflip the stage cards.
 						Game.GameManager.logger.info("Flipping cards in stage " + (_currStage + 1));
-						List<Card> cardsToReveal = Game.GameManager.Stages[_currStage].GetComponent<CardArea>().cards;
-						for(int i = 0; i < cardsToReveal.Count; i++){
-							cardsToReveal[i].flipCard(false);
+						if(_currStage < _questCard.stages){
+							List<Card> cardsToReveal = Game.GameManager.Stages[_currStage].GetComponent<CardArea>().cards;
+							for(int i = 0; i < cardsToReveal.Count; i++){
+								cardsToReveal[i].flipCard(false);
+							}
 						}
-
 						didYouSurvivePrompt();
 
 						// Clear the players inPlay list.
@@ -247,6 +256,14 @@ public class QuestBehaviour : GameBehaviour {
 								stagedCards[i].flipCard (true);
 							}
 						}
+
+						// 2nd time to ensure flipage
+						for(int x = 0 ; x < 4 ; x++){
+							for (int i = 0; i < stagedCards.Count; i++) {
+								stagedCards[i].flipCard (true);
+							}
+						}
+
 
 						//Remove Cards Played in stage
 						Game.GameManager.removeCards(_turnId,stagedCards);
@@ -341,14 +358,12 @@ public class QuestBehaviour : GameBehaviour {
 				for(int i = 0 ; i < _questCard.stages ; i++){
 					Game.GameManager.loadCards(AIcards[i],stages[i]);
 				}
-
 				//Remove Cards from AI HAND
 				for(int i = 0 ; i < AIcards.Count ;i++){
 					for(int j = 0 ; j < AIcards[i].Count;j++){
 						Game.GameManager.removeCardByName(_turnId,AIcards[i][j].name);
 					}
 				}
-					
 				endTurn();
 			}
 
