@@ -117,8 +117,8 @@ public class Deck{
 		/* Sir Pellinore */
 		addAlly("King Pellinore",10,0,0,4,"Search for the Questing Beast", null, false, "card_image/special/specialCard1", 1);
 
-		/* Sir Percival */
-		addAlly("Sir Percival",5,0,20,0,"Search for the Holy Grail", null, false, "card_image/special/specialCard2", 1);
+		/* Sir  */
+		addAlly("Sir ",5,0,20,0,"Search for the Holy Grail", null, false, "card_image/special/specialCard2", 1);
 
 		/* Sir Tristan */
 		addAlly("Sir Tristan", 10, 0, 20, 0, null, "Queen Iseult", false, "card_image/special/specialCard4", 1);
@@ -147,17 +147,25 @@ public class Deck{
 		/* Amour load */
 		addArmour("Amour", 10, 1, "card_image/special/specialCard3", 8);
 	}
-
 	void addBoarHunt(){
-		/* 1 Boar Hunt */
 		addQuest("Boar Hunt", 2, "Boar", "card_image/quest/questCard4", 1);
-
-		//addEvent("Prosperity Throughout the Realm", "All players may immediately draw 2 adventure Cards", "card_image/events/eventCard8", 1);
-
-		/* 1 Chivalrous Deed */
+		addEvent("Prosperity Throughout the Realm", "All players may immediately draw 2 adventure Cards", "card_image/events/eventCard8", 1);
 		addEvent("Chivalrous Deed", "lowest rank and shield receives 3 shields", "card_image/events/eventCard1", 1);
 	}
-
+	void addScenario2(){
+		addQuest("Search for the Holy Grail", 5, "*", "card_image/quest/questCard9", 1);
+		addQuest("Boar Hunt", 2, "Boar", "card_image/quest/questCard4", 1);
+		addQuest("Test of the Green Knight", 4, "Green Knight", "card_image/quest/questCard10", 1);
+		addEvent("Chivalrous Deed", "lowest rank and shield receives 3 shields", "card_image/events/eventCard1", 1);
+		addTournament("Tournament at Camelot", 3, "card_image/tournament/TournamentCard", 6);
+	}
+	void addScenario3(){
+		addQuest("Search for the Holy Grail", 5, "*", "card_image/quest/questCard9", 1);
+		addQuest("Test of the Green Knight", 4, "Green Knight", "card_image/quest/questCard10", 1);
+		addQuest("Vanquish King Arthur's Enemies", 3, "", "card_image/quest/questCard2", 2);
+		addEvent("Chivalrous Deed", "lowest rank and shield receives 3 shields", "card_image/events/eventCard1", 1);
+		addTournament("Tournament at Camelot", 3, "card_image/tournament/TournamentCard", 6);
+	}
 	void specialHand(){
 		//Player 1 Hand
 		addAlly("Queen Iseult", 0, 2, 0, 4, null, "Sir Tristan", false, "card_image/special/specialCard8", 1);
@@ -187,26 +195,32 @@ public class Deck{
 		//Player 3 Hand
 		addFoe("Boar","Boar", 5, 15, false, "card_image/foe/foeCard3", 4);
 		addWeapon("Excalibur", 30, "card_image/weapons/weaponCard3", 2);
-		addFoe("Thieves","Thieves", 5, 5, false, "card_image/foe/foeCard4", 3);
-		addWeapon("BattleAxe", 15, "card_image/weapons/weaponCard5", 3);
+		addFoe("Thieves","Thieves", 5, 5, false, "card_image/foe/foeCard4", 2);
+		addFoe("Black Knight","Black Knight", 25, 35, false, "card_image/foe/foeCard6", 1);
+		addWeapon("BattleAxe", 15, "card_image/weapons/weaponCard5", 2);
+		addFoe("Green Knight","Green Knight", 25, 40, false, "card_image/foe/foeCard5", 1);
 
 		//Player 4 Hand
 		addArmour("Amour", 10, 1, "card_image/special/specialCard3", 2);
 		addFoe("Giant","Giant", 40, 40, false, "card_image/foe/foeCard10", 2);
 		addWeapon("Lance", 20, "card_image/weapons/weaponCard4", 2);
 		addFoe("Mordred","Mordred", 30, 30, true, "card_image/foe/foeCard11", 1);
-		addWeapon("Sword", 10, "card_image/weapons/weaponCard1", 2);
+		addWeapon("Sword", 10, "card_image/weapons/weaponCard1", 1);
+		addFoe("Thieves","Thieves", 5, 5, false, "card_image/foe/foeCard4", 1);
 		addAlly("Queen Iseult", 0, 2, 0, 4, null, "Sir Tristan", false, "card_image/special/specialCard8", 1);
 		addAlly("Sir Gawain", 10, 0, 20, 0, "Test of the Green Knight", null, false, "card_image/special/specialCard11", 1);
+		addFoe("Black Knight","Black Knight", 25, 35, false, "card_image/foe/foeCard6", 1);
 	}
 	void specialHand3(){
 		//Player 1 Hand
 		addAlly("Queen Iseult", 0, 2, 0, 4, null, "Sir Tristan", false, "card_image/special/specialCard8", 1);
-		addWeapon("Sword", 10, "card_image/weapons/weaponCard1", 2);
+		addFoe("Green Knight","Green Knight", 25, 40, false, "card_image/foe/foeCard5", 2);
+		addFoe("Thieves","Thieves", 5, 5, false, "card_image/foe/foeCard4", 1);
 		addFoe("Saxon Knight","Saxon", 15, 25, false, "card_image/foe/foeCard8", 2);
 		addAlly("Sir Lancelot", 15, 0, 25, 0, "Defend the Queen's Honor", null, false, "card_image/special/specialCard9", 1);
-		addFoe("Mordred","Mordred", 30, 30, true, "card_image/foe/foeCard11", 2);
-		addFoe("Boar","Boar", 5, 15, false, "card_image/foe/foeCard3", 4);
+		addFoe("Mordred","Mordred", 30, 30, true, "card_image/foe/foeCard11", 1);
+		addFoe("Black Knight","Black Knight", 25, 35, false, "card_image/foe/foeCard6", 1);
+		addFoe("Boar","Boar", 5, 15, false, "card_image/foe/foeCard3", 1);
 
 
 		//Player 2 Hand
@@ -215,7 +229,7 @@ public class Deck{
 		addAlly("Sir Tristan", 10, 0, 20, 0, null, "Queen Iseult", false, "card_image/special/specialCard4", 1);
 		addAlly("King Arthur", 10, 2, 0, 0, null, null, false, "card_image/special/specialCard5", 1);
 		addAlly("Queen Guinevere", 0, 3, 0, 0, null, null, false, "card_image/special/specialCard6", 1);
-		addAlly("Merlin", 0, 0, 0, 0, null, null, true, "card_image/special/specialCard7", 1);
+		addFoe("Mordred","Mordred", 30, 30, true, "card_image/foe/foeCard11", 1);
 		addAlly("Queen Iseult", 0, 2, 0, 4, null, "Sir Tristan", false, "card_image/special/specialCard8", 1);
 		addAlly("Sir Lancelot", 15, 0, 25, 0, "Defend the Queen's Honor", null, false, "card_image/special/specialCard9", 1);
 		addAlly("Galahad", 15, 0, 0, 0, null, null, false, "card_image/special/specialCard10", 1);
@@ -223,10 +237,14 @@ public class Deck{
 		addArmour("Amour", 10, 1, "card_image/special/specialCard3", 2);
 
 		//Player 3 Hand
-		addFoe("Boar","Boar", 5, 15, false, "card_image/foe/foeCard3", 4);
+		addFoe("Green Knight","Green Knight", 25, 40, false, "card_image/foe/foeCard5", 1);
+		addFoe("Boar","Boar", 5, 15, false, "card_image/foe/foeCard3", 2);
+		addFoe("Mordred","Mordred", 30, 30, true, "card_image/foe/foeCard11", 1);
 		addWeapon("Excalibur", 30, "card_image/weapons/weaponCard3", 2);
 		addFoe("Thieves","Thieves", 5, 5, false, "card_image/foe/foeCard4", 3);
-		addWeapon("BattleAxe", 15, "card_image/weapons/weaponCard5", 3);
+		addWeapon("BattleAxe", 15, "card_image/weapons/weaponCard5", 2);
+		addWeapon("Dagger", 5, "card_image/weapons/weaponCard2", 1);
+
 
 		//Player 4 Hand
 		addArmour("Amour", 10, 1, "card_image/special/specialCard3", 2);
@@ -236,21 +254,6 @@ public class Deck{
 		addWeapon("Sword", 10, "card_image/weapons/weaponCard1", 2);
 		addAlly("Queen Iseult", 0, 2, 0, 4, null, "Sir Tristan", false, "card_image/special/specialCard8", 1);
 		addAlly("Sir Gawain", 10, 0, 20, 0, "Test of the Green Knight", null, false, "card_image/special/specialCard11", 1);
-	}
-	void addScenario2(){
-		addQuest("Search for the Holy Grail", 5, "*", "card_image/quest/questCard9", 1);
-		addQuest("Boar Hunt", 2, "Boar", "card_image/quest/questCard4", 1);
-		addQuest("Test of the Green Knight", 4, "Green Knight", "card_image/quest/questCard10", 1);
-		addEvent("Chivalrous Deed", "lowest rank and shield receives 3 shields", "card_image/events/eventCard1", 1);
-		addTournament("Tournament at Camelot", 3, "card_image/tournament/TournamentCard", 6);
-	}
-
-	void addScenario3(){
-		addQuest("Search for the Holy Grail", 5, "*", "card_image/quest/questCard9", 1);
-		addQuest("Test of the Green Knight", 4, "Green Knight", "card_image/quest/questCard10", 1);
-		addQuest("Vanquish King Arthur's Enemies", 3, "", "card_image/quest/questCard2", 2);
-		addEvent("Chivalrous Deed", "lowest rank and shield receives 3 shields", "card_image/events/eventCard1", 1);
-		addTournament("Tournament at Camelot", 3, "card_image/tournament/TournamentCard", 6);
 	}
 	void addQuestCards(){
 		/* 1 Search for the Holy Grail */
@@ -308,10 +311,10 @@ public class Deck{
 		addEvent("Pox", "All players except player drawing this card lose 1 shield", "card_image/events/eventCard2", 1);
 
 		/* 1 Plague */
-		//addEvent("Plague", "Drawer loses 2 shields if possible", "card_image/events/eventCard3", 1);
+		addEvent("Plague", "Drawer loses 2 shields if possible", "card_image/events/eventCard3", 1);
 
 		/* 2 King's Recognition */
-		//addEvent("King's Recognition", "The next player(s) to complete a quest will receive 2 extra shields", "card_image/events/eventCard4", 2);
+		addEvent("King's Recognition", "The next player(s) to complete a quest will receive 2 extra shields", "card_image/events/eventCard4", 2);
 
 		/* 2 Queen's Favor */
 		//addEvent("Queen's Favor", "The lowest ranked player(s) immediately receives 2 Adventure cards", "card_image/events/eventCard5", 2);
@@ -323,7 +326,7 @@ public class Deck{
 		//addEvent("King's Call to Arms", "Highest ranked player(s) must discard 1 weapon, if unable 2 foe cards must be discarded", "card_image/events/eventCard7", 1);
 
 		/* 1 Properity Throughout the Realm */
-		//addEvent("Prosperity Throughout the Realm", "All players may immediately draw 2 adventure Cards", "card_image/events/eventCard8", 1);
+		addEvent("Prosperity Throughout the Realm", "All players may immediately draw 2 adventure Cards", "card_image/events/eventCard8", 1);
 	}
 
 	void addTestCard(string name, int minBid, string asset, int copies){

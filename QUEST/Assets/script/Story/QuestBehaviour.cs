@@ -106,7 +106,13 @@ public class QuestBehaviour : GameBehaviour {
 
 						// Payout winners.
 						for(int i = 0 ; i < _playersIn.Count ; i++){
-							Game.GameManager.payShield(_playersIn[i], _questCard.stages);
+							if(Game.GameManager.bonusQuestPoints == true){
+								Game.GameManager.payShield(_playersIn[i], _questCard.stages+2);
+								Debug.Log("Bonus shield win");
+							}
+							else{	
+								Game.GameManager.payShield(_playersIn[i], _questCard.stages);
+							}
 						}
 
 						// Remove AmourCard.
@@ -115,6 +121,7 @@ public class QuestBehaviour : GameBehaviour {
 						}
 
 						// End the quest.
+						Game.GameManager.bonusQuestPoints = false;
 						endQuest();
 						return;
 					}
