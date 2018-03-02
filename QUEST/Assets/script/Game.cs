@@ -74,8 +74,10 @@ public class Game : MonoBehaviour {
 	Card _storyCard;
 	bool activeStoryCard = false;
 
+ 	public bool bonusQuestPoints = false;
 	//tempFix
 	bool allFlip = false;
+
 
 	// Initialization.
 	void Awake(){
@@ -105,6 +107,7 @@ public class Game : MonoBehaviour {
 				discardCard(_tournamentBehaviour.getCurrentTurn());
 				_tournamentBehaviour.endTurn();
 			} else {
+				discardCard(_eventBehaviour.getCurrentTurn());
 				_eventBehaviour.endTurn();
 			}
 		} else {
@@ -465,6 +468,40 @@ public class Game : MonoBehaviour {
 		_players[player_id].hand.RemoveAt(ind);
 	}
 
+	// Remove a card from a players hand by name.
+	public void removeCardByNameInplay(int player_id, string name){
+		int ind = 0;
+		for (int i = 0; i < _players [player_id].inPlay.Count; i++) {
+			if (_players [player_id].inPlay [i].name == name) {
+				ind = i;
+				Debug.Log("inside remove all cards");
+				break;
+			}
+		}
+		_players[player_id].inPlay.RemoveAt(ind);
+	}
+
+	public void removeAllAllies(){
+		List<Card> allAlly = new List<Card>();
+		
+		//Get list of all allies
+		for(int i = 0 ; i < _players.Count ; i++){
+			for(int j = 0 ; j < _players[i].hand.Count; j++){
+				Card currCard = _players[i].hand[j];
+				if(currCard.GetType() == typeof(AllyCard)){
+					allAlly.Add(currCard);	
+				}
+			}
+		}
+
+		//Remove Ally from hand
+		for(int i = 0 ; i < _players.Count; i++){
+			for(int j = 0 ; j < allAlly.Count; j++){
+				removeCardByNameInplay(i,allAlly[j].name);
+			}
+		}
+
+	}
 	// Set a players in play cards.
 	public void setInPlay(int player_id){
 		List<Card> playedCards = playArea.GetComponent<CardArea>().cards;

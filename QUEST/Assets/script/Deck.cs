@@ -149,8 +149,21 @@ public class Deck{
 	void addBoarHunt(){
 		/* 2 Boar Hunt */
 		addQuest("Boar Hunt", 2, "Boar", "card_image/quest/questCard4", 1);
+
 		/* 1 Chivalrous Deed */
 		addEvent("Chivalrous Deed", "lowest rank and shield receives 3 shields", "card_image/events/eventCard1", 1);
+
+		addEvent("Court Called to Camelot", "All Allies in play must be discarded", "card_image/events/eventCard6", 1);
+
+		addEvent("Plague", "Drawer loses 2 shields if possible", "card_image/events/eventCard3", 2);
+
+		/* 2 King's Recognition */
+		addEvent("King's Recognition", "The next player(s) to complete a quest will receive 2 extra shields", "card_image/events/eventCard4", 2);
+
+		addEvent("Prosperity Throughout the Realm", "All players may immediately draw 2 adventure Cards", "card_image/events/eventCard8", 1);
+
+		addEvent("Court Called to Camelot", "All Allies in play must be discarded", "card_image/events/eventCard6", 12);
+
 	}
 
 	void specialHand(){
@@ -302,22 +315,22 @@ public class Deck{
 		addEvent("Pox", "All players except player drawing this card lose 1 shield", "card_image/events/eventCard2", 1);
 
 		/* 1 Plague */
-		//addEvent("Plague", "Drawer loses 2 shields if possible", "card_image/events/eventCard3", 1);
+		addEvent("Plague", "Drawer loses 2 shields if possible", "card_image/events/eventCard3", 1);
 
 		/* 2 King's Recognition */
-		//addEvent("King's Recognition", "The next player(s) to complete a quest will receive 2 extra shields", "card_image/events/eventCard4", 2);
+		addEvent("King's Recognition", "The next player(s) to complete a quest will receive 2 extra shields", "card_image/events/eventCard4", 2);
 
 		/* 2 Queen's Favor */
 		//addEvent("Queen's Favor", "The lowest ranked player(s) immediately receives 2 Adventure cards", "card_image/events/eventCard5", 2);
 
 		/* 2 Court Called to Camelot */
-		//addEvent("Court Called to Camelot", "All Allies in play must be discarded", "card_image/events/eventCard6", 2);
+		addEvent("Court Called to Camelot", "All Allies in play must be discarded", "card_image/events/eventCard6", 2);
 
 		/* 1 King's Call to Arms */
 		//addEvent("King's Call to Arms", "Highest ranked player(s) must discard 1 weapon, if unable 2 foe cards must be discarded", "card_image/events/eventCard7", 1);
 
 		/* 1 Properity Throughout the Realm */
-		//addEvent("Prosperity Throughout the Realm", "All players may immediately draw 2 adventure Cards", "card_image/events/eventCard8", 1);
+		addEvent("Prosperity Throughout the Realm", "All players may immediately draw 2 adventure Cards", "card_image/events/eventCard8", 1);
 	}
 
 	void addTestCard(string name, int minBid, string asset, int copies){
