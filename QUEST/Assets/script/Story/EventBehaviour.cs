@@ -40,8 +40,6 @@ public class EventBehaviour : GameBehaviour {
 						lowest = p.calcRankShields ();
 					}
 				}
-
-				Debug.Log ("Lowest is: " + lowest);
 		
 				// Find the players with the lowest.
 				for (int i = 0; i < numPlayers; i++) {
@@ -108,8 +106,6 @@ public class EventBehaviour : GameBehaviour {
 					p = Game.GameManager.getPlayer(i);
 					if(p.shieldCounter <= lowestVal){
 						lowestVal = p.shieldCounter;
-						//Debug.Log("lowest being added: " + lowestVal + "to player");
-						//lowestPlayers.Add(i);
 					}
 
 				}
@@ -123,8 +119,6 @@ public class EventBehaviour : GameBehaviour {
 				}
 				//give players two adventure cards 
 				for(int i = 0; i < lowestPlayers.Count; i++){
-					Debug.Log("lowestPlayers: " + lowestPlayers[i]);
-
 					p = Game.GameManager.getPlayer(lowestPlayers[i]);
 					for(int j = 0; j < 2; j++){
 						p.addCard(Game.GameManager.drawAdventureCard());
