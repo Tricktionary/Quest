@@ -421,8 +421,15 @@ public class Game : MonoBehaviour {
 	}
 
 	// Determine if the cards in the play area are valid.
-	public bool playAreaValid(){
-		List<Card>cards = playArea.GetComponent<CardArea>().cards;
+	public bool playAreaValid(List<Card> cards = null){
+		bool doPrompt = true;
+
+		if (cards == null) {
+			cards = playArea.GetComponent<CardArea> ().cards;
+		} else {
+			doPrompt = false;
+		}
+
 		int amourCardCounter = 0;
 		List<WeaponCard> weapons = new List<WeaponCard>();
 
@@ -430,7 +437,9 @@ public class Game : MonoBehaviour {
 			// Return false if there are any foe cards.
 			if(cards[i].GetType() == typeof(FoeCard)){
 				logger.warn("Play area invalid: you can't submit foes to the play area!");
-				Prompt.PromptManager.statusPrompt("You can't submit foes to the play area!");
+				if (doPrompt) {
+					Prompt.PromptManager.statusPrompt ("You can't submit foes to the play area!");
+				}
 				return false;
 			}
 
@@ -439,7 +448,9 @@ public class Game : MonoBehaviour {
 				for(int x = 0 ; x < weapons.Count; x++){
 					if(currWeapon.name == weapons[x].name){
 						logger.warn("Play area invalid: you can't submit duplicate weapons to the play area!");
-						Prompt.PromptManager.statusPrompt("You can't submit duplicate weapons.");
+						if (doPrompt) {
+							Prompt.PromptManager.statusPrompt ("You can't submit duplicate weapons.");
+						}
 						return false;
 					}
 				}
@@ -533,8 +544,8 @@ public class Game : MonoBehaviour {
 	//Remove Cards from player hand
 	public void removeCards(int playerid , List<Card> cards){
 		for(int i = 0; i < cards.Count; i++){
-			_players [playerid].hand.Remove (cards [i]);
-//			removeCardByName(playerid, cards[i].name);
+			_players[playerid].hand.Remove(cards[i]);
+			//removeCardByName(playerid, cards[i].name);
 		}
 	}
 
@@ -816,32 +827,40 @@ public class Game : MonoBehaviour {
 
 	//Pay the player shields
 	public void payShield(int playerId, int shields){
-		logger.info("Paying " + shields + " to Player " + (playerId + 1) + ".");
+		logger.info("Paying " + shields + " shields to Player " + (playerId + 1) + ".");
 		_players[playerId].AddShields(shields);
 	}
 
 
 	// Discard a card.
-	public void discardCard(int player_id){
+	public void discardCard(int player_id, List<Card> discardList = null){
+
+		List<Card> disCards = new List<Card>();
 
 		// Handle discard.
-		List<Card> disCards = discardPile.GetComponent<CardArea>().cards;
+		if (discardList == null) {
+			disCards = discardPile.GetComponent<CardArea> ().cards;
+		} else {
+			disCards = discardList;
+		}
 
 		if (disCards.Count > 0){
 			// Remove the cards from the player.
 			removeCards(player_id, disCards);
 
-			// Discard.
-			for(int i = 0; i < disCards.Count; i++){
-				logger.info("Player " + (player_id + 1) + " discarded: " + disCards[i].name);
-				_discardPileAdventure.Discard(disCards[i]);
-			}
+			if (discardList == null) {
+				// Discard.
+				for (int i = 0; i < disCards.Count; i++) {
+					logger.info ("Player " + (player_id + 1) + " discarded: " + disCards [i].name);
+					_discardPileAdventure.Discard (disCards [i]);
+				}
 
-			// Create a new list.
-			discardPile.GetComponent<CardArea>().cards = new List<Card>();
+				// Create a new list.
+				discardPile.GetComponent<CardArea> ().cards = new List<Card> ();
 
-			foreach (Transform child in discardPile.transform) {
-				GameObject.Destroy (child.gameObject);
+				foreach (Transform child in discardPile.transform) {
+					GameObject.Destroy (child.gameObject);
+				}
 			}
 		}
 	}

@@ -10,7 +10,7 @@ public class UnitTests {
 	[Test]
 	//This test have a small chance to fail. This is because it is testing shuffle which means in a very small chance it will shuffle unevenly.
 	public void Test_Deck() {
-		int currentStoryCardTotal = 23;			//Total Cards
+		int currentStoryCardTotal = 19;			//Total Cards
 		int currentAdventureCardTotal = 117;	//Total Cards
 		//test story init, then adventure init then blank (discard) init
 		Deck deck = new Deck ("Story");
@@ -40,9 +40,203 @@ public class UnitTests {
 		discard.Discard (deck.Draw ());
 		discard.Discard (deck.Draw ());
 		Assert.AreEqual (discard.GetSize(), 3);
+	}
 
 
+	// Test drawing from story deck.
+	[Test]
+	public void Test_StoryDeckDraw(){
+		Deck deck = new Deck ("Story");
+		int size = deck.GetSize();
+		Card c = deck.Draw();
+		Assert.AreEqual ((size - 1), deck.GetSize ());
+	}
 
+	// Test drawing from adventure deck.
+	[Test]
+	public void Test_AdventureDeckDraw(){
+		Deck deck = new Deck ("Adventure");
+		int size = deck.GetSize();
+		Card c = deck.Draw();
+		Assert.AreEqual ((size - 1), deck.GetSize ());
+	}
+
+	// Test adding multiple cards.
+	[Test]
+	public void Test_addCardsToPlayerHand(){
+		Game gameTester = new Game();
+
+		Player player = new Player(1);
+
+		gameTester.addPlayer (player);
+
+		Deck deck = new Deck ("Adventure");
+
+		List<Card> cards = new List<Card>();
+
+		cards.Add(deck.Draw());
+		cards.Add(deck.Draw());
+
+		gameTester.addCardsToPlayerHand(0, cards);
+
+		Assert.AreEqual(player.hand.Count, 2);
+	}
+
+	// Stage cannot contain duplicate weapons.
+	[Test]
+	public void Test_StageDuplicateWeapons(){
+		Game gameTester = new Game();
+		gameTester._questBehaviour = new QuestBehaviour ();
+
+		Player player = new Player(1);
+
+		gameTester.addPlayer(player);
+
+		List<Card> cards = new List<Card>();
+
+		cards.Add(new WeaponCard("Excalibur", 30, "card_image/weapons/weaponCard3"));
+		cards.Add(new WeaponCard("Excalibur", 30, "card_image/weapons/weaponCard3"));
+
+		Assert.AreEqual(gameTester._questBehaviour.stageValid(cards, false), -1);
+	}
+
+
+	// Stage cannot contain multiple foes.
+	[Test]
+	public void Test_StageMultipleFoes(){
+		Game gameTester = new Game();
+		gameTester._questBehaviour = new QuestBehaviour ();
+		gameTester._questBehaviour.setCard(new QuestCard("Repel the Saxxon Raiders", 2, "Saxon", "card_image/quest/questCard3"));
+
+		Player player = new Player(1);
+
+		gameTester.addPlayer(player);
+
+		List<Card> cards = new List<Card>();
+
+		cards.Add(new FoeCard("Thieves","Thieves", 5, 5, false, "card_image/foe/foeCard4"));
+		cards.Add(new FoeCard("Thieves","Thieves", 5, 5, false, "card_image/foe/foeCard4"));
+
+		Assert.AreEqual(gameTester._questBehaviour.stageValid(cards, false), -1);
+	}
+
+	// Test that getInPlay(player_id) correct retrieves cards.
+	[Test]
+	public void Test_getPlayersCardsInPlay(){
+		Game gameTester = new Game();
+
+		Player player = new Player(1);
+
+		gameTester.addPlayer (player);
+
+		Deck deck = new Deck ("Adventure");
+
+		Card firstCard = deck.Draw();
+		Card secondCard = deck.Draw();
+
+		player.addCard (firstCard);
+		player.addCard (secondCard);
+
+		Assert.AreEqual (gameTester.getInPlay (0), player.inPlay);
+	}
+
+	// Test that getRankPower produces correct results.
+	[Test]
+	public void Test_getRankPower(){
+		Game gameTester = new Game();
+
+		Assert.AreEqual (gameTester.getRankPower (0), 5);
+		Assert.AreEqual (gameTester.getRankPower (1), 10);
+		Assert.AreEqual (gameTester.getRankPower (2), 20);
+	}
+
+	// Test that getRankAsset produces correct results.
+	[Test]
+	public void Test_getRankAsset(){
+		Game gameTester = new Game();
+
+		Assert.AreEqual (gameTester.getRankAsset (0), "card_image/rank/rankCard1");
+		Assert.AreEqual (gameTester.getRankAsset (1), "card_image/rank/rankCard2");
+		Assert.AreEqual (gameTester.getRankAsset (2), "card_image/rank/rankCard3");
+	}
+
+	// Test if discarding actually removes card from players hand.
+	[Test]
+	public void Test_discardCard(){
+		Game gameTester = new Game();
+
+		Player player = new Player(1);
+
+		gameTester.addPlayer (player);
+
+		Deck deck = new Deck ("Adventure");
+
+		Card firstCard = deck.Draw();
+		Card secondCard = deck.Draw();
+
+		player.addCard(firstCard);
+		player.addCard(secondCard);
+
+		// Add the cards to the discard pile.
+		List<Card> discardList = new List<Card>();
+		discardList.Add (firstCard);
+
+		// Discard cards in the discard area.
+		gameTester.discardCard(0, discardList);
+
+		Assert.AreEqual (player.hand.Count, 1);
+	}
+
+	// Play area is not valid if it contains duplicate weapons.
+	[Test]
+	public void Test_PlayAreaDuplicateWeapons(){
+		Game gameTester = new Game ();
+
+		List<Card> cards = new List<Card>();
+
+		cards.Add(new WeaponCard("Excalibur", 30, "card_image/weapons/weaponCard3"));
+		cards.Add(new WeaponCard("Excalibur", 30, "card_image/weapons/weaponCard3"));
+
+		Assert.False (gameTester.playAreaValid (cards));
+	}
+
+	// Play area is not valid if it contains a foe.
+	[Test]
+	public void Test_PlayAreaFoes(){
+		Game gameTester = new Game ();
+
+		List<Card> cards = new List<Card>();
+
+		cards.Add(new FoeCard("Thieves","Thieves", 5, 5, false, "card_image/foe/foeCard4"));
+
+		Assert.False (gameTester.playAreaValid (cards));
+	}
+
+	// Play area is not valid if it contains more than one amour card.
+	[Test]
+	public void Test_PlayAreaTooManyAmour(){
+		Game gameTester = new Game ();
+
+		List<Card> cards = new List<Card>();
+
+		cards.Add(new AmourCard("Amour", 10, 1, "card_image/special/specialCard3"));
+		cards.Add(new AmourCard("Amour", 10, 1, "card_image/special/specialCard3"));
+
+		Assert.False (gameTester.playAreaValid (cards));
+	}
+
+	// Play area containing amour and non-duplicate weapons should be valid.
+	[Test]
+	public void Test_PlayAreaValid(){
+		Game gameTester = new Game ();
+
+		List<Card> cards = new List<Card>();
+
+		cards.Add(new AmourCard("Amour", 10, 1, "card_image/special/specialCard3"));
+		cards.Add(new WeaponCard("Excalibur", 30, "card_image/weapons/weaponCard3"));
+		cards.Add(new WeaponCard("Lance", 20, "card_image/weapons/weaponCard4"));
+
+		Assert.True (gameTester.playAreaValid (cards));
 	}
 
 	[Test]
@@ -68,12 +262,6 @@ public class UnitTests {
 		player1.AddShields(10);
 
 		Assert.AreEqual(player1.shieldCounter,10);
-		player1.Rankup();
-
-		Assert.AreEqual(player1.rank ,1);
-		Assert.AreEqual(player1.bp ,10);
-		Assert.AreEqual(player1.shieldCounter,5);
-
 
 		//Receiving Card Test
 		player1.addPlayCard(deck.Draw());

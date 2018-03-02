@@ -106,9 +106,11 @@ public class QuestBehaviour : GameBehaviour {
 
 						// Payout winners.
 						for(int i = 0 ; i < _playersIn.Count ; i++){
-							if(Game.GameManager.bonusQuestPoints == true){
-								Game.GameManager.payShield(_playersIn[i], _questCard.stages+2);
-								Debug.Log("Bonus shield win");
+							Game.GameManager.logger.info("Player " + (_playersIn[i] + 1) + " won the quest!");
+              
+							if(Game.GameManager.bonusQuestPoints){
+								Game.GameManager.payShield(_playersIn[i], _questCard.stages + 2);
+								Game.GameManager.logger.info("Player " + (_playersIn[i] + 1) + " recieved 2 extra shields because of King's Recognition.");
 							}
 							else{	
 								Game.GameManager.payShield(_playersIn[i], _questCard.stages);
@@ -489,7 +491,7 @@ public class QuestBehaviour : GameBehaviour {
 	}
 
 	// Check to make sure a stage is valid.
-	public int stageValid(List<Card> currStage){
+	public int stageValid(List<Card> currStage, bool doPrompt = true){
 		Card currCard = null;
 		int power = 0;
 		int foeCount = 0;
@@ -504,8 +506,10 @@ public class QuestBehaviour : GameBehaviour {
 
 				for(int x = 0 ; x < weapons.Count; x++){
 					if(currWeapon.name == weapons[x].name){
-						Game.GameManager.logger.warn("Quest setup is invalid: duplicate weapons.");
-						Prompt.PromptManager.statusPrompt("Quest Invalid: Duplicate weapons.");
+						if (doPrompt) {
+							Game.GameManager.logger.warn("Quest setup is invalid: duplicate weapons.");
+							Prompt.PromptManager.statusPrompt ("Quest Invalid: Duplicate weapons.");
+						}
 						return -1;
 					}
 				}
@@ -520,10 +524,16 @@ public class QuestBehaviour : GameBehaviour {
 				// Handle feature foe.
 				if(_questCard.featuredFoe == currFoe.type){
 					power += currFoe.hiPower;
+					if (doPrompt) {
+						Game.GameManager.logger.info ("Using high power for " + currFoe.name + " because it is featured.");
+					}
 				} else if(_questCard.featuredFoe == "*") {
 					power += currFoe.hiPower;
 				} else {
 					power += currFoe.loPower;
+					if (doPrompt) {
+						Game.GameManager.logger.info ("Using low power for " + currFoe.name + " because it is NOT featured.");
+					}
 				}
 				foeCount++;
 
@@ -534,8 +544,10 @@ public class QuestBehaviour : GameBehaviour {
 		}
 
 		if(foeCount > 1 || foeCount <= 0){
-			Game.GameManager.logger.warn("Quest setup is invalid: each stage must have exactly 1 foe.");
-			Prompt.PromptManager.statusPrompt("Quest Invalid: Each stage must exactly have 1 foe.");
+			if (doPrompt) {
+				Game.GameManager.logger.warn("Quest setup is invalid: each stage must have exactly 1 foe.");
+				Prompt.PromptManager.statusPrompt ("Quest Invalid: Each stage must exactly have 1 foe.");
+			}
 			return -1;
 		}
 
