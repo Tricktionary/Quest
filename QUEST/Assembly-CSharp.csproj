@@ -67,6 +67,7 @@
      <Compile Include="Assets\script\EventCard.cs" />
      <Compile Include="Assets\script\FoeCard.cs" />
      <Compile Include="Assets\script\Game.cs" />
+     <Compile Include="Assets\script\Logger.cs" />
      <Compile Include="Assets\script\MainMenu.cs" />
      <Compile Include="Assets\script\Player.cs" />
      <Compile Include="Assets\script\popUp.cs" />
