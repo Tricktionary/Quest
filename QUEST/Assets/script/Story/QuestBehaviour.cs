@@ -90,7 +90,7 @@ public class QuestBehaviour : GameBehaviour {
 
 				// Check if there are still players.
 				if (participatingPlayers == 0) {
-					Debug.Log("Oh no! Everyone died!");
+					Game.GameManager.logger.info("Quest is over and everyone died!\t");
 
 					// End the quest.
 					endQuest();
@@ -102,7 +102,7 @@ public class QuestBehaviour : GameBehaviour {
 
 					// If there are no more stages, we have winners.
 					if (_currStage >= _stagePower.Count){
-						Debug.Log ("We have winner(s)!");
+						Game.GameManager.logger.info("Quest is over and we have winner(s)!");
 
 						// Payout winners.
 						for(int i = 0 ; i < _playersIn.Count ; i++){
@@ -130,12 +130,15 @@ public class QuestBehaviour : GameBehaviour {
 					_setupWeapons = true;
 					_showResults = false;
 
+					Game.GameManager.logger.info("Swithing back to setup weapons state.");
+
 					// Go back to the first player who is still alive.
 					participatingPlayerIndex = 0;
 					_turnId = _playersIn[0];
 
 					// Pay everyone 1 adventure card.
 					for(int i = 0; i < _playersIn.Count; i++){
+						Game.GameManager.logger.info("Giving Player " + (_playersIn[i] + 1) + " an adventure card for passing the stage.");
 						Game.GameManager.giveCard(_playersIn[i]);
 					}
 
@@ -186,11 +189,14 @@ public class QuestBehaviour : GameBehaviour {
 					if (participatingPlayerIndex > (participatingPlayers - 1)) {
 						_setupWeapons = false;
 						_showResults = true;
+
+						Game.GameManager.logger.info("All playing players have setup weapons for stage " + (_currStage + 1));
+
 						participatingPlayerIndex = 0;
 						_turnId = _playersIn[0];
 
 						// Unflip the stage cards.
-						Debug.Log("Flipping cards in stage " + _currStage);
+						Game.GameManager.logger.info("Flipping cards in stage " + (_currStage + 1));
 						List<Card> cardsToReveal = Game.GameManager.Stages[_currStage].GetComponent<CardArea>().cards;
 						for(int i = 0; i < cardsToReveal.Count; i++){
 							cardsToReveal[i].flipCard(false);
@@ -210,7 +216,6 @@ public class QuestBehaviour : GameBehaviour {
 							if(aiPlayCard != null){
 								Game.GameManager.setInPlayAI(_turnId,aiPlayCard);
 							}
-							//Debug.Log(aiPlayCard.Count);
 							endTurn();
 						}
 					}
@@ -220,7 +225,7 @@ public class QuestBehaviour : GameBehaviour {
 
 				// Weapon setup is not valid.
 				} else {
-					Debug.Log("Play area is invalid");
+					Game.GameManager.logger.info("Play area is invalid!");
 					//Prompt.PromptManager.statusPrompt("You can't submit foe/too many amours to the play area!");
 				}
 
@@ -285,11 +290,6 @@ public class QuestBehaviour : GameBehaviour {
 
 						// Clear the status prompt.
 						Prompt.PromptManager.statusPrompt ("");
-
-					// Incorrect setup.
-					} else {
-
-						Debug.Log("Quest is invalid, setup correctly.");
 					}
 				}
 			}
@@ -298,6 +298,8 @@ public class QuestBehaviour : GameBehaviour {
 
 	// Ends the currect quest.
 	public void endQuest(){
+		Game.GameManager.logger.info("Quest has been fully reset and ended.");
+
 		// Reset the quest behaviour.
 		_sponsorId = -1;
 		_turnId = 0;
@@ -326,6 +328,8 @@ public class QuestBehaviour : GameBehaviour {
 			// Prompt the user to setup the quest.
 			Prompt.PromptManager.statusPrompt("Please set up the Quest.");
 
+			Game.GameManager.logger.info("Player " + (_turnId + 1) + " decided to sponsor the quest.");
+
 			// Set the sponsor and setup the stages.
 			createQuest(_turnId);
 
@@ -343,22 +347,22 @@ public class QuestBehaviour : GameBehaviour {
 				for(int i = 0 ; i < _questCard.stages ; i++){
 					Game.GameManager.loadCards(AIcards[i],stages[i]);
 				}
-
 				//Remove Cards from AI HAND
 				for(int i = 0 ; i < AIcards.Count ;i++){
 					for(int j = 0 ; j < AIcards[i].Count;j++){
 						Game.GameManager.removeCardByName(_turnId,AIcards[i][j].name);
 					}
 				}
-
-
 				endTurn();
 			}
 
 
 		// The user doesn't want to sponsor the quest.
 		} else {
+			Game.GameManager.logger.info("Player " + (_turnId + 1) + " decided NOT to sponsor the quest.");
+
 			if(_asked >= Game.GameManager.getNumberOfPlayers() ){
+				Game.GameManager.logger.info("Nobody wanted to sponsor the quest!");
 				endQuest();
 				return;
 			}
@@ -385,13 +389,17 @@ public class QuestBehaviour : GameBehaviour {
 		// The user doesn't want to join the quest.
 		if (!answer) {
 			// Remove the players from the players in the quest.
-			_playersIn.Remove(_turnId);
+			_playersIn.Remove (_turnId);
+			Game.GameManager.logger.info ("Player " + (_turnId + 1) + " decided to NOT join the quest.");
+		} else {
+			Game.GameManager.logger.info("Player " + (_turnId + 1) + " decided to join the quest.");
 		}
 
 		// If we have asked all the players.
 		if (_asked >= (Game.GameManager.getNumberOfPlayers() - 1)) {
 
 			if(_playersIn.Count == 0 ){
+				Game.GameManager.logger.info("Ending the quest because no players joined.");
 				endQuest();
 				return;
 			}
@@ -400,11 +408,13 @@ public class QuestBehaviour : GameBehaviour {
 
 				// Pay everyone that join 1 adventure Card.
 				for(int i = 0 ; i<_playersIn.Count ; i++){
+					Game.GameManager.logger.info("Giving Player " + (_playersIn[i] + 1) + " one adventure card for joining the quest.");
 					Game.GameManager.giveCard(_playersIn[i]);
 				}
 
 				// Move to setup weapon phase.
 				_setupWeapons = true;
+				Game.GameManager.logger.info("Moving to setup weapons state.");
 
 				participatingPlayers = _playersIn.Count;
 
@@ -452,17 +462,19 @@ public class QuestBehaviour : GameBehaviour {
 
 		// Add the rank bonus.
 		power += Game.GameManager.getRankPower(Game.GameManager.getPlayer(_turnId).rank);
-		Debug.Log("Current Stage PowerLevel: "+ _stagePower[_currStage]);
+		Game.GameManager.logger.info("Stage " + (_currStage + 1) + " has a power level of " + _stagePower[_currStage] + ".");
+		Game.GameManager.logger.info("Player " + (_turnId + 1) + " has a power level of " + power + ".");
 		return power > _stagePower[_currStage];
 	}
 
 	public void didYouSurvivePrompt(){
 		if (didYouSurvive(Game.GameManager.getInPlay(_turnId))){
 			Prompt.PromptManager.statusPrompt ("You passed stage " + (_currStage + 1) + "!");
+			Game.GameManager.logger.info("Player " + (_turnId + 1) + " passed stage " + (_currStage + 1) + ".");
 		} else {
 			// Player died, remove them.
 			_deadPlayers.Add(_turnId);
-
+			Game.GameManager.logger.info("Player " + (_turnId + 1) + " died on stage " + (_currStage + 1) + ".");
 			Prompt.PromptManager.statusPrompt ("You died on stage " + (_currStage + 1) + "!");
 		}
 	}
@@ -483,6 +495,7 @@ public class QuestBehaviour : GameBehaviour {
 
 				for(int x = 0 ; x < weapons.Count; x++){
 					if(currWeapon.name == weapons[x].name){
+						Game.GameManager.logger.warn("Quest setup is invalid: duplicate weapons.");
 						Prompt.PromptManager.statusPrompt("Quest Invalid: Duplicate weapons.");
 						return -1;
 					}
@@ -512,6 +525,7 @@ public class QuestBehaviour : GameBehaviour {
 		}
 
 		if(foeCount > 1 || foeCount <= 0){
+			Game.GameManager.logger.warn("Quest setup is invalid: each stage must have exactly 1 foe.");
 			Prompt.PromptManager.statusPrompt("Quest Invalid: Each stage must exactly have 1 foe.");
 			return -1;
 		}
@@ -538,6 +552,7 @@ public class QuestBehaviour : GameBehaviour {
 		// Check ascending power level.
 		for(int i = 0; i < powerLevels.Count - 1; i++){
 			if(powerLevels[i] >= powerLevels[i + 1]){
+				Game.GameManager.logger.warn("Quest setup is invalid: not ascending power level.");
 				Prompt.PromptManager.statusPrompt("Quest Invalid: Not ascending power.");
 				return false;
 			}
@@ -551,7 +566,6 @@ public class QuestBehaviour : GameBehaviour {
 
 /* AI */
 	public void AIStageSetup(List<List<Card>> stages){
-		Debug.Log(stages.Count);
 		List<int> powerLevels = new List<int>();
 		int currPower = 0;
 

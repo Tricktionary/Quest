@@ -90,7 +90,8 @@ public class TournamentBehaviour : GameBehaviour {
 						Game.GameManager.clearInPlay (_playersIn[i]);
 					}
 
-					Prompt.PromptManager.statusPrompt("The following players have won " + shieldPrize + " shields: " + winners_string.Substring(0, winners_string.Length - 2));
+					Game.GameManager.logger.info("The following player(s) have won " + shieldPrize + " shields: " + winners_string.Substring(0, winners_string.Length - 2));
+					Prompt.PromptManager.statusPrompt("The following player(s) have won " + shieldPrize + " shields: " + winners_string.Substring(0, winners_string.Length - 2));
 
 					_tournamentConcluded = true;
 				} else {
@@ -125,8 +126,6 @@ public class TournamentBehaviour : GameBehaviour {
 
 				// Prompt to join the tournament.
 				Prompt.PromptManager.promptMessage ("tournament");
-			} else {
-				Debug.Log ("Tournament in progress!");
 			}
 		}
 	}
@@ -162,6 +161,8 @@ public class TournamentBehaviour : GameBehaviour {
 				power += Game.GameManager.getPowerFromCard(cardsInPlay[j]);
 			}
 
+			Game.GameManager.logger.info("Player " + (_playersIn[i] + 1) + " entered a power level of " + power + ".");
+
 			// Add to power levels and reset.
 			powerLevels.Add(power);
 			power = 0;
@@ -186,6 +187,8 @@ public class TournamentBehaviour : GameBehaviour {
 
 	// Ends the current tournament.
 	public void endTournament(){
+		Game.GameManager.logger.info("Ending the tournament!");
+
 		// Reset tournament varaibles.
 		_turnId = 0;
 		_playersIn = new List<int>();
@@ -208,12 +211,16 @@ public class TournamentBehaviour : GameBehaviour {
 		// The user wants to join the tournament.
 		if (!answer) {
 			// Remove the players from the players in the quest.
-			_playersIn.Remove(_turnId);
+			_playersIn.Remove (_turnId);
+			Game.GameManager.logger.info ("Player " + (_turnId + 1) + " decided to NOT join the tournament.");
+		} else {
+			Game.GameManager.logger.info ("Player " + (_turnId + 1) + " decided to join the tournament.");
 		}
 
 		// If we have asked all the players.
 		if (_asked >= (Game.GameManager.getNumberOfPlayers())) {
 			if(_playersIn.Count < 2){
+				Game.GameManager.logger.info("Not enough players joined the tournament!");
 
 				//Pay the one player that joined the tournament
 				for(int i = 0 ; i < _playersIn.Count;i++){
@@ -228,11 +235,14 @@ public class TournamentBehaviour : GameBehaviour {
 
 				//Pay everyone that join 1 adventure Card
 				for(int i = 0 ; i<_playersIn.Count ; i++){
+					Game.GameManager.logger.info("Giving Player " + (_playersIn[i] + 1) + " one card for joining the tournament.");
 					Game.GameManager.giveCard(_playersIn[i]);
 				}
 
 				// Everyone has had the option to join.
 				_joinedUp = true;
+
+				Game.GameManager.logger.info("Starting tournament!");
 
 				// Update the participating players.
 				participatingPlayers = _playersIn.Count;

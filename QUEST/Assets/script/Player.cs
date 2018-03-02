@@ -152,6 +152,7 @@ public class Player {
 
 		while (_shieldCounter >= requirements [_rank]) {
 			_shieldCounter -= requirements [_rank];
+			Game.GameManager.logger.info("Ranking up Player " + _playerId);
 			_rank++;
 			if (_rank == 3) {
 				//END GAME HERE

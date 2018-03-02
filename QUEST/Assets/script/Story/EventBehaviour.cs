@@ -14,6 +14,7 @@ public class EventBehaviour : GameBehaviour {
 
 	// End turn method for when a Event card is in play.
 	public void endTurn(){
+		Game.GameManager.logger.info ("Handling event card: " + _eventCard.name);
 		handleEvent(_eventCard.name);
 	}
 

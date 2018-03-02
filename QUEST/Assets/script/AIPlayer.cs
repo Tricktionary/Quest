@@ -39,7 +39,7 @@ public class AIPlayer : Player {
 	}
 
 	bool someoneCouldWin(int value, List<Player> players) {
-		int[] requirements = new int[]{ 5, 7, 10 };
+		int[] requirements = new int[]{ 5, 7, 10, 0};
 		for (int playerId = 0; playerId < players.Count; playerId++) {
 			Player currPlayer = players [playerId];
 			if (currPlayer.shieldCounter + value >= requirements [currPlayer.rank]) {
