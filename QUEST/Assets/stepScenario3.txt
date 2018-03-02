@@ -1,0 +1,12 @@
+Scenario 2:
+
+
+
+Scenario 3:
+
+Handle Special Allies
+player 1 draws
+No one sponsors the quest
+player 3 sponsors and sets up quest
+No one joins except for player 2
+Player 2 plays queen issult and sir tristan getting 35 bp due to bonus

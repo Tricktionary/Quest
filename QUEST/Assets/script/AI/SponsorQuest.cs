@@ -92,6 +92,9 @@ public class SponsorQuest: AIBehaviour {
 					bool stageSet = false;
 					while (!stageSet) {
 						while(true) {
+							if (foeCards.Count == 0) {
+								return null;
+							}
 							if (foeCards [0].power (questCard) < stagePower) {
 								currFoe = foeCards [0];
 								index = 0;
