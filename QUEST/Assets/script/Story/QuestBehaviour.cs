@@ -175,8 +175,6 @@ public class QuestBehaviour : GameBehaviour {
 					// Move to next player in _playersIn.
 					participatingPlayerIndex++;
 
-
-
 					// If we have finished checking all the participating players.
 					if (participatingPlayerIndex > (participatingPlayers - 1)) {
 						_setupWeapons = false;
@@ -184,8 +182,12 @@ public class QuestBehaviour : GameBehaviour {
 						participatingPlayerIndex = 0;
 						_turnId = _playersIn[0];
 
-						//Unflip Cards
-						//TODO : Unflip Cards
+						// Unflip the stage cards.
+						Debug.Log("Flipping cards in stage " + _currStage);
+						List<Card> cardsToReveal = Game.GameManager.Stages[_currStage].GetComponent<CardArea>().cards;
+						for(int i = 0; i < cardsToReveal.Count; i++){
+							cardsToReveal[i].flipCard(false);
+						}
 
 						didYouSurvivePrompt();
 
@@ -233,8 +235,8 @@ public class QuestBehaviour : GameBehaviour {
 					if (_questReady) {
 
 						// Flip the staged cards.
-						List<Card> stagedCards = Game.GameManager.getStagedCards (_questCard.stages);
-						for(int x = 0 ; x < 2 ; x++){
+						List<Card> stagedCards = Game.GameManager.getStagedCards(_questCard.stages);
+						for(int x = 0 ; x < 4 ; x++){
 							for (int i = 0; i < stagedCards.Count; i++) {
 								stagedCards[i].flipCard (true);
 							}
@@ -327,14 +329,22 @@ public class QuestBehaviour : GameBehaviour {
 			if(Game.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
 				_questReady = true;
 				List<List<Card>> AIcards = Game.GameManager.AISponsorCards(_turnId);
+				AIStageSetup(AIcards);
+				List<GameObject> stages = Game.GameManager.Stages;
 
+				//Display Cards
+				for(int i = 0 ; i < _questCard.stages ; i++){
+					Game.GameManager.loadCards(AIcards[i],stages[i]);
+				}
+
+				//Remove Cards from AI HAND
 				for(int i = 0 ; i < AIcards.Count ;i++){
-					for(int j = 0 ; j < AIcards[i].Count; j++){
-						Debug.Log(AIcards[i][j]);
+					for(int j = 0 ; j < AIcards[i].Count;j++){
+						Game.GameManager.removeCardByName(_turnId,AIcards[i][j].name);
 					}
 				}
 
-				AIStageSetup(AIcards);
+
 				endTurn();
 			}
 
