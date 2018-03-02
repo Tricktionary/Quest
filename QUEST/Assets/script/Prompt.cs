@@ -28,10 +28,13 @@ public class Prompt : MonoBehaviour {
 	public void promptMessage(string messageType){
 		promptObj.SetActive(true);
 		if(messageType == "sponsor"){
+			Game.GameManager.logger.info("Displaying sponsor prompt!");
 			promptTxt.GetComponent<UnityEngine.UI.Text>().text = sponsorText;
 		} else if (messageType == "quest"){
+			Game.GameManager.logger.info("Displaying join quest prompt!");
 			promptTxt.GetComponent<UnityEngine.UI.Text>().text = questText;
 		} else if (messageType == "tournament"){
+			Game.GameManager.logger.info("Displaying join tournament prompt!");
 			promptTxt.GetComponent<UnityEngine.UI.Text>().text = tournamentText;
 		}
 	}

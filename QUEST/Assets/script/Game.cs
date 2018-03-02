@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class Game : MonoBehaviour {
 
+	// Create the logger.
+	public Logger logger = new Logger();
+
 	private static Game _instance;
 	public static Game GameManager { get { return _instance; } }
 
@@ -79,7 +82,7 @@ public class Game : MonoBehaviour {
 		if(!_instance) {
 			_instance = this;
 		}
-		Debug.Log("Game running...");
+		logger.info("Initializing Game object.");
 	}
 
 	// End a turn (fires when the End Turn button is clicked).
@@ -88,6 +91,7 @@ public class Game : MonoBehaviour {
 		// If the hand has too many cards.
 		if(Hand.GetComponent<CardArea>().cards.Count >= 13 ){
 			Prompt.PromptManager.statusPrompt("Too many cards, please discard or use.");
+			logger.info("There are too many cards in Player " + (_currentPlayer + 1) + "'s hand, they must discard or play.");
 			return;
 		}
 
@@ -104,33 +108,21 @@ public class Game : MonoBehaviour {
 				_eventBehaviour.endTurn();
 			}
 		} else {
-			Debug.Log("You need to draw a card before ending your turn.");
+			logger.info("Player " + (_currentPlayer + 1) + " must draw a card before ending their turn.");
 		}
 	}
 
 	// Draw a card (fires when the button is clicked).
 	public void DrawCard(){
-
-		//If the hand has too many cards.
-		/*
-		if(Hand.GetComponent<CardArea>().cards.Count >= 13 ){
-			Prompt.PromptManager.statusPrompt("Too many cards, please discard or use.");
-			return;
-		}
-
-		discardCard();
-		*/
-
 		// A story card exists, can't draw.
 		if (activeStoryCard){
-			Debug.Log ("Story card has been drawn, can't draw another.");
+			logger.info ("A story card has already been drawn.");
 
 			// Story card hasn't been drawn yet.
 		} else {
+			logger.info("Drawing a story card...");
 			// Draw a story card.
-
 			_storyCard = _storyDeck.Draw();
-			Debug.Log(_storyCard);
 			GameObject storyCardObj = null;
 
 			// Discard.
@@ -139,6 +131,7 @@ public class Game : MonoBehaviour {
 
 			//Out of Cards reshuffle
 			if(_storyDeck.GetSize() == 0){
+				logger.info("The check has ran out, reshuffling the deck!");
 				_storyDeck = _discardPileStory;
 				_discardPileStory = new Deck ("");
 			}
@@ -148,16 +141,19 @@ public class Game : MonoBehaviour {
 
 			// A quest card has been drawn.
 			if (_storyCard.GetType() == typeof(QuestCard)) {
+				logger.info("A quest card was drawn: " + _storyCard.name);
 				storyCardObj = Instantiate(QuestCard);
 				_questBehaviour.setCurrentTurn(_currentPlayer);
 				_questBehaviour.setCard(_storyCard);
 				// A tournament card been drawn.
 			} else if (_storyCard.GetType() == typeof(TournamentCard)) {
+				logger.info("A tournament card was drawn: " + _storyCard.name);
 				storyCardObj = Instantiate(TournamentCard);
 				_tournamentBehaviour.setCurrentTurn(_currentPlayer);
 				_tournamentBehaviour.setCard(_storyCard);
 				// A event card has been drawn.
 			} else if (_storyCard.GetType() == typeof(EventCard)) {
+				logger.info("A event card was drawn: " + _storyCard.name);
 				storyCardObj = Instantiate(EventCard);
 				_eventBehaviour.setCurrentTurn(_currentPlayer);
 				_eventBehaviour.setCard(_storyCard);
@@ -170,6 +166,7 @@ public class Game : MonoBehaviour {
 			// Indicate a story card is in play.
 			activeStoryCard = true;
 
+			// Clear the prompt.
 			Prompt.PromptManager.statusPrompt("");
 
 			// Auto end the turn to prompt.
@@ -189,7 +186,7 @@ public class Game : MonoBehaviour {
 
 	// Load a player.
 	public void loadPlayer(int n){
-		Debug.Log("Loading player: " + (n+1));
+		logger.info("Loading player: " + (n + 1));
 		foreach (Transform child in Hand.transform) {
 			GameObject.Destroy(child.gameObject);
 		}
@@ -235,6 +232,7 @@ public class Game : MonoBehaviour {
 		loadPlayer(_currentPlayer);
 
 		// Clean the stages.
+		logger.info("Cleaning cards from stages.");
 		for (int i = 0; i < Stages.Count; i++) {
 			Stages[i].SetActive (true);
 			Stages[i].GetComponent<CardArea>().cards = new List<Card> ();
@@ -370,8 +368,10 @@ public class Game : MonoBehaviour {
 		List<List<Card>> questStages = currAi.sponsorQuest ((QuestCard)_storyCard, _players);
 		return questStages;
 	}
+
 	// Sets up the stages based on the story card.
 	public void setupStages() {
+		logger.info("Setting up stages for quest: " + _storyCard.name);
 		// Get the number of stages for the quest.
 		QuestCard questCard = (QuestCard)_storyCard;
 
@@ -426,7 +426,7 @@ public class Game : MonoBehaviour {
 		for(int i = 0; i < cards.Count; i++){
 			// Return false if there are any foe cards.
 			if(cards[i].GetType() == typeof(FoeCard)){
-				Debug.Log("You can't submit foes to the play area!");
+				logger.warn("Play area invalid: you can't submit foes to the play area!");
 				Prompt.PromptManager.statusPrompt("You can't submit foes to the play area!");
 				return false;
 			}
@@ -435,7 +435,7 @@ public class Game : MonoBehaviour {
 				WeaponCard currWeapon = (WeaponCard)cards[i];
 				for(int x = 0 ; x < weapons.Count; x++){
 					if(currWeapon.name == weapons[x].name){
-						Debug.Log("You Cannot Submit Duplicate weapons.");
+						logger.warn("Play area invalid: you can't submit duplicate weapons to the play area!");
 						Prompt.PromptManager.statusPrompt("You can't submit duplicate weapons.");
 						return false;
 					}
@@ -444,7 +444,7 @@ public class Game : MonoBehaviour {
 
 			}
 			if(cards[i].GetType() == typeof(AmourCard)){
-				Debug.Log("Too Many Amour Cards.");
+				logger.warn("Play area invalid: too many amour cards in the play area!");
 				amourCardCounter++;
 			}
 		}
@@ -485,8 +485,7 @@ public class Game : MonoBehaviour {
 //			removeCardByName(playerid, cards[i].name);
 		}
 	}
-
-
+		
 	public void setQuest(int player_id, List<List<Card>> stages) {
 		//Access each stage in the quest
 		//Set the stage to the next list
@@ -764,7 +763,8 @@ public class Game : MonoBehaviour {
 	}
 
 	//Pay the player shields
-	public void payShield(int playerId,int shields){
+	public void payShield(int playerId, int shields){
+		logger.info("Paying " + shields + " to Player " + (playerId + 1) + ".");
 		_players[playerId].AddShields(shields);
 	}
 
@@ -781,6 +781,7 @@ public class Game : MonoBehaviour {
 
 			// Discard.
 			for(int i = 0; i < disCards.Count; i++){
+				logger.info("Player " + (player_id + 1) + " discarded: " + disCards[i].name);
 				_discardPileAdventure.Discard(disCards[i]);
 			}
 
@@ -791,11 +792,6 @@ public class Game : MonoBehaviour {
 				GameObject.Destroy (child.gameObject);
 			}
 		}
-
-		if(disCards.Count > 0){
-			Debug.Log("Player " + (player_id + 1) + " discarded " + disCards.Count + " cards!");
-		}
-
 	}
 /*
 	Methods in here aren't being used, but might need to be.
@@ -912,6 +908,8 @@ public class Game : MonoBehaviour {
 
 	// Setup non-AI modes.
 	public void genericModeSetup(string storyDeckType){
+		logger.info("Setting up game...");
+
 		// Hide menu.
 		Menu.SetActive(false);
 
@@ -930,22 +928,28 @@ public class Game : MonoBehaviour {
 
 		for(int i = 0 ; i < playerChoice.Count; i++){
 			if (playerChoice[i].GetComponent<Dropdown> ().value == 0) { //huMAN
-				Debug.Log ("Normal Player ID: "+ (i+1));
-				_players.Add(new Player(i+1));
+				logger.info("Creating Player " + (i + 1) + " as a human player.");
+				_players.Add(new Player(i + 1));
 			}
 			else if (playerChoice [i].GetComponent<Dropdown> ().value == 1) { //AI
-				Debug.Log ("AI Player ID: "+ (i+1));
-				_players.Add(new AIPlayer(i+1));
+				logger.info("Creating Player " + (i + 1) + " as an AI player.");
+				_players.Add(new AIPlayer(i + 1));
 			}
 		}
 
 		// Setup decks.
 		_adventureDeck = new Deck("Adventure");
+		logger.info("Created adventure deck with " + _adventureDeck.GetSize() + " cards.");
+
 		_storyDeck = new Deck(storyDeckType);
+		logger.info("Created story deck with " + _storyDeck.GetSize() + " cards.");
+
+		// Make discard piles.
 		_discardPileAdventure = new Deck ("");
 		_discardPileStory = new Deck ("");
 
 		// Populate the players hands.
+		logger.info("Dealing 12 cards from adventure deck to each player.");
 		for(int i = 0; i < _players.Count ; i++){
 			for(int x = 0 ; x < 12 ; x++){
 				_players[i].addCard((_adventureDeck.Draw()));
@@ -958,25 +962,30 @@ public class Game : MonoBehaviour {
 
 	// Runs if the user selects Play PVP.
 	public void NormalMode(){
+		logger.info("Normal mode selected.");
 		genericModeSetup("Story");
 	}
 
 	// Runs if the user selects Quest Only Mode.
 	public void QuestOnlyMode(){
+		logger.info("Quest Only mode selected.");
 		genericModeSetup("QuestOnly");
 	}
 
 	// Runs if the user selects Tournament Only Mode.
 	public void TournamentOnlyMode(){
+		logger.info("Tournament Only mode selected.");
 		genericModeSetup("TournamentOnly");
 	}
 
 	// Runs if the user selects Event Only Mode.
 	public void EventModeOnly(){
+		logger.info("Event Only mode selected.");
 		genericModeSetup("EventOnly");
 	}
 
 	public void boarHunt(){
+		logger.info("Boar Hunt mode selected.");
 		genericModeSetup("BoarHunt");
 	}
 
@@ -984,14 +993,15 @@ public class Game : MonoBehaviour {
 	//Give card to player
 	public void giveCard(int id){
 		_players[id].addCard((_adventureDeck.Draw()));
-		Debug.Log("Giving player " + (id + 1) + " an adventure card.");
 	}
 
+	// Check for a winner of the game.
 	public void checkWinner(){
 		for(int i = 0 ; i < _players.Count ; i++){
 			if(_players[i].rank  == 3){
 				winScreen.SetActive(true);
 				winScreenTxt.GetComponent<UnityEngine.UI.Text>().text = "The Winning Player is "+ _players[i].playerId;
+				logger.info("Player " + (i + 1) + " has won the game!");
 				break;
 			}
 		}
