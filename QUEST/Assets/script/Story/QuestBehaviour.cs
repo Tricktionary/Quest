@@ -190,11 +190,12 @@ public class QuestBehaviour : GameBehaviour {
 
 						// Unflip the stage cards.
 						Game.GameManager.logger.info("Flipping cards in stage " + (_currStage + 1));
-						List<Card> cardsToReveal = Game.GameManager.Stages[_currStage].GetComponent<CardArea>().cards;
-						for(int i = 0; i < cardsToReveal.Count; i++){
-							cardsToReveal[i].flipCard(false);
+						if(_currStage < _questCard.stages){
+							List<Card> cardsToReveal = Game.GameManager.Stages[_currStage].GetComponent<CardArea>().cards;
+							for(int i = 0; i < cardsToReveal.Count; i++){
+								cardsToReveal[i].flipCard(false);
+							}
 						}
-
 						didYouSurvivePrompt();
 
 						// Clear the players inPlay list.
@@ -246,6 +247,14 @@ public class QuestBehaviour : GameBehaviour {
 								stagedCards[i].flipCard (true);
 							}
 						}
+
+						// 2nd time to ensure flipage
+						for(int x = 0 ; x < 4 ; x++){
+							for (int i = 0; i < stagedCards.Count; i++) {
+								stagedCards[i].flipCard (true);
+							}
+						}
+
 
 						//Remove Cards Played in stage
 						Game.GameManager.removeCards(_turnId,stagedCards);

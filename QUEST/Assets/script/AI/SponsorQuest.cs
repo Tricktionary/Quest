@@ -162,7 +162,7 @@ public class SponsorQuest: AIBehaviour {
 				foeCards.Add(currFoe);
 			}
 		}
-			
+
 		//Sort
 		weaponCards.Sort((x, y) => x.bp.CompareTo(y.bp));
 		weaponCards.Reverse ();

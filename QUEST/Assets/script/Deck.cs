@@ -36,21 +36,22 @@ public class Deck{
 			addScenario2();
 			addAdventureCard();
 		}
-		else if (type.Equals("BoarHunt")){
+		else if (type.Equals("scenario1")){
 			addBoarHunt();
 		}
 		else if (type.Equals("specialHand")){
 			specialHand();
+			addAdventureCard();
 		}
 		else if (type.Equals("scenario3")){
 			addScenario3();
 		}
 		else if (type.Equals("specialHand3")){
 			specialHand3();
-
+			addAdventureCard();
 		}
 		//Boar Hunt is Prefix
-		if(type != "BoarHunt" && type != "specialHand" && type != "specialHand3" && type != "scenario3" && type != "scenario2"){
+		if(type != "scenario1" && type != "specialHand" && type != "specialHand3" && type != "scenario3" && type != "scenario2"){
 			// Shuffe the deck of cards after adding.
 			this.Shuffle();
 		}
@@ -146,9 +147,13 @@ public class Deck{
 		/* Amour load */
 		addArmour("Amour", 10, 1, "card_image/special/specialCard3", 8);
 	}
+
 	void addBoarHunt(){
-		/* 2 Boar Hunt */
+		/* 1 Boar Hunt */
 		addQuest("Boar Hunt", 2, "Boar", "card_image/quest/questCard4", 1);
+
+		//addEvent("Prosperity Throughout the Realm", "All players may immediately draw 2 adventure Cards", "card_image/events/eventCard8", 1);
+
 		/* 1 Chivalrous Deed */
 		addEvent("Chivalrous Deed", "lowest rank and shield receives 3 shields", "card_image/events/eventCard1", 1);
 	}
@@ -157,11 +162,12 @@ public class Deck{
 		//Player 1 Hand
 		addAlly("Queen Iseult", 0, 2, 0, 4, null, "Sir Tristan", false, "card_image/special/specialCard8", 1);
 		addFoe("Green Knight","Green Knight", 25, 40, false, "card_image/foe/foeCard5", 2);
+		addFoe("Thieves","Thieves", 5, 5, false, "card_image/foe/foeCard4", 1);
 		addFoe("Saxon Knight","Saxon", 15, 25, false, "card_image/foe/foeCard8", 2);
 		addAlly("Sir Lancelot", 15, 0, 25, 0, "Defend the Queen's Honor", null, false, "card_image/special/specialCard9", 1);
 		addFoe("Mordred","Mordred", 30, 30, true, "card_image/foe/foeCard11", 1);
 		addFoe("Black Knight","Black Knight", 25, 35, false, "card_image/foe/foeCard6", 1);
-		addFoe("Boar","Boar", 5, 15, false, "card_image/foe/foeCard3", 2);
+		addFoe("Boar","Boar", 5, 15, false, "card_image/foe/foeCard3", 1);
 
 
 		//Player 2 Hand
