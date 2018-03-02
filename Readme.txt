@@ -1,5 +1,6 @@
 Team 20:
 #100997767 Andy Bui
+#100998216 Robin Luo
 
 HOW TO INSTALL:
 1. Download the game file
