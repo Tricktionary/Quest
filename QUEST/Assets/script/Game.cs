@@ -458,7 +458,7 @@ public class Game : MonoBehaviour {
 	public void removeCardByName(int player_id, string name){
 		int ind = 0;
 		for (int i = 0; i < _players [player_id].hand.Count; i++) {
-			if (_players [player_id].hand [i].name == name) {
+			if (_players [player_id].hand [i].name.Equals(name)) {
 				ind = i;
 			}
 		}
@@ -481,7 +481,8 @@ public class Game : MonoBehaviour {
 	//Remove Cards from player hand
 	public void removeCards(int playerid , List<Card> cards){
 		for(int i = 0; i < cards.Count; i++){
-			removeCardByName(playerid, cards[i].name);
+			_players [playerid].hand.Remove (cards [i]);
+//			removeCardByName(playerid, cards[i].name);
 		}
 	}
 
