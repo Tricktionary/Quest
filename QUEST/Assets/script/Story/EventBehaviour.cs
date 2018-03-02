@@ -92,12 +92,34 @@ public class EventBehaviour : GameBehaviour {
 				
 
 			} else if (name == "King's Recognition") {
-
 				Game.GameManager.bonusQuestPoints = true;
 				Prompt.PromptManager.statusPrompt("Next players to finish a quest will gain two extra shields");
 
 			} else if (name == "Queen's Favor") {
+				Player p;
+				int lowestVal = 30;
+				int lowerCount = 0;
+				int currPlayer = _turnId;
 
+				List<int> lowestPlayers = new List<int>();
+
+				for(int i = 0; i < Game.GameManager.getNumberOfPlayers(); i++){
+					p = Game.GameManager.getPlayer(i);
+					if(p.shieldCounter <= lowestVal){
+						lowestVal = p.shieldCounter;
+						Debug.Log("lowest being added: " + lowestVal + "to player");
+						lowestPlayers.Add(i);
+					}
+
+				}
+
+				for(int i = 0; i < lowestPlayers.Count; i++){
+					Debug.Log("lowestPlayers: " + lowestPlayers[i]);
+					p = Game.GameManager.getPlayer(lowestPlayers[i]);
+					for(int j = 0; j < 2; j++){
+						p.addCard(Game.GameManager.drawAdventureCard());
+					}
+				}	
 
 
 

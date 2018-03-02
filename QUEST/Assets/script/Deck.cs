@@ -149,8 +149,10 @@ public class Deck{
 	}
 	void addBoarHunt(){
 		addQuest("Boar Hunt", 2, "Boar", "card_image/quest/questCard4", 1);
-		addEvent("Prosperity Throughout the Realm", "All players may immediately draw 2 adventure Cards", "card_image/events/eventCard8", 1);
-		addEvent("Chivalrous Deed", "lowest rank and shield receives 3 shields", "card_image/events/eventCard1", 1);
+		//addEvent("Prosperity Throughout the Realm", "All players may immediately draw 2 adventure Cards", "card_image/events/eventCard8", 1);
+		//addEvent("Chivalrous Deed", "lowest rank and shield receives 3 shields", "card_image/events/eventCard1", 1);
+		addEvent("Queen's Favor", "The lowest ranked player(s) immediately receives 2 Adventure cards", "card_image/events/eventCard5", 2);
+
 	}
 	void addScenario2(){
 		addQuest("Search for the Holy Grail", 5, "*", "card_image/quest/questCard9", 1);
@@ -317,7 +319,7 @@ public class Deck{
 		addEvent("King's Recognition", "The next player(s) to complete a quest will receive 2 extra shields", "card_image/events/eventCard4", 2);
 
 		/* 2 Queen's Favor */
-		//addEvent("Queen's Favor", "The lowest ranked player(s) immediately receives 2 Adventure cards", "card_image/events/eventCard5", 2);
+		addEvent("Queen's Favor", "The lowest ranked player(s) immediately receives 2 Adventure cards", "card_image/events/eventCard5", 2);
 
 		/* 2 Court Called to Camelot */
 		//addEvent("Court Called to Camelot", "All Allies in play must be discarded", "card_image/events/eventCard6", 2);

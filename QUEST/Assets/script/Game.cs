@@ -476,14 +476,18 @@ public class Game : MonoBehaviour {
 	// Remove a card from a players hand by name.
 	public void removeCardByNameInplay(int player_id, string name){
 		int ind = 0;
+		bool found = false;
 		for (int i = 0; i < _players [player_id].inPlay.Count; i++) {
 			if (_players [player_id].inPlay [i].name == name) {
 				ind = i;
+				found = true;
 				Debug.Log("inside remove all cards");
 				break;
 			}
 		}
-		_players[player_id].inPlay.RemoveAt(ind);
+		if(found){
+			_players[player_id].inPlay.RemoveAt(ind);
+		}
 	}
 
 	public void removeAllAllies(){
@@ -497,6 +501,10 @@ public class Game : MonoBehaviour {
 					allAlly.Add(currCard);
 				}
 			}
+		}
+
+		for(int i = 0 ; i< allAlly.Count ; i++){
+			Debug.Log(allAlly[i]);
 		}
 
 		//Remove Ally from hand
