@@ -30,15 +30,17 @@ public class SponsorQuest: AIBehaviour {
 		}
 		foeCards.Sort ((x, y) => x.power (questCard).CompareTo (y.power (questCard)));
 		foeCards.Reverse ();
-		int differentPower = 1;
-		for (int y = foeCards.Count -1; y >= 0; y--) {
-			if (y > 0) {
-				if (foeCards [y].power (questCard) != foeCards [y - 1].power (questCard)) {
+		int differentPower = 0;
+		for (int y = 0; y < foeCards.Count; y++) {
+			if (y + 1 < foeCards.Count) {
+				if (foeCards [y].power (questCard) != foeCards [y + 1].power (questCard)) {
 					differentPower += 1;
-					if (differentPower == questCard.stages) {
-						return true;
-					}
 				}
+			} else {
+				differentPower += 1;
+			}
+			if (differentPower == questCard.stages) {
+				return true;
 			}
 		}
 		return false;
