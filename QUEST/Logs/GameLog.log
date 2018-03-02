@@ -62,3 +62,818 @@
 2018-03-01T21:43:28.9516840-05:00 [INFO]: Setting up stages for quest: Search for the Holy Grail
 2018-03-01T21:43:52.5608030-05:00 [WARN]: Quest setup is invalid: not ascending power level.
 2018-03-01T22:01:28.5976650-05:00 [INFO]: Initializing Game object.
+2018-03-02T08:19:27.0073450-05:00 [INFO]: Initializing Game object.
+2018-03-02T08:19:34.9117900-05:00 [INFO]: Quest Only mode selected.
+2018-03-02T08:19:34.9155260-05:00 [INFO]: Setting up game...
+2018-03-02T08:19:34.9267360-05:00 [INFO]: Creating Player 1 as an AI player.
+2018-03-02T08:19:34.9309480-05:00 [INFO]: Creating Player 2 as an AI player.
+2018-03-02T08:19:34.9325330-05:00 [INFO]: Creating Player 3 as an AI player.
+2018-03-02T08:19:34.9347970-05:00 [INFO]: Creating Player 4 as a human player.
+2018-03-02T08:19:35.3012300-05:00 [INFO]: Created adventure deck with 117 cards.
+2018-03-02T08:19:35.3403060-05:00 [INFO]: Created story deck with 13 cards.
+2018-03-02T08:19:35.3423970-05:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-03-02T08:19:35.3463660-05:00 [INFO]: Loading player: 1
+2018-03-02T08:19:35.5127780-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T08:19:35.5163190-05:00 [INFO]: Drawing a story card...
+2018-03-02T08:19:35.5224380-05:00 [INFO]: A quest card was drawn: Slay the Dragon
+2018-03-02T08:19:35.5299330-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T08:19:35.5413740-05:00 [INFO]: Player 1 decided to sponsor the quest.
+2018-03-02T08:19:35.5435870-05:00 [INFO]: Setting up stages for quest: Slay the Dragon
+2018-03-02T08:19:35.6981540-05:00 [INFO]: Loading player: 2
+2018-03-02T08:19:35.8644760-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:19:35.8720470-05:00 [INFO]: Player 2 decided to join the quest.
+2018-03-02T08:19:35.8755780-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:19:35.8829840-05:00 [INFO]: Player 3 decided to NOT join the quest.
+2018-03-02T08:19:35.8874690-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:19:35.8902510-05:00 [INFO]: Loading player: 4
+2018-03-02T08:19:36.0559820-05:00 [INFO]: Loading player: 4
+2018-03-02T08:19:37.6832410-05:00 [INFO]: Player 4 decided to join the quest.
+2018-03-02T08:19:37.6848790-05:00 [INFO]: Giving Player 2 one adventure card for joining the quest.
+2018-03-02T08:19:37.6866110-05:00 [INFO]: Giving Player 4 one adventure card for joining the quest.
+2018-03-02T08:19:37.6885160-05:00 [INFO]: Moving to setup weapons state.
+2018-03-02T08:19:37.6979810-05:00 [INFO]: Loading player: 4
+2018-03-02T08:19:37.8056380-05:00 [INFO]: Loading player: 4
+2018-03-02T08:19:43.0378900-05:00 [INFO]: All playing players have setup weapons for stage 1
+2018-03-02T08:19:43.0395100-05:00 [INFO]: Flipping cards in stage 1
+2018-03-02T08:19:43.0423140-05:00 [INFO]: Stage 1 has a power level of 30.
+2018-03-02T08:19:43.0440610-05:00 [INFO]: Player 2 has a power level of 45.
+2018-03-02T08:19:43.0460290-05:00 [INFO]: Player 2 passed stage 1.
+2018-03-02T08:19:43.0482050-05:00 [INFO]: Loading player: 2
+2018-03-02T08:19:44.6835210-05:00 [INFO]: Stage 1 has a power level of 30.
+2018-03-02T08:19:44.6852830-05:00 [INFO]: Player 4 has a power level of 20.
+2018-03-02T08:19:44.6875520-05:00 [INFO]: Player 4 died on stage 1.
+2018-03-02T08:19:44.6893450-05:00 [INFO]: Loading player: 4
+2018-03-02T08:19:46.5290490-05:00 [INFO]: Swithing back to setup weapons state.
+2018-03-02T08:19:46.5307190-05:00 [INFO]: Giving Player 2 an adventure card for passing the stage.
+2018-03-02T08:19:46.5350330-05:00 [INFO]: All playing players have setup weapons for stage 2
+2018-03-02T08:19:46.5366570-05:00 [INFO]: Flipping cards in stage 2
+2018-03-02T08:19:46.5385910-05:00 [INFO]: Stage 2 has a power level of 35.
+2018-03-02T08:19:46.5404460-05:00 [INFO]: Player 2 has a power level of 45.
+2018-03-02T08:19:46.5427490-05:00 [INFO]: Player 2 passed stage 2.
+2018-03-02T08:19:46.5445250-05:00 [INFO]: Loading player: 2
+2018-03-02T08:19:46.6094610-05:00 [INFO]: Loading player: 2
+2018-03-02T08:19:48.1422170-05:00 [INFO]: Swithing back to setup weapons state.
+2018-03-02T08:19:48.1438760-05:00 [INFO]: Giving Player 2 an adventure card for passing the stage.
+2018-03-02T08:19:48.1476830-05:00 [INFO]: All playing players have setup weapons for stage 3
+2018-03-02T08:19:48.1496190-05:00 [INFO]: Flipping cards in stage 3
+2018-03-02T08:19:48.1518950-05:00 [INFO]: Stage 3 has a power level of 55.
+2018-03-02T08:19:48.1547800-05:00 [INFO]: Player 2 has a power level of 45.
+2018-03-02T08:19:48.1569970-05:00 [INFO]: Player 2 died on stage 3.
+2018-03-02T08:19:48.1587100-05:00 [INFO]: Loading player: 2
+2018-03-02T08:19:48.2007200-05:00 [INFO]: Loading player: 2
+2018-03-02T08:19:49.8712960-05:00 [INFO]: Quest is over and everyone died!	
+2018-03-02T08:19:49.8733880-05:00 [INFO]: Quest has been fully reset and ended.
+2018-03-02T08:19:49.8751380-05:00 [INFO]: Loading player: 2
+2018-03-02T08:19:49.9070560-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T08:19:49.9093470-05:00 [INFO]: Drawing a story card...
+2018-03-02T08:19:49.9113670-05:00 [INFO]: A quest card was drawn: Rescue the Fair Maiden
+2018-03-02T08:19:49.9138430-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T08:19:49.9165090-05:00 [INFO]: Player 2 decided NOT to sponsor the quest.
+2018-03-02T08:19:49.9189740-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T08:19:49.9215670-05:00 [INFO]: Loading player: 3
+2018-03-02T08:21:07.8462530-05:00 [INFO]: Initializing Game object.
+2018-03-02T08:23:06.0158330-05:00 [INFO]: Initializing Game object.
+2018-03-02T08:23:07.8555980-05:00 [INFO]: Boar Hunt mode selected.
+2018-03-02T08:23:07.8583020-05:00 [INFO]: Setting up game...
+2018-03-02T08:23:07.8657300-05:00 [INFO]: Creating Player 1 as a human player.
+2018-03-02T08:23:07.8675600-05:00 [INFO]: Creating Player 2 as a human player.
+2018-03-02T08:23:07.8696830-05:00 [INFO]: Creating Player 3 as a human player.
+2018-03-02T08:23:07.8717840-05:00 [INFO]: Creating Player 4 as a human player.
+2018-03-02T08:23:08.3192540-05:00 [INFO]: Created adventure deck with 117 cards.
+2018-03-02T08:23:08.4232310-05:00 [INFO]: Created story deck with 2 cards.
+2018-03-02T08:23:08.4732720-05:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-03-02T08:23:08.5772990-05:00 [INFO]: Loading player: 1
+2018-03-02T08:23:08.7685730-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T08:23:09.9294150-05:00 [INFO]: Drawing a story card...
+2018-03-02T08:23:09.9367580-05:00 [INFO]: A quest card was drawn: Boar Hunt
+2018-03-02T08:23:09.9443510-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T08:23:11.1106360-05:00 [INFO]: Player 1 decided to sponsor the quest.
+2018-03-02T08:23:11.1141280-05:00 [INFO]: Setting up stages for quest: Boar Hunt
+2018-03-02T08:23:18.9800460-05:00 [INFO]: Loading player: 2
+2018-03-02T08:23:19.1458940-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:23:21.8841790-05:00 [INFO]: Player 2 decided to join the quest.
+2018-03-02T08:23:21.8862150-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:23:21.8881910-05:00 [INFO]: Loading player: 3
+2018-03-02T08:23:22.7828720-05:00 [INFO]: Player 3 decided to join the quest.
+2018-03-02T08:23:22.7851770-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:23:22.7871060-05:00 [INFO]: Loading player: 4
+2018-03-02T08:23:23.5147800-05:00 [INFO]: Player 4 decided to join the quest.
+2018-03-02T08:23:23.5176560-05:00 [INFO]: Giving Player 2 one adventure card for joining the quest.
+2018-03-02T08:23:23.5239230-05:00 [INFO]: Giving Player 3 one adventure card for joining the quest.
+2018-03-02T08:23:23.5279780-05:00 [INFO]: Giving Player 4 one adventure card for joining the quest.
+2018-03-02T08:23:23.5316230-05:00 [INFO]: Moving to setup weapons state.
+2018-03-02T08:23:23.5343320-05:00 [INFO]: Loading player: 2
+2018-03-02T08:23:30.6460380-05:00 [WARN]: Play area invalid: you can't submit duplicate weapons to the play area!
+2018-03-02T08:23:30.6480950-05:00 [INFO]: Play area is invalid!
+2018-03-02T08:23:36.4154500-05:00 [INFO]: Loading player: 3
+2018-03-02T08:23:43.3315950-05:00 [INFO]: Loading player: 4
+2018-03-02T08:23:48.2699400-05:00 [INFO]: All playing players have setup weapons for stage 1
+2018-03-02T08:23:48.2719640-05:00 [INFO]: Flipping cards in stage 1
+2018-03-02T08:23:48.2752730-05:00 [INFO]: Stage 1 has a power level of 5.
+2018-03-02T08:23:48.2769900-05:00 [INFO]: Player 2 has a power level of 15.
+2018-03-02T08:23:48.2791830-05:00 [INFO]: Player 2 passed stage 1.
+2018-03-02T08:23:48.2815170-05:00 [INFO]: Loading player: 2
+2018-03-02T08:23:49.4170500-05:00 [INFO]: Stage 1 has a power level of 5.
+2018-03-02T08:23:49.4190270-05:00 [INFO]: Player 3 has a power level of 20.
+2018-03-02T08:23:49.4209720-05:00 [INFO]: Player 3 passed stage 1.
+2018-03-02T08:23:49.4229560-05:00 [INFO]: Loading player: 3
+2018-03-02T08:23:50.6304750-05:00 [INFO]: Stage 1 has a power level of 5.
+2018-03-02T08:23:50.6324310-05:00 [INFO]: Player 4 has a power level of 15.
+2018-03-02T08:23:50.6344260-05:00 [INFO]: Player 4 passed stage 1.
+2018-03-02T08:23:50.6361320-05:00 [INFO]: Loading player: 4
+2018-03-02T08:23:52.3102840-05:00 [INFO]: Swithing back to setup weapons state.
+2018-03-02T08:23:52.3122500-05:00 [INFO]: Giving Player 2 an adventure card for passing the stage.
+2018-03-02T08:23:52.3141100-05:00 [INFO]: Giving Player 3 an adventure card for passing the stage.
+2018-03-02T08:23:52.3157350-05:00 [INFO]: Giving Player 4 an adventure card for passing the stage.
+2018-03-02T08:23:52.3173490-05:00 [INFO]: Loading player: 2
+2018-03-02T08:24:00.9395690-05:00 [WARN]: Play area invalid: too many amour cards in the play area!
+2018-03-02T08:24:00.9422450-05:00 [INFO]: Loading player: 3
+2018-03-02T08:24:04.7804500-05:00 [INFO]: Loading player: 4
+2018-03-02T08:24:05.5132000-05:00 [INFO]: There are too many cards in Player 1's hand, they must discard or play.
+2018-03-02T08:24:08.5379120-05:00 [INFO]: Player 4 discarded: Merlin
+2018-03-02T08:24:08.5399110-05:00 [INFO]: All playing players have setup weapons for stage 2
+2018-03-02T08:24:08.5417290-05:00 [INFO]: Flipping cards in stage 2
+2018-03-02T08:25:38.3315080-05:00 [INFO]: Initializing Game object.
+2018-03-02T08:25:41.3057470-05:00 [INFO]: Boar Hunt mode selected.
+2018-03-02T08:25:41.3090960-05:00 [INFO]: Setting up game...
+2018-03-02T08:25:41.3213060-05:00 [INFO]: Creating Player 1 as a human player.
+2018-03-02T08:25:41.3263580-05:00 [INFO]: Creating Player 2 as a human player.
+2018-03-02T08:25:41.3288660-05:00 [INFO]: Creating Player 3 as a human player.
+2018-03-02T08:25:41.3309830-05:00 [INFO]: Creating Player 4 as a human player.
+2018-03-02T08:25:41.6983630-05:00 [INFO]: Created adventure deck with 117 cards.
+2018-03-02T08:25:41.7183960-05:00 [INFO]: Created story deck with 2 cards.
+2018-03-02T08:25:41.7210680-05:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-03-02T08:25:41.7273170-05:00 [INFO]: Loading player: 1
+2018-03-02T08:25:41.9115630-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T08:25:46.3706420-05:00 [INFO]: Drawing a story card...
+2018-03-02T08:25:46.3745220-05:00 [INFO]: A quest card was drawn: Boar Hunt
+2018-03-02T08:25:46.3822660-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T08:25:48.4178460-05:00 [INFO]: Player 1 decided to sponsor the quest.
+2018-03-02T08:25:48.4201360-05:00 [INFO]: Setting up stages for quest: Boar Hunt
+2018-03-02T08:25:53.7264450-05:00 [INFO]: Loading player: 2
+2018-03-02T08:25:53.8651610-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:25:55.1513820-05:00 [INFO]: Player 2 decided to join the quest.
+2018-03-02T08:25:55.1534600-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:25:55.1557400-05:00 [INFO]: Loading player: 3
+2018-03-02T08:25:55.5839590-05:00 [INFO]: Player 3 decided to join the quest.
+2018-03-02T08:25:55.5861370-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:25:55.5881700-05:00 [INFO]: Loading player: 4
+2018-03-02T08:25:55.9645920-05:00 [INFO]: Player 4 decided to join the quest.
+2018-03-02T08:25:55.9663460-05:00 [INFO]: Giving Player 2 one adventure card for joining the quest.
+2018-03-02T08:25:55.9681070-05:00 [INFO]: Giving Player 3 one adventure card for joining the quest.
+2018-03-02T08:25:55.9695660-05:00 [INFO]: Giving Player 4 one adventure card for joining the quest.
+2018-03-02T08:25:55.9711670-05:00 [INFO]: Moving to setup weapons state.
+2018-03-02T08:25:55.9729660-05:00 [INFO]: Loading player: 2
+2018-03-02T08:26:00.4880050-05:00 [INFO]: Player 2 discarded: Dagger
+2018-03-02T08:26:00.4911350-05:00 [WARN]: Play area invalid: you can't submit foes to the play area!
+2018-03-02T08:26:00.4943420-05:00 [INFO]: Play area is invalid!
+2018-03-02T08:26:32.5825620-05:00 [INFO]: Initializing Game object.
+2018-03-02T08:27:25.1250070-05:00 [INFO]: Initializing Game object.
+2018-03-02T08:27:28.6826400-05:00 [INFO]: Boar Hunt mode selected.
+2018-03-02T08:27:28.6865590-05:00 [INFO]: Setting up game...
+2018-03-02T08:27:28.6997090-05:00 [INFO]: Creating Player 1 as a human player.
+2018-03-02T08:27:28.7026200-05:00 [INFO]: Creating Player 2 as a human player.
+2018-03-02T08:27:28.7056240-05:00 [INFO]: Creating Player 3 as a human player.
+2018-03-02T08:27:28.7094220-05:00 [INFO]: Creating Player 4 as a human player.
+2018-03-02T08:27:29.0895080-05:00 [INFO]: Created adventure deck with 117 cards.
+2018-03-02T08:27:29.0991250-05:00 [INFO]: Created story deck with 2 cards.
+2018-03-02T08:27:29.1023960-05:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-03-02T08:27:29.1098820-05:00 [INFO]: Loading player: 1
+2018-03-02T08:27:29.2476260-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T08:27:31.0062940-05:00 [INFO]: Drawing a story card...
+2018-03-02T08:27:31.0101240-05:00 [INFO]: A quest card was drawn: Boar Hunt
+2018-03-02T08:27:31.0167350-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T08:27:31.9387180-05:00 [INFO]: Player 1 decided to sponsor the quest.
+2018-03-02T08:27:31.9415440-05:00 [INFO]: Setting up stages for quest: Boar Hunt
+2018-03-02T08:27:38.9234660-05:00 [INFO]: Loading player: 2
+2018-03-02T08:27:38.9998290-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:27:39.8516650-05:00 [INFO]: Player 2 decided to join the quest.
+2018-03-02T08:27:39.8536710-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:27:39.8556330-05:00 [INFO]: Loading player: 3
+2018-03-02T08:27:40.3996600-05:00 [INFO]: Player 3 decided to join the quest.
+2018-03-02T08:27:40.4017200-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:27:40.4035850-05:00 [INFO]: Loading player: 4
+2018-03-02T08:27:40.9316080-05:00 [INFO]: Player 4 decided to join the quest.
+2018-03-02T08:27:40.9334650-05:00 [INFO]: Giving Player 2 one adventure card for joining the quest.
+2018-03-02T08:27:40.9356260-05:00 [INFO]: Giving Player 3 one adventure card for joining the quest.
+2018-03-02T08:27:40.9377430-05:00 [INFO]: Giving Player 4 one adventure card for joining the quest.
+2018-03-02T08:27:40.9395370-05:00 [INFO]: Moving to setup weapons state.
+2018-03-02T08:27:40.9412480-05:00 [INFO]: Loading player: 2
+2018-03-02T08:27:44.8737990-05:00 [INFO]: Loading player: 3
+2018-03-02T08:27:49.8443220-05:00 [INFO]: Loading player: 4
+2018-03-02T08:27:53.4853320-05:00 [INFO]: All playing players have setup weapons for stage 1
+2018-03-02T08:27:53.4869620-05:00 [INFO]: Flipping cards in stage 1
+2018-03-02T08:27:53.4897380-05:00 [INFO]: Stage 1 has a power level of 5.
+2018-03-02T08:27:53.4915830-05:00 [INFO]: Player 2 has a power level of 10.
+2018-03-02T08:27:53.4941420-05:00 [INFO]: Player 2 passed stage 1.
+2018-03-02T08:27:53.4969630-05:00 [INFO]: Loading player: 2
+2018-03-02T08:27:55.2802380-05:00 [INFO]: Stage 1 has a power level of 5.
+2018-03-02T08:27:55.2821750-05:00 [INFO]: Player 3 has a power level of 15.
+2018-03-02T08:27:55.2842580-05:00 [INFO]: Player 3 passed stage 1.
+2018-03-02T08:27:55.2859560-05:00 [INFO]: Loading player: 3
+2018-03-02T08:27:56.2607010-05:00 [INFO]: Stage 1 has a power level of 5.
+2018-03-02T08:27:56.2627480-05:00 [INFO]: Player 4 has a power level of 15.
+2018-03-02T08:27:56.2645790-05:00 [INFO]: Player 4 passed stage 1.
+2018-03-02T08:27:56.2662000-05:00 [INFO]: Loading player: 4
+2018-03-02T08:27:57.0756950-05:00 [INFO]: Swithing back to setup weapons state.
+2018-03-02T08:27:57.0781610-05:00 [INFO]: Giving Player 2 an adventure card for passing the stage.
+2018-03-02T08:27:57.0807030-05:00 [INFO]: Giving Player 3 an adventure card for passing the stage.
+2018-03-02T08:27:57.0828330-05:00 [INFO]: Giving Player 4 an adventure card for passing the stage.
+2018-03-02T08:27:57.0846050-05:00 [INFO]: Loading player: 2
+2018-03-02T08:28:38.7843500-05:00 [INFO]: Initializing Game object.
+2018-03-02T08:28:40.5302860-05:00 [INFO]: Boar Hunt mode selected.
+2018-03-02T08:28:40.5337530-05:00 [INFO]: Setting up game...
+2018-03-02T08:28:40.5451440-05:00 [INFO]: Creating Player 1 as a human player.
+2018-03-02T08:28:40.5490190-05:00 [INFO]: Creating Player 2 as a human player.
+2018-03-02T08:28:40.5535910-05:00 [INFO]: Creating Player 3 as a human player.
+2018-03-02T08:28:40.5566460-05:00 [INFO]: Creating Player 4 as a human player.
+2018-03-02T08:28:40.9908490-05:00 [INFO]: Created adventure deck with 117 cards.
+2018-03-02T08:28:41.0026550-05:00 [INFO]: Created story deck with 2 cards.
+2018-03-02T08:28:41.0053480-05:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-03-02T08:28:41.0110500-05:00 [INFO]: Loading player: 1
+2018-03-02T08:28:41.1915840-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T08:28:41.8714630-05:00 [INFO]: Drawing a story card...
+2018-03-02T08:28:41.8765530-05:00 [INFO]: A quest card was drawn: Boar Hunt
+2018-03-02T08:28:41.8845020-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T08:28:42.7534020-05:00 [INFO]: Player 1 decided to sponsor the quest.
+2018-03-02T08:28:42.7563350-05:00 [INFO]: Setting up stages for quest: Boar Hunt
+2018-03-02T08:28:49.7549430-05:00 [INFO]: Loading player: 2
+2018-03-02T08:28:49.8123650-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:28:50.8152250-05:00 [INFO]: Player 2 decided to join the quest.
+2018-03-02T08:28:50.8187430-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:28:50.8213890-05:00 [INFO]: Loading player: 3
+2018-03-02T08:28:51.7468200-05:00 [INFO]: Player 3 decided to join the quest.
+2018-03-02T08:28:51.7489480-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:28:51.7506870-05:00 [INFO]: Loading player: 4
+2018-03-02T08:28:52.4449610-05:00 [INFO]: Player 4 decided to join the quest.
+2018-03-02T08:28:52.4470780-05:00 [INFO]: Giving Player 2 one adventure card for joining the quest.
+2018-03-02T08:28:52.4489400-05:00 [INFO]: Giving Player 3 one adventure card for joining the quest.
+2018-03-02T08:28:52.4505870-05:00 [INFO]: Giving Player 4 one adventure card for joining the quest.
+2018-03-02T08:28:52.4525060-05:00 [INFO]: Moving to setup weapons state.
+2018-03-02T08:28:52.4541890-05:00 [INFO]: Loading player: 2
+2018-03-02T08:35:02.6396100-05:00 [INFO]: Initializing Game object.
+2018-03-02T08:36:52.6472660-05:00 [INFO]: Initializing Game object.
+2018-03-02T08:37:00.4712500-05:00 [INFO]: Normal mode selected.
+2018-03-02T08:37:00.4745300-05:00 [INFO]: Setting up game...
+2018-03-02T08:37:00.4814330-05:00 [INFO]: Creating Player 1 as a human player.
+2018-03-02T08:37:00.4835570-05:00 [INFO]: Creating Player 2 as a human player.
+2018-03-02T08:37:00.7783720-05:00 [INFO]: Created adventure deck with 117 cards.
+2018-03-02T08:37:00.8184340-05:00 [INFO]: Created story deck with 19 cards.
+2018-03-02T08:37:00.8247960-05:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-03-02T08:37:00.8378780-05:00 [INFO]: Loading player: 1
+2018-03-02T08:37:01.0727190-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T08:37:02.3155170-05:00 [INFO]: Drawing a story card...
+2018-03-02T08:37:02.3217970-05:00 [INFO]: A tournament card was drawn: Tournament at York
+2018-03-02T08:37:02.3265470-05:00 [INFO]: Displaying join tournament prompt!
+2018-03-02T08:37:04.6101460-05:00 [INFO]: Player 1 decided to join the tournament.
+2018-03-02T08:37:04.6122730-05:00 [INFO]: Displaying join tournament prompt!
+2018-03-02T08:37:04.6142650-05:00 [INFO]: Loading player: 2
+2018-03-02T08:37:05.4411270-05:00 [INFO]: Player 2 decided to join the tournament.
+2018-03-02T08:37:05.4431380-05:00 [INFO]: Giving Player 1 one card for joining the tournament.
+2018-03-02T08:37:05.4454340-05:00 [INFO]: Giving Player 2 one card for joining the tournament.
+2018-03-02T08:37:05.4472170-05:00 [INFO]: Starting tournament!
+2018-03-02T08:37:05.4489320-05:00 [INFO]: Loading player: 1
+2018-03-02T08:37:16.5002670-05:00 [INFO]: Loading player: 2
+2018-03-02T08:37:20.5738250-05:00 [INFO]: Player 1 entered a power level of 15.
+2018-03-02T08:37:20.5757150-05:00 [INFO]: Player 2 entered a power level of 10.
+2018-03-02T08:37:20.5781530-05:00 [INFO]: The following player(s) have won 2 shields: 1
+2018-03-02T08:37:20.5798550-05:00 [INFO]: Loading player: 2
+2018-03-02T08:37:22.0518670-05:00 [INFO]: Ending the tournament!
+2018-03-02T08:37:22.0537810-05:00 [INFO]: Loading player: 2
+2018-03-02T08:37:22.1333950-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T08:37:24.9791130-05:00 [INFO]: Drawing a story card...
+2018-03-02T08:37:24.9849290-05:00 [INFO]: A quest card was drawn: Test of the Green Knight
+2018-03-02T08:37:24.9889910-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T08:37:26.0097420-05:00 [INFO]: Player 2 decided to sponsor the quest.
+2018-03-02T08:37:26.0119400-05:00 [INFO]: Setting up stages for quest: Test of the Green Knight
+2018-03-02T08:38:40.3388810-05:00 [INFO]: Initializing Game object.
+2018-03-02T08:39:51.6250380-05:00 [INFO]: Normal mode selected.
+2018-03-02T08:39:51.6342740-05:00 [INFO]: Setting up game...
+2018-03-02T08:39:51.6446180-05:00 [INFO]: Creating Player 1 as an AI player.
+2018-03-02T08:39:51.6477880-05:00 [INFO]: Creating Player 2 as an AI player.
+2018-03-02T08:39:51.6501360-05:00 [INFO]: Creating Player 3 as a human player.
+2018-03-02T08:39:51.6525330-05:00 [INFO]: Creating Player 4 as a human player.
+2018-03-02T08:39:52.1461350-05:00 [INFO]: Created adventure deck with 117 cards.
+2018-03-02T08:39:52.2065460-05:00 [INFO]: Created story deck with 19 cards.
+2018-03-02T08:39:52.2106750-05:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-03-02T08:39:52.2152860-05:00 [INFO]: Loading player: 1
+2018-03-02T08:39:52.3796000-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T08:39:52.3957710-05:00 [INFO]: Drawing a story card...
+2018-03-02T08:39:52.4008900-05:00 [INFO]: A quest card was drawn: Test of the Green Knight
+2018-03-02T08:39:52.4086890-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T08:39:52.4235020-05:00 [INFO]: Player 1 decided NOT to sponsor the quest.
+2018-03-02T08:39:52.4276300-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T08:39:52.4314350-05:00 [INFO]: Loading player: 2
+2018-03-02T08:40:15.6249750-05:00 [INFO]: Initializing Game object.
+2018-03-02T08:45:57.7150330-05:00 [INFO]: Initializing Game object.
+2018-03-02T08:46:02.1813430-05:00 [INFO]: Normal mode selected.
+2018-03-02T08:46:02.1848790-05:00 [INFO]: Setting up game...
+2018-03-02T08:46:02.1947730-05:00 [INFO]: Creating Player 1 as a human player.
+2018-03-02T08:46:02.1982720-05:00 [INFO]: Creating Player 2 as a human player.
+2018-03-02T08:46:02.2025810-05:00 [INFO]: Creating Player 3 as a human player.
+2018-03-02T08:46:02.2099380-05:00 [INFO]: Creating Player 4 as a human player.
+2018-03-02T08:46:02.6041450-05:00 [INFO]: Created adventure deck with 117 cards.
+2018-03-02T08:46:02.6546330-05:00 [INFO]: Created story deck with 19 cards.
+2018-03-02T08:46:02.6574750-05:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-03-02T08:46:02.6649440-05:00 [INFO]: Loading player: 1
+2018-03-02T08:46:02.9269530-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T08:46:10.4525530-05:00 [INFO]: Initializing Game object.
+2018-03-02T08:46:27.1036600-05:00 [INFO]: Loading player: 1
+2018-03-02T08:46:27.2082420-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T08:46:28.3980010-05:00 [INFO]: Drawing a story card...
+2018-03-02T08:46:28.4044480-05:00 [INFO]: A quest card was drawn: Search for the Holy Grail
+2018-03-02T08:46:28.4122040-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T08:46:29.4287040-05:00 [INFO]: Player 1 decided to sponsor the quest.
+2018-03-02T08:46:29.4306190-05:00 [INFO]: Setting up stages for quest: Search for the Holy Grail
+2018-03-02T08:46:50.9654560-05:00 [INFO]: Loading player: 2
+2018-03-02T08:46:51.0263640-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:46:53.0588550-05:00 [INFO]: Player 2 decided to join the quest.
+2018-03-02T08:46:53.0616010-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:46:53.0641050-05:00 [INFO]: Loading player: 3
+2018-03-02T08:46:53.6074090-05:00 [INFO]: Player 3 decided to join the quest.
+2018-03-02T08:46:53.6099480-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:46:53.6124140-05:00 [INFO]: Loading player: 4
+2018-03-02T08:46:54.1035020-05:00 [INFO]: Player 4 decided to join the quest.
+2018-03-02T08:46:54.1061360-05:00 [INFO]: Giving Player 2 one adventure card for joining the quest.
+2018-03-02T08:46:54.1091640-05:00 [INFO]: Giving Player 3 one adventure card for joining the quest.
+2018-03-02T08:46:54.1117820-05:00 [INFO]: Giving Player 4 one adventure card for joining the quest.
+2018-03-02T08:46:54.1145610-05:00 [INFO]: Moving to setup weapons state.
+2018-03-02T08:46:54.1173540-05:00 [INFO]: Loading player: 2
+2018-03-02T08:47:02.9408450-05:00 [INFO]: Initializing Game object.
+2018-03-02T08:47:07.3776620-05:00 [INFO]: Loading player: 1
+2018-03-02T08:47:07.5179990-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T08:47:08.3073740-05:00 [INFO]: Drawing a story card...
+2018-03-02T08:47:08.3112120-05:00 [INFO]: A quest card was drawn: Search for the Holy Grail
+2018-03-02T08:47:08.3177150-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T08:47:09.0385940-05:00 [INFO]: Player 1 decided to sponsor the quest.
+2018-03-02T08:47:09.0407770-05:00 [INFO]: Setting up stages for quest: Search for the Holy Grail
+2018-03-02T08:47:20.4970870-05:00 [INFO]: Loading player: 2
+2018-03-02T08:47:20.5713250-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:47:21.4406230-05:00 [INFO]: Player 2 decided to join the quest.
+2018-03-02T08:47:21.4428560-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:47:21.4443370-05:00 [INFO]: Loading player: 3
+2018-03-02T08:47:21.9727850-05:00 [INFO]: Player 3 decided to join the quest.
+2018-03-02T08:47:21.9756680-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:47:21.9782050-05:00 [INFO]: Loading player: 4
+2018-03-02T08:49:39.1748870-05:00 [INFO]: Initializing Game object.
+2018-03-02T08:49:41.2356810-05:00 [INFO]: Loading player: 1
+2018-03-02T08:49:41.4209530-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T08:49:42.0635250-05:00 [INFO]: Drawing a story card...
+2018-03-02T08:49:42.0681210-05:00 [INFO]: A quest card was drawn: Search for the Holy Grail
+2018-03-02T08:49:42.0741710-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T08:49:43.2612100-05:00 [INFO]: Player 1 decided to sponsor the quest.
+2018-03-02T08:49:43.2641950-05:00 [INFO]: Setting up stages for quest: Search for the Holy Grail
+2018-03-02T08:50:09.3868390-05:00 [INFO]: Loading player: 2
+2018-03-02T08:50:09.4950040-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:50:10.9464730-05:00 [INFO]: Player 2 decided to join the quest.
+2018-03-02T08:50:10.9481900-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:50:10.9497250-05:00 [INFO]: Loading player: 3
+2018-03-02T08:50:11.3473890-05:00 [INFO]: Player 3 decided to join the quest.
+2018-03-02T08:50:11.3494220-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:50:11.3511150-05:00 [INFO]: Loading player: 4
+2018-03-02T08:50:11.8774170-05:00 [INFO]: Player 4 decided to join the quest.
+2018-03-02T08:50:11.8795570-05:00 [INFO]: Giving Player 2 one adventure card for joining the quest.
+2018-03-02T08:50:11.8824100-05:00 [INFO]: Giving Player 3 one adventure card for joining the quest.
+2018-03-02T08:50:11.8842300-05:00 [INFO]: Giving Player 4 one adventure card for joining the quest.
+2018-03-02T08:50:11.8859720-05:00 [INFO]: Moving to setup weapons state.
+2018-03-02T08:50:11.8878640-05:00 [INFO]: Loading player: 2
+2018-03-02T08:54:05.5473390-05:00 [INFO]: Initializing Game object.
+2018-03-02T08:54:10.3922020-05:00 [INFO]: Normal mode selected.
+2018-03-02T08:54:10.3945370-05:00 [INFO]: Setting up game...
+2018-03-02T08:54:10.4009350-05:00 [INFO]: Creating Player 1 as a human player.
+2018-03-02T08:54:10.4028360-05:00 [INFO]: Creating Player 2 as a human player.
+2018-03-02T08:54:10.7267470-05:00 [INFO]: Created adventure deck with 117 cards.
+2018-03-02T08:54:10.7612170-05:00 [INFO]: Created story deck with 19 cards.
+2018-03-02T08:54:10.7628840-05:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-03-02T08:54:10.7695650-05:00 [INFO]: Loading player: 1
+2018-03-02T08:54:10.9658970-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T08:54:11.8539500-05:00 [INFO]: Drawing a story card...
+2018-03-02T08:54:11.8565660-05:00 [INFO]: A quest card was drawn: Boar Hunt
+2018-03-02T08:54:11.8720030-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T08:54:12.5849510-05:00 [INFO]: Player 1 decided to sponsor the quest.
+2018-03-02T08:54:12.5869060-05:00 [INFO]: Setting up stages for quest: Boar Hunt
+2018-03-02T08:54:29.9798410-05:00 [INFO]: Loading player: 2
+2018-03-02T08:54:30.0677530-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:54:31.0237500-05:00 [INFO]: Player 2 decided to join the quest.
+2018-03-02T08:54:31.0255850-05:00 [INFO]: Giving Player 2 one adventure card for joining the quest.
+2018-03-02T08:54:31.0286120-05:00 [INFO]: Moving to setup weapons state.
+2018-03-02T08:54:31.0303950-05:00 [INFO]: Loading player: 2
+2018-03-02T08:54:40.7356270-05:00 [INFO]: All playing players have setup weapons for stage 1
+2018-03-02T08:54:40.7378280-05:00 [INFO]: Flipping cards in stage 1
+2018-03-02T08:54:40.7418500-05:00 [INFO]: Stage 1 has a power level of 10.
+2018-03-02T08:54:40.7437490-05:00 [INFO]: Player 2 has a power level of 15.
+2018-03-02T08:54:40.7455820-05:00 [INFO]: Player 2 passed stage 1.
+2018-03-02T08:54:40.7476610-05:00 [INFO]: Loading player: 2
+2018-03-02T08:54:42.5293210-05:00 [INFO]: Swithing back to setup weapons state.
+2018-03-02T08:54:42.5312470-05:00 [INFO]: Giving Player 2 an adventure card for passing the stage.
+2018-03-02T08:54:42.5340220-05:00 [INFO]: Loading player: 2
+2018-03-02T08:54:49.5462420-05:00 [INFO]: All playing players have setup weapons for stage 2
+2018-03-02T08:54:49.5479330-05:00 [INFO]: Flipping cards in stage 2
+2018-03-02T08:54:49.5497140-05:00 [INFO]: Stage 2 has a power level of 35.
+2018-03-02T08:54:49.5516540-05:00 [INFO]: Player 2 has a power level of 40.
+2018-03-02T08:54:49.5534390-05:00 [INFO]: Player 2 passed stage 2.
+2018-03-02T08:54:49.5550540-05:00 [INFO]: Loading player: 2
+2018-03-02T08:54:50.5109780-05:00 [INFO]: Quest is over and we have winner(s)!
+2018-03-02T08:54:50.5142380-05:00 [INFO]: Paying 2 to Player 2.
+2018-03-02T08:54:50.5169650-05:00 [INFO]: Quest has been fully reset and ended.
+2018-03-02T08:54:50.5186870-05:00 [INFO]: Loading player: 2
+2018-03-02T08:54:50.6392590-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T08:54:51.4901950-05:00 [INFO]: Drawing a story card...
+2018-03-02T08:54:51.4961770-05:00 [INFO]: A quest card was drawn: Repel the Saxxon Raiders
+2018-03-02T08:54:51.4992030-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T08:54:52.2573860-05:00 [INFO]: Player 2 decided to sponsor the quest.
+2018-03-02T08:54:52.2590850-05:00 [INFO]: Setting up stages for quest: Repel the Saxxon Raiders
+2018-03-02T08:56:33.5419390-05:00 [INFO]: Initializing Game object.
+2018-03-02T08:56:46.5125360-05:00 [INFO]: Loading player: 1
+2018-03-02T08:56:46.6484780-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T08:56:47.3020900-05:00 [INFO]: Drawing a story card...
+2018-03-02T08:56:47.3049870-05:00 [INFO]: A quest card was drawn: Search for the Holy Grail
+2018-03-02T08:56:47.3099640-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T08:56:48.4986740-05:00 [INFO]: Player 1 decided to sponsor the quest.
+2018-03-02T08:56:48.5008070-05:00 [INFO]: Setting up stages for quest: Search for the Holy Grail
+2018-03-02T08:57:01.8216900-05:00 [INFO]: Loading player: 2
+2018-03-02T08:57:01.8742390-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:57:03.4471050-05:00 [INFO]: Player 2 decided to join the quest.
+2018-03-02T08:57:03.4489770-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:57:03.4516320-05:00 [INFO]: Loading player: 3
+2018-03-02T08:57:04.4772130-05:00 [INFO]: Player 3 decided to join the quest.
+2018-03-02T08:57:04.4798120-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T08:57:04.4824350-05:00 [INFO]: Loading player: 4
+2018-03-02T08:57:05.0941500-05:00 [INFO]: Player 4 decided to join the quest.
+2018-03-02T08:57:05.0967360-05:00 [INFO]: Giving Player 2 one adventure card for joining the quest.
+2018-03-02T08:57:05.0986200-05:00 [INFO]: Giving Player 3 one adventure card for joining the quest.
+2018-03-02T08:57:05.1001530-05:00 [INFO]: Giving Player 4 one adventure card for joining the quest.
+2018-03-02T08:57:05.1025900-05:00 [INFO]: Moving to setup weapons state.
+2018-03-02T08:57:05.1044410-05:00 [INFO]: Loading player: 2
+2018-03-02T08:57:10.8125990-05:00 [WARN]: Play area invalid: too many amour cards in the play area!
+2018-03-02T08:57:10.8154230-05:00 [WARN]: Play area invalid: too many amour cards in the play area!
+2018-03-02T08:57:10.8183330-05:00 [INFO]: Play area is invalid!
+2018-03-02T08:58:02.2568780-05:00 [INFO]: Player 2 discarded: Amour
+2018-03-02T08:58:02.2615990-05:00 [WARN]: Play area invalid: too many amour cards in the play area!
+2018-03-02T08:58:02.2638600-05:00 [INFO]: Loading player: 3
+2018-03-02T08:58:14.2612730-05:00 [WARN]: Play area invalid: you can't submit duplicate weapons to the play area!
+2018-03-02T08:58:14.2634100-05:00 [INFO]: Play area is invalid!
+2018-03-02T08:58:18.6191800-05:00 [INFO]: There are too many cards in Player 1's hand, they must discard or play.
+2018-03-02T08:58:21.6945600-05:00 [INFO]: Player 3 discarded: Amour
+2018-03-02T08:58:21.6970930-05:00 [INFO]: Loading player: 4
+2018-03-02T08:58:27.5961270-05:00 [INFO]: All playing players have setup weapons for stage 1
+2018-03-02T08:58:27.5978980-05:00 [INFO]: Flipping cards in stage 1
+2018-03-02T08:58:27.6018970-05:00 [INFO]: Stage 1 has a power level of 15.
+2018-03-02T08:58:27.6037210-05:00 [INFO]: Player 2 has a power level of 95.
+2018-03-02T08:58:27.6056750-05:00 [INFO]: Player 2 passed stage 1.
+2018-03-02T08:58:27.6076870-05:00 [INFO]: Loading player: 2
+2018-03-02T08:58:42.9434640-05:00 [INFO]: Stage 1 has a power level of 15.
+2018-03-02T08:58:42.9462340-05:00 [INFO]: Player 3 has a power level of 5.
+2018-03-02T08:58:42.9490510-05:00 [INFO]: Player 3 died on stage 1.
+2018-03-02T08:58:42.9508270-05:00 [INFO]: Loading player: 3
+2018-03-02T08:58:51.1070150-05:00 [INFO]: Stage 1 has a power level of 15.
+2018-03-02T08:58:51.1088880-05:00 [INFO]: Player 4 has a power level of 15.
+2018-03-02T08:58:51.1117520-05:00 [INFO]: Player 4 died on stage 1.
+2018-03-02T08:58:51.1135580-05:00 [INFO]: Loading player: 4
+2018-03-02T08:58:59.3552620-05:00 [INFO]: Swithing back to setup weapons state.
+2018-03-02T08:58:59.3571540-05:00 [INFO]: Giving Player 2 an adventure card for passing the stage.
+2018-03-02T08:58:59.3598510-05:00 [INFO]: Loading player: 2
+2018-03-02T08:59:02.2806530-05:00 [WARN]: Play area invalid: too many amour cards in the play area!
+2018-03-02T08:59:16.8132240-05:00 [WARN]: Play area invalid: too many amour cards in the play area!
+2018-03-02T08:59:17.1792840-05:00 [WARN]: Play area invalid: too many amour cards in the play area!
+2018-03-02T09:02:02.9710050-05:00 [INFO]: Initializing Game object.
+2018-03-02T09:02:10.8373410-05:00 [INFO]: Loading player: 1
+2018-03-02T09:02:11.0397760-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T09:02:11.6993310-05:00 [INFO]: Drawing a story card...
+2018-03-02T09:02:11.7028540-05:00 [INFO]: A quest card was drawn: Search for the Holy Grail
+2018-03-02T09:02:11.7108550-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:02:12.4817890-05:00 [INFO]: Player 1 decided to sponsor the quest.
+2018-03-02T09:02:12.4837760-05:00 [INFO]: Setting up stages for quest: Search for the Holy Grail
+2018-03-02T09:02:26.8186230-05:00 [INFO]: Loading player: 2
+2018-03-02T09:02:26.8945470-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T09:02:27.7605620-05:00 [INFO]: Player 2 decided to join the quest.
+2018-03-02T09:02:27.7623990-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T09:02:27.7649400-05:00 [INFO]: Loading player: 3
+2018-03-02T09:02:28.1740260-05:00 [INFO]: Player 3 decided to join the quest.
+2018-03-02T09:02:28.1758810-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T09:02:28.1785690-05:00 [INFO]: Loading player: 4
+2018-03-02T09:02:28.5420520-05:00 [INFO]: Player 4 decided to join the quest.
+2018-03-02T09:02:28.5442120-05:00 [INFO]: Giving Player 2 one adventure card for joining the quest.
+2018-03-02T09:02:28.5471510-05:00 [INFO]: Giving Player 3 one adventure card for joining the quest.
+2018-03-02T09:02:28.5488600-05:00 [INFO]: Giving Player 4 one adventure card for joining the quest.
+2018-03-02T09:02:28.5505410-05:00 [INFO]: Moving to setup weapons state.
+2018-03-02T09:02:28.5523890-05:00 [INFO]: Loading player: 2
+2018-03-02T09:02:42.6263850-05:00 [WARN]: Play area invalid: too many amour cards in the play area!
+2018-03-02T09:02:42.6288620-05:00 [INFO]: Loading player: 3
+2018-03-02T09:02:44.0058490-05:00 [INFO]: There are too many cards in Player 1's hand, they must discard or play.
+2018-03-02T09:02:47.1307140-05:00 [INFO]: Player 3 discarded: BattleAxe
+2018-03-02T09:02:47.1325520-05:00 [INFO]: Loading player: 4
+2018-03-02T09:02:51.0881030-05:00 [INFO]: All playing players have setup weapons for stage 1
+2018-03-02T09:02:51.0898410-05:00 [INFO]: Flipping cards in stage 1
+2018-03-02T09:02:51.1103100-05:00 [INFO]: Stage 1 has a power level of 15.
+2018-03-02T09:02:51.1179730-05:00 [INFO]: Player 2 has a power level of 95.
+2018-03-02T09:02:51.1213450-05:00 [INFO]: Player 2 passed stage 1.
+2018-03-02T09:02:51.1240090-05:00 [INFO]: Loading player: 2
+2018-03-02T09:02:52.3030140-05:00 [INFO]: Stage 1 has a power level of 15.
+2018-03-02T09:02:52.3051080-05:00 [INFO]: Player 3 has a power level of 5.
+2018-03-02T09:02:52.3079070-05:00 [INFO]: Player 3 died on stage 1.
+2018-03-02T09:02:52.3109510-05:00 [INFO]: Loading player: 3
+2018-03-02T09:02:53.1680420-05:00 [INFO]: Stage 1 has a power level of 15.
+2018-03-02T09:02:53.1698740-05:00 [INFO]: Player 4 has a power level of 35.
+2018-03-02T09:02:53.1718740-05:00 [INFO]: Player 4 passed stage 1.
+2018-03-02T09:02:53.1735990-05:00 [INFO]: Loading player: 4
+2018-03-02T09:02:53.9659210-05:00 [INFO]: Swithing back to setup weapons state.
+2018-03-02T09:02:53.9677520-05:00 [INFO]: Giving Player 2 an adventure card for passing the stage.
+2018-03-02T09:02:53.9694500-05:00 [INFO]: Giving Player 4 an adventure card for passing the stage.
+2018-03-02T09:02:53.9710890-05:00 [INFO]: Loading player: 2
+2018-03-02T09:02:55.0128500-05:00 [WARN]: Play area invalid: too many amour cards in the play area!
+2018-03-02T09:02:55.0151200-05:00 [INFO]: Loading player: 4
+2018-03-02T09:02:57.0074410-05:00 [INFO]: There are too many cards in Player 1's hand, they must discard or play.
+2018-03-02T09:02:59.2360660-05:00 [INFO]: Player 4 discarded: Excalibur
+2018-03-02T09:02:59.2380450-05:00 [INFO]: All playing players have setup weapons for stage 2
+2018-03-02T09:02:59.2407730-05:00 [INFO]: Flipping cards in stage 2
+2018-03-02T09:02:59.2429270-05:00 [INFO]: Stage 2 has a power level of 25.
+2018-03-02T09:02:59.2625420-05:00 [INFO]: Player 2 has a power level of 95.
+2018-03-02T09:02:59.2661110-05:00 [INFO]: Player 2 passed stage 2.
+2018-03-02T09:02:59.2688530-05:00 [INFO]: Loading player: 2
+2018-03-02T09:03:00.2334210-05:00 [INFO]: Stage 2 has a power level of 25.
+2018-03-02T09:03:00.2355850-05:00 [INFO]: Player 4 has a power level of 5.
+2018-03-02T09:03:00.2383910-05:00 [INFO]: Player 4 died on stage 2.
+2018-03-02T09:03:00.2401990-05:00 [INFO]: Loading player: 4
+2018-03-02T09:03:01.1820310-05:00 [INFO]: Swithing back to setup weapons state.
+2018-03-02T09:03:01.1836700-05:00 [INFO]: Giving Player 2 an adventure card for passing the stage.
+2018-03-02T09:03:01.1864790-05:00 [INFO]: Loading player: 2
+2018-03-02T09:03:02.6288470-05:00 [WARN]: Play area invalid: too many amour cards in the play area!
+2018-03-02T09:03:02.6309750-05:00 [INFO]: All playing players have setup weapons for stage 3
+2018-03-02T09:03:02.6338180-05:00 [INFO]: Flipping cards in stage 3
+2018-03-02T09:03:02.6364120-05:00 [INFO]: Stage 3 has a power level of 30.
+2018-03-02T09:03:02.6382190-05:00 [INFO]: Player 2 has a power level of 95.
+2018-03-02T09:03:02.6401150-05:00 [INFO]: Player 2 passed stage 3.
+2018-03-02T09:03:02.6422160-05:00 [INFO]: Loading player: 2
+2018-03-02T09:03:04.2593030-05:00 [INFO]: Swithing back to setup weapons state.
+2018-03-02T09:03:04.2611590-05:00 [INFO]: Giving Player 2 an adventure card for passing the stage.
+2018-03-02T09:03:04.2629560-05:00 [INFO]: Loading player: 2
+2018-03-02T09:03:05.4711320-05:00 [WARN]: Play area invalid: too many amour cards in the play area!
+2018-03-02T09:03:05.4731980-05:00 [INFO]: All playing players have setup weapons for stage 4
+2018-03-02T09:03:05.4754270-05:00 [INFO]: Flipping cards in stage 4
+2018-03-02T09:03:05.4772290-05:00 [INFO]: Stage 4 has a power level of 35.
+2018-03-02T09:03:05.4791400-05:00 [INFO]: Player 2 has a power level of 95.
+2018-03-02T09:03:05.5009660-05:00 [INFO]: Player 2 passed stage 4.
+2018-03-02T09:03:05.5047350-05:00 [INFO]: Loading player: 2
+2018-03-02T09:03:06.4686150-05:00 [INFO]: Swithing back to setup weapons state.
+2018-03-02T09:03:06.4704590-05:00 [INFO]: Giving Player 2 an adventure card for passing the stage.
+2018-03-02T09:03:06.4732570-05:00 [INFO]: Loading player: 2
+2018-03-02T09:03:07.3675410-05:00 [WARN]: Play area invalid: too many amour cards in the play area!
+2018-03-02T09:03:07.3695770-05:00 [INFO]: All playing players have setup weapons for stage 5
+2018-03-02T09:03:07.3712800-05:00 [INFO]: Flipping cards in stage 5
+2018-03-02T09:03:24.4094210-05:00 [INFO]: Quest is over and we have winner(s)!
+2018-03-02T09:03:24.4113680-05:00 [INFO]: Paying 5 to Player 2.
+2018-03-02T09:03:24.4139250-05:00 [INFO]: Quest has been fully reset and ended.
+2018-03-02T09:03:24.4158930-05:00 [INFO]: Ranking up Player 2
+2018-03-02T09:03:24.4184780-05:00 [INFO]: Loading player: 2
+2018-03-02T09:03:24.5478120-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T09:03:24.7229100-05:00 [INFO]: Player 2 must draw a card before ending their turn.
+2018-03-02T09:12:16.0571900-05:00 [INFO]: Initializing Game object.
+2018-03-02T09:15:16.3608990-05:00 [INFO]: Initializing Game object.
+2018-03-02T09:15:28.2137680-05:00 [INFO]: Loading player: 1
+2018-03-02T09:15:28.3574280-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T09:15:29.4074810-05:00 [INFO]: Drawing a story card...
+2018-03-02T09:15:29.4136560-05:00 [INFO]: A quest card was drawn: Search for the Holy Grail
+2018-03-02T09:15:29.4190810-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:15:30.3221270-05:00 [INFO]: Player 1 decided to sponsor the quest.
+2018-03-02T09:15:30.3238890-05:00 [INFO]: Setting up stages for quest: Search for the Holy Grail
+2018-03-02T09:15:45.8225140-05:00 [INFO]: Loading player: 2
+2018-03-02T09:15:45.9179720-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T09:15:49.9443620-05:00 [INFO]: Player 2 decided to join the quest.
+2018-03-02T09:15:49.9466360-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T09:15:49.9492200-05:00 [INFO]: Loading player: 3
+2018-03-02T09:15:51.4902830-05:00 [INFO]: Player 3 decided to NOT join the quest.
+2018-03-02T09:15:51.4922020-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T09:15:51.4948630-05:00 [INFO]: Loading player: 4
+2018-03-02T09:15:52.9515640-05:00 [INFO]: Player 4 decided to NOT join the quest.
+2018-03-02T09:15:52.9532130-05:00 [INFO]: Giving Player 2 one adventure card for joining the quest.
+2018-03-02T09:15:52.9562070-05:00 [INFO]: Moving to setup weapons state.
+2018-03-02T09:15:52.9580200-05:00 [INFO]: Loading player: 2
+2018-03-02T09:16:06.1878390-05:00 [INFO]: All playing players have setup weapons for stage 1
+2018-03-02T09:16:06.1895070-05:00 [INFO]: Flipping cards in stage 1
+2018-03-02T09:16:06.1935850-05:00 [INFO]: Stage 1 has a power level of 5.
+2018-03-02T09:16:06.1957610-05:00 [INFO]: Player 2 has a power level of 15.
+2018-03-02T09:16:06.1975610-05:00 [INFO]: Player 2 passed stage 1.
+2018-03-02T09:16:06.1995050-05:00 [INFO]: Loading player: 2
+2018-03-02T09:16:07.1846300-05:00 [INFO]: Swithing back to setup weapons state.
+2018-03-02T09:16:07.1863370-05:00 [INFO]: Giving Player 2 an adventure card for passing the stage.
+2018-03-02T09:16:07.1880090-05:00 [INFO]: Loading player: 2
+2018-03-02T09:16:08.0493220-05:00 [INFO]: There are too many cards in Player 1's hand, they must discard or play.
+2018-03-02T09:16:14.0689150-05:00 [INFO]: Player 2 discarded: Amour
+2018-03-02T09:16:14.0707040-05:00 [INFO]: All playing players have setup weapons for stage 2
+2018-03-02T09:16:14.0732900-05:00 [INFO]: Flipping cards in stage 2
+2018-03-02T09:16:19.1393770-05:00 [INFO]: Swithing back to setup weapons state.
+2018-03-02T09:16:19.1410330-05:00 [INFO]: Giving Player 2 an adventure card for passing the stage.
+2018-03-02T09:16:19.1426820-05:00 [INFO]: Loading player: 2
+2018-03-02T09:16:19.9209040-05:00 [INFO]: There are too many cards in Player 1's hand, they must discard or play.
+2018-03-02T09:16:21.6523920-05:00 [INFO]: There are too many cards in Player 1's hand, they must discard or play.
+2018-03-02T09:16:25.8068280-05:00 [INFO]: Player 2 discarded: Amour
+2018-03-02T09:16:25.8086090-05:00 [INFO]: All playing players have setup weapons for stage 3
+2018-03-02T09:16:25.8112900-05:00 [INFO]: Flipping cards in stage 3
+2018-03-02T09:16:25.8130190-05:00 [INFO]: Stage 3 has a power level of 30.
+2018-03-02T09:16:25.8147930-05:00 [INFO]: Player 2 has a power level of 15.
+2018-03-02T09:16:25.8176140-05:00 [INFO]: Player 2 died on stage 3.
+2018-03-02T09:16:25.8194980-05:00 [INFO]: Loading player: 2
+2018-03-02T09:16:26.9715450-05:00 [INFO]: Quest is over and everyone died!	
+2018-03-02T09:16:26.9739150-05:00 [INFO]: Quest has been fully reset and ended.
+2018-03-02T09:16:26.9762380-05:00 [INFO]: Loading player: 2
+2018-03-02T09:16:27.0749630-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T09:22:22.4649680-05:00 [INFO]: Initializing Game object.
+2018-03-02T09:27:12.2980090-05:00 [INFO]: Initializing Game object.
+2018-03-02T09:30:00.0212000-05:00 [INFO]: Initializing Game object.
+2018-03-02T09:30:07.4675740-05:00 [INFO]: Normal mode selected.
+2018-03-02T09:30:07.4731610-05:00 [INFO]: Setting up game...
+2018-03-02T09:30:07.4843940-05:00 [INFO]: Creating Player 1 as a human player.
+2018-03-02T09:30:07.4868040-05:00 [INFO]: Creating Player 2 as a human player.
+2018-03-02T09:30:07.4885570-05:00 [INFO]: Creating Player 3 as a human player.
+2018-03-02T09:30:07.4901290-05:00 [INFO]: Creating Player 4 as a human player.
+2018-03-02T09:30:07.7605680-05:00 [INFO]: Created adventure deck with 117 cards.
+2018-03-02T09:30:07.8436480-05:00 [INFO]: Created story deck with 25 cards.
+2018-03-02T09:30:07.8463950-05:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-03-02T09:30:07.8525150-05:00 [INFO]: Loading player: 1
+2018-03-02T09:30:08.1045440-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T09:30:10.0911280-05:00 [INFO]: Drawing a story card...
+2018-03-02T09:30:10.0965850-05:00 [INFO]: A event card was drawn: Prosperity Throughout the Realm
+2018-03-02T09:30:10.1001300-05:00 [INFO]: Handling event card: Prosperity Throughout the Realm
+2018-03-02T09:32:06.7351130-05:00 [INFO]: Initializing Game object.
+2018-03-02T09:32:11.3438550-05:00 [INFO]: Loading player: 1
+2018-03-02T09:32:11.5560440-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T09:32:13.0125700-05:00 [INFO]: Drawing a story card...
+2018-03-02T09:32:13.0192260-05:00 [INFO]: A quest card was drawn: Search for the Holy Grail
+2018-03-02T09:32:13.0260080-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:32:13.6949830-05:00 [INFO]: Player 1 decided to sponsor the quest.
+2018-03-02T09:32:13.6973430-05:00 [INFO]: Setting up stages for quest: Search for the Holy Grail
+2018-03-02T09:33:47.8404940-05:00 [INFO]: Initializing Game object.
+2018-03-02T09:33:50.8215030-05:00 [INFO]: Loading player: 1
+2018-03-02T09:33:51.0835610-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T09:33:51.9251150-05:00 [INFO]: Drawing a story card...
+2018-03-02T09:33:51.9297640-05:00 [INFO]: A quest card was drawn: Search for the Holy Grail
+2018-03-02T09:33:51.9349580-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:33:53.2056110-05:00 [INFO]: Player 1 decided to sponsor the quest.
+2018-03-02T09:33:53.2074820-05:00 [INFO]: Setting up stages for quest: Search for the Holy Grail
+2018-03-02T09:34:02.6038550-05:00 [INFO]: Initializing Game object.
+2018-03-02T09:34:04.6604530-05:00 [INFO]: Loading player: 1
+2018-03-02T09:34:04.7959870-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T09:34:07.4883970-05:00 [INFO]: Drawing a story card...
+2018-03-02T09:34:07.4909210-05:00 [INFO]: A quest card was drawn: Search for the Holy Grail
+2018-03-02T09:34:07.4963010-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:34:08.8523840-05:00 [INFO]: Player 1 decided NOT to sponsor the quest.
+2018-03-02T09:34:08.8566730-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:34:08.8585050-05:00 [INFO]: Loading player: 2
+2018-03-02T09:34:09.0726050-05:00 [INFO]: Player 2 decided NOT to sponsor the quest.
+2018-03-02T09:34:09.0756220-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:34:09.0788630-05:00 [INFO]: Loading player: 3
+2018-03-02T09:34:09.3184210-05:00 [INFO]: Player 3 decided NOT to sponsor the quest.
+2018-03-02T09:34:09.3202530-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:34:09.3221470-05:00 [INFO]: Loading player: 4
+2018-03-02T09:34:09.5481740-05:00 [INFO]: Player 4 decided NOT to sponsor the quest.
+2018-03-02T09:34:09.5498170-05:00 [INFO]: Nobody wanted to sponsor the quest!
+2018-03-02T09:34:09.5515930-05:00 [INFO]: Quest has been fully reset and ended.
+2018-03-02T09:34:09.5534370-05:00 [INFO]: Loading player: 2
+2018-03-02T09:34:09.6724470-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T09:34:11.6113190-05:00 [INFO]: Drawing a story card...
+2018-03-02T09:34:11.6162050-05:00 [INFO]: A quest card was drawn: Boar Hunt
+2018-03-02T09:34:11.6186980-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:34:12.6435400-05:00 [INFO]: Player 2 decided to sponsor the quest.
+2018-03-02T09:34:12.6468490-05:00 [INFO]: Setting up stages for quest: Boar Hunt
+2018-03-02T09:35:49.1089660-05:00 [INFO]: Initializing Game object.
+2018-03-02T09:35:57.3310660-05:00 [INFO]: Loading player: 1
+2018-03-02T09:35:57.5006220-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T09:35:58.9047150-05:00 [INFO]: Drawing a story card...
+2018-03-02T09:35:58.9117020-05:00 [INFO]: A quest card was drawn: Search for the Holy Grail
+2018-03-02T09:35:58.9163930-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:35:59.6858160-05:00 [INFO]: Player 1 decided NOT to sponsor the quest.
+2018-03-02T09:35:59.6879080-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:35:59.6896150-05:00 [INFO]: Loading player: 2
+2018-03-02T09:36:06.4952190-05:00 [INFO]: Player 2 decided NOT to sponsor the quest.
+2018-03-02T09:36:06.4981130-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:36:06.5008710-05:00 [INFO]: Loading player: 3
+2018-03-02T09:36:07.1002640-05:00 [INFO]: Player 3 decided NOT to sponsor the quest.
+2018-03-02T09:36:07.1039620-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:36:07.1068820-05:00 [INFO]: Loading player: 4
+2018-03-02T09:36:07.9818580-05:00 [INFO]: Player 4 decided NOT to sponsor the quest.
+2018-03-02T09:36:07.9839980-05:00 [INFO]: Nobody wanted to sponsor the quest!
+2018-03-02T09:36:07.9869960-05:00 [INFO]: Quest has been fully reset and ended.
+2018-03-02T09:36:07.9895120-05:00 [INFO]: Loading player: 2
+2018-03-02T09:36:08.1718940-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T09:36:09.1645810-05:00 [INFO]: Drawing a story card...
+2018-03-02T09:36:09.1701250-05:00 [INFO]: A quest card was drawn: Test of the Green Knight
+2018-03-02T09:36:09.1739950-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:36:10.8603220-05:00 [INFO]: Player 2 decided to sponsor the quest.
+2018-03-02T09:36:10.8640530-05:00 [INFO]: Setting up stages for quest: Test of the Green Knight
+2018-03-02T09:36:21.9873310-05:00 [INFO]: Initializing Game object.
+2018-03-02T09:36:24.1207750-05:00 [INFO]: Loading player: 1
+2018-03-02T09:36:24.2798090-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T09:36:24.9585480-05:00 [INFO]: Drawing a story card...
+2018-03-02T09:36:24.9612830-05:00 [INFO]: A quest card was drawn: Search for the Holy Grail
+2018-03-02T09:36:24.9658970-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:36:26.8544160-05:00 [INFO]: Player 1 decided NOT to sponsor the quest.
+2018-03-02T09:36:26.8568250-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:36:26.8591140-05:00 [INFO]: Loading player: 2
+2018-03-02T09:36:27.0409740-05:00 [INFO]: Player 2 decided NOT to sponsor the quest.
+2018-03-02T09:36:27.0435560-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:36:27.0465840-05:00 [INFO]: Loading player: 3
+2018-03-02T09:36:27.2110980-05:00 [INFO]: Player 3 decided NOT to sponsor the quest.
+2018-03-02T09:36:27.2139540-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:36:27.2166590-05:00 [INFO]: Loading player: 4
+2018-03-02T09:36:27.4733750-05:00 [INFO]: Player 4 decided NOT to sponsor the quest.
+2018-03-02T09:36:27.4759420-05:00 [INFO]: Nobody wanted to sponsor the quest!
+2018-03-02T09:36:27.4793110-05:00 [INFO]: Quest has been fully reset and ended.
+2018-03-02T09:36:27.4811200-05:00 [INFO]: Loading player: 2
+2018-03-02T09:36:27.5663210-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T09:36:28.6324200-05:00 [INFO]: Drawing a story card...
+2018-03-02T09:36:28.6376150-05:00 [INFO]: A quest card was drawn: Boar Hunt
+2018-03-02T09:36:28.6400380-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:36:41.6885130-05:00 [INFO]: Initializing Game object.
+2018-03-02T09:36:45.3469720-05:00 [INFO]: Loading player: 1
+2018-03-02T09:36:45.4576900-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T09:36:51.5975840-05:00 [INFO]: Initializing Game object.
+2018-03-02T09:36:54.1640410-05:00 [INFO]: Loading player: 1
+2018-03-02T09:36:54.3425810-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T09:36:55.1529660-05:00 [INFO]: Drawing a story card...
+2018-03-02T09:36:55.1558040-05:00 [INFO]: A quest card was drawn: Search for the Holy Grail
+2018-03-02T09:36:55.1603410-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:36:56.4183610-05:00 [INFO]: Player 1 decided NOT to sponsor the quest.
+2018-03-02T09:36:56.4205270-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:36:56.4221330-05:00 [INFO]: Loading player: 2
+2018-03-02T09:36:56.7983310-05:00 [INFO]: Player 2 decided NOT to sponsor the quest.
+2018-03-02T09:36:56.8012300-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:36:56.8031880-05:00 [INFO]: Loading player: 3
+2018-03-02T09:36:56.9767970-05:00 [INFO]: Player 3 decided NOT to sponsor the quest.
+2018-03-02T09:36:56.9812010-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:36:56.9839250-05:00 [INFO]: Loading player: 4
+2018-03-02T09:36:57.1989490-05:00 [INFO]: Player 4 decided NOT to sponsor the quest.
+2018-03-02T09:36:57.2023190-05:00 [INFO]: Nobody wanted to sponsor the quest!
+2018-03-02T09:36:57.2049380-05:00 [INFO]: Quest has been fully reset and ended.
+2018-03-02T09:36:57.2078040-05:00 [INFO]: Loading player: 2
+2018-03-02T09:36:57.2890920-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T09:36:58.3461910-05:00 [INFO]: Drawing a story card...
+2018-03-02T09:36:58.3484020-05:00 [INFO]: A quest card was drawn: Test of the Green Knight
+2018-03-02T09:36:58.3505320-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:36:59.1927870-05:00 [INFO]: Player 2 decided NOT to sponsor the quest.
+2018-03-02T09:36:59.1950540-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:36:59.1969220-05:00 [INFO]: Loading player: 3
+2018-03-02T09:37:01.0559860-05:00 [INFO]: Player 3 decided to sponsor the quest.
+2018-03-02T09:37:01.0698240-05:00 [INFO]: Setting up stages for quest: Test of the Green Knight
+2018-03-02T09:40:28.2820460-05:00 [WARN]: Quest setup is invalid: not ascending power level.
+2018-03-02T09:40:30.5874320-05:00 [INFO]: A story card has already been drawn.
+2018-03-02T09:40:39.7610030-05:00 [INFO]: Initializing Game object.
+2018-03-02T09:40:45.6382950-05:00 [INFO]: Loading player: 1
+2018-03-02T09:40:45.8632100-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T09:41:07.2307220-05:00 [INFO]: Initializing Game object.
+2018-03-02T09:43:10.1459770-05:00 [INFO]: Loading player: 1
+2018-03-02T09:43:10.3007300-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T09:43:15.6755440-05:00 [INFO]: Initializing Game object.
+2018-03-02T09:43:17.5299800-05:00 [INFO]: Loading player: 1
+2018-03-02T09:43:17.6233660-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T09:43:18.6416180-05:00 [INFO]: Drawing a story card...
+2018-03-02T09:43:18.6493890-05:00 [INFO]: A quest card was drawn: Search for the Holy Grail
+2018-03-02T09:43:18.6772700-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:43:20.1993250-05:00 [INFO]: Player 1 decided NOT to sponsor the quest.
+2018-03-02T09:43:20.2014380-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:43:20.2038010-05:00 [INFO]: Loading player: 2
+2018-03-02T09:43:20.3717150-05:00 [INFO]: Player 2 decided NOT to sponsor the quest.
+2018-03-02T09:43:20.3850560-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:43:20.3915260-05:00 [INFO]: Loading player: 3
+2018-03-02T09:43:20.5357830-05:00 [INFO]: Player 3 decided NOT to sponsor the quest.
+2018-03-02T09:43:20.5404910-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:43:20.5432210-05:00 [INFO]: Loading player: 4
+2018-03-02T09:43:20.7868790-05:00 [INFO]: Player 4 decided NOT to sponsor the quest.
+2018-03-02T09:43:20.7900110-05:00 [INFO]: Nobody wanted to sponsor the quest!
+2018-03-02T09:43:20.7929330-05:00 [INFO]: Quest has been fully reset and ended.
+2018-03-02T09:43:20.7947830-05:00 [INFO]: Loading player: 2
+2018-03-02T09:43:20.8447990-05:00 [INFO]: Cleaning cards from stages.
+2018-03-02T09:43:51.6724990-05:00 [INFO]: Drawing a story card...
+2018-03-02T09:43:51.6793370-05:00 [INFO]: A quest card was drawn: Test of the Green Knight
+2018-03-02T09:43:51.6816370-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:43:53.2354640-05:00 [INFO]: Player 2 decided NOT to sponsor the quest.
+2018-03-02T09:43:53.2383650-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-02T09:43:53.2409980-05:00 [INFO]: Loading player: 3
+2018-03-02T09:43:54.0492400-05:00 [INFO]: Player 3 decided to sponsor the quest.
+2018-03-02T09:43:54.0512340-05:00 [INFO]: Setting up stages for quest: Test of the Green Knight
+2018-03-02T09:44:14.9370810-05:00 [INFO]: Loading player: 4
+2018-03-02T09:44:15.0062870-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T09:44:22.2991360-05:00 [INFO]: Player 4 decided to NOT join the quest.
+2018-03-02T09:44:22.3014410-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T09:44:22.3040640-05:00 [INFO]: Loading player: 1
+2018-03-02T09:44:23.1474150-05:00 [INFO]: Player 1 decided to NOT join the quest.
+2018-03-02T09:44:23.1490800-05:00 [INFO]: Displaying join quest prompt!
+2018-03-02T09:44:23.1505720-05:00 [INFO]: Loading player: 2
+2018-03-02T09:44:23.9446070-05:00 [INFO]: Player 2 decided to join the quest.
+2018-03-02T09:44:23.9462640-05:00 [INFO]: Giving Player 2 one adventure card for joining the quest.
+2018-03-02T09:44:23.9479550-05:00 [INFO]: Moving to setup weapons state.
+2018-03-02T09:44:23.9496940-05:00 [INFO]: Loading player: 2
+2018-03-02T09:44:46.3742420-05:00 [INFO]: All playing players have setup weapons for stage 1
+2018-03-02T09:44:46.3758660-05:00 [INFO]: Flipping cards in stage 1
+2018-03-02T09:44:50.5993710-05:00 [INFO]: Swithing back to setup weapons state.
+2018-03-02T09:44:50.6016380-05:00 [INFO]: Giving Player 2 an adventure card for passing the stage.
+2018-03-02T09:44:50.6044780-05:00 [INFO]: Loading player: 2
+2018-03-02T09:44:55.0036600-05:00 [INFO]: All playing players have setup weapons for stage 2
+2018-03-02T09:44:55.0052680-05:00 [INFO]: Flipping cards in stage 2
+2018-03-02T09:44:55.0095300-05:00 [INFO]: Stage 2 has a power level of 10.
+2018-03-02T09:44:55.0115030-05:00 [INFO]: Player 2 has a power level of 35.
+2018-03-02T09:44:55.0133640-05:00 [INFO]: Player 2 passed stage 2.
+2018-03-02T09:44:55.0156520-05:00 [INFO]: Loading player: 2
+2018-03-02T09:46:11.5360410-05:00 [INFO]: Swithing back to setup weapons state.
+2018-03-02T09:46:11.5376550-05:00 [INFO]: Giving Player 2 an adventure card for passing the stage.
+2018-03-02T09:46:11.5404970-05:00 [INFO]: Loading player: 2
