@@ -17,6 +17,10 @@ public class EventBehaviour : GameBehaviour {
 		handleEvent(_eventCard.name);
 	}
 
+	public int getCurrentTurn(){
+		return _turnId;
+	}
+
 	public void handleEvent(string name){
 		if (!_eventHandled) {
 			_eventHandled = true;
@@ -74,15 +78,44 @@ public class EventBehaviour : GameBehaviour {
 
 			} else if (name == "Plague") {
 
+				Player p;
+				p = Game.GameManager.getPlayer(_turnId);
+				if(p.shieldCounter >= 2){
+					p.shieldCounter = p.shieldCounter-2;
+					Prompt.PromptManager.statusPrompt("Player " + (_turnId + 1) + " lost 2 shield.");
+				}
+				else{
+					Prompt.PromptManager.statusPrompt("Player " + (_turnId + 1) + " did not have enough shields.");
+				}
+
+				
+
 			} else if (name == "King's Recognition") {
+
+				Game.GameManager.bonusQuestPoints = true;
+				Prompt.PromptManager.statusPrompt("Next players to finish a quest will gain two extra shields");
 
 			} else if (name == "Queen's Favor") {
 
-			} else if (name == "Court Called To Camelot") {
+
+
+
+			} else if (name == "Court Called to Camelot") {
+				//Game.GameManager.removeAllAllies();
+
 
 			} else if (name == "King's Call to Arms") {
 
 			} else if (name == "Prosperity Throughout the Realm") {
+				int numPlayers = Game.GameManager.getNumberOfPlayers ();
+				Player p;
+
+				for(int i = 0; i < numPlayers; i++){
+					p = Game.GameManager.getPlayer(i);
+					for(int j = 0; j < 2; j++){
+						p.addCard(Game.GameManager.drawAdventureCard());
+					}
+				}
 
 			} else {
 				Debug.Log ("Unknown event card!");
