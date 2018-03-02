@@ -458,6 +458,7 @@ public class QuestBehaviour : GameBehaviour {
 		// Add the rank bonus.
 		power += Game.GameManager.getRankPower(Game.GameManager.getPlayer(_turnId).rank);
 		Game.GameManager.logger.info("Stage " + (_currStage + 1) + " has a power level of " + _stagePower[_currStage] + ".");
+		Game.GameManager.logger.info("Player " + (_turnId + 1) + " has a power level of " + power + ".");
 		return power > _stagePower[_currStage];
 	}
 
