@@ -1,6 +1,8 @@
 Team 20:
-#100997767 Andy Bui
-#100998216 Robin Luo
+Andy Bui #100997767
+Joshua Arts #101009222
+Philippe Legault #101017065
+Robin Luo #100998216
 
 HOW TO INSTALL:
 1. Download the game file
@@ -11,7 +13,9 @@ HOW TO INSTALL:
 6. Press the play button
 
 
-Logged Scenarios can be found at Quest/LogScenario
+Logged Scenarios can be found at
+- Quest/LogScenario
+- Quest/Logs
 
 Strategy pattern
 - was implemented in the AI class and can be found in Assets/script/AIPlayer
