@@ -982,12 +982,12 @@ public class Game : MonoBehaviour {
 	}
 
 	public void Scenario2(){
-		rigged("BoarHunt","specialHand1");
+		rigged("scenario2","specialHand");
 	}
 
 
 	public void Scenario3(){
-		rigged("BoarHunt","specialHand2");
+		rigged("scenario3","specialHand3");
 	}
 
 	//Rig Hands and story deck
@@ -1020,7 +1020,7 @@ public class Game : MonoBehaviour {
 		}
 
 		// Setup decks.
-		_adventureDeck = new Deck("Adventure");
+		_adventureDeck = new Deck(adventureDeckType);
 		_storyDeck = new Deck(storyDeckType);
 		_discardPileAdventure = new Deck ("");
 		_discardPileStory = new Deck ("");
