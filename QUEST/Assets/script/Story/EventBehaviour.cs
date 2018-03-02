@@ -107,21 +107,22 @@ public class EventBehaviour : GameBehaviour {
 					p = Game.GameManager.getPlayer(i);
 					if(p.shieldCounter <= lowestVal){
 						lowestVal = p.shieldCounter;
-						Debug.Log("lowest being added: " + lowestVal + "to player");
+						//Debug.Log("lowest being added: " + lowestVal + "to player");
 						lowestPlayers.Add(i);
 					}
 
 				}
 
 				for(int i = 0; i < lowestPlayers.Count; i++){
-					Debug.Log("lowestPlayers: " + lowestPlayers[i]);
+					//Debug.Log("lowestPlayers: " + lowestPlayers[i]);
 					p = Game.GameManager.getPlayer(lowestPlayers[i]);
 					for(int j = 0; j < 2; j++){
 						p.addCard(Game.GameManager.drawAdventureCard());
 					}
+
 				}	
 
-
+				Prompt.PromptManager.statusPrompt("Players with lowest rank got 2 extra Adventure Cards: ");
 
 			} else if (name == "Court Called to Camelot") {
 				//Game.GameManager.removeAllAllies();
@@ -139,6 +140,7 @@ public class EventBehaviour : GameBehaviour {
 						p.addCard(Game.GameManager.drawAdventureCard());
 					}
 				}
+				Prompt.PromptManager.statusPrompt("All players immediately drew 2 extra Adventure Cards: ");
 
 			} else {
 				Debug.Log ("Unknown event card!");
