@@ -485,7 +485,7 @@ public class Game : MonoBehaviour {
 //			removeCardByName(playerid, cards[i].name);
 		}
 	}
-		
+
 	public void setQuest(int player_id, List<List<Card>> stages) {
 		//Access each stage in the quest
 		//Set the stage to the next list
@@ -960,6 +960,7 @@ public class Game : MonoBehaviour {
 		nextCardAndPlayer();
 	}
 
+
 	// Runs if the user selects Play PVP.
 	public void NormalMode(){
 		logger.info("Normal mode selected.");
@@ -989,6 +990,60 @@ public class Game : MonoBehaviour {
 		genericModeSetup("BoarHunt");
 	}
 
+	public void Scenario2(){
+		rigged("scenario2","specialHand");
+	}
+
+
+	public void Scenario3(){
+		rigged("scenario3","specialHand3");
+	}
+
+	//Rig Hands and story deck
+	public void rigged(string storyDeckType, string adventureDeckType){
+		// Hide menu.
+		Menu.SetActive(false);
+
+		// Clear hand.
+		foreach (Transform child in Hand.transform) {
+			GameObject.Destroy(child.gameObject);
+		}
+
+		// Create the game behvaiours.
+		_questBehaviour = new QuestBehaviour();
+		_tournamentBehaviour = new TournamentBehaviour();
+		_eventBehaviour = new EventBehaviour();
+
+		// Setup players.
+		_players = new List<Player>();
+
+		for(int i = 0 ; i < playerChoice.Count; i++){
+			if (playerChoice[i].GetComponent<Dropdown> ().value == 0) { //huMAN
+				Debug.Log ("Normal Player ID: "+ (i+1));
+				_players.Add(new Player(i+1));
+			}
+			else if (playerChoice [i].GetComponent<Dropdown> ().value == 1) { //AI
+				Debug.Log ("AI Player ID: "+ (i+1));
+				_players.Add(new AIPlayer(i+1));
+			}
+		}
+
+		// Setup decks.
+		_adventureDeck = new Deck(adventureDeckType);
+		_storyDeck = new Deck(storyDeckType);
+		_discardPileAdventure = new Deck ("");
+		_discardPileStory = new Deck ("");
+
+		// Populate the players hands.
+		for(int i = 0; i < _players.Count ; i++){
+			for(int x = 0 ; x < 12 ; x++){
+				_players[i].addCard((_adventureDeck.Draw()));
+			}
+		}
+
+		// Load up the first player.
+		nextCardAndPlayer();
+	}
 
 	//Give card to player
 	public void giveCard(int id){
@@ -1006,4 +1061,6 @@ public class Game : MonoBehaviour {
 			}
 		}
 	}
+
+
 }
