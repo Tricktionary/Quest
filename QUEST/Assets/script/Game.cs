@@ -993,8 +993,7 @@ public class Game : MonoBehaviour {
 	public void Scenario2(){
 		rigged("scenario2","specialHand");
 	}
-
-
+	
 	public void Scenario3(){
 		rigged("scenario3","specialHand3");
 	}
