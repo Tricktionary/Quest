@@ -106,3 +106,108 @@
 2018-03-02T14:01:13.6998000-05:00 [INFO]: Player 3 discarded: Sword
 2018-03-02T14:01:13.7011500-05:00 [INFO]: Handling event card: Prosperity Throughout the Realm
 2018-03-02T14:01:14.7584510-05:00 [INFO]: A story card has already been drawn.
+2018-03-04T14:13:09.1117690-05:00 [INFO]: Initializing Game object.
+2018-03-04T14:13:11.3938250-05:00 [INFO]: Normal mode selected.
+2018-03-04T14:13:11.3966770-05:00 [INFO]: Setting up game...
+2018-03-04T14:13:11.4028930-05:00 [INFO]: Creating Player 1 as a human player.
+2018-03-04T14:13:11.4046730-05:00 [INFO]: Creating Player 2 as a human player.
+2018-03-04T14:13:11.4063460-05:00 [INFO]: Creating Player 3 as a human player.
+2018-03-04T14:13:11.4080500-05:00 [INFO]: Creating Player 4 as a human player.
+2018-03-04T14:13:11.7362230-05:00 [INFO]: Created adventure deck with 117 cards.
+2018-03-04T14:13:11.8056590-05:00 [INFO]: Created story deck with 25 cards.
+2018-03-04T14:13:11.8089840-05:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-03-04T14:13:11.8139710-05:00 [INFO]: Loading player: 1
+2018-03-04T14:13:11.9935250-05:00 [INFO]: Cleaning cards from stages.
+2018-03-04T14:13:16.6526760-05:00 [INFO]: Initializing Game object.
+2018-03-04T14:13:23.6312600-05:00 [INFO]: Normal mode selected.
+2018-03-04T14:13:23.6332290-05:00 [INFO]: Setting up game...
+2018-03-04T14:13:23.6395120-05:00 [INFO]: Creating Player 1 as a human player.
+2018-03-04T14:13:23.6412250-05:00 [INFO]: Creating Player 2 as an AI player.
+2018-03-04T14:13:23.6426480-05:00 [INFO]: Creating Player 3 as an AI player.
+2018-03-04T14:13:23.6441860-05:00 [INFO]: Creating Player 4 as an AI player.
+2018-03-04T14:13:23.8271200-05:00 [INFO]: Created adventure deck with 117 cards.
+2018-03-04T14:13:23.8677380-05:00 [INFO]: Created story deck with 25 cards.
+2018-03-04T14:13:23.8694910-05:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-03-04T14:13:23.8736210-05:00 [INFO]: Loading player: 1
+2018-03-04T14:13:23.9597880-05:00 [INFO]: Cleaning cards from stages.
+2018-03-04T14:13:24.9582400-05:00 [INFO]: Drawing a story card...
+2018-03-04T14:13:24.9632530-05:00 [INFO]: A quest card was drawn: Vanquish King Arthur's Enemies
+2018-03-04T14:13:24.9673430-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-04T14:13:26.3060480-05:00 [INFO]: Player 1 decided to sponsor the quest.
+2018-03-04T14:13:26.3082610-05:00 [INFO]: Setting up stages for quest: Vanquish King Arthur's Enemies
+2018-03-04T14:13:39.3431780-05:00 [INFO]: Using low power for Saxons because it is NOT featured.
+2018-03-04T14:13:39.3448160-05:00 [INFO]: Using low power for Robber Knight because it is NOT featured.
+2018-03-04T14:13:39.3461470-05:00 [INFO]: Using low power for Evil Knight because it is NOT featured.
+2018-03-04T14:13:39.3486250-05:00 [INFO]: Loading player: 2
+2018-03-04T14:13:39.4261940-05:00 [INFO]: Displaying join quest prompt!
+2018-03-04T14:13:39.4313870-05:00 [INFO]: Player 2 decided to join the quest.
+2018-03-04T14:13:39.4346270-05:00 [INFO]: Displaying join quest prompt!
+2018-03-04T14:13:39.4410800-05:00 [INFO]: Player 3 decided to join the quest.
+2018-03-04T14:13:39.4448230-05:00 [INFO]: Displaying join quest prompt!
+2018-03-04T14:14:09.5386840-05:00 [INFO]: Initializing Game object.
+2018-03-04T14:14:15.2088350-05:00 [INFO]: Normal mode selected.
+2018-03-04T14:14:15.2112200-05:00 [INFO]: Setting up game...
+2018-03-04T14:14:15.2171890-05:00 [INFO]: Creating Player 1 as a human player.
+2018-03-04T14:14:15.2188060-05:00 [INFO]: Creating Player 2 as an AI player.
+2018-03-04T14:14:15.2203350-05:00 [INFO]: Creating Player 3 as a human player.
+2018-03-04T14:14:15.2217890-05:00 [INFO]: Creating Player 4 as a human player.
+2018-03-04T14:14:15.4429210-05:00 [INFO]: Created adventure deck with 117 cards.
+2018-03-04T14:14:15.4865510-05:00 [INFO]: Created story deck with 25 cards.
+2018-03-04T14:14:15.4895240-05:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-03-04T14:14:15.4949310-05:00 [INFO]: Loading player: 1
+2018-03-04T14:14:15.5748140-05:00 [INFO]: Cleaning cards from stages.
+2018-03-04T14:14:16.4199780-05:00 [INFO]: Drawing a story card...
+2018-03-04T14:14:16.4269120-05:00 [INFO]: A event card was drawn: Queen's Favor
+2018-03-04T14:14:16.4296060-05:00 [INFO]: Handling event card: Queen's Favor
+2018-03-04T14:14:20.7859090-05:00 [INFO]: Initializing Game object.
+2018-03-04T14:14:23.3730290-05:00 [INFO]: Quest Only mode selected.
+2018-03-04T14:14:23.3751940-05:00 [INFO]: Setting up game...
+2018-03-04T14:14:23.3800740-05:00 [INFO]: Creating Player 1 as a human player.
+2018-03-04T14:14:23.3815360-05:00 [INFO]: Creating Player 2 as an AI player.
+2018-03-04T14:14:23.3831630-05:00 [INFO]: Creating Player 3 as a human player.
+2018-03-04T14:14:23.3843880-05:00 [INFO]: Creating Player 4 as a human player.
+2018-03-04T14:14:23.5928050-05:00 [INFO]: Created adventure deck with 117 cards.
+2018-03-04T14:14:23.6107520-05:00 [INFO]: Created story deck with 13 cards.
+2018-03-04T14:14:23.6120440-05:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-03-04T14:14:23.6147370-05:00 [INFO]: Loading player: 1
+2018-03-04T14:14:23.7250360-05:00 [INFO]: Cleaning cards from stages.
+2018-03-04T14:14:24.6832060-05:00 [INFO]: Drawing a story card...
+2018-03-04T14:14:24.6881490-05:00 [INFO]: A quest card was drawn: Search for the Questing Beast
+2018-03-04T14:14:24.6922440-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-04T14:14:25.5328600-05:00 [INFO]: Player 1 decided to sponsor the quest.
+2018-03-04T14:14:25.5346310-05:00 [INFO]: Setting up stages for quest: Search for the Questing Beast
+2018-03-04T14:14:37.1560820-05:00 [INFO]: Using low power for Thieves because it is NOT featured.
+2018-03-04T14:14:37.1576880-05:00 [INFO]: Using low power for Evil Knight because it is NOT featured.
+2018-03-04T14:14:37.1606710-05:00 [INFO]: Using low power for Giant because it is NOT featured.
+2018-03-04T14:14:37.1623990-05:00 [INFO]: Using low power for Dragon because it is NOT featured.
+2018-03-04T14:14:37.1650210-05:00 [INFO]: Loading player: 2
+2018-03-04T14:14:37.2219370-05:00 [INFO]: Displaying join quest prompt!
+2018-03-04T14:14:37.2287130-05:00 [INFO]: Player 2 decided to NOT join the quest.
+2018-03-04T14:14:37.2315640-05:00 [INFO]: Displaying join quest prompt!
+2018-03-04T14:14:37.2333230-05:00 [INFO]: Loading player: 3
+2018-03-04T14:17:33.5984110-05:00 [INFO]: Initializing Game object.
+2018-03-04T14:17:43.0526200-05:00 [INFO]: Quest Only mode selected.
+2018-03-04T14:17:43.0638660-05:00 [INFO]: Setting up game...
+2018-03-04T14:17:43.0696770-05:00 [INFO]: Creating Player 1 as a human player.
+2018-03-04T14:17:43.0711330-05:00 [INFO]: Creating Player 2 as an AI player.
+2018-03-04T14:17:43.0728210-05:00 [INFO]: Creating Player 3 as an AI player.
+2018-03-04T14:17:43.0747420-05:00 [INFO]: Creating Player 4 as an AI player.
+2018-03-04T14:17:43.2866750-05:00 [INFO]: Created adventure deck with 117 cards.
+2018-03-04T14:17:43.3045460-05:00 [INFO]: Created story deck with 13 cards.
+2018-03-04T14:17:43.3059050-05:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-03-04T14:17:43.3089720-05:00 [INFO]: Loading player: 1
+2018-03-04T14:17:43.4064850-05:00 [INFO]: Cleaning cards from stages.
+2018-03-04T14:17:45.2774670-05:00 [INFO]: Drawing a story card...
+2018-03-04T14:17:45.2821630-05:00 [INFO]: A quest card was drawn: Rescue the Fair Maiden
+2018-03-04T14:17:45.2862130-05:00 [INFO]: Displaying sponsor prompt!
+2018-03-04T14:17:47.3562970-05:00 [INFO]: Player 1 decided to sponsor the quest.
+2018-03-04T14:17:47.3579640-05:00 [INFO]: Setting up stages for quest: Rescue the Fair Maiden
+2018-03-04T14:17:56.5195460-05:00 [INFO]: Using low power for Thieves because it is NOT featured.
+2018-03-04T14:17:56.5211650-05:00 [INFO]: Using low power for Boar because it is NOT featured.
+2018-03-04T14:17:56.5243450-05:00 [INFO]: Using high power for Black Knight because it is featured.
+2018-03-04T14:17:56.5394580-05:00 [INFO]: Loading player: 2
+2018-03-04T14:17:56.5849100-05:00 [INFO]: Displaying join quest prompt!
+2018-03-04T14:17:56.5919510-05:00 [INFO]: Player 2 decided to join the quest.
+2018-03-04T14:17:56.5940480-05:00 [INFO]: Displaying join quest prompt!
+2018-03-04T14:17:56.6003840-05:00 [INFO]: Player 3 decided to join the quest.
+2018-03-04T14:17:56.6043480-05:00 [INFO]: Displaying join quest prompt!

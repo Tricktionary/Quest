@@ -107,12 +107,12 @@ public class QuestBehaviour : GameBehaviour {
 						// Payout winners.
 						for(int i = 0 ; i < _playersIn.Count ; i++){
 							Game.GameManager.logger.info("Player " + (_playersIn[i] + 1) + " won the quest!");
-              
+
 							if(Game.GameManager.bonusQuestPoints){
 								Game.GameManager.payShield(_playersIn[i], _questCard.stages + 2);
 								Game.GameManager.logger.info("Player " + (_playersIn[i] + 1) + " recieved 2 extra shields because of King's Recognition.");
 							}
-							else{	
+							else{
 								Game.GameManager.payShield(_playersIn[i], _questCard.stages);
 							}
 						}
@@ -297,6 +297,7 @@ public class QuestBehaviour : GameBehaviour {
 						//AI join quest
 						if(Game.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
 							Game.GameManager.AILogicResponse(_turnId,"quest");
+							Debug.Log("Herelol");
 						}
 
 						// Clear the status prompt.
