@@ -493,6 +493,8 @@ public class Game : MonoBehaviour {
 				ind = i;
 				found = true;
 				Debug.Log("inside remove all cards");
+				Debug.Log("Player ID (remove card in play): " + player_id);
+				Debug.Log("name (remove card in play): " + name);
 				break;
 			}
 		}
@@ -503,12 +505,13 @@ public class Game : MonoBehaviour {
 
 	public void removeAllAllies(){
 		List<Card> allAlly = new List<Card>();
-
+		Debug.Log("Inside remove all allies");
 		//Get list of all allies
 		for(int i = 0 ; i < _players.Count ; i++){
-			for(int j = 0 ; j < _players[i].hand.Count; j++){
-				Card currCard = _players[i].hand[j];
+			for(int j = 0 ; j < _players[i].inPlay.Count; j++){
+				Card currCard = _players[i].inPlay[j];
 				if(currCard.GetType() == typeof(AllyCard)){
+					Debug.Log("added card (remove all allies): "+ currCard.name);
 					allAlly.Add(currCard);
 				}
 			}
