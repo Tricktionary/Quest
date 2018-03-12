@@ -250,3 +250,28 @@
 2018-03-12T15:34:01.9944050-04:00 [INFO]: Initializing Game object.
 2018-03-12T15:34:17.5866470-04:00 [INFO]: Initializing Game object.
 2018-03-12T15:35:14.4773040-04:00 [INFO]: Initializing Game object.
+2018-03-12T15:39:44.1973190-04:00 [INFO]: Initializing Game object.
+2018-03-12T15:40:05.1628920-04:00 [INFO]: Initializing Game object.
+2018-03-12T15:40:41.8760020-04:00 [INFO]: Initializing Game object.
+2018-03-12T15:49:44.6614470-04:00 [INFO]: Initializing Game object.
+2018-03-12T15:51:38.4004560-04:00 [INFO]: Initializing Game object.
+2018-03-12T16:13:33.9396600-04:00 [INFO]: Initializing Game object.
+2018-03-12T16:13:37.6083510-04:00 [INFO]: Normal mode selected.
+2018-03-12T16:13:37.6106650-04:00 [INFO]: Setting up game...
+2018-03-12T16:13:37.6155920-04:00 [INFO]: Creating Player 1 as an AI player.
+2018-03-12T16:13:37.6176160-04:00 [INFO]: Creating Player 2 as a human player.
+2018-03-12T16:13:37.6189380-04:00 [INFO]: Creating Player 3 as a human player.
+2018-03-12T16:13:37.6201210-04:00 [INFO]: Creating Player 4 as a human player.
+2018-03-12T16:13:37.8477730-04:00 [INFO]: Created adventure deck with 117 cards.
+2018-03-12T16:13:37.8794540-04:00 [INFO]: Created story deck with 25 cards.
+2018-03-12T16:13:37.8810570-04:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-03-12T16:13:37.8844790-04:00 [INFO]: Loading player: 1
+2018-03-12T16:13:38.0536280-04:00 [INFO]: Cleaning cards from stages.
+2018-03-12T16:13:38.0667100-04:00 [INFO]: Drawing a story card...
+2018-03-12T16:13:38.0740000-04:00 [INFO]: A event card was drawn: King's Recognition
+2018-03-12T16:13:38.0800270-04:00 [INFO]: Handling event card: King's Recognition
+2018-03-12T16:13:38.0848580-04:00 [INFO]: Handling event card: King's Recognition
+2018-03-12T16:13:38.0950610-04:00 [INFO]: Loading player: 2
+2018-03-12T16:13:38.2764630-04:00 [INFO]: Cleaning cards from stages.
+2018-03-12T16:15:41.7679610-04:00 [INFO]: Initializing Game object.
+2018-03-12T16:16:31.6996090-04:00 [INFO]: Initializing Game object.
