@@ -129,7 +129,7 @@ public class EventBehaviour : GameBehaviour {
 				Prompt.PromptManager.statusPrompt("Players with lowest rank got 2 extra Adventure Cards: ");
 
 			} else if (name == "Court Called to Camelot") {
-				//Game.GameManager.removeAllAllies();
+				Game.GameManager.removeAllAllies();
 
 
 			} else if (name == "King's Call to Arms") {
