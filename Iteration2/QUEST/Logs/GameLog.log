@@ -226,3 +226,27 @@
 2018-03-05T11:13:17.3316410-05:00 [INFO]: Drawing a story card...
 2018-03-05T11:13:17.3470540-05:00 [INFO]: A event card was drawn: Plague
 2018-03-05T11:13:17.3497710-05:00 [INFO]: Handling event card: Plague
+2018-03-12T14:30:28.3265710-04:00 [INFO]: Initializing Game object.
+2018-03-12T15:23:16.9104240-04:00 [INFO]: Initializing Game object.
+2018-03-12T15:23:20.5924280-04:00 [INFO]: Normal mode selected.
+2018-03-12T15:23:20.5966540-04:00 [INFO]: Setting up game...
+2018-03-12T15:23:20.6018820-04:00 [INFO]: Creating Player 1 as a human player.
+2018-03-12T15:23:20.6033440-04:00 [INFO]: Creating Player 2 as a human player.
+2018-03-12T15:23:20.6046630-04:00 [INFO]: Creating Player 3 as a human player.
+2018-03-12T15:23:20.6064540-04:00 [INFO]: Creating Player 4 as a human player.
+2018-03-12T15:23:20.8025740-04:00 [INFO]: Created adventure deck with 117 cards.
+2018-03-12T15:23:20.8369970-04:00 [INFO]: Created story deck with 25 cards.
+2018-03-12T15:23:20.8382930-04:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-03-12T15:23:20.8442760-04:00 [INFO]: Loading player: 1
+2018-03-12T15:23:20.9716370-04:00 [INFO]: Cleaning cards from stages.
+2018-03-12T15:23:25.6743360-04:00 [INFO]: Initializing Game object.
+2018-03-12T15:24:08.0814680-04:00 [INFO]: Initializing Game object.
+2018-03-12T15:25:12.2983200-04:00 [INFO]: Initializing Game object.
+2018-03-12T15:25:41.8691970-04:00 [INFO]: Initializing Game object.
+2018-03-12T15:26:29.5902860-04:00 [INFO]: Initializing Game object.
+2018-03-12T15:32:27.5634960-04:00 [INFO]: Initializing Game object.
+2018-03-12T15:32:48.7300720-04:00 [INFO]: Initializing Game object.
+2018-03-12T15:33:15.9099540-04:00 [INFO]: Initializing Game object.
+2018-03-12T15:34:01.9944050-04:00 [INFO]: Initializing Game object.
+2018-03-12T15:34:17.5866470-04:00 [INFO]: Initializing Game object.
+2018-03-12T15:35:14.4773040-04:00 [INFO]: Initializing Game object.
