@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Menu.cs" />
      <Compile Include="Assets\script\AdventureCard.cs" />
      <Compile Include="Assets\script\AI\AbstractAI.cs" />
      <Compile Include="Assets\script\AI\AIBehaviour.cs" />
@@ -63,10 +64,12 @@
      <Compile Include="Assets\script\AmourCard.cs" />
      <Compile Include="Assets\script\Card.cs" />
      <Compile Include="Assets\script\CardArea.cs" />
+     <Compile Include="Assets\script\Client.cs" />
      <Compile Include="Assets\script\Deck.cs" />
      <Compile Include="Assets\script\EventCard.cs" />
      <Compile Include="Assets\script\FoeCard.cs" />
      <Compile Include="Assets\script\Game.cs" />
+     <Compile Include="Assets\script\Host.cs" />
      <Compile Include="Assets\script\Logger.cs" />
      <Compile Include="Assets\script\MainMenu.cs" />
      <Compile Include="Assets\script\Player.cs" />
@@ -198,10 +201,10 @@
  <HintPath>/Applications/Unity/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="TextMeshPro-2017.3-1.0.56-Editor">
- <HintPath>/Users/andybui/Documents/School/Winter2018/comp3004/proj/COMP3004-QUEST/QUEST/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-2017.3-1.0.56-Editor.dll</HintPath>
+ <HintPath>/Users/andybui/Documents/School/Winter2018/comp3004/proj/COMP3004-QUEST/Iteration2/QUEST/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-2017.3-1.0.56-Editor.dll</HintPath>
  </Reference>
  <Reference Include="TextMeshPro-2017.3-1.0.56-Runtime">
- <HintPath>/Users/andybui/Documents/School/Winter2018/comp3004/proj/COMP3004-QUEST/QUEST/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-2017.3-1.0.56-Runtime.dll</HintPath>
+ <HintPath>/Users/andybui/Documents/School/Winter2018/comp3004/proj/COMP3004-QUEST/Iteration2/QUEST/Assets/TextMesh Pro/Plugins/Editor DLL/TextMeshPro-2017.3-1.0.56-Runtime.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Advertisements">
  <HintPath>/Users/andybui/Library/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.3/UnityEngine.Advertisements.dll</HintPath>
