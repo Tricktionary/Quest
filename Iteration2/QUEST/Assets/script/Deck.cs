@@ -149,6 +149,7 @@ public class Deck{
 	}
 	void addBoarHunt(){
 		addQuest("Boar Hunt", 2, "Boar", "card_image/quest/questCard4", 1);
+		addEvent("Court Called to Camelot", "All Allies in play must be discarded", "card_image/events/eventCard6", 2);
 		addEvent("Prosperity Throughout the Realm", "All players may immediately draw 2 adventure Cards", "card_image/events/eventCard8", 1);
 		addEvent("Chivalrous Deed", "lowest rank and shield receives 3 shields", "card_image/events/eventCard1", 1);
 		addEvent("Queen's Favor", "The lowest ranked player(s) immediately receives 2 Adventure cards", "card_image/events/eventCard5", 2);
@@ -322,7 +323,7 @@ public class Deck{
 		addEvent("Queen's Favor", "The lowest ranked player(s) immediately receives 2 Adventure cards", "card_image/events/eventCard5", 2);
 
 		/* 2 Court Called to Camelot */
-		//addEvent("Court Called to Camelot", "All Allies in play must be discarded", "card_image/events/eventCard6", 2);
+		addEvent("Court Called to Camelot", "All Allies in play must be discarded", "card_image/events/eventCard6", 2);
 
 		/* 1 King's Call to Arms */
 		//addEvent("King's Call to Arms", "Highest ranked player(s) must discard 1 weapon, if unable 2 foe cards must be discarded", "card_image/events/eventCard7", 1);
