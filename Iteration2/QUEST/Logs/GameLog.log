@@ -275,3 +275,90 @@
 2018-03-12T16:13:38.2764630-04:00 [INFO]: Cleaning cards from stages.
 2018-03-12T16:15:41.7679610-04:00 [INFO]: Initializing Game object.
 2018-03-12T16:16:31.6996090-04:00 [INFO]: Initializing Game object.
+2018-03-12T16:18:04.1128880-04:00 [INFO]: Initializing Game object.
+2018-03-12T16:24:35.3870890-04:00 [INFO]: Initializing Game object.
+2018-03-12T16:24:37.2027940-04:00 [INFO]: Normal mode selected.
+2018-03-12T16:24:37.2048120-04:00 [INFO]: Setting up game...
+2018-03-12T16:24:37.2099560-04:00 [INFO]: Creating Player 1 as a human player.
+2018-03-12T16:24:37.2114440-04:00 [INFO]: Creating Player 2 as a human player.
+2018-03-12T16:24:37.2126050-04:00 [INFO]: Creating Player 3 as a human player.
+2018-03-12T16:24:37.2137610-04:00 [INFO]: Creating Player 4 as a human player.
+2018-03-12T16:24:37.4603480-04:00 [INFO]: Created adventure deck with 117 cards.
+2018-03-12T16:24:37.5126540-04:00 [INFO]: Created story deck with 25 cards.
+2018-03-12T16:24:37.5145810-04:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-03-12T16:24:37.5179650-04:00 [INFO]: Loading player: 1
+2018-03-12T16:24:37.6674970-04:00 [INFO]: Cleaning cards from stages.
+2018-03-12T16:24:38.5655580-04:00 [INFO]: Drawing a story card...
+2018-03-12T16:24:38.5724650-04:00 [INFO]: A quest card was drawn: Test of the Green Knight
+2018-03-12T16:24:38.5798920-04:00 [INFO]: Displaying sponsor prompt!
+2018-03-12T16:24:39.2810100-04:00 [INFO]: Player 1 decided to sponsor the quest.
+2018-03-12T16:24:39.2831670-04:00 [INFO]: Setting up stages for quest: Test of the Green Knight
+2018-03-12T16:24:48.3156880-04:00 [INFO]: Initializing Game object.
+2018-03-12T16:24:50.5537830-04:00 [INFO]: Boar Hunt mode selected.
+2018-03-12T16:24:50.5560610-04:00 [INFO]: Setting up game...
+2018-03-12T16:24:50.5621390-04:00 [INFO]: Creating Player 1 as a human player.
+2018-03-12T16:24:50.5638720-04:00 [INFO]: Creating Player 2 as a human player.
+2018-03-12T16:24:50.5650460-04:00 [INFO]: Creating Player 3 as a human player.
+2018-03-12T16:24:50.5661970-04:00 [INFO]: Creating Player 4 as a human player.
+2018-03-12T16:24:50.8222730-04:00 [INFO]: Created adventure deck with 117 cards.
+2018-03-12T16:24:50.8379890-04:00 [INFO]: Created story deck with 5 cards.
+2018-03-12T16:24:50.8406170-04:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-03-12T16:24:50.8459890-04:00 [INFO]: Loading player: 1
+2018-03-12T16:24:50.9613860-04:00 [INFO]: Cleaning cards from stages.
+2018-03-12T16:24:55.2765310-04:00 [INFO]: Drawing a story card...
+2018-03-12T16:24:55.2832970-04:00 [INFO]: A quest card was drawn: Boar Hunt
+2018-03-12T16:24:55.2876550-04:00 [INFO]: Displaying sponsor prompt!
+2018-03-12T16:24:56.4071290-04:00 [INFO]: Player 1 decided to sponsor the quest.
+2018-03-12T16:24:56.4089990-04:00 [INFO]: Setting up stages for quest: Boar Hunt
+2018-03-12T16:25:01.9456420-04:00 [INFO]: Using low power for Evil Knight because it is NOT featured.
+2018-03-12T16:25:01.9476600-04:00 [INFO]: Using low power for Green Knight because it is NOT featured.
+2018-03-12T16:25:01.9505270-04:00 [INFO]: Loading player: 2
+2018-03-12T16:25:02.0240610-04:00 [INFO]: Displaying join quest prompt!
+2018-03-12T16:25:02.8412810-04:00 [INFO]: Player 2 decided to join the quest.
+2018-03-12T16:25:02.8429470-04:00 [INFO]: Displaying join quest prompt!
+2018-03-12T16:25:02.8442930-04:00 [INFO]: Loading player: 3
+2018-03-12T16:25:03.2907190-04:00 [INFO]: Player 3 decided to join the quest.
+2018-03-12T16:25:03.2925050-04:00 [INFO]: Displaying join quest prompt!
+2018-03-12T16:25:03.2941440-04:00 [INFO]: Loading player: 4
+2018-03-12T16:25:03.7890600-04:00 [INFO]: Player 4 decided to join the quest.
+2018-03-12T16:25:03.7907240-04:00 [INFO]: Giving Player 2 one adventure card for joining the quest.
+2018-03-12T16:25:03.7921280-04:00 [INFO]: Giving Player 3 one adventure card for joining the quest.
+2018-03-12T16:25:03.7934280-04:00 [INFO]: Giving Player 4 one adventure card for joining the quest.
+2018-03-12T16:25:03.7946110-04:00 [INFO]: Moving to setup weapons state.
+2018-03-12T16:25:03.7958490-04:00 [INFO]: Loading player: 2
+2018-03-12T16:25:08.0787730-04:00 [INFO]: Loading player: 3
+2018-03-12T16:25:10.9880180-04:00 [INFO]: Loading player: 4
+2018-03-12T16:25:14.2297450-04:00 [INFO]: All playing players have setup weapons for stage 1
+2018-03-12T16:25:14.2312990-04:00 [INFO]: Flipping cards in stage 1
+2018-03-12T16:25:14.2354400-04:00 [INFO]: Stage 1 has a power level of 20.
+2018-03-12T16:25:14.2369940-04:00 [INFO]: Player 2 has a power level of 15.
+2018-03-12T16:25:14.2383330-04:00 [INFO]: Player 2 died on stage 1.
+2018-03-12T16:25:14.2398850-04:00 [INFO]: Loading player: 2
+2018-03-12T16:25:15.2958030-04:00 [INFO]: Stage 1 has a power level of 20.
+2018-03-12T16:25:15.2974750-04:00 [INFO]: Player 3 has a power level of 20.
+2018-03-12T16:25:15.3005780-04:00 [INFO]: Player 3 died on stage 1.
+2018-03-12T16:25:15.3021970-04:00 [INFO]: Loading player: 3
+2018-03-12T16:25:16.6083960-04:00 [INFO]: Stage 1 has a power level of 20.
+2018-03-12T16:25:16.6215020-04:00 [INFO]: Player 4 has a power level of 15.
+2018-03-12T16:25:16.6239700-04:00 [INFO]: Player 4 died on stage 1.
+2018-03-12T16:25:16.6256360-04:00 [INFO]: Loading player: 4
+2018-03-12T16:25:17.3068980-04:00 [INFO]: Quest is over and everyone died!	
+2018-03-12T16:25:17.3092740-04:00 [INFO]: Quest has been fully reset and ended.
+2018-03-12T16:25:17.3116170-04:00 [INFO]: Loading player: 2
+2018-03-12T16:25:17.3775990-04:00 [INFO]: Cleaning cards from stages.
+2018-03-12T21:43:20.8692600-04:00 [INFO]: Initializing Game object.
+2018-03-12T22:02:47.0381050-04:00 [INFO]: Initializing Game object.
+2018-03-12T22:02:48.2313650-04:00 [INFO]: Normal mode selected.
+2018-03-12T22:02:48.2334960-04:00 [INFO]: Setting up game...
+2018-03-12T22:02:48.2386800-04:00 [INFO]: Creating Player 1 as a human player.
+2018-03-12T22:02:48.2403150-04:00 [INFO]: Creating Player 2 as a human player.
+2018-03-12T22:02:48.2415050-04:00 [INFO]: Creating Player 3 as a human player.
+2018-03-12T22:02:48.2427510-04:00 [INFO]: Creating Player 4 as a human player.
+2018-03-12T22:02:48.5074470-04:00 [INFO]: Created adventure deck with 117 cards.
+2018-03-12T22:02:48.5650960-04:00 [INFO]: Created story deck with 27 cards.
+2018-03-12T22:02:48.5669410-04:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-03-12T22:02:48.5712030-04:00 [INFO]: Loading player: 1
+2018-03-12T22:02:48.7095170-04:00 [INFO]: Cleaning cards from stages.
+2018-03-12T22:02:49.6102260-04:00 [INFO]: Drawing a story card...
+2018-03-12T22:02:49.6156000-04:00 [INFO]: A event card was drawn: Pox
+2018-03-12T22:02:49.6186220-04:00 [INFO]: Handling event card: Pox

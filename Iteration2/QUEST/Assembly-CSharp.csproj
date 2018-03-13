@@ -51,8 +51,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Menu.cs" />
-     <Compile Include="Assets\script\AdventureCard.cs" />
+     <Compile Include="Assets\Lobby\Scripts\DraggablePanel.cs" />
+     <Compile Include="Assets\Lobby\Scripts\EventSystemChecker.cs" />
+     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyCountdownPanel.cs" />
+     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyHook.cs" />
+     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyInfoPanel.cs" />
+     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyMainMenu.cs" />
+     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyManager.cs" />
+     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyPlayer.cs" />
+     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyPlayerList.cs" />
+     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyServerEntry.cs" />
+     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyServerList.cs" />
+     <Compile Include="Assets\Lobby\Scripts\Lobby\LobbyTopPanel.cs" />
+     <Compile Include="Assets\SampleScenes\Scripts\NetworkAsteroid.cs" />
+     <Compile Include="Assets\SampleScenes\Scripts\NetworkGameManager.cs" />
+     <Compile Include="Assets\SampleScenes\Scripts\NetworkLobbyHook.cs" />
+     <Compile Include="Assets\SampleScenes\Scripts\NetworkSpaceship.cs" />
+     <Compile Include="Assets\SampleScenes\Scripts\NetworkSpaceshipBullet.cs" />
      <Compile Include="Assets\script\AI\AbstractAI.cs" />
      <Compile Include="Assets\script\AI\AIBehaviour.cs" />
      <Compile Include="Assets\script\AI\Backout.cs" />
@@ -60,18 +75,24 @@
      <Compile Include="Assets\script\AI\ParticipateInTournament.cs" />
      <Compile Include="Assets\script\AI\SponsorQuest.cs" />
      <Compile Include="Assets\script\AIPlayer.cs" />
-     <Compile Include="Assets\script\AllyCard.cs" />
-     <Compile Include="Assets\script\AmourCard.cs" />
-     <Compile Include="Assets\script\Card.cs" />
      <Compile Include="Assets\script\CardArea.cs" />
+     <Compile Include="Assets\script\Cards\AdventureCard.cs" />
+     <Compile Include="Assets\script\Cards\AllyCard.cs" />
+     <Compile Include="Assets\script\Cards\AmourCard.cs" />
+     <Compile Include="Assets\script\Cards\Card.cs" />
+     <Compile Include="Assets\script\Cards\EventCard.cs" />
+     <Compile Include="Assets\script\Cards\FoeCard.cs" />
+     <Compile Include="Assets\script\Cards\StoryCard.cs" />
+     <Compile Include="Assets\script\Cards\TestCard.cs" />
+     <Compile Include="Assets\script\Cards\TournamentCard.cs" />
+     <Compile Include="Assets\script\Cards\WeaponCard.cs" />
      <Compile Include="Assets\script\Client.cs" />
      <Compile Include="Assets\script\Deck.cs" />
-     <Compile Include="Assets\script\EventCard.cs" />
-     <Compile Include="Assets\script\FoeCard.cs" />
      <Compile Include="Assets\script\Game.cs" />
      <Compile Include="Assets\script\Host.cs" />
      <Compile Include="Assets\script\Logger.cs" />
      <Compile Include="Assets\script\MainMenu.cs" />
+     <Compile Include="Assets\script\Menu.cs" />
      <Compile Include="Assets\script\Player.cs" />
      <Compile Include="Assets\script\popUp.cs" />
      <Compile Include="Assets\script\Prompt.cs" />
@@ -80,10 +101,6 @@
      <Compile Include="Assets\script\Story\GameBehaviour.cs" />
      <Compile Include="Assets\script\Story\QuestBehaviour.cs" />
      <Compile Include="Assets\script\Story\TournamentBehaviour.cs" />
-     <Compile Include="Assets\script\StoryCard.cs" />
-     <Compile Include="Assets\script\TestCard.cs" />
-     <Compile Include="Assets\script\TournamentCard.cs" />
-     <Compile Include="Assets\script\WeaponCard.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
@@ -122,8 +139,10 @@
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
+     <None Include="Assets\Lobby\Documentation.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
+     <None Include="Assets\Lobby\Instruction.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
@@ -132,6 +151,7 @@
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
      <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\NotoSans - License.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
+     <None Include="Assets\Fonts\OpenSans\License!.txt" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\LiberationSans - OFL.txt" />
