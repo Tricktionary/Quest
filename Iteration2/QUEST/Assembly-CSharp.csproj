@@ -82,6 +82,7 @@
      <Compile Include="Assets\script\Cards\Card.cs" />
      <Compile Include="Assets\script\Cards\EventCard.cs" />
      <Compile Include="Assets\script\Cards\FoeCard.cs" />
+     <Compile Include="Assets\script\Cards\QuestCard.cs" />
      <Compile Include="Assets\script\Cards\StoryCard.cs" />
      <Compile Include="Assets\script\Cards\TestCard.cs" />
      <Compile Include="Assets\script\Cards\TournamentCard.cs" />
@@ -94,9 +95,7 @@
      <Compile Include="Assets\script\MainMenu.cs" />
      <Compile Include="Assets\script\Menu.cs" />
      <Compile Include="Assets\script\Player.cs" />
-     <Compile Include="Assets\script\popUp.cs" />
      <Compile Include="Assets\script\Prompt.cs" />
-     <Compile Include="Assets\script\QuestCard.cs" />
      <Compile Include="Assets\script\Story\EventBehaviour.cs" />
      <Compile Include="Assets\script\Story\GameBehaviour.cs" />
      <Compile Include="Assets\script\Story\QuestBehaviour.cs" />
@@ -216,6 +215,9 @@
  </Reference>
  <Reference Include="UnityEditor.Graphs">
  <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEditor.Graphs.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.WebGL.Extensions">
+ <HintPath>/Applications/Unity/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.OSXStandalone.Extensions">
  <HintPath>/Applications/Unity/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>

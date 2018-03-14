@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour {
 	public GameObject MenuPanel;
-	public GameObject Network;
 	public GameObject HotSeatGameMode;
 
 	public void HotSeatMode(){
@@ -14,7 +14,7 @@ public class Menu : MonoBehaviour {
 
 	public void MultiplayerMode(){
 		MenuPanel.SetActive(false);
-		Network.SetActive(true);
+		SceneManager.LoadScene("MultiplayerLobby",LoadSceneMode.Single);
 	}
 
 	// Use this for initialization
