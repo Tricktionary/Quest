@@ -569,3 +569,41 @@
 2018-03-14T12:11:52.6903950-04:00 [INFO]: Dealing 12 cards from adventure deck to each player.
 2018-03-14T12:11:52.6946660-04:00 [INFO]: Loading player: 1
 2018-03-14T12:11:52.7718300-04:00 [INFO]: Cleaning cards from stages.
+2018-03-14T16:52:03.6791810-04:00 [INFO]: Initializing Game object.
+2018-03-14T16:52:04.7201620-04:00 [INFO]: Normal mode selected.
+2018-03-14T16:52:04.7222200-04:00 [INFO]: Setting up game...
+2018-03-14T16:52:04.7282230-04:00 [INFO]: Creating Player 1 as a human player.
+2018-03-14T16:52:04.7302460-04:00 [INFO]: Creating Player 2 as a human player.
+2018-03-14T16:52:04.7322920-04:00 [INFO]: Creating Player 3 as a human player.
+2018-03-14T16:52:04.7337000-04:00 [INFO]: Creating Player 4 as a human player.
+2018-03-14T16:52:04.9484910-04:00 [INFO]: Created adventure deck with 117 cards.
+2018-03-14T16:52:04.9926200-04:00 [INFO]: Created story deck with 27 cards.
+2018-03-14T16:52:04.9941730-04:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-03-14T16:52:04.9973910-04:00 [INFO]: Loading player: 1
+2018-03-14T16:52:05.1021710-04:00 [INFO]: Cleaning cards from stages.
+2018-03-14T16:52:06.2675990-04:00 [INFO]: Drawing a story card...
+2018-03-14T16:52:06.2793450-04:00 [INFO]: A event card was drawn: Plague
+2018-03-14T16:52:06.2843020-04:00 [INFO]: Handling event card: Plague
+2018-03-14T17:43:35.3030160-04:00 [INFO]: Initializing Game object.
+2018-03-14T17:43:36.2942950-04:00 [INFO]: Normal mode selected.
+2018-03-14T17:43:36.2984790-04:00 [INFO]: Setting up game...
+2018-03-14T17:43:36.3086160-04:00 [INFO]: Creating Player 1 as a human player.
+2018-03-14T17:43:36.3104420-04:00 [INFO]: Creating Player 2 as a human player.
+2018-03-14T17:43:36.3122120-04:00 [INFO]: Creating Player 3 as a human player.
+2018-03-14T17:43:36.3141610-04:00 [INFO]: Creating Player 4 as a human player.
+2018-03-14T17:43:36.5531900-04:00 [INFO]: Created adventure deck with 117 cards.
+2018-03-14T17:43:36.5957510-04:00 [INFO]: Created story deck with 27 cards.
+2018-03-14T17:43:36.5974350-04:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-03-14T17:43:36.6099160-04:00 [INFO]: Loading player: 1
+2018-03-14T17:43:36.6970820-04:00 [INFO]: Cleaning cards from stages.
+2018-03-14T17:43:43.9300660-04:00 [INFO]: Initializing Game object.
+2018-03-14T17:43:45.0347650-04:00 [INFO]: Loading player: 1
+2018-03-14T17:43:45.1219110-04:00 [INFO]: Cleaning cards from stages.
+2018-03-14T17:45:02.2235780-04:00 [INFO]: Initializing Game object.
+2018-03-14T17:45:02.2432180-04:00 [INFO]: Normal mode selected.
+2018-03-14T17:45:02.2461920-04:00 [INFO]: Setting up game...
+2018-03-14T17:45:02.4953370-04:00 [INFO]: Created adventure deck with 117 cards.
+2018-03-14T17:45:02.5481370-04:00 [INFO]: Created story deck with 27 cards.
+2018-03-14T17:45:02.5499070-04:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-03-14T17:45:02.5553050-04:00 [INFO]: Loading player: 1
+2018-03-14T17:45:02.6205420-04:00 [INFO]: Cleaning cards from stages.

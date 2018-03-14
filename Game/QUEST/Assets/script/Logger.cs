@@ -9,7 +9,7 @@ public class Logger {
 	public Logger() {
 		//this.init();
 	}
-			
+
 	//Can be called as many time as you want in your code (as it will still construct the logger but won't call the init function
 	public Logger(bool b) {} //This constructor won't call the init function
 
@@ -49,7 +49,8 @@ public class Logger {
 	private void printToFile(string n) {
 		// Print logs to console too.
 		Debug.Log(n);
-		System.IO.File.AppendAllText(Directory.GetCurrentDirectory() + "/Logs/GameLog.log", n);
+		/*COMMENT THIS OUT BEFORE SHIPPING*/
+		//System.IO.File.AppendAllText(Directory.GetCurrentDirectory() + "/Logs/GameLog.log", n);
 	}
 
 	private string generateTimestamp() {

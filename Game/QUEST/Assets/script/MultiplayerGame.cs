@@ -66,7 +66,13 @@ public class MultiplayerGame : MonoBehaviour {
 	private Deck _discardPileAdventure;
 	private Deck _discardPileStory;
 
-  public GameObject me;
+	//Button
+	public GameObject endTurnButton;
+	public GameObject drawCardButton;
+	public GameObject showHandButton;
+	public GameObject showPlayerButton;
+	public GameObject exitShowPlayerButton;
+
 	// The current story card in play.
 	Card _storyCard;
 	bool activeStoryCard = false;
@@ -81,9 +87,14 @@ public class MultiplayerGame : MonoBehaviour {
 		if(!_instance) {
 			_instance = this;
 		}
-
 		logger.info("Initializing Game object.");
     NormalMode();
+
+		endTurnButton.GetComponent<Button>().onClick.AddListener(EndTurn);
+		drawCardButton.GetComponent<Button>().onClick.AddListener(DrawCard);
+		showHandButton.GetComponent<Button>().onClick.AddListener(unflipHand);
+		showPlayerButton.GetComponent<Button>().onClick.AddListener(OpenShowPlayer);
+		exitShowPlayerButton.GetComponent<Button>().onClick.AddListener(CloseShowPlayer);
 	}
 
 	// End a turn (fires when the End Turn button is clicked).

@@ -54,7 +54,7 @@ public class Prompt : MonoBehaviour {
 	// The user responds no to a prompt.
 	public void promptNo(){
 		promptObj.SetActive(false);
-		if (promptTxt.GetComponent<UnityEngine.UI.Text>().text == sponsorText) {			 
+		if (promptTxt.GetComponent<UnityEngine.UI.Text>().text == sponsorText) {
 			Game.GameManager._questBehaviour.sponsor(false);
 		} else if (promptTxt.GetComponent<UnityEngine.UI.Text>().text == questText) {
 			Game.GameManager._questBehaviour.joinQuest(false);
