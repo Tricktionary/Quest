@@ -31,6 +31,7 @@ public class Game : MonoBehaviour {
 	public GameObject AmourCard;
 	public GameObject TestCard;
 	public GameObject EventCard;
+
 	public GameObject RankCard;
 	public GameObject TournamentCard;
 
@@ -530,7 +531,7 @@ public class Game : MonoBehaviour {
 
 	}
 
-	
+
 	// Set a players in play cards.
 	public void setInPlay(int player_id){
 		List<Card> playedCards = playArea.GetComponent<CardArea>().cards;

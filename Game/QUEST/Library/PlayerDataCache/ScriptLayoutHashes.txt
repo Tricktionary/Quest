@@ -258,3 +258,4 @@ af7666733efcc974926d7d470e1732a6 Assembly-CSharp.dll:TMPro.Examples.SkewTextExam
 76b50a21cbb6399e548c72e304b67bee Assembly-CSharp.dll:.QuestCard
 34e025057ef78b1bf238460cdf6583a3 Assembly-CSharp.dll:TMPro.Examples.ObjectSpin
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:TMPro.Examples.SimpleScript
+78c8b4d973416626474cb194e8a8d4e1 Assembly-CSharp.dll:.MultiplayerGame
