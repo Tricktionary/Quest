@@ -188,6 +188,26 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 1872371446}
     m_Modifications:
+    - target: {fileID: 114785561801248176, guid: fb67b75353fea49198b3a7a01436f109,
+        type: 2}
+      propertyPath: m_Options.m_Options.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114336009701106900, guid: fb67b75353fea49198b3a7a01436f109,
+        type: 2}
+      propertyPath: m_Options.m_Options.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114809376355093850, guid: fb67b75353fea49198b3a7a01436f109,
+        type: 2}
+      propertyPath: m_Options.m_Options.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114316905540376416, guid: fb67b75353fea49198b3a7a01436f109,
+        type: 2}
+      propertyPath: m_Options.m_Options.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 224061225021711734, guid: fb67b75353fea49198b3a7a01436f109,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -1249,6 +1269,71 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1422410299904542, guid: fb67b75353fea49198b3a7a01436f109, type: 2}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114785561801248176, guid: fb67b75353fea49198b3a7a01436f109,
+        type: 2}
+      propertyPath: m_Options.m_Options.Array.data[3].m_Text
+      value: None
+      objectReference: {fileID: 0}
+    - target: {fileID: 114785561801248176, guid: fb67b75353fea49198b3a7a01436f109,
+        type: 2}
+      propertyPath: m_Options.m_Options.Array.data[1].m_Text
+      value: AI 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114785561801248176, guid: fb67b75353fea49198b3a7a01436f109,
+        type: 2}
+      propertyPath: m_Options.m_Options.Array.data[2].m_Text
+      value: AI 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114336009701106900, guid: fb67b75353fea49198b3a7a01436f109,
+        type: 2}
+      propertyPath: m_Options.m_Options.Array.data[3].m_Text
+      value: None
+      objectReference: {fileID: 0}
+    - target: {fileID: 114336009701106900, guid: fb67b75353fea49198b3a7a01436f109,
+        type: 2}
+      propertyPath: m_Options.m_Options.Array.data[1].m_Text
+      value: AI 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114336009701106900, guid: fb67b75353fea49198b3a7a01436f109,
+        type: 2}
+      propertyPath: m_Options.m_Options.Array.data[2].m_Text
+      value: AI 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114809376355093850, guid: fb67b75353fea49198b3a7a01436f109,
+        type: 2}
+      propertyPath: m_Options.m_Options.Array.data[3].m_Text
+      value: None
+      objectReference: {fileID: 0}
+    - target: {fileID: 114809376355093850, guid: fb67b75353fea49198b3a7a01436f109,
+        type: 2}
+      propertyPath: m_Options.m_Options.Array.data[1].m_Text
+      value: AI 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114809376355093850, guid: fb67b75353fea49198b3a7a01436f109,
+        type: 2}
+      propertyPath: m_Options.m_Options.Array.data[2].m_Text
+      value: AI 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114316905540376416, guid: fb67b75353fea49198b3a7a01436f109,
+        type: 2}
+      propertyPath: m_Options.m_Options.Array.data[1].m_Text
+      value: AI 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114316905540376416, guid: fb67b75353fea49198b3a7a01436f109,
+        type: 2}
+      propertyPath: m_Options.m_Options.Array.data[3].m_Text
+      value: None
+      objectReference: {fileID: 0}
+    - target: {fileID: 114316905540376416, guid: fb67b75353fea49198b3a7a01436f109,
+        type: 2}
+      propertyPath: m_Options.m_Options.Array.data[2].m_Text
+      value: AI 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114336009701106900, guid: fb67b75353fea49198b3a7a01436f109,
+        type: 2}
+      propertyPath: m_Value
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:

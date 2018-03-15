@@ -1034,12 +1034,17 @@ public class Game : MonoBehaviour {
 		_players = new List<Player>();
 
 		for(int i = 0 ; i < playerChoice.Count; i++){
-			if (playerChoice[i].GetComponent<Dropdown> ().value == 0) { //huMAN
+			//Debug.Log(playerChoice[i].GetComponent<Dropdown>().value);
+			if (playerChoice[i].GetComponent<Dropdown>().value == 0) { //huMAN
 				Debug.Log ("Normal Player ID: "+ (i+1));
 				_players.Add(new Player(i+1));
 			}
-			else if (playerChoice [i].GetComponent<Dropdown> ().value == 1) { //AI
-				Debug.Log ("AI Player ID: "+ (i+1));
+			else if (playerChoice [i].GetComponent<Dropdown> ().value == 1) { //AI Strattegy 1
+				Debug.Log ("AI Player1 ID: "+ (i+1));
+				_players.Add(new AIPlayer(i+1));
+			}
+			else if (playerChoice [i].GetComponent<Dropdown> ().value == 2) { //AI Strattegy 2
+				Debug.Log ("AI Player2 ID: "+ (i+1));
 				_players.Add(new AIPlayer(i+1));
 			}
 		}

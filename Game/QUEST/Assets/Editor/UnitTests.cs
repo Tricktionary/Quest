@@ -97,7 +97,7 @@ public class UnitTests {
 		cards.Add(new WeaponCard("Excalibur", 30, "card_image/weapons/weaponCard3"));
 		cards.Add(new WeaponCard("Excalibur", 30, "card_image/weapons/weaponCard3"));
 
-		Assert.AreEqual(gameTester._questBehaviour.stageValid(cards, false), -1);
+		Assert.AreEqual(gameTester._questBehaviour.stageValid(cards,1,false), -1);
 	}
 
 
@@ -117,7 +117,7 @@ public class UnitTests {
 		cards.Add(new FoeCard("Thieves","Thieves", 5, 5, false, "card_image/foe/foeCard4"));
 		cards.Add(new FoeCard("Thieves","Thieves", 5, 5, false, "card_image/foe/foeCard4"));
 
-		Assert.AreEqual(gameTester._questBehaviour.stageValid(cards, false), -1);
+		Assert.AreEqual(gameTester._questBehaviour.stageValid(cards,1,false), -1);
 	}
 
 	// Test that getInPlay(player_id) correct retrieves cards.
