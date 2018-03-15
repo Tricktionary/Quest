@@ -1034,7 +1034,7 @@ public class Game : MonoBehaviour {
 		_players = new List<Player>();
 
 		for(int i = 0 ; i < playerChoice.Count; i++){
-			//Debug.Log(playerChoice[i].GetComponent<Dropdown>().value);
+			Debug.Log(playerChoice[i].GetComponent<Dropdown>().value);
 			if (playerChoice[i].GetComponent<Dropdown>().value == 0) { //huMAN
 				Debug.Log ("Normal Player ID: "+ (i+1));
 				_players.Add(new Player(i+1));

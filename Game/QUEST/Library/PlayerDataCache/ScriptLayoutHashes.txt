@@ -1,4 +1,4 @@
-OSXStandalone
+WebGL
 SceneListBegin?
 Assets/scenes/MainGame.unity
 Assets/scenes/MultiplayerLobby.unity
@@ -23,7 +23,7 @@ ff05dcdf90651c3d98a9cad3df5e471e UnityEngine.Timeline.dll:UnityEngine.Timeline.C
 9ca6347af5ceb6b0d1c105af31b6722e UnityEngine.Timeline.dll:UnityEngine.Timeline.TimelineAsset
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.CardArea
 2b4ee1fc14f90ef2465230265b6864ae Assembly-CSharp.dll:.NetworkSpaceshipBullet
-78c8b4d973416626474cb194e8a8d4e1 Assembly-CSharp.dll:.MultiplayerGame
+d18eaaa409f800c4020ab4ea4c40a909 Assembly-CSharp.dll:.MultiplayerGame
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.QuestBehaviour
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:Prototype.NetworkLobby.EventSystemChecker
 a35dc9cca2faebc5f5f1aeb9e8e47bbe UnityEngine.UI.dll:UnityEngine.UI.AspectRatioFitter
