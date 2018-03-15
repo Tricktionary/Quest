@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class SponsorQuest: AIBehaviour {
 
-	//Strategy 1
+	//Strategy 1 and Strategy 2 check
 	public bool sponsor(int aiId, bool couldwin, List<Player> players, QuestCard questCard){
 		if (couldwin) {
 			return false;
@@ -46,6 +46,64 @@ public class SponsorQuest: AIBehaviour {
 		return false;
 	}
 
+	private List<WeaponCard> extractWeapons(List<Card> hand) {
+		List<WeaponCard> weaponCards = new List<WeaponCard>();
+		for (int i = 0; i < hand.Count; i++) {
+			if (hand [i].GetType () == typeof(WeaponCard)) {
+				WeaponCard currWeapon = (WeaponCard)hand [i];
+				weaponCards.Add (currWeapon);
+			}
+		}
+		return weaponCards;
+	}
+	private List<FoeCard> extractFoes(List<Card> hand) {
+		List<FoeCard> foeCards = new List<FoeCard>();
+		for (int i = 0; i < hand.Count; i++) {
+			if (hand [i].GetType () == typeof(FoeCard)) {
+				FoeCard currFoe = (FoeCard)hand [i];
+				foeCards.Add (currFoe);
+			}
+		}
+		return foeCards;
+	}
+
+	private void findSuitableFoe(ref List<FoeCard> foeCards, QuestCard questCard, int stagePower, bool isOne) {
+		bool stageSet = false;
+		while (!stageSet) {
+			while(true) {
+				if (foeCards.Count == 0) {
+					Debug.LogError ("Error on sponsorQuest Check");
+					return;
+				}
+				if (isOne && foeCards [0].power (questCard) < stagePower) {
+					stageSet = true;
+					break;
+				} else if (!isOne && foeCards [0].power (questCard) > stagePower) {
+					stageSet = true;
+					break;
+				} else {
+					foeCards.RemoveAt (0);
+				}
+			}
+		}
+	}
+
+	private int setupBoss(ref List<List<Card>> returnedStages, ref List<WeaponCard> weaponCards, QuestCard questCard, int minPower) {
+		int bossPower = ((FoeCard)returnedStages [returnedStages.Count-1] [0]).power (questCard);
+		for (int i = 0; i < weaponCards.Count; i++) {
+			if (!returnedStages [returnedStages.Count-1].Contains (weaponCards [i])) {
+				returnedStages [returnedStages.Count-1].Add (weaponCards [i]);
+				bossPower += weaponCards [i].bp;
+				weaponCards.RemoveAt (i);
+				i--;
+			}
+			if (bossPower >= minPower) {
+				break;
+			}
+		}
+		return bossPower;
+	}
+
 	//TODO: when test is implemented put second last as test
 	//SETUP 1
 	public List<List<Card>> setup1(QuestCard questCard, Player ai) {
@@ -58,21 +116,8 @@ public class SponsorQuest: AIBehaviour {
 		//quest setup is finished, return List<List<Card>>
 
 		List<List<Card>> returnedStages = new List<List<Card>> ();
-		List<WeaponCard> weaponCards = new List<WeaponCard>();
-		List<FoeCard> foeCards = new List<FoeCard>();
-		List<Card> hand = ai.hand;
-
-		for(int i = 0 ; i < hand.Count ; i++){
-			if(hand[i].GetType() == typeof(WeaponCard)){
-				WeaponCard currWeapon = (WeaponCard)hand[i];
-				weaponCards.Add(currWeapon);
-			}
-			if(hand[i].GetType() == typeof(FoeCard)) {
-				FoeCard currFoe = (FoeCard)hand[i];
-				foeCards.Add(currFoe);
-			}
-		}
-
+		List<WeaponCard> weaponCards = extractWeapons (ai.hand);
+		List<FoeCard> foeCards = extractFoes (ai.hand);
 
 		//Sort and just POP the last one into each stage  Foe
 		weaponCards.Sort((x, y) => x.bp.CompareTo(y.bp));
@@ -82,34 +127,20 @@ public class SponsorQuest: AIBehaviour {
 		//Add the stages
 		for (int i = questCard.stages - 1; i >= 0; i--) {
 			returnedStages.Add (new List<Card> ());
-			FoeCard currFoe = foeCards[0];
-			int index = 0;
 			if (returnedStages.Count > 1) {
 				//Find previous stage power
 				int stagePower = ((FoeCard)returnedStages[returnedStages.Count-2][0]).power(questCard);
 				//Does not beat previous stage
-				if (currFoe.power(questCard) >= stagePower) {
-					bool stageSet = false;
-					while (!stageSet) {
-						while(true) {
-							if (foeCards.Count == 0) {
-								return null;
-							}
-							if (foeCards [0].power (questCard) < stagePower) {
-								currFoe = foeCards [0];
-								index = 0;
-								stageSet = true;
-								break;
-							} else {
-								foeCards.RemoveAt (0);
-							}
-						}
-					}
+				if (foeCards[0].power(questCard) >= stagePower) {
+					findSuitableFoe (ref foeCards, questCard, stagePower, true);
 				}
 			}
-			returnedStages [returnedStages.Count-1].Add (currFoe);
-			foeCards.RemoveAt(index);
+			returnedStages [returnedStages.Count-1].Add (foeCards[0]);
+			foeCards.RemoveAt(0);
 		}
+
+		int bossPower = setupBoss (ref returnedStages, ref weaponCards, questCard, 50);
+		/*
 		int bossPower = ((FoeCard)returnedStages [0] [0]).power (questCard);
 		for (int i = 0; i < weaponCards.Count; i++) {
 			if (!returnedStages [0].Contains (weaponCards [i])) {
@@ -122,6 +153,7 @@ public class SponsorQuest: AIBehaviour {
 				break;
 			}
 		}
+		*/
 		int previousFoePower = bossPower;
 		int currFoePower = 0;
 		for (int i = 1; i < returnedStages.Count; i++) {
@@ -151,29 +183,44 @@ public class SponsorQuest: AIBehaviour {
 		//since you already selected the weakest monsters with minimal weapons, this is already implemented
 		//quest setup is finished, return List<List<Card>>
 
-		List<WeaponCard> weaponCards = new List<WeaponCard>();
-		List<FoeCard> foeCards = new List<FoeCard>();
-		List<Card> hand = ai.hand;
+		List<List<Card>> returnedStages = new List<List<Card>> ();
+		List<WeaponCard> weaponCards = extractWeapons (ai.hand);
+		List<FoeCard> foeCards = extractFoes (ai.hand);
 
-		for(int i = 0 ; i < hand.Count ; i++){
-			if(hand[i].GetType() == typeof(WeaponCard)){
-				WeaponCard currWeapon = (WeaponCard)hand[i];
-				weaponCards.Add(currWeapon);
+		//Sort and just POP the last one into each stage  Foe
+		weaponCards.Sort((x, y) => x.bp.CompareTo(y.bp));
+		foeCards.Sort ((x, y) => x.power (questCard).CompareTo (y.power (questCard)));
+		//Add the stages
+		for (int i = 0; i < questCard.stages-1; i++) {
+			returnedStages.Add (new List<Card> ());
+			if (returnedStages.Count > 1) {
+				//Find previous stage power
+				int stagePower = ((FoeCard)returnedStages[returnedStages.Count-2][0]).power(questCard);
+				//Does not beat previous stage
+				if (foeCards[0].power(questCard) < stagePower) {
+					findSuitableFoe (ref foeCards, questCard, stagePower, true);
+				}
 			}
-			if(hand[i].GetType() == typeof(FoeCard)){
-				FoeCard currFoe = (FoeCard)hand[i];
-				foeCards.Add(currFoe);
+			returnedStages [returnedStages.Count-1].Add (foeCards[0]);
+			foeCards.RemoveAt(0);
+		}
+		returnedStages.Add(new List<Card> ());
+		returnedStages [returnedStages.Count - 1].Add (foeCards [foeCards.Count - 1]);
+		int bossPower = ((FoeCard)returnedStages [returnedStages.Count-1] [0]).power (questCard);
+		setupBoss (ref returnedStages, ref weaponCards, questCard, 40);
+		/*
+		for (int i = 0; i < weaponCards.Count; i++) {
+			if (!returnedStages [returnedStages.Count-1].Contains (weaponCards [i])) {
+				returnedStages [returnedStages.Count-1].Add (weaponCards [i]);
+				bossPower += weaponCards [i].bp;
+				weaponCards.RemoveAt (i);
+				i--;
+			}
+			if (bossPower >= 40) {
+				break;
 			}
 		}
-
-		//Sort
-		weaponCards.Sort((x, y) => x.bp.CompareTo(y.bp));
-		weaponCards.Reverse ();
-		foeCards.Sort ((x, y) => x.power (questCard).CompareTo (y.power (questCard)));
-		foeCards.Reverse ();
-
-
-
-		return null;
+		*/
+		return returnedStages;
 	}
 }
