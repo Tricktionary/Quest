@@ -945,12 +945,12 @@ public class Game : MonoBehaviour {
 
 		for(int i = 0 ; i < playerChoice.Count; i++){
 			if (playerChoice[i].GetComponent<Dropdown> ().value == 0) { //huMAN
-				logger.info("Creating Player " + (i + 1) + " as a human player.");
-				_players.Add(new Player(i + 1));
+				logger.info("Creating Player " + (i) + " as a human player.");
+				_players.Add(new Player(i));
 			}
 			else if (playerChoice [i].GetComponent<Dropdown> ().value == 1) { //AI
-				logger.info("Creating Player " + (i + 1) + " as an AI player.");
-				_players.Add(new AIPlayer(i + 1));
+				logger.info("Creating Player " + (i) + " as an AI player.");
+						_players.Add(new AIPlayer(i));
 			}
 		}
 

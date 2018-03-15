@@ -7,6 +7,7 @@ public class Player {
 	protected List<Card> _hand;
 	protected List<Card> _inPlay;
 	protected int _playerId;							//Player ID
+	protected int _playerDisplay;
 	protected int _rank;								//Players current ranks 0-2; 3 ends the game
 	protected int _shieldCounter;      				//Shield Counter
 	protected List<Card> _allies;  //List of cards
@@ -83,6 +84,7 @@ public class Player {
 	//Constructor
 	public Player(int id){
 		_playerId = id;
+		_playerDisplay = id + 1;
 		_rank = 0;
 		_shieldCounter = 0;
 		_bp = 5;
@@ -94,6 +96,7 @@ public class Player {
 	//AI
 	public Player(){
 		_playerId = -1;
+		_playerDisplay = -1;
 		_rank = 0;
 		_shieldCounter = 0;
 		_bp = 5;
