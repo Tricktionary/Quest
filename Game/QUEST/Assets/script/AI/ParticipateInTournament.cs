@@ -59,6 +59,7 @@ public class ParticipateInTournament: AIBehaviour{
 
 	}
 
+	//Strategy 2
 	public bool join2(bool couldWin){
 		return true;
 	}
