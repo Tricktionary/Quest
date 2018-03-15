@@ -149,7 +149,7 @@ public class QuestBehaviour : GameBehaviour {
 					if(Game.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
 						Debug.Log("AI Setup Weapon");
 						List<Card> aiPlayCard = Game.GameManager.AILogicPlayCards(_turnId);
-						if(aiPlayCard != null || aiPlayCard.Count > 0){
+						if(aiPlayCard != null && aiPlayCard.Count > 0){
 							Game.GameManager.setInPlayAI(_turnId,aiPlayCard);
 						}
 						endTurn();
