@@ -74,6 +74,7 @@
      <Compile Include="Assets\script\AI\ParticipateInQuest.cs" />
      <Compile Include="Assets\script\AI\ParticipateInTournament.cs" />
      <Compile Include="Assets\script\AI\SponsorQuest.cs" />
+     <Compile Include="Assets\script\AI\TestBid.cs" />
      <Compile Include="Assets\script\AIPlayer.cs" />
      <Compile Include="Assets\script\CardArea.cs" />
      <Compile Include="Assets\script\Cards\AdventureCard.cs" />
@@ -96,7 +97,9 @@
      <Compile Include="Assets\script\Menu.cs" />
      <Compile Include="Assets\script\MultiplayerGame.cs" />
      <Compile Include="Assets\script\Player.cs" />
+     <Compile Include="Assets\script\PlayerObject.cs" />
      <Compile Include="Assets\script\Prompt.cs" />
+     <Compile Include="Assets\script\server.cs" />
      <Compile Include="Assets\script\Story\EventBehaviour.cs" />
      <Compile Include="Assets\script\Story\GameBehaviour.cs" />
      <Compile Include="Assets\script\Story\QuestBehaviour.cs" />

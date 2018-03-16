@@ -23,7 +23,6 @@ public class AIPlayer : Player {
 
 	public List<Card> playTournament(TournamentCard storyCard, List<Player> players) {
 		return participateTournamentBehaviour.play1 (_playerId, storyCard, players);
-
 	}
 
 	public bool joinTournament(TournamentCard storyCard, List<Player> players) {

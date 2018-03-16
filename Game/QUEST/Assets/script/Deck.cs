@@ -146,6 +146,14 @@ public class Deck{
 
 		/* Amour load */
 		addArmour("Amour", 10, 1, "card_image/special/specialCard3", 8);
+
+		/*TestCard Load*/
+		/*
+		addTestCard("Test of the Questing Beast",4,"card_image/tests/testCard",2);
+		addTestCard("Test of Temptation",0,"card_image/tests/testCard1",2);
+		addTestCard("Test of Valor",0,"card_image/tests/testCard2",2);
+		addTestCard("Test of Morgan Le Fey",3,"card_image/tests/testCard3",2);
+		*/
 	}
 	void addBoarHunt(){
 		addQuest("Boar Hunt", 2, "Boar", "card_image/quest/questCard4", 1);
@@ -153,11 +161,10 @@ public class Deck{
 		addEvent("Prosperity Throughout the Realm", "All players may immediately draw 2 adventure Cards", "card_image/events/eventCard8", 1);
 		addEvent("Chivalrous Deed", "lowest rank and shield receives 3 shields", "card_image/events/eventCard1", 1);
 		addEvent("Queen's Favor", "The lowest ranked player(s) immediately receives 2 Adventure cards", "card_image/events/eventCard5", 2);
-
 	}
 	void addScenario2(){
-		addQuest("Search for the Holy Grail", 5, "*", "card_image/quest/questCard9", 1);
 		addQuest("Boar Hunt", 2, "Boar", "card_image/quest/questCard4", 1);
+		addQuest("Search for the Holy Grail", 5, "*", "card_image/quest/questCard9", 1);
 		addQuest("Test of the Green Knight", 4, "Green Knight", "card_image/quest/questCard10", 1);
 		addEvent("Chivalrous Deed", "lowest rank and shield receives 3 shields", "card_image/events/eventCard1", 1);
 		addTournament("Tournament at Camelot", 3, "card_image/tournament/TournamentCard", 6);
@@ -174,7 +181,8 @@ public class Deck{
 		addAlly("Queen Iseult", 0, 2, 0, 4, null, "Sir Tristan", false, "card_image/special/specialCard8", 1);
 		addFoe("Green Knight","Green Knight", 25, 40, false, "card_image/foe/foeCard5", 2);
 		addFoe("Thieves","Thieves", 5, 5, false, "card_image/foe/foeCard4", 1);
-		addFoe("Saxon Knight","Saxon", 15, 25, false, "card_image/foe/foeCard8", 2);
+		addFoe("Saxon Knight","Saxon", 15, 25, false, "card_image/foe/foeCard8", 1);
+		addTestCard("Test of Valor",0,"card_image/tests/testCard2",1);
 		addAlly("Sir Lancelot", 15, 0, 25, 0, "Defend the Queen's Honor", null, false, "card_image/special/specialCard9", 1);
 		addFoe("Mordred","Mordred", 30, 30, true, "card_image/foe/foeCard11", 1);
 		addFoe("Black Knight","Black Knight", 25, 35, false, "card_image/foe/foeCard6", 1);
@@ -258,6 +266,7 @@ public class Deck{
 		addAlly("Queen Iseult", 0, 2, 0, 4, null, "Sir Tristan", false, "card_image/special/specialCard8", 1);
 		addAlly("Sir Gawain", 10, 0, 20, 0, "Test of the Green Knight", null, false, "card_image/special/specialCard11", 1);
 	}
+
 	void addQuestCards(){
 		/* 1 Search for the Holy Grail */
 		addQuest("Search for the Holy Grail", 5, "*", "card_image/quest/questCard9", 1);
@@ -289,7 +298,6 @@ public class Deck{
 		/* 2 Repel the Saxxon Raiders */
 		addQuest("Repel the Saxxon Raiders", 2, "Saxon", "card_image/quest/questCard3", 2);
 	}
-
 	void addTournamentCards(){
 		/* 1 Tournament at Camelot */
 		addTournament("Tournament at Camelot", 3, "card_image/tournament/TournamentCard", 1);
@@ -385,6 +393,7 @@ public class Deck{
 			_cards.Add(new QuestCard(name, stages, featuredFoe, asset));
 		}
 	}
+
 
 	// Use this for initialization
 	void Start () {

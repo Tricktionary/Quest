@@ -43,6 +43,11 @@ public class QuestBehaviour : GameBehaviour {
 	// Number of participating players at the start of a cycle.
 	int participatingPlayers = 0;
 
+	//The stage that test appears on
+	int testStage = -1;
+
+	int numberOfTestStage = 0;
+
 
 	// Moves to the next player.
 	public void nextPlayer(){
@@ -65,9 +70,11 @@ public class QuestBehaviour : GameBehaviour {
 
 	// End turn method for when a Quest card is in play.
 	public void endTurn(){
-
+		if(_currStage == testStage){
+			Debug.Log("Test Mode");
+		}
 		// Check if the results of the quest are in.
-		if (_showResults) {
+		else if (_showResults) {
 			// Move to the next player.
 			participatingPlayerIndex++;
 
@@ -99,6 +106,7 @@ public class QuestBehaviour : GameBehaviour {
 				} else {
 					// Move to the next stage (players have been eliminated if they died).
 					_currStage++;
+
 
 					// If there are no more stages, we have winners.
 					if (_currStage >= _stagePower.Count){
@@ -318,8 +326,11 @@ public class QuestBehaviour : GameBehaviour {
 		_asked = 0;
 		_currStage = 0;
 		_questReady = false;
-		 _setupWeapons = false;
-		 _showResults = false;
+	  _setupWeapons = false;
+		_showResults = false;
+		testStage = -1;
+		numberOfTestStage = 0;
+
 		participatingPlayerIndex = 0;
 		participatingPlayers = 0;
 
@@ -492,7 +503,7 @@ public class QuestBehaviour : GameBehaviour {
 	}
 
 	// Check to make sure a stage is valid.
-	public int stageValid(List<Card> currStage, bool doPrompt = true){
+	public int stageValid(List<Card> currStage,int stageNum, bool doPrompt = true){
 		Card currCard = null;
 		int power = 0;
 		int foeCount = 0;
@@ -538,8 +549,21 @@ public class QuestBehaviour : GameBehaviour {
 				}
 				foeCount++;
 
+
+			} else if(currCard.GetType() == typeof(TestCard)){
+
+
+				if(currStage.Count > 1){	//If there is more than one card on this stage
+					Game.GameManager.logger.info ("To many cards on this test stage");
+					return -1;
+				}
+
+				testStage = stageNum;		//THE Test stage;
+				numberOfTestStage++;		//Increase global test stage object if there is more than one then break
+				return 1;
+
 				// Invalid card.
-			} else {
+			}else {
 				return -1;
 			}
 		}
@@ -561,12 +585,22 @@ public class QuestBehaviour : GameBehaviour {
 		List<List<Card>> stages = Game.GameManager.getStages(_questCard.stages);
 		int currPower = 0;;
 
+		if(numberOfTestStage > 1){	//More than one test stage is found in this quest
+			Game.GameManager.logger.warn("Quest setup is invalid: Too many test cards.");
+			Prompt.PromptManager.statusPrompt("Quest Invalid: Too many test cards.");
+			numberOfTestStage = 0;
+			testStage = -1;
+			return false;
+		}
+
 		// Grab the power levels from all the cards within the stages.
 		for (int i = 0; i < stages.Count; i++) {
-			currPower = stageValid(stages[i]);
+			currPower = stageValid(stages[i],i);
 			if(currPower == -1){
 				return false;
-			} else {
+			}else if(currPower == 1){
+				powerLevels.Add(10000); //Show that it is a test stage
+			}else {
 				powerLevels.Add(currPower);
 			}
 		}
@@ -582,6 +616,7 @@ public class QuestBehaviour : GameBehaviour {
 
 		// Get calculated stage powers if valid.
 		_stagePower = powerLevels;
+
 
 		return true;
 	}
