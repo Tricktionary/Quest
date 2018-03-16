@@ -7,23 +7,18 @@ public class ParticipateInQuest: AIBehaviour{
 	//Strategy 1
 	public bool join1(int aiId,int stages, List<Player> players) {
 		Player ai = players [aiId];
-		int allies = ai.inPlay.Count;
-		int weapons = 0;
-		int discardFoes = 0;
-		for (int i = 0; i < ai.hand.Count; i++) {
-			if (ai.hand [i] is WeaponCard) {
-				weapons += 1;
-			} else if (ai.hand [i] is AllyCard) {
-				allies += 1;
-			} else if(ai.hand [i] is FoeCard) {
-				FoeCard foe = ((FoeCard)ai.hand [i]);
-				if (foe.loPower < 20) {
-					discardFoes += 1;
-				}
+		List<Card> hand = ai.hand;
+		int allyCards = extractAllies (hand).Count;
+		int weaponCards = extractWeapons(hand).Count;
+		List<FoeCard> foeCards = extractFoes (hand);
+		int weakFoes = 0;
+		for (int i = 0; i < foeCards.Count; i++) {
+			if (foeCards[i].loPower < 20) {
+				weakFoes += 1;
 			}
 		}
 
-		if ((weapons / stages) + allies >= 2 && discardFoes >= 2) {
+		if ((weaponCards + allyCards) / stages >= 2 && weakFoes >= 2) {
 			return true;
 		}
 		return false;
@@ -32,70 +27,48 @@ public class ParticipateInQuest: AIBehaviour{
 	public List<Card> play1(int aiId,int testBid, bool isLastStage, List<Player> players) {
 		Player ai = players [aiId];
 
-		Dictionary<string,int> cardsWithPower = new Dictionary<string, int>();
-		List<Card> cardPowerKeys = new List<Card> ();
-		List<Card> sortedList = new List<Card> ();
+		List<Card> hand = ai.hand;
+		List<AllyCard> allyCards = extractAllies (hand);
+		List<WeaponCard> weaponCards = extractWeapons(hand);
+		List<FoeCard> foeCards = extractFoes (hand);
+		List<AmourCard> amourCards = extractAmours (hand);
+		List<Card> playFromHand = new List<Card>();
 
-		for (int i = 0; i < ai.hand.Count; i++) {
-			if (!cardsWithPower.ContainsKey (ai.hand [i].name)) {
-				if (ai.hand [i] is WeaponCard) {
-					cardsWithPower [ai.hand [i].name] = ((WeaponCard)ai.hand [i]).bp;
-					cardPowerKeys.Add (ai.hand [i]);
-				} else if (ai.hand [i] is AllyCard) {
-					cardsWithPower [ai.hand [i].name] = ((AllyCard)ai.hand [i]).power;
-					cardPowerKeys.Add (ai.hand [i]);
-				} else if (ai.hand [i] is AmourCard) {
-					cardsWithPower [ai.hand [i].name] = ((AmourCard)ai.hand [i]).power;
-					cardPowerKeys.Add (ai.hand [i]);
-				}
-			}
-		}
+		allyCards.Sort ((x, y) => x.power.CompareTo (y.power));
+		weaponCards.Sort ((x, y) => x.power.CompareTo (y.power));
+		foeCards.Sort ((x, y) => x.loPower.CompareTo (y.loPower));
 
-		cardPowerKeys.Sort((x, y) => cardsWithPower[x.name].CompareTo(cardsWithPower[y.name]));
-		cardPowerKeys.Reverse ();
-		sortedList = cardPowerKeys;
-
-		Dictionary<Card,int> cards = new Dictionary<Card, int>();
-		List<Card> keys = new List<Card>();
 		bool amourPlayed = false;
-		if (ai.hand.Contains(new AmourCard("amour",0,0,""))) {
+		if (ai.inPlay.Contains(new AmourCard("Amour",0,0,""))) {
 			amourPlayed = true;
 		}
 		int played = 0;
 		if (isLastStage) {
-			return sortedList;
+			return strongestCombination (hand);
 		} else {
-			for (int i = 0; i < sortedList.Count; i++) {
-				if (sortedList[i] is AllyCard) {
-					keys.Add(sortedList[i]);
-					sortedList.RemoveAt (i);
-					i--;
-					played += 1;
-				} else if (sortedList[i] is AmourCard && !amourPlayed) {
-					keys.Add(sortedList[i]);
-					sortedList.RemoveAt (i);
-					i--;
-					played += 1;
-					amourPlayed = true;
-				}
+			if (!amourPlayed && amourCards.Count > 0) {
+				playFromHand.Add (amourCards [0]);
+				played++;
+			}
+			for (int i = 0; i < allyCards.Count; i++) {
+				playFromHand.Add (allyCards [i]);
+				played++;
 				if (played == 2) {
-					return keys;
+					return playFromHand;
 				}
 			}
 		}
 		played = 0;
-		List<Card> weapons = new List<Card>();
-		for (int i = sortedList.Count-1; i >= 0; i--) {
-			if (sortedList [i] is WeaponCard) {
-				weapons.Add (sortedList [i]);
-				played += 1;
-			}
-			if (played == 2) {
-				keys.AddRange (weapons);
-				return keys;
+		for (int i = 0; i < weaponCards.Count; i++) {
+			if (!playFromHand.Contains(weaponCards[i])) {
+				playFromHand.Add (weaponCards [i]);
+				played++;
+				if (played == 2) {
+					break;
+				}
 			}
 		}
-		return null;
+		return playFromHand;
 	}
 
 
@@ -105,31 +78,27 @@ public class ParticipateInQuest: AIBehaviour{
 		//Allies should be played incrementally first then weapons sparingly
 		Player ai = players [aiId];
 		int discardFoes = 0;
-		List<AllyCard> allies = new List<AllyCard>();
-		List<WeaponCard> weapons = new List<WeaponCard>();
-		bool amour = false;
-		for (int i = 0; i < ai.hand.Count; i++) {
-			if (ai.hand [i] is WeaponCard) {
-				weapons.Add (((WeaponCard)ai.hand [i]));
-			} else if (ai.hand [i] is AllyCard) {
-				allies.Add (((AllyCard)ai.hand [i]));
-			} else if (ai.hand[i] is AmourCard) {
-				stages -= 1;
-			} else if (ai.hand [i] is FoeCard) {
-				FoeCard foe = ((FoeCard)ai.hand [i]);
-				if (foe.loPower < 20) {
-					discardFoes += 1;
-				}
+		List<Card> hand = ai.hand;
+		List<AllyCard> allyCards = extractAllies (hand);
+		List<WeaponCard> weaponCards = extractWeapons(hand);
+		List<FoeCard> foeCards = extractFoes (hand);
+		List<AmourCard> amourCards = extractAmours (hand);
+		if (amourCards.Count > 0) {
+			stages--;
+		}
+		for (int i = 0; i < foeCards.Count; i++) {
+			if (foeCards [i].loPower < 20) {
+				discardFoes += 1;
 			}
 		}
-		allies.Sort((x, y) => x.power.CompareTo(y.power));
-		weapons.Sort((x, y) => x.power.CompareTo(y.power));
+		allyCards.Sort((x, y) => x.power.CompareTo(y.power));
+		weaponCards.Sort((x, y) => x.power.CompareTo(y.power));
 		for (int i=0;i<stages;i++) {
 			int tempPower = 0;
 			bool done = false;
-			for (int j=0;j<allies.Count;j++) {
-				tempPower += allies [0].power;
-				allies.RemoveAt (0);
+			for (int j=0;j<allyCards.Count;j++) {
+				tempPower += allyCards [0].power;
+				allyCards.RemoveAt (0);
 				j--;
 				if (tempPower > 10) {
 					done = true;
@@ -138,11 +107,11 @@ public class ParticipateInQuest: AIBehaviour{
 			}
 			if (!done) {
 				Card previousCard = null;
-				for (int j=0;j<weapons.Count;j++) {
-					if (previousCard.Equals (weapons [j])) {
-						previousCard = weapons [j];
-						tempPower += weapons [j].power;
-						weapons.RemoveAt (j);
+				for (int j=0;j<weaponCards.Count;j++) {
+					if (previousCard.Equals (weaponCards [j])) {
+						previousCard = weaponCards [j];
+						tempPower += weaponCards [j].power;
+						weaponCards.RemoveAt (j);
 						j--;
 						if (tempPower > 10) {
 							done = true;
@@ -163,25 +132,16 @@ public class ParticipateInQuest: AIBehaviour{
 
 	public List<Card> play2(int aiId,int testBid, bool isLastStage, List<Player> players) {
 		Player ai = players [aiId];
-		List<AllyCard> allies = new List<AllyCard>();
-		List<WeaponCard> weapons = new List<WeaponCard>();
+		List<Card> hand = ai.hand;
+		List<AllyCard> allies = extractAllies(hand);
+		List<WeaponCard> weapons = extractWeapons(hand);
+		List<AmourCard> amourCards = extractAmours (hand);
 		List<Card> keys = new List<Card>();
-		if (!ai.inPlay.Contains (new AmourCard ("amour", 0, 0, "")) && ai.hand.Contains (new AmourCard ("amour", 0, 0, ""))) {
-			for (int i = 0; i < ai.hand.Count; i++) {
-				if (ai.hand [i] is AmourCard) {
-					keys.Add (ai.hand [i]);
-					return keys;
-				}
-			}
+		if (!ai.inPlay.Contains (new AmourCard ("Amour", 0, 0, "")) && amourCards.Count > 0) {
+			keys.Add (amourCards [0]);
+			return keys;
 		}
 
-		for (int i = 0; i < ai.hand.Count; i++) {
-			if (ai.hand [i] is WeaponCard) {
-				weapons.Add (((WeaponCard)ai.hand [i]));
-			} else if (ai.hand [i] is AllyCard) {
-				allies.Add (((AllyCard)ai.hand [i]));
-			}
-		}
 		allies.Sort((x, y) => x.power.CompareTo(y.power));
 		weapons.Sort((x, y) => x.power.CompareTo(y.power));
 

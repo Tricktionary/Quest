@@ -28,23 +28,9 @@ public class ParticipateInTournament: AIBehaviour{
 		Dictionary<string,int> cards = new Dictionary<string, int>();
 		List<Card> keys = new List<Card>();
 
-		//filter weapon cards
-		for (int i = 0; i < ai.hand.Count; i++) {
-			if (ai.hand [i] is WeaponCard) {
-				if (cards.ContainsKey(ai.hand[i].name)) {
-					cards[ai.hand[i].name] += 1;
-				} else {
-					cards.Add (ai.hand[i].name, 1);
-					keys.Add (ai.hand [i]);
-				}
-			} else if (ai.hand [i] is AllyCard) {
-				cards.Add (ai.hand[i].name, 1);
-				keys.Add(ai.hand[i]);
-			}
-		}
 		if (strongest) {
 			//play strongest
-			return keys;
+			return strongestCombination(ai.hand);
 		} else {
 			//play only duplicates
 			List<Card> playCards = new List<Card>();

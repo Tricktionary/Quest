@@ -4,11 +4,14 @@ public class AIPlayer : Player {
 	SponsorQuest sponsorQuestBehaviour;
 	ParticipateInQuest participateQuestBehaviour;
 	ParticipateInTournament participateTournamentBehaviour;
+	TestBid testBidBehaviour;
+
 
 	public AIPlayer (int playerId) : base(playerId) {
 		sponsorQuestBehaviour = new SponsorQuest ();
 		participateQuestBehaviour = new ParticipateInQuest ();
 		participateTournamentBehaviour = new ParticipateInTournament ();
+		testBidBehaviour = new TestBid ();
 	}
 
 	public List<List<Card>> sponsorQuest(QuestCard questCard, List<Player> players) {
@@ -34,8 +37,16 @@ public class AIPlayer : Player {
 		return participateQuestBehaviour.join1 (_playerId, storyCard.stages, players);
 	}
 
-	public List<Card> playQuest(List<Player> players, int testBid, bool isLastStage) {
-		return participateQuestBehaviour.play1 (_playerId, testBid, isLastStage, players);
+	public List<Card> playQuest(List<Player> players, int testBid, bool isLastStage, bool secondRound) {
+		if (testBid == -1) {
+			return participateQuestBehaviour.play1 (_playerId, testBid, isLastStage, players);
+		} else {
+			return testBidBehaviour.discardAfterWinningTest1 (_playerId, players, testBid, secondRound);
+		}
+	}
+
+	public int requestBid(List<Player> players, int currBid, bool multipleBids) {
+		return testBidBehaviour.nextBid1(_playerId, players, currBid, multipleBids);
 	}
 
 	bool someoneCouldWin(int value, List<Player> players) {
