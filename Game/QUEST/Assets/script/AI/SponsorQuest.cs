@@ -14,23 +14,18 @@ public class SponsorQuest: AIBehaviour {
 	}
 
 	private bool canSponsor(Player ai, QuestCard questCard) {
-		List<WeaponCard> weaponCards = new List<WeaponCard>();
-		List<FoeCard> foeCards = new List<FoeCard>();
+		int differentPower = 0;
 		List<Card> hand = ai.hand;
+		List<WeaponCard> weaponCards = extractWeapons (hand);
+		List<FoeCard> foeCards = extractFoes (hand);
+		List<TestCard> testCards = extractTests (hand);
 
-		for(int i = 0 ; i < hand.Count ; i++){
-			if(hand[i].GetType() == typeof(WeaponCard)){
-				WeaponCard currWeapon = (WeaponCard)hand[i];
-				weaponCards.Add(currWeapon);
-			}
-			if(hand[i].GetType() == typeof(FoeCard)){
-				FoeCard currFoe = (FoeCard)hand[i];
-				foeCards.Add(currFoe);
-			}
+		if (testCards.Count > 0) {
+			differentPower++;
 		}
+
 		foeCards.Sort ((x, y) => x.power (questCard).CompareTo (y.power (questCard)));
 		foeCards.Reverse ();
-		int differentPower = 0;
 		for (int y = 0; y < foeCards.Count; y++) {
 			if (y + 1 < foeCards.Count) {
 				if (foeCards [y].power (questCard) != foeCards [y + 1].power (questCard)) {
@@ -44,27 +39,6 @@ public class SponsorQuest: AIBehaviour {
 			}
 		}
 		return false;
-	}
-
-	private List<WeaponCard> extractWeapons(List<Card> hand) {
-		List<WeaponCard> weaponCards = new List<WeaponCard>();
-		for (int i = 0; i < hand.Count; i++) {
-			if (hand [i].GetType () == typeof(WeaponCard)) {
-				WeaponCard currWeapon = (WeaponCard)hand [i];
-				weaponCards.Add (currWeapon);
-			}
-		}
-		return weaponCards;
-	}
-	private List<FoeCard> extractFoes(List<Card> hand) {
-		List<FoeCard> foeCards = new List<FoeCard>();
-		for (int i = 0; i < hand.Count; i++) {
-			if (hand [i].GetType () == typeof(FoeCard)) {
-				FoeCard currFoe = (FoeCard)hand [i];
-				foeCards.Add (currFoe);
-			}
-		}
-		return foeCards;
 	}
 
 	private void findSuitableFoe(ref List<FoeCard> foeCards, QuestCard questCard, int stagePower, bool isOne) {
@@ -118,14 +92,21 @@ public class SponsorQuest: AIBehaviour {
 		List<List<Card>> returnedStages = new List<List<Card>> ();
 		List<WeaponCard> weaponCards = extractWeapons (ai.hand);
 		List<FoeCard> foeCards = extractFoes (ai.hand);
+		List<TestCard> testCards = extractTests (ai.hand);
 
 		//Sort and just POP the last one into each stage  Foe
 		weaponCards.Sort((x, y) => x.bp.CompareTo(y.bp));
 		weaponCards.Reverse ();
 		foeCards.Sort ((x, y) => x.power (questCard).CompareTo (y.power (questCard)));
 		foeCards.Reverse ();
+
+		int stageModifier = 1;
+		if (testCards.Count > 0) {
+			stageModifier = 2;
+		}
+
 		//Add the stages
-		for (int i = questCard.stages - 1; i >= 0; i--) {
+		for (int i = questCard.stages - stageModifier; i >= 0; i--) {
 			returnedStages.Add (new List<Card> ());
 			if (returnedStages.Count > 1) {
 				//Find previous stage power
@@ -139,36 +120,28 @@ public class SponsorQuest: AIBehaviour {
 			foeCards.RemoveAt(0);
 		}
 
-		int bossPower = setupBoss (ref returnedStages, ref weaponCards, questCard, 50);
-		/*
-		int bossPower = ((FoeCard)returnedStages [0] [0]).power (questCard);
-		for (int i = 0; i < weaponCards.Count; i++) {
-			if (!returnedStages [0].Contains (weaponCards [i])) {
-				returnedStages [0].Add (weaponCards [i]);
-				bossPower += weaponCards [i].bp;
-				weaponCards.RemoveAt (i);
-				i--;
-			}
-			if (bossPower >= 50) {
-				break;
-			}
+		if (testCards.Count > 0) {
+			returnedStages.Add(new List<Card> ());
+			returnedStages [returnedStages.Count - 1].Add (testCards[0]);
 		}
-		*/
+
+		int bossPower = setupBoss (ref returnedStages, ref weaponCards, questCard, 50);
 		int previousFoePower = bossPower;
 		int currFoePower = 0;
 		for (int i = 1; i < returnedStages.Count; i++) {
-			currFoePower = ((FoeCard)returnedStages [i] [0]).power (questCard);
-			for (int j = 0; j < weaponCards.Count; j++) {
-				if (weaponCards [j].bp + currFoePower < previousFoePower) {
-					currFoePower += weaponCards [j].bp;
-					returnedStages [i].Add (weaponCards [j]);
-					weaponCards.RemoveAt (j);
-					break;
+			if (returnedStages [i] [0] is FoeCard) {
+				currFoePower = ((FoeCard)returnedStages [i] [0]).power (questCard);
+				for (int j = 0; j < weaponCards.Count; j++) {
+					if (weaponCards [j].bp + currFoePower < previousFoePower) {
+						currFoePower += weaponCards [j].bp;
+						returnedStages [i].Add (weaponCards [j]);
+						weaponCards.RemoveAt (j);
+						break;
+					}
 				}
+				previousFoePower = currFoePower;
 			}
-			previousFoePower = currFoePower;
 		}
-		returnedStages.Reverse ();
 		return returnedStages;
 	}
 
@@ -186,12 +159,19 @@ public class SponsorQuest: AIBehaviour {
 		List<List<Card>> returnedStages = new List<List<Card>> ();
 		List<WeaponCard> weaponCards = extractWeapons (ai.hand);
 		List<FoeCard> foeCards = extractFoes (ai.hand);
+		List<TestCard> testCards = extractTests (ai.hand);
 
 		//Sort and just POP the last one into each stage  Foe
 		weaponCards.Sort((x, y) => x.bp.CompareTo(y.bp));
 		foeCards.Sort ((x, y) => x.power (questCard).CompareTo (y.power (questCard)));
+
+		int stageModifier = 1;
+		if (testCards.Count > 0) {
+			stageModifier = 2;
+		}
+
 		//Add the stages
-		for (int i = 0; i < questCard.stages-1; i++) {
+		for (int i = 0; i < questCard.stages-stageModifier; i++) {
 			returnedStages.Add (new List<Card> ());
 			if (returnedStages.Count > 1) {
 				//Find previous stage power
@@ -204,23 +184,16 @@ public class SponsorQuest: AIBehaviour {
 			returnedStages [returnedStages.Count-1].Add (foeCards[0]);
 			foeCards.RemoveAt(0);
 		}
+
+		if (testCards.Count > 0) {
+			returnedStages.Add(new List<Card> ());
+			returnedStages [returnedStages.Count - 1].Add (testCards[0]);
+		}
+
 		returnedStages.Add(new List<Card> ());
 		returnedStages [returnedStages.Count - 1].Add (foeCards [foeCards.Count - 1]);
 		int bossPower = ((FoeCard)returnedStages [returnedStages.Count-1] [0]).power (questCard);
 		setupBoss (ref returnedStages, ref weaponCards, questCard, 40);
-		/*
-		for (int i = 0; i < weaponCards.Count; i++) {
-			if (!returnedStages [returnedStages.Count-1].Contains (weaponCards [i])) {
-				returnedStages [returnedStages.Count-1].Add (weaponCards [i]);
-				bossPower += weaponCards [i].bp;
-				weaponCards.RemoveAt (i);
-				i--;
-			}
-			if (bossPower >= 40) {
-				break;
-			}
-		}
-		*/
 		return returnedStages;
 	}
 }
