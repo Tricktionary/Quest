@@ -435,7 +435,7 @@ public class UnitTests {
 
 		//will play lance and excalibur and sir tristan
 		ai.addCard(dagger);
-		List<Card> played = ai.playQuest (players, 0, true);
+		List<Card> played = ai.playQuest (players, -1, true, false);
 		Assert.IsTrue (played.Contains (sirtristan));
 		Assert.IsTrue (played.Contains (excalibur));
 		Assert.IsTrue (played.Contains (lance));
@@ -451,7 +451,7 @@ public class UnitTests {
 		ai.addCard(excalibur2);
 		ai.addCard(lance2);
 
-		played = ai.playQuest (players, 0, false);
+		played = ai.playQuest (players, -1, false, false);
 		Assert.IsTrue (played.Contains (dagger));
 		Assert.IsTrue (played.Contains (lance));
 		Assert.IsTrue (played.Contains (sirtristan));
