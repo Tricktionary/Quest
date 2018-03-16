@@ -366,7 +366,7 @@ public class MultiplayerGame : MonoBehaviour {
 		AIPlayer currAi = (AIPlayer)_players[turnId];
 
 		if (_storyCard.GetType() == typeof(QuestCard)) {
-			playCards = currAi.playQuest(_players,0,false);
+			playCards = currAi.playQuest(_players,-1,false, false);
 			Debug.Log("AI Played Quest Cards");
 		}
 		else if (_storyCard.GetType() == typeof(TournamentCard)) {
