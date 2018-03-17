@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
-//https://www.youtube.com/watch?v=qGkkaNkq8co 38:08
+using System.Text;
+//https://www.youtube.com/watch?v=qGkkaNkq8co 1:04:55
+
 public class MClient : MonoBehaviour {
 	private const int MAX_CONNECTION = 4;
 
@@ -19,11 +21,17 @@ public class MClient : MonoBehaviour {
 	private float connectionTime;
 
 	private int connectionId;
-
+	private int clientId; //OUR CLIENT ID
 	private bool isStarted = false;
 	private bool isConnected = false;
 
+	public GameObject playerObj;
+	public List<OnlinePlayer> players = new List<OnlinePlayer> ();
+
 	private string playerName;
+
+
+
 	public void Connect()
 	{
 		string pName = GameObject.Find ("NameField").GetComponent<InputField> ().text;
@@ -67,15 +75,65 @@ public class MClient : MonoBehaviour {
 			byte error;
 			NetworkEventType recData = NetworkTransport.Receive (out recHostId, out connectionId, out channelId, recBuffer, bufferSize, out dataSize, out error);
 			switch (recData) {
-			case NetworkEventType.Nothing:         //1 Nothing is received 
-				break;
-			case NetworkEventType.ConnectEvent:    //2 Someone has connected 
-				break;
-			case NetworkEventType.DataEvent:       //3 GAME LOOP
-				break;
-			case NetworkEventType.DisconnectEvent: //4 Disconnect
-				break;
+				case NetworkEventType.DataEvent:       //GAME LOOP
+					string msg = Encoding.Unicode.GetString (recBuffer, 0, dataSize);
+					Debug.Log ("Receiving-MSG :" + msg);
+					string[] splitData = msg.Split ('|');
+
+					switch(splitData[0])
+					{
+						case "ASKNAME":
+							OnAskName(splitData);
+							break;
+						case "CNN":
+							SpawnPlayer (splitData [1],int.Parse(splitData[2]));
+							break;
+						case "DC":
+							break;
+						default:
+							Debug.Log("Invalid Message : " + msg);
+							 break;
+					}
+					break;
 			}
 		}
 	}
+
+	private void OnAskName(string[] data){
+
+		//Set out client ID
+		clientId = int.Parse(data [1]);
+
+		//Send our name to the server 
+		Send("NAMEIS|" + playerName,reliableChannel);
+
+		//create all the other players
+		for (int i = 2; i < data.Length - 1; i++) {
+			string[] d = data [i].Split ('%');
+			SpawnPlayer (d [0], int.Parse (d [1]));
+		}
+	}
+
+	private void SpawnPlayer(string playerName, int cnnId)
+	{
+		GameObject go = Instantiate (playerObj) as GameObject;
+
+		if (cnnId == clientId) {
+			//remove canvas
+			GameObject.Find("Canvas").SetActive(false);
+			isStarted = true;
+		}
+
+		OnlinePlayer p = new OnlinePlayer (playerName, cnnId,go);
+		players.Add (p);
+	}
+
+	private void Send(string message,int channelId)
+	{
+		Debug.Log ("Sending : " + message);
+		byte[] msg = Encoding.Unicode.GetBytes (message); 
+		NetworkTransport.Send (hostId, connectionId, channelId, msg, message.Length * sizeof(char), out error);
+
+	}
+
 }

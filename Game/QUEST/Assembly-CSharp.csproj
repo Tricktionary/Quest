@@ -97,6 +97,7 @@
      <Compile Include="Assets\script\MClient.cs" />
      <Compile Include="Assets\script\Menu.cs" />
      <Compile Include="Assets\script\MultiplayerGame.cs" />
+     <Compile Include="Assets\script\OnlinePlayer.cs" />
      <Compile Include="Assets\script\Player.cs" />
      <Compile Include="Assets\script\PlayerObject.cs" />
      <Compile Include="Assets\script\Prompt.cs" />

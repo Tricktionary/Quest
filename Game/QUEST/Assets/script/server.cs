@@ -54,23 +54,41 @@ public class Server : MonoBehaviour{
 			byte error;
 			NetworkEventType recData = NetworkTransport.Receive (out recHostId, out connectionId, out channelId, recBuffer, bufferSize, out dataSize, out error);
 			switch (recData) {
-			case NetworkEventType.Nothing:         //1 Nothing is received
-		     	break;
-			case NetworkEventType.ConnectEvent:    //2 Someone has connected 
-				Debug.Log ("Player " + connectionId + "has connected"); 
-				OnConnection (connectionId);
-				break;
-			case NetworkEventType.DataEvent:       //3 GAME LOOP!!
-				string msg = Encoding.Unicode.GetString(recBuffer,0,dataSize);
-				Debug.Log("Player " + connectionId + "has sent :" + msg);  
-				break;
-			case NetworkEventType.DisconnectEvent: //4 Disconnect
-				Debug.Log("Player " + connectionId + "has disconnected");  
-				break;
-			}
+
+				case NetworkEventType.ConnectEvent:    //Someone has connected 
+					Debug.Log ("Player " + connectionId + "has connected"); 
+					OnConnection (connectionId);
+					break;
+				
+				case NetworkEventType.DataEvent:       //GAME LOOP!!
+					string msg = Encoding.Unicode.GetString(recBuffer,0,dataSize);
+					Debug.Log("Receiving From " + connectionId + ":" + msg);  
+					string[] splitData = msg.Split ('|');
+					switch(splitData[0])
+					{
+						case "NAMEIS":
+							OnNameIs(connectionId,splitData[1]);
+							break;
+						default:
+							Debug.Log("Invalid Message : " + msg);
+							break;
+					}
+					break;
+				
+				case NetworkEventType.DisconnectEvent: //Disconnect
+					Debug.Log("Player " + connectionId + "has disconnected");  
+					break;
+				}
 		}
     }
 
+	private void OnNameIs(int cnnId, string playerName){
+		//Link name to connection ID
+		clients.Find(x => x.connectionId == cnnId).playerName = playerName;
+
+		//Tell everyon that a new player has connected
+		Send("CNN|" +playerName +'|' + cnnId,reliableChannel,clients);
+	}
 	private void OnConnection(int cnnId)
 	{
 		//Add too a list
@@ -90,7 +108,24 @@ public class Server : MonoBehaviour{
 		msg = msg.Trim ('|');
 
 		//ASKNAME|3|DAVE%1|MICHAEL%2|TEMP%3
-
+		Send(msg,reliableChannel,cnnId);
 	}
+
+	private void Send(string message, int channelId, int cnnId)
+	{
+		List<ServerClient> c = new List<ServerClient> ();
+		c.Add (clients.Find (x => x.connectionId == cnnId));
+		Send (message, channelId, c);
+	}
+
+	private void Send(string message,int channelId, List<ServerClient> c)
+	{
+		Debug.Log ("Sending : " + message);
+		byte[] msg = Encoding.Unicode.GetBytes (message);
+		foreach (ServerClient sc in c) {
+			NetworkTransport.Send (hostId,sc.connectionId,channelId,msg,message.Length * sizeof(char), out error);
+		}
+	}
+
 
 }
