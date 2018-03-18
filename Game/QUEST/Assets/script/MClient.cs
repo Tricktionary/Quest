@@ -90,8 +90,8 @@ public class MClient : MonoBehaviour {
 				case "ASKNAME":
 					OnAskName(splitData);
 					break;
-				case "NEWHAND":
-					ReceivingCard (splitData);
+				case "RECEIVEADVENTURECARD":	
+					ReceivingAdventureCard (splitData);
 					break;
 				case "CNN":
 					SpawnPlayer (splitData [1],int.Parse(splitData[2]));
@@ -107,8 +107,13 @@ public class MClient : MonoBehaviour {
 		}
 	}
 
-	private void ReceivingCard(string[] data){
-		Debug.Log (data);
+	private void ReceivingAdventureCard(string[] data){
+		//Debug.Log ("HERE");
+		//Debug.Log(data[1]);
+		string currCardJson = data[1];
+		Card currCard;
+		currCard = JsonUtility.FromJson<Card>(currCardJson);
+		Debug.Log (currCard.ToString ());
 	}
 	private void OnAskName(string[] data){
 
@@ -122,6 +127,11 @@ public class MClient : MonoBehaviour {
 		for (int i = 2; i < data.Length - 1; i++) {
 			string[] d = data [i].Split ('%');
 			SpawnPlayer (d [0], int.Parse (d [1]));
+		}
+
+		//Send("MAKEHAND|",reliableChannel);
+		for (int i = 0; i < 12; i++) {
+			Send ("GETADVENTURECARD", reliableChannel);
 		}
 	}
 

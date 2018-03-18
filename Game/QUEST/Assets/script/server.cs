@@ -69,26 +69,31 @@ public class Server : MonoBehaviour{
 					OnConnection (connectionId);
 					break;
 				
-				case NetworkEventType.DataEvent:       //GAME LOOP!!
-					string msg = Encoding.Unicode.GetString(recBuffer,0,dataSize);
-					Debug.Log("Receiving From " + connectionId + ":" + msg);  
-					string[] splitData = msg.Split ('|');
-					switch(splitData[0])
-					{
-						case "NAMEIS":
-							OnNameIs(connectionId,splitData[1]);
-							break;
-						default:
-							Debug.Log("Invalid Message : " + msg);
-							break;
-					}
+
+			case NetworkEventType.DataEvent:       //GAME LOOP!!
+				string msg = Encoding.Unicode.GetString(recBuffer,0,dataSize);
+				Debug.Log("Receiving From " + connectionId + ":" + msg);  
+				string[] splitData = msg.Split ('|');
+				switch(splitData[0])
+				{
+				case "NAMEIS":
+					OnNameIs(connectionId,splitData[1]);
 					break;
-				
-				case NetworkEventType.DisconnectEvent: //Disconnect
-					Debug.Log("Player " + connectionId + "has disconnected");  
+				case "GETADVENTURECARD":
+					GetAdventureCard (connectionId);
+					break;
+				default:
+					Debug.Log("Invalid Message : " + msg);
 					break;
 				}
+				break;
+			case NetworkEventType.DisconnectEvent: //Disconnect		
+				Debug.Log("Player " + connectionId + "has disconnected");  
+				break;
+			}
+	
 		}
+
     }
 
 	private void OnNameIs(int cnnId, string playerName){
@@ -98,6 +103,7 @@ public class Server : MonoBehaviour{
 		//Tell everyon that a new player has connected
 		Send("CNN|" +playerName +'|' + cnnId,reliableChannel,clients);
 	}
+
 	private void OnConnection(int cnnId)
 	{
 		//Add too a list
@@ -119,28 +125,15 @@ public class Server : MonoBehaviour{
 		 
 		//ASKNAME|3|DAVE%1|MICHAEL%2|TEMP%3
 		Send(msg,reliableChannel,cnnId);
-		initPlayerCards (cnnId);
-
-		 
+	}
+	private void GetAdventureCard(int cnnId){
+		Card currCard = adventureDeck.Draw ();
+		string msg = "RECEIVEADVENTURECARD|";
+		msg = msg + JsonUtility.ToJson (currCard) + "|";
+		msg = msg.Trim ('|');
+		Send (msg, reliableChannel, cnnId);
 	}
 
-	private void initPlayerCards(int cnnId){
-
-		List<Card> newPlayerHand = new List<Card> ();
-
-		for (int i = 0; i < 12; i++) {
-			newPlayerHand.Add (adventureDeck.Draw());
-		}
-
-		string msg = "NEWHAND|";
-		for (int i = 0; i < newPlayerHand.Count; i++) {
-			msg = msg + JsonUtility.ToJson (newPlayerHand[i]) + "|";
-		}
-
-		Debug.Log (msg);
-		Send (msg, unreliableChannel, cnnId);
-
-	}
 
 	private void Send(string message, int channelId, int cnnId)
 	{
