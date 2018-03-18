@@ -12,9 +12,14 @@ public class Menu : MonoBehaviour {
 		HotSeatGameMode.SetActive(true);
 	}
 
-	public void MultiplayerMode(){
+	public void Host(){
 		MenuPanel.SetActive(false);
-		SceneManager.LoadScene("MultiplayerLobby",LoadSceneMode.Single);
+		SceneManager.LoadScene("Server",LoadSceneMode.Single);
+	}
+
+	public void Join(){
+		MenuPanel.SetActive(false);
+		SceneManager.LoadScene("Client",LoadSceneMode.Single);
 	}
 
 	// Use this for initialization

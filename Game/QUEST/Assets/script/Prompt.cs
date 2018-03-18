@@ -28,13 +28,13 @@ public class Prompt : MonoBehaviour {
 	public void promptMessage(string messageType){
 		promptObj.SetActive(true);
 		if(messageType == "sponsor"){
-			//Game.GameManager.logger.info("Displaying sponsor prompt!");
+			Game.GameManager.logger.info("Displaying sponsor prompt!");
 			promptTxt.GetComponent<UnityEngine.UI.Text>().text = sponsorText;
 		} else if (messageType == "quest"){
-			//Game.GameManager.logger.info("Displaying join quest prompt!");
+			Game.GameManager.logger.info("Displaying join quest prompt!");
 			promptTxt.GetComponent<UnityEngine.UI.Text>().text = questText;
 		} else if (messageType == "tournament"){
-			//Game.GameManager.logger.info("Displaying join tournament prompt!");
+			Game.GameManager.logger.info("Displaying join tournament prompt!");
 			promptTxt.GetComponent<UnityEngine.UI.Text>().text = tournamentText;
 		}
 	}
@@ -43,11 +43,11 @@ public class Prompt : MonoBehaviour {
 	public void promptYes(){
 		promptObj.SetActive(false);
 		if(promptTxt.GetComponent<UnityEngine.UI.Text>().text == sponsorText){
-			//Game.GameManager._questBehaviour.sponsor(true);
+			Game.GameManager._questBehaviour.sponsor(true);
 		} else if(promptTxt.GetComponent<UnityEngine.UI.Text>().text == questText){
-			//Game.GameManager._questBehaviour.joinQuest(true);
+			Game.GameManager._questBehaviour.joinQuest(true);
 		} else if(promptTxt.GetComponent<UnityEngine.UI.Text>().text == tournamentText){
-			//Game.GameManager._tournamentBehaviour.joinTournament(true);
+			Game.GameManager._tournamentBehaviour.joinTournament(true);
 		}
 	}
 
@@ -55,11 +55,11 @@ public class Prompt : MonoBehaviour {
 	public void promptNo(){
 		promptObj.SetActive(false);
 		if (promptTxt.GetComponent<UnityEngine.UI.Text>().text == sponsorText) {
-			//Game.GameManager._questBehaviour.sponsor(false);
+			Game.GameManager._questBehaviour.sponsor(false);
 		} else if (promptTxt.GetComponent<UnityEngine.UI.Text>().text == questText) {
-			//Game.GameManager._questBehaviour.joinQuest(false);
+			Game.GameManager._questBehaviour.joinQuest(false);
 		} else if(promptTxt.GetComponent<UnityEngine.UI.Text>().text == tournamentText){
-			//Game.GameManager._tournamentBehaviour.joinTournament(false);
+			Game.GameManager._tournamentBehaviour.joinTournament(false);
 		}
 	}
 
