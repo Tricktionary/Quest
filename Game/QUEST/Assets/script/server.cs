@@ -24,20 +24,29 @@ public class Server : MonoBehaviour{
 
     private byte error;
 
+	private Deck adventureDeck;
+	private Deck storyDeck;
+
 	private List<ServerClient> clients = new List<ServerClient>();
 
     private void Start()
     {
-      	  NetworkTransport.Init();
-		  ConnectionConfig cc = new ConnectionConfig ();
+		Application.runInBackground = true;
+      	NetworkTransport.Init();
+		ConnectionConfig cc = new ConnectionConfig ();
 
-		  reliableChannel = cc.AddChannel (QosType.Reliable);
-		  unreliableChannel = cc.AddChannel (QosType.Unreliable);
+		reliableChannel = cc.AddChannel (QosType.Reliable);
+		unreliableChannel = cc.AddChannel (QosType.Unreliable);
 
-		  HostTopology topo = new HostTopology (cc, MAX_CONNECTION);
-		  hostId = NetworkTransport.AddHost (topo, port, null);
-		  webHostId = NetworkTransport.AddWebsocketHost (topo, port, null);
-		  isStarted = true;
+		HostTopology topo = new HostTopology (cc, MAX_CONNECTION);
+		hostId = NetworkTransport.AddHost (topo, port, null);
+		  
+		webHostId = NetworkTransport.AddWebsocketHost (topo, port, null);
+		  
+		adventureDeck= new Deck("Adventure");
+		storyDeck = new Deck("Story");
+		isStarted = true;
+
     }
 
     private void Update(){
@@ -107,8 +116,29 @@ public class Server : MonoBehaviour{
 
 		msg = msg.Trim ('|');
 
+		 
 		//ASKNAME|3|DAVE%1|MICHAEL%2|TEMP%3
 		Send(msg,reliableChannel,cnnId);
+		initPlayerCards (cnnId);
+
+		 
+	}
+
+	private void initPlayerCards(int cnnId){
+
+		List<Card> newPlayerHand = new List<Card> ();
+
+		for (int i = 0; i < 12; i++) {
+			newPlayerHand.Add (adventureDeck.Draw());
+		}
+
+		string msg = "NEWHAND|";
+		for (int i = 0; i < newPlayerHand.Count; i++) {
+			msg = msg + JsonUtility.ToJson (newPlayerHand[i]) + "|";
+		}
+
+		Debug.Log (msg);
+		Send (msg, reliableChannel, cnnId);
 	}
 
 	private void Send(string message, int channelId, int cnnId)

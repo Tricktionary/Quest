@@ -9,11 +9,11 @@ public abstract class Card : MonoBehaviour, IEquatable<Card> {
 
 	public Transform oldPosition = null;     //Old Position of the card on the board
 
-	protected string _asset;
-	protected string _name;
-	protected bool _flipped = false;
-	protected GameObject _obj;
-	protected bool _draggable = false;
+	public string _asset;
+	public string _name;
+	public bool _flipped = false;
+	public GameObject _obj;
+	public bool _draggable = false;
 
 	public bool draggable{
 		get {

@@ -2,8 +2,11 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/script/MClient.cs">
     <Files>
-      <File FileName="Assets/script/MClient.cs" Line="71" Column="13" />
-      <File FileName="Assets/script/Server.cs" Line="56" Column="22" />
+      <File FileName="Assets/script/Server.cs" Line="100" Column="28" />
+      <File FileName="Assets/script/MClient.cs" Line="7" Column="51" />
+      <File FileName="Assets/script/Menu.cs" Line="14" Column="2" />
+      <File FileName="Assets/script/Player.cs" Line="85" Column="2" />
+      <File FileName="Assets/script/OnlinePlayer.cs" Line="13" Column="20" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

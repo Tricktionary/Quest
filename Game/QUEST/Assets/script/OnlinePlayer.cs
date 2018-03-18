@@ -7,10 +7,10 @@ public class OnlinePlayer : Player {
 
 	public string playerName;
 	public int connectionId;
-	public GameObject playerField;
+	//public GameObject playerField;
 
-	public OnlinePlayer(string name, int cnnId , GameObject go){
-		playerField = go;
+	public OnlinePlayer(string name, int cnnId ){
+		//playerField = go;
 		connectionId = cnnId;
 		_playerDisplay = cnnId;
 		_rank = 0;

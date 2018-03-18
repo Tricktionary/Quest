@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Text;
-//https://www.youtube.com/watch?v=qGkkaNkq8co 1:04:55
+//https://www.youtube.com/watch?v=qGkkaNkq8co 1:06:55
 
 public class MClient : MonoBehaviour {
 	private const int MAX_CONNECTION = 4;
@@ -25,7 +25,9 @@ public class MClient : MonoBehaviour {
 	private bool isStarted = false;
 	private bool isConnected = false;
 
-	public GameObject playerObj;
+
+	public GameObject playField;
+
 	public List<OnlinePlayer> players = new List<OnlinePlayer> ();
 
 	private string playerName;
@@ -53,8 +55,7 @@ public class MClient : MonoBehaviour {
 
 		hostId = NetworkTransport.AddHost (topo,0);
 
-		connectionId = NetworkTransport.Connect(hostId, "127.0.0.1"  , port ,0, out error);
-		//connectionId = NetworkTransport.Connect(hostId, "192.16.7.21", 8888, 0, out error);
+		connectionId = NetworkTransport.Connect (hostId, "127.0.0.1", port, 0, out error);
 		connectionTime = Time.time;
 
 
@@ -62,7 +63,9 @@ public class MClient : MonoBehaviour {
 
 	}
 
+
 	private void Update(){
+		Application.runInBackground = true;
 		if (!isConnected) {
 			return;
 		} else {
@@ -74,31 +77,39 @@ public class MClient : MonoBehaviour {
 			int dataSize;
 			byte error;
 			NetworkEventType recData = NetworkTransport.Receive (out recHostId, out connectionId, out channelId, recBuffer, bufferSize, out dataSize, out error);
-			switch (recData) {
-				case NetworkEventType.DataEvent:       //GAME LOOP
-					string msg = Encoding.Unicode.GetString (recBuffer, 0, dataSize);
-					Debug.Log ("Receiving-MSG :" + msg);
-					string[] splitData = msg.Split ('|');
 
-					switch(splitData[0])
-					{
-						case "ASKNAME":
-							OnAskName(splitData);
-							break;
-						case "CNN":
-							SpawnPlayer (splitData [1],int.Parse(splitData[2]));
-							break;
-						case "DC":
-							break;
-						default:
-							Debug.Log("Invalid Message : " + msg);
-							 break;
-					}
+			switch (recData) {
+
+			case NetworkEventType.DataEvent:       //GAME LOOP
+				string msg = Encoding.Unicode.GetString (recBuffer, 0, dataSize);
+				Debug.Log ("Receiving-MSG :" + msg);
+				string[] splitData = msg.Split ('|');
+
+				switch(splitData[0])
+				{
+				case "ASKNAME":
+					OnAskName(splitData);
 					break;
+				case "NEWHAND":
+					ReceivingCard (splitData);
+					break;
+				case "CNN":
+					SpawnPlayer (splitData [1],int.Parse(splitData[2]));
+					break;
+				case "DC":
+					break;
+				default:
+					Debug.Log("Invalid Message : " + msg);
+					break;
+				}
+				break;
 			}
 		}
 	}
 
+	private void ReceivingCard(string[] data){
+		Debug.Log (data);
+	}
 	private void OnAskName(string[] data){
 
 		//Set out client ID
@@ -116,15 +127,16 @@ public class MClient : MonoBehaviour {
 
 	private void SpawnPlayer(string playerName, int cnnId)
 	{
-		GameObject go = Instantiate (playerObj) as GameObject;
+		//GameObject go = Instantiate (playerObj) as GameObject;
 
 		if (cnnId == clientId) {
 			//remove canvas
 			GameObject.Find("Canvas").SetActive(false);
+			playField.SetActive (true);
 			isStarted = true;
 		}
 
-		OnlinePlayer p = new OnlinePlayer (playerName, cnnId,go);
+		OnlinePlayer p = new OnlinePlayer (playerName, cnnId);
 		players.Add (p);
 	}
 
