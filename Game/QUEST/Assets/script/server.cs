@@ -138,7 +138,8 @@ public class Server : MonoBehaviour{
 		}
 
 		Debug.Log (msg);
-		Send (msg, reliableChannel, cnnId);
+		Send (msg, unreliableChannel, cnnId);
+
 	}
 
 	private void Send(string message, int channelId, int cnnId)
