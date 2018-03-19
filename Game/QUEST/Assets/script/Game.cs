@@ -22,6 +22,7 @@ public class Game : MonoBehaviour {
 	// Store the current player id (outside of quest, tournament, events).
 	public int _currentPlayer = -1;
 
+
 	// Prefabs.
 	public GameObject Card;
 	public GameObject WeaponCard;
@@ -61,6 +62,7 @@ public class Game : MonoBehaviour {
 	public GameObject winScreen;
 	public GameObject winScreenTxt;
 
+
 	// Text fields.
 	public GameObject playerIdTxt;
 	public GameObject shieldCounterTxt;
@@ -79,6 +81,9 @@ public class Game : MonoBehaviour {
 	//tempFix
 	bool allFlip = false;
 
+	public int numStages(){
+		return Stages.Count;
+	}
 
 	// Initialization.
 	void Awake(){
@@ -721,6 +726,10 @@ public class Game : MonoBehaviour {
 		for(int i =0 ; i < filteredCards.Count ;i++){
 			playArea.GetComponent<CardArea>().addCard(filteredCards[i]);
 		}
+	}
+
+	public int getNumInHand(int playerNum){
+		return _players[playerNum].inPlay.Count;
 	}
 
 	// Load the players hand onto the UI.

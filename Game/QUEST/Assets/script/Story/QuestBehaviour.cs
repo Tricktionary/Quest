@@ -48,6 +48,13 @@ public class QuestBehaviour : GameBehaviour {
 
 	int numberOfTestStage = 0;
 
+	//highest bid
+	int highestBid;
+	int highestBidder;
+
+	List<Card> stagedCards;
+
+
 
 	// Moves to the next player.
 	public void nextPlayer(){
@@ -70,12 +77,16 @@ public class QuestBehaviour : GameBehaviour {
 
 	// End turn method for when a Quest card is in play.
 	public void endTurn(){
-		if(_currStage == testStage){
-			Debug.Log("Test Mode");
-			
-		}
+		/*
+			if(Game.GameManager.Stages[_currStage++].GetType() == typeof(TestCard))
+			{
+				Debug.Log("Test Mode");
+				Debug.Log("flip card");
+			}
+		
+		*/
 		// Check if the results of the quest are in.
-		else if (_showResults) {
+		if (_showResults) {
 			// Move to the next player.
 			participatingPlayerIndex++;
 
@@ -108,7 +119,9 @@ public class QuestBehaviour : GameBehaviour {
 					// Move to the next stage (players have been eliminated if they died).
 					_currStage++;
 
-
+					
+					
+					
 					// If there are no more stages, we have winners.
 					if (_currStage >= _stagePower.Count){
 						Game.GameManager.logger.info("Quest is over and we have winner(s)!");
@@ -136,6 +149,7 @@ public class QuestBehaviour : GameBehaviour {
 						endQuest();
 						return;
 					}
+		
 
 					// Return to setup weapons mode.
 					_setupWeapons = true;
@@ -178,9 +192,16 @@ public class QuestBehaviour : GameBehaviour {
 			// Load the new player.
 			Game.GameManager.loadPlayer(_turnId);
 		} else {
+			//if we are on a test stage 
+			if(testStage>=0){
+				Debug.Log("currently on test stage");
+				highestBid = Game.GameManager.getNumInHand(_turnId);
+				Prompt.PromptManager.statusPrompt ("Bid by adding cards in the play area, current highest bid: " + highestBid); 
+				//if card in play area is less than highest bid go to next player, if card is higher new higher than new highest bid and highest player
 
+			}
 			// If we are on the setup weapons stage.
-			if (_setupWeapons) {
+			else if (_setupWeapons) {
 
 				// Weapon setup is valid.
 				if (Game.GameManager.playAreaValid ()) {
@@ -259,20 +280,27 @@ public class QuestBehaviour : GameBehaviour {
 					if (_questReady) {
 
 						// Flip the staged cards.
-						List<Card> stagedCards = Game.GameManager.getStagedCards(_questCard.stages);
+						stagedCards = Game.GameManager.getStagedCards(_questCard.stages);
+						/*
 						for(int x = 0 ; x < 4 ; x++){
 							for (int i = 0; i < stagedCards.Count; i++) {
-								stagedCards[i].flipCard (true);
+								//if(stagedCards[i].GetType() != typeof(TestCard)){
+									stagedCards[i].flipCard (true);
+								//}
 							}
 						}
-
+						*/
 						// 2nd time to ensure flipage
-						for(int x = 0 ; x < 4 ; x++){
-							for (int i = 0; i < stagedCards.Count; i++) {
-								stagedCards[i].flipCard (true);
+						for(int j=0; j < 5; j++){
+							for(int x = 0 ; x < 4 ; x++){
+								for (int i = 0; i < stagedCards.Count; i++) {
+									if(stagedCards[i].GetType() != typeof(TestCard)){
+										stagedCards[i].flipCard (true);
+									}
+								}
 							}
 						}
-
+						
 
 						//Remove Cards Played in stage
 						Game.GameManager.removeCards(_turnId,stagedCards);
@@ -327,7 +355,7 @@ public class QuestBehaviour : GameBehaviour {
 		_asked = 0;
 		_currStage = 0;
 		_questReady = false;
-	  _setupWeapons = false;
+	  	_setupWeapons = false;
 		_showResults = false;
 		testStage = -1;
 		numberOfTestStage = 0;
@@ -406,9 +434,6 @@ public class QuestBehaviour : GameBehaviour {
 		}
 	}
 
-	public void joinBid(int bidVal){
-
-	}
 
 	// When the user responds to the join quest prompt.
 	public void joinQuest(bool answer){
@@ -440,6 +465,12 @@ public class QuestBehaviour : GameBehaviour {
 					Game.GameManager.giveCard(_playersIn[i]);
 				}
 
+				if(testStage>=0){
+					Debug.Log("currently on test stage");
+					Prompt.PromptManager.statusPrompt ("Bid by adding cards in the play area, current highest bid: " + highestBid); 
+					//Debug.Log(highestBid);
+				}
+				else{
 				// Move to setup weapon phase.
 				_setupWeapons = true;
 				Game.GameManager.logger.info("Moving to setup weapons state.");
@@ -447,6 +478,7 @@ public class QuestBehaviour : GameBehaviour {
 				participatingPlayers = _playersIn.Count;
 
 				Prompt.PromptManager.statusPrompt("Setup your weapons!");
+				}
 
 				if(Game.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
 					Debug.Log("AI Setup Weapon");
@@ -599,6 +631,7 @@ public class QuestBehaviour : GameBehaviour {
 		}
 
 		// Grab the power levels from all the cards within the stages.
+		
 		for (int i = 0; i < stages.Count; i++) {
 			currPower = stageValid(stages[i],i);
 			if(currPower == -1){
@@ -610,9 +643,11 @@ public class QuestBehaviour : GameBehaviour {
 			}
 		}
 
-		// Check ascending power level.
+		// Check ascending power level
 		for(int i = 0; i < powerLevels.Count - 1; i++){
-			if(powerLevels[i] >= powerLevels[i + 1]){
+			
+
+			if(powerLevels[i] >= powerLevels[i + 1] && powerLevels[i] != 10000){
 				Game.GameManager.logger.warn("Quest setup is invalid: not ascending power level.");
 				Prompt.PromptManager.statusPrompt("Quest Invalid: Not ascending power.");
 				return false;
