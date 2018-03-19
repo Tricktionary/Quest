@@ -72,6 +72,7 @@ public class QuestBehaviour : GameBehaviour {
 	public void endTurn(){
 		if(_currStage == testStage){
 			Debug.Log("Test Mode");
+			
 		}
 		// Check if the results of the quest are in.
 		else if (_showResults) {
@@ -405,6 +406,10 @@ public class QuestBehaviour : GameBehaviour {
 		}
 	}
 
+	public void joinBid(int bidVal){
+
+	}
+
 	// When the user responds to the join quest prompt.
 	public void joinQuest(bool answer){
 		_asked++;
@@ -530,7 +535,7 @@ public class QuestBehaviour : GameBehaviour {
 				power += currWeapon.power;
 
 			// Otherwise, it's a foe card.
-			} else if(currCard.GetType() == typeof(FoeCard)){
+			}else if(currCard.GetType() == typeof(FoeCard)){
 				FoeCard currFoe = (FoeCard)currCard;
 
 				// Handle feature foe.

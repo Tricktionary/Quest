@@ -10,11 +10,14 @@ public class Prompt : MonoBehaviour {
 	public GameObject promptObj;
 	public GameObject promptTxt;
 	public GameObject gameStatus;
+	public GameObject yesButton;
+	public GameObject noButton;
 
 	// Text snippets.
 	public static string sponsorText = "Do you want to Sponsor this Quest?";
 	public static string questText = "Do you want to join the Quest?";
 	public static string tournamentText = "Do you Want To join this Tournament?";
+	public static string testText = "How much would you like to bid?";
 
 	public static Prompt PromptManager { get { return _instance; } }
 
@@ -36,7 +39,24 @@ public class Prompt : MonoBehaviour {
 		} else if (messageType == "tournament"){
 			Game.GameManager.logger.info("Displaying join tournament prompt!");
 			promptTxt.GetComponent<UnityEngine.UI.Text>().text = tournamentText;
+		} 
+		else if (messageType == "test"){ //gets called in endturn if card is a test card
+			Game.GameManager.logger.info("Displaying Test prompt!");
+			promptTxt.GetComponent<UnityEngine.UI.Text>().text = testText;
+			
+
+			//make yes and no into 1-13
 		}
+
+	}
+
+	public int getInput(string bidNum){
+		Debug.Log("bidNum value: " + bidNum);
+		if(bidNum == "3"){
+			Yes.SetActive(false);
+		}
+		//int x = Int32.Parse(bidNum);
+
 	}
 
 	// The user responds yes to a prompt.

@@ -148,12 +148,12 @@ public class Deck{
 		addArmour("Amour", 10, 1, "card_image/special/specialCard3", 8);
 
 		/*TestCard Load*/
-		/*
+		
 		addTestCard("Test of the Questing Beast",4,"card_image/tests/testCard",2);
 		addTestCard("Test of Temptation",0,"card_image/tests/testCard1",2);
 		addTestCard("Test of Valor",0,"card_image/tests/testCard2",2);
 		addTestCard("Test of Morgan Le Fey",3,"card_image/tests/testCard3",2);
-		*/
+		
 	}
 	void addBoarHunt(){
 		addQuest("Boar Hunt", 2, "Boar", "card_image/quest/questCard4", 1);
