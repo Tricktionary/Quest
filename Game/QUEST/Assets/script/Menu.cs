@@ -22,6 +22,11 @@ public class Menu : MonoBehaviour {
 		SceneManager.LoadScene("Client",LoadSceneMode.Single);
 	}
 
+	public void MultiplayerLobby(){
+		MenuPanel.SetActive(false);
+		SceneManager.LoadScene("MultiplayerLobby",LoadSceneMode.Single);
+	}
+
 	// Use this for initialization
 	void Start () {
 

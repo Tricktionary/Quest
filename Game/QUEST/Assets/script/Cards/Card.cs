@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
- 
+
 public abstract class Card : MonoBehaviour, IEquatable<Card> {
 
 	public Transform oldPosition = null;     //Old Position of the card on the board
