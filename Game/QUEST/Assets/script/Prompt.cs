@@ -53,7 +53,7 @@ public class Prompt : MonoBehaviour {
 	public int getInput(string bidNum){
 		Debug.Log("bidNum value: " + bidNum);
 		if(bidNum == "3"){
-			Yes.SetActive(false);
+			//Yes.SetActive(false);
 		}
 		//int x = Int32.Parse(bidNum);
 
