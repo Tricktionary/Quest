@@ -366,7 +366,7 @@ Prefab:
     - target: {fileID: 11475086, guid: c0978251ff7b10d4fb954a4b56acd9f0, type: 2}
       propertyPath: m_GamePlayerPrefab
       value: 
-      objectReference: {fileID: 1018777929355814, guid: 157207934c6ec4334825546343028c92,
+      objectReference: {fileID: 1141798864386944, guid: f43b429611b2a4f1fb75b676db0209e7,
         type: 2}
     - target: {fileID: 11475086, guid: c0978251ff7b10d4fb954a4b56acd9f0, type: 2}
       propertyPath: m_UseWebSockets

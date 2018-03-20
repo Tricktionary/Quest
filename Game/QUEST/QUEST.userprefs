@@ -1,9 +1,9 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/script/PlayerObject.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/script/NetworkLobbyHook.cs">
     <Files>
-      <File FileName="Assets/script/NetworkGameManager.cs" Line="1" Column="1" />
       <File FileName="Assets/script/NetworkLobbyHook.cs" Line="1" Column="1" />
+      <File FileName="Assets/script/NetworkGameManager.cs" Line="1" Column="1" />
       <File FileName="Assets/script/PlayerObject.cs" Line="1" Column="1" />
       <File FileName="Assets/script/Menu.cs" Line="1" Column="1" />
       <File FileName="Assets/script/Player.cs" Line="1" Column="1" />
