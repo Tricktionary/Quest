@@ -53,6 +53,9 @@ public class Game : MonoBehaviour {
 	//PLAYER SETUP
 	public List<GameObject> playerChoice;
 
+	//cards currently in play
+	public List<Card> currInPlay = new List<Card>();
+
 	// Misc GameObject's.
 	public GameObject currStageTxt;
 	public GameObject discardPile;
@@ -589,7 +592,7 @@ public class Game : MonoBehaviour {
 
 	// Clear a players in play cards.
 	public void clearInPlayEnd(int player_id){
-		List<Card> currInPlay = new List<Card>();
+	//	List<Card> currInPlay = new List<Card>();
 		List<Card> filteredHand1 = new List<Card>();
 		List<Card> filteredHand2 = new List<Card>();
 
@@ -728,9 +731,11 @@ public class Game : MonoBehaviour {
 		}
 	}
 
-	public int getNumInHand(int playerNum){
+	public int getNumInPlay(int playerNum){
 		return _players[playerNum].inPlay.Count;
 	}
+
+	
 
 	// Load the players hand onto the UI.
 	void loadHand(int playerId){

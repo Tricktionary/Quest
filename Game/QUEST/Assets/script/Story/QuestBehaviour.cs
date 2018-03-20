@@ -86,6 +86,8 @@ public class QuestBehaviour : GameBehaviour {
 		
 		*/
 		// Check if the results of the quest are in.
+		//Debug.Log("Num in hand2  " + Game.GameManager.getNumInPlay(_turnId));
+
 		if (_showResults) {
 			// Move to the next player.
 			participatingPlayerIndex++;
@@ -198,8 +200,14 @@ public class QuestBehaviour : GameBehaviour {
 			if(testStage == _currStage){
 				Debug.Log("FUCK");
 				//check if newbid is higher than highestBid, save new highestBid and highest Bidder 
-				if(Game.GameManager.getNumInHand(_turnId) > highestBid){ 
-					highestBid = Game.GameManager.getNumInHand(_turnId);
+				
+				//Debug.Log("Num in hand -1" + Game.GameManager.getInPlay(_turnId-1).Count);
+				Debug.Log("Num in hand  " + Game.GameManager.getNumInPlay(_turnId));
+				//Debug.Log("Num in hand +1 " + Game.GameManager.getInPlay(_turnId+1).Count);
+				//Debug.Log("Num in hand +2" + Game.GameManager.getInPlay(_turnId+2).Count);
+				Debug.Log("turn ID: " + _turnId);
+				if(Game.GameManager.getInPlay(_turnId).Count > highestBid){ 
+					highestBid = Game.GameManager.getInPlay(_turnId).Count;
 					highestBidder = _turnId;
 					Debug.Log("highest Bid: " + highestBid); 
 					Debug.Log("highest Bidder: " + highestBidder); 
@@ -213,7 +221,7 @@ public class QuestBehaviour : GameBehaviour {
 
 				nextPlayer();
 				// Load the new player.
-					Game.GameManager.loadPlayer(_turnId);
+				Game.GameManager.loadPlayer(_turnId);
 			}
 			// If we are on the setup weapons stage.
 			else if (_setupWeapons) {
@@ -485,12 +493,16 @@ public class QuestBehaviour : GameBehaviour {
 				if(testStage==_currStage){
 					Debug.Log("currently on test stage");
 					Prompt.PromptManager.statusPrompt ("Bid by adding cards in the play area, current highest bid: " + highestBid);
-					highestBid = Game.GameManager.getNumInHand(_turnId);
+				
+					Debug.Log("Num in hand  " + Game.GameManager.currInPlay.Count);
+				
+					//Debug.Log("Num in hand +3 " + Game.GameManager.getInPlay(_turnId+3).Count);
+
+					highestBid = Game.GameManager.getNumInPlay(_turnId);
 					highestBidder = _turnId;
 					Debug.Log("highest bid: " + highestBid);
 
-					//nextPlayer();
-					//endTurn();
+					
 				}
 				else{
 				// Move to setup weapon phase.
