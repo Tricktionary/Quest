@@ -191,14 +191,29 @@ public class QuestBehaviour : GameBehaviour {
 
 			// Load the new player.
 			Game.GameManager.loadPlayer(_turnId);
-		} else {
-			//if we are on a test stage 
-			if(testStage>=0){
-				Debug.Log("currently on test stage");
-				highestBid = Game.GameManager.getNumInHand(_turnId);
-				Prompt.PromptManager.statusPrompt ("Bid by adding cards in the play area, current highest bid: " + highestBid); 
-				//if card in play area is less than highest bid go to next player, if card is higher new higher than new highest bid and highest player
+		} 
 
+		else {
+			//if we are on a test stage 
+			if(testStage == _currStage){
+				Debug.Log("FUCK");
+				//check if newbid is higher than highestBid, save new highestBid and highest Bidder 
+				if(Game.GameManager.getNumInHand(_turnId) > highestBid){ 
+					highestBid = Game.GameManager.getNumInHand(_turnId);
+					highestBidder = _turnId;
+					Debug.Log("highest Bid: " + highestBid); 
+					Debug.Log("highest Bidder: " + highestBidder); 
+				}
+				Prompt.PromptManager.statusPrompt ("Bid by adding cards in the play area, current highest bid: " + highestBid); 
+				
+				participatingPlayerIndex++;
+
+				if (participatingPlayerIndex > (participatingPlayers - 1)) {
+				}
+
+				nextPlayer();
+				// Load the new player.
+					Game.GameManager.loadPlayer(_turnId);
 			}
 			// If we are on the setup weapons stage.
 			else if (_setupWeapons) {
@@ -239,7 +254,9 @@ public class QuestBehaviour : GameBehaviour {
 
 						// Clear the players inPlay list.
 						Game.GameManager.clearInPlay(_turnId);
-					} else {
+					} 
+
+					else {
 
 						// Update _turnId.
 						_turnId = _playersIn[participatingPlayerIndex];
@@ -465,10 +482,15 @@ public class QuestBehaviour : GameBehaviour {
 					Game.GameManager.giveCard(_playersIn[i]);
 				}
 
-				if(testStage>=0){
+				if(testStage==_currStage){
 					Debug.Log("currently on test stage");
-					Prompt.PromptManager.statusPrompt ("Bid by adding cards in the play area, current highest bid: " + highestBid); 
-					//Debug.Log(highestBid);
+					Prompt.PromptManager.statusPrompt ("Bid by adding cards in the play area, current highest bid: " + highestBid);
+					highestBid = Game.GameManager.getNumInHand(_turnId);
+					highestBidder = _turnId;
+					Debug.Log("highest bid: " + highestBid);
+
+					//nextPlayer();
+					//endTurn();
 				}
 				else{
 				// Move to setup weapon phase.
@@ -596,6 +618,7 @@ public class QuestBehaviour : GameBehaviour {
 				}
 
 				testStage = stageNum;		//THE Test stage;
+				Debug.Log("testStage "+ testStage);
 				numberOfTestStage++;		//Increase global test stage object if there is more than one then break
 				return 1;
 
