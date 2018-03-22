@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MultiplayerPrompt : MonoBehaviour {
 
-	private static MultiplayerPrompt _instance;
+	//private static MultiplayerPrompt _instance;
 
 	// Prompts.
 	public GameObject promptObj;
@@ -16,13 +17,17 @@ public class MultiplayerPrompt : MonoBehaviour {
 	public static string questText = "Do you want to join the Quest?";
 	public static string tournamentText = "Do you Want To join this Tournament?";
 
-	public static MultiplayerPrompt PromptManager { get { return _instance; } }
+	//public static MultiplayerPrompt PromptManager { get { return _instance; } }
 
 	private void Awake(){
-		if (!_instance) {
-			_instance = this;
-		}
-		DontDestroyOnLoad(this);
+
+	}
+
+	public MultiplayerPrompt(GameObject promptObj, GameObject promptTxt, GameObject gameStatus){
+		this.promptObj = promptObj;
+		this.promptTxt = promptTxt;
+		this.gameStatus = gameStatus;
+
 	}
 
 	// Spawn a prompt.

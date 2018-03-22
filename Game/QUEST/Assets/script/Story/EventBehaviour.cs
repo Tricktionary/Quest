@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -40,7 +40,7 @@ public class EventBehaviour : GameBehaviour {
 						lowest = p.calcRankShields ();
 					}
 				}
-		
+
 				// Find the players with the lowest.
 				for (int i = 0; i < numPlayers; i++) {
 					p = Game.GameManager.getPlayer (i);
@@ -87,7 +87,7 @@ public class EventBehaviour : GameBehaviour {
 					Prompt.PromptManager.statusPrompt("Player " + (_turnId + 1) + " did not have enough shields.");
 				}
 
-				
+
 
 			} else if (name == "King's Recognition") {
 				Game.GameManager.bonusQuestPoints = true;
@@ -109,7 +109,7 @@ public class EventBehaviour : GameBehaviour {
 					}
 
 				}
-				//add players with shield value equal to lowest 
+				//add players with shield value equal to lowest
 				for(int i = 0; i < Game.GameManager.getNumberOfPlayers(); i++){
 					p = Game.GameManager.getPlayer(i);
 					if(p.shieldCounter <= lowestVal){
@@ -117,14 +117,14 @@ public class EventBehaviour : GameBehaviour {
 					}
 
 				}
-				//give players two adventure cards 
+				//give players two adventure cards
 				for(int i = 0; i < lowestPlayers.Count; i++){
 					p = Game.GameManager.getPlayer(lowestPlayers[i]);
 					for(int j = 0; j < 2; j++){
 						p.addCard(Game.GameManager.drawAdventureCard());
 					}
 
-				}	
+				}
 
 				Prompt.PromptManager.statusPrompt("Players with lowest rank got 2 extra Adventure Cards: ");
 

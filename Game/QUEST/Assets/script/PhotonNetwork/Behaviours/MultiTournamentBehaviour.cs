@@ -66,7 +66,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 					MultiplayerGame.GameManager.setInPlay(_turnId);
 				}
 				// Fix prompt message (if they submited an invalid input).
-				MultiplayerPrompt.PromptManager.statusPrompt ("Setup your weapons!");
+					MultiplayerGame.GameManager.getPromptManager().statusPrompt ("Setup your weapons!");
 
 				// Move to next player in _playersIn.
 				participatingPlayerIndex++;
@@ -91,7 +91,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 					}
 
 					MultiplayerGame.GameManager.logger.info("The following player(s) have won " + shieldPrize + " shields: " + winners_string.Substring(0, winners_string.Length - 2));
-					MultiplayerPrompt.PromptManager.statusPrompt("The following player(s) have won " + shieldPrize + " shields: " + winners_string.Substring(0, winners_string.Length - 2));
+						MultiplayerGame.GameManager.getPromptManager().statusPrompt("The following player(s) have won " + shieldPrize + " shields: " + winners_string.Substring(0, winners_string.Length - 2));
 
 					_tournamentConcluded = true;
 				} else {
@@ -111,7 +111,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 				MultiplayerGame.GameManager.loadPlayer(_turnId);
 
 			} else {
-				MultiplayerPrompt.PromptManager.statusPrompt("You can't submit foes to the play area!");
+					MultiplayerGame.GameManager.getPromptManager().statusPrompt("You can't submit foes to the play area!");
 			}
 
 		} else {
@@ -120,12 +120,12 @@ public class MultiTournamentBehaviour : GameBehaviour {
 				_tournamentInProgress = true;
 
 				// Add everyone to playersIn.
-				for (int i = 0; i < Game.GameManager.getNumberOfPlayers (); i++) {
+				for (int i = 0; i < MultiplayerGame.GameManager.getNumberOfPlayers (); i++) {
 					_playersIn.Add (i);
 				}
 
 				// Prompt to join the tournament.
-				MultiplayerPrompt.PromptManager.promptMessage ("tournament");
+					MultiplayerGame.GameManager.getPromptManager().promptMessage ("tournament");
 			}
 		}
 	}
@@ -236,7 +236,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 				//Pay everyone that join 1 adventure Card
 				for(int i = 0 ; i<_playersIn.Count ; i++){
 					MultiplayerGame.GameManager.logger.info("Giving Player " + (_playersIn[i] + 1) + " one card for joining the tournament.");
-					Game.GameManager.giveCard(_playersIn[i]);
+					MultiplayerGame.GameManager.giveCard(_playersIn[i]);
 				}
 
 				// Everyone has had the option to join.
@@ -247,7 +247,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 				// Update the participating players.
 				participatingPlayers = _playersIn.Count;
 
-				MultiplayerPrompt.PromptManager.statusPrompt ("Setup your weapons!");
+					MultiplayerGame.GameManager.getPromptManager().statusPrompt ("Setup your weapons!");
 				if(MultiplayerGame.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
 					Debug.Log("AI Setup Weapon");
 
@@ -261,11 +261,11 @@ public class MultiTournamentBehaviour : GameBehaviour {
 		}
 
 		else {
-			MultiplayerPrompt.PromptManager.promptMessage("tournament");
+				MultiplayerGame.GameManager.getPromptManager().promptMessage("tournament");
 			nextPlayer();
 			//AI Join?
 			if(MultiplayerGame.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
-				MultiplayerPrompt.PromptManager.promptYes();
+					MultiplayerGame.GameManager.getPromptManager().promptYes();
 				MultiplayerGame.GameManager.AILogicResponse(_turnId,"");
 			}
 		}

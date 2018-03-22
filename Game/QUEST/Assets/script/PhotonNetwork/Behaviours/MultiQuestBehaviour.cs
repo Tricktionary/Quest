@@ -153,7 +153,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 					}
 
 					// Return to setup weapons prompt.
-					MultiplayerPrompt.PromptManager.statusPrompt("Setup your weapons!");
+						MultiplayerGame.GameManager.getPromptManager().statusPrompt("Setup your weapons!");
 					if(MultiplayerGame.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
 						Debug.Log("AI Setup Weapon");
 						List<Card> aiPlayCard = Game.GameManager.AILogicPlayCards(_turnId);
@@ -190,7 +190,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 					}
 
 					// Fix prompt message (if they submited an invalid input).
-					MultiplayerPrompt.PromptManager.statusPrompt ("Setup your weapons!");
+						MultiplayerGame.GameManager.getPromptManager().statusPrompt ("Setup your weapons!");
 
 					// Move to next player in _playersIn.
 					participatingPlayerIndex++;
@@ -237,7 +237,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 				// Weapon setup is not valid.
 				} else {
 					MultiplayerGame.GameManager.logger.info("Play area is invalid!");
-					MultiplayerPrompt.PromptManager.statusPrompt("You can't submit foe/too many amours to the play area!");
+						MultiplayerGame.GameManager.getPromptManager().statusPrompt("You can't submit foe/too many amours to the play area!");
 				}
 
 			// Otherwise, quest needs to be setup.
@@ -245,7 +245,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 				// If the quest is unsponsored.
 				if (_sponsorId == -1) {
-					MultiplayerPrompt.PromptManager.promptMessage ("sponsor");
+						MultiplayerGame.GameManager.getPromptManager().promptMessage ("sponsor");
 
 					// The quest is sponsored.
 				} else {
@@ -300,7 +300,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 						MultiplayerGame.GameManager.loadPlayer(_turnId);
 
 						// Ask if the next player wants to play.
-						MultiplayerPrompt.PromptManager.promptMessage ("quest");
+							MultiplayerGame.GameManager.getPromptManager().promptMessage ("quest");
 
 						//AI join quest
 						if(MultiplayerGame.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
@@ -309,7 +309,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 						}
 
 						// Clear the status prompt.
-						MultiplayerPrompt.PromptManager.statusPrompt ("");
+							MultiplayerGame.GameManager.getPromptManager().statusPrompt ("");
 					}
 				}
 			}
@@ -349,7 +349,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 		_asked++;
 		if (answer) {
 			// Prompt the user to setup the quest.
-			MultiplayerPrompt.PromptManager.statusPrompt("Please set up the Quest.");
+				MultiplayerGame.GameManager.getPromptManager().statusPrompt("Please set up the Quest.");
 
 			MultiplayerGame.GameManager.logger.info("Player " + (_turnId + 1) + " decided to sponsor the quest.");
 
@@ -441,7 +441,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 				participatingPlayers = _playersIn.Count;
 
-				MultiplayerPrompt.PromptManager.statusPrompt("Setup your weapons!");
+					MultiplayerGame.GameManager.getPromptManager().statusPrompt("Setup your weapons!");
 
 				if(MultiplayerGame.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
 					Debug.Log("AI Setup Weapon");
@@ -456,7 +456,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 		// Not eveyone has been asked yet.
 		else {
-			MultiplayerPrompt.PromptManager.promptMessage("quest");
+				MultiplayerGame.GameManager.getPromptManager().promptMessage("quest");
 			nextPlayer();
 			//AI join quest
 			if(MultiplayerGame.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
@@ -492,13 +492,13 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 	public void didYouSurvivePrompt(){
 		if (didYouSurvive(MultiplayerGame.GameManager.getInPlay(_turnId))){
-			MultiplayerPrompt.PromptManager.statusPrompt ("You passed stage " + (_currStage + 1) + "!");
+				MultiplayerGame.GameManager.getPromptManager().statusPrompt ("You passed stage " + (_currStage + 1) + "!");
 			MultiplayerGame.GameManager.logger.info("Player " + (_turnId + 1) + " passed stage " + (_currStage + 1) + ".");
 		} else {
 			// Player died, remove them.
 			_deadPlayers.Add(_turnId);
 			MultiplayerGame.GameManager.logger.info("Player " + (_turnId + 1) + " died on stage " + (_currStage + 1) + ".");
-			MultiplayerPrompt.PromptManager.statusPrompt ("You died on stage " + (_currStage + 1) + "!");
+				MultiplayerGame.GameManager.getPromptManager().statusPrompt ("You died on stage " + (_currStage + 1) + "!");
 		}
 	}
 
@@ -520,7 +520,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 					if(currWeapon.name == weapons[x].name){
 						if (doPrompt) {
 							MultiplayerGame.GameManager.logger.warn("Quest setup is invalid: duplicate weapons.");
-							MultiplayerPrompt.PromptManager.statusPrompt ("Quest Invalid: Duplicate weapons.");
+								MultiplayerGame.GameManager.getPromptManager().statusPrompt ("Quest Invalid: Duplicate weapons.");
 						}
 						return -1;
 					}
@@ -571,7 +571,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 		if(foeCount > 1 || foeCount <= 0){
 			if (doPrompt) {
 				MultiplayerGame.GameManager.logger.warn("Quest setup is invalid: each stage must have exactly 1 foe.");
-				MultiplayerPrompt.PromptManager.statusPrompt ("Quest Invalid: Each stage must exactly have 1 foe.");
+					MultiplayerGame.GameManager.getPromptManager().statusPrompt ("Quest Invalid: Each stage must exactly have 1 foe.");
 			}
 			return -1;
 		}
@@ -587,7 +587,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 		if(numberOfTestStage > 1){	//More than one test stage is found in this quest
 			MultiplayerGame.GameManager.logger.warn("Quest setup is invalid: Too many test cards.");
-			MultiplayerPrompt.PromptManager.statusPrompt("Quest Invalid: Too many test cards.");
+				MultiplayerGame.GameManager.getPromptManager().statusPrompt("Quest Invalid: Too many test cards.");
 			numberOfTestStage = 0;
 			testStage = -1;
 			return false;
@@ -609,7 +609,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 		for(int i = 0; i < powerLevels.Count - 1; i++){
 			if(powerLevels[i] >= powerLevels[i + 1]){
 				MultiplayerGame.GameManager.logger.warn("Quest setup is invalid: not ascending power level.");
-				MultiplayerPrompt.PromptManager.statusPrompt("Quest Invalid: Not ascending power.");
+					MultiplayerGame.GameManager.getPromptManager().statusPrompt("Quest Invalid: Not ascending power.");
 				return false;
 			}
 		}

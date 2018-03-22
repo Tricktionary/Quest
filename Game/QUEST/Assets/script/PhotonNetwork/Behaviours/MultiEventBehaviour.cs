@@ -57,7 +57,8 @@ public class MultiEventBehaviour : GameBehaviour {
 					MultiplayerGame.GameManager.getPlayer(winners[i]).shieldCounter += 3;
 				}
 
-				MultiplayerPrompt.PromptManager.statusPrompt("The following players won 3 shields: " + winners_string.Substring(0, winners_string.Length - 2));
+					MultiplayerGame.GameManager.getPromptManager().statusPrompt("The following players won 3 shields: " + winners_string.Substring(0, winners_string.Length - 2));
+
 
 			} else if (name == "Pox") {
 
@@ -73,7 +74,7 @@ public class MultiEventBehaviour : GameBehaviour {
 					}
 				}
 
-				MultiplayerPrompt.PromptManager.statusPrompt("Everyone except for player " + (_turnId + 1) + " lost 1 shield.");
+					MultiplayerGame.GameManager.getPromptManager().statusPrompt("Everyone except for player " + (_turnId + 1) + " lost 1 shield.");
 
 			} else if (name == "Plague") {
 
@@ -81,17 +82,17 @@ public class MultiEventBehaviour : GameBehaviour {
 				p = MultiplayerGame.GameManager.getPlayer(_turnId);
 				if(p.shieldCounter >= 2){
 					p.shieldCounter = p.shieldCounter-2;
-					MultiplayerPrompt.PromptManager.statusPrompt("Player " + (_turnId + 1) + " lost 2 shield.");
+						MultiplayerGame.GameManager.getPromptManager().statusPrompt("Player " + (_turnId + 1) + " lost 2 shield.");
 				}
 				else{
-					MultiplayerPrompt.PromptManager.statusPrompt("Player " + (_turnId + 1) + " did not have enough shields.");
+						MultiplayerGame.GameManager.getPromptManager().statusPrompt("Player " + (_turnId + 1) + " did not have enough shields.");
 				}
 
 
 
 			} else if (name == "King's Recognition") {
 				MultiplayerGame.GameManager.bonusQuestPoints = true;
-				MultiplayerPrompt.PromptManager.statusPrompt("Next players to finish a quest will gain two extra shields to lose shields");
+					MultiplayerGame.GameManager.getPromptManager().statusPrompt("Next players to finish a quest will gain two extra shields to lose shields");
 
 			} else if (name == "Queen's Favor") {
 				Player p;
@@ -126,7 +127,7 @@ public class MultiEventBehaviour : GameBehaviour {
 
 				}
 
-				MultiplayerPrompt.PromptManager.statusPrompt("Players with lowest rank got 2 extra Adventure Cards: ");
+					MultiplayerGame.GameManager.getPromptManager().statusPrompt("Players with lowest rank got 2 extra Adventure Cards: ");
 
 			} else if (name == "Court Called to Camelot") {
 				MultiplayerGame.GameManager.removeAllAllies();
@@ -144,7 +145,7 @@ public class MultiEventBehaviour : GameBehaviour {
 						p.addCard(MultiplayerGame.GameManager.drawAdventureCard());
 					}
 				}
-				MultiplayerPrompt.PromptManager.statusPrompt("All players immediately drew 2 extra Adventure Cards: ");
+					MultiplayerGame.GameManager.getPromptManager().statusPrompt("All players immediately drew 2 extra Adventure Cards: ");
 
 			} else {
 				Debug.Log ("Unknown event card!");

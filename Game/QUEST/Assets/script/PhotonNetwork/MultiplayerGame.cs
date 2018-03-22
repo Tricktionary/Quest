@@ -16,6 +16,7 @@ public class MultiplayerGame : MonoBehaviour {
 	public MultiTournamentBehaviour _tournamentBehaviour;
 	public MultiEventBehaviour _eventBehaviour;
 
+	public MultiplayerPrompt PromptManager;
 	// List of players.
 	private List<Player> _players = new List<Player>();
 
@@ -73,6 +74,13 @@ public class MultiplayerGame : MonoBehaviour {
 	public GameObject showPlayerButton;
 	public GameObject exitShowPlayerButton;
 
+	//Prompt;
+	public GameObject promptObj;
+	public GameObject promptTxt;
+	public GameObject gameStatus;
+	public GameObject yesButton;
+	public GameObject noButton;
+
 	// The current story card in play.
 	Card _storyCard;
 	bool activeStoryCard = false;
@@ -88,7 +96,12 @@ public class MultiplayerGame : MonoBehaviour {
 			_instance = this;
 		}
 		logger.info("Initializing Game object.");
+		PromptManager = new MultiplayerPrompt(promptObj,promptTxt,gameStatus);
     NormalMode();
+
+		yesButton.GetComponent<Button>().onClick.AddListener(YesClick);
+		noButton.GetComponent<Button>().onClick.AddListener(NoClick);
+
 		endTurnButton.GetComponent<Button>().onClick.AddListener(EndTurn);
 		drawCardButton.GetComponent<Button>().onClick.AddListener(DrawCard);
 		showHandButton.GetComponent<Button>().onClick.AddListener(unflipHand);
@@ -96,12 +109,25 @@ public class MultiplayerGame : MonoBehaviour {
 		exitShowPlayerButton.GetComponent<Button>().onClick.AddListener(CloseShowPlayer);
 	}
 
+	public void YesClick(){
+		PromptManager.promptYes();	
+	}
+
+	public void NoClick(){
+		PromptManager.promptNo();
+	}
+
+
+
+	public MultiplayerPrompt getPromptManager(){
+		return PromptManager;
+	}
 	// End a turn (fires when the End Turn button is clicked).
 	public void EndTurn() {
 
 		// If the hand has too many cards.
 		if(Hand.GetComponent<CardArea>().cards.Count >= 13 ){
-			MultiplayerPrompt.PromptManager.statusPrompt("Too many cards, please discard or use.");
+			PromptManager.statusPrompt("Too many cards, please discard or use.");
 			logger.info("There are too many cards in Player " + (_currentPlayer + 1) + "'s hand, they must discard or play.");
 			return;
 		}
@@ -179,7 +205,7 @@ public class MultiplayerGame : MonoBehaviour {
 			activeStoryCard = true;
 
 			// Clear the prompt.
-			MultiplayerPrompt.PromptManager.statusPrompt("");
+			PromptManager.statusPrompt("");
 
 			// Auto end the turn to prompt.
 			EndTurn();
@@ -264,7 +290,7 @@ public class MultiplayerGame : MonoBehaviour {
 			GameObject.Destroy(child.gameObject);
 		}
 
-		MultiplayerPrompt.PromptManager.statusPrompt("It's your turn to draw a story card!");
+		PromptManager.statusPrompt("It's your turn to draw a story card!");
 
 		// AI logic.
 		if(_players[_currentPlayer].GetType() == typeof(AIPlayer)){
@@ -289,25 +315,25 @@ public class MultiplayerGame : MonoBehaviour {
 			if (_storyCard.GetType() == typeof(QuestCard)) {
 				List<List<Card>> questStages = currAi.sponsorQuest ((QuestCard)_storyCard, _players);
 				if (questStages == null) {
-					MultiplayerPrompt.PromptManager.promptNo();
+					PromptManager.promptNo();
 					Debug.Log("AI declined to sponsor quest");
 				} else {
-					MultiplayerPrompt.PromptManager.promptYes ();
+					PromptManager.promptYes ();
 					Debug.Log("AI sponsors quest");
 				}
 			}
 			//Join Tournament
 			else if (_storyCard.GetType() == typeof(TournamentCard)) {
-				MultiplayerPrompt.PromptManager.promptYes();
+				PromptManager.promptYes();
 
 				bool answer = currAi.joinTournament((TournamentCard)_storyCard,_players);
 				if(answer){
 					Debug.Log("AI has Joined Tournement");
-					MultiplayerPrompt.PromptManager.promptYes();
+					PromptManager.promptYes();
 				}
 				else{
 					Debug.Log("AI has denied Tournament entry");
-					MultiplayerPrompt.PromptManager.promptNo();
+					PromptManager.promptNo();
 				}
 
 			}
@@ -323,24 +349,24 @@ public class MultiplayerGame : MonoBehaviour {
 		*/
 		else if(activeStoryCard == true) {
 			if (_storyCard.GetType() == typeof(QuestCard)) {
-				MultiplayerPrompt.PromptManager.promptYes();
+				PromptManager.promptYes();
 				if(type == "sponsor") {
 					List<List<Card>> questStages = currAi.sponsorQuest ((QuestCard)_storyCard, _players);
 					if (questStages == null) {
-						MultiplayerPrompt.PromptManager.promptNo();
+						PromptManager.promptNo();
 						Debug.Log("AI declined to sponsor quest");
 					} else {
-						MultiplayerPrompt.PromptManager.promptYes ();
+						PromptManager.promptYes ();
 					}
 				}
 				if(type == "quest"){
 					bool answer = currAi.joinQuest((QuestCard)_storyCard,_players);
 					if(answer) {
 						Debug.Log("AI Joined Quest");
-						MultiplayerPrompt.PromptManager.promptYes();
+						PromptManager.promptYes();
 					} else {
 						Debug.Log("AI Denied to Join Quest");
-						MultiplayerPrompt.PromptManager.promptNo();
+						PromptManager.promptNo();
 					}
 				}
 			}
@@ -349,10 +375,10 @@ public class MultiplayerGame : MonoBehaviour {
 				bool answer = currAi.joinTournament((TournamentCard)_storyCard,_players);
 				if(answer) {
 					Debug.Log("AI Joined Tournement");
-					MultiplayerPrompt.PromptManager.promptYes();
+					PromptManager.promptYes();
 				} else {
 					Debug.Log("AI Denied to join tournament");
-					MultiplayerPrompt.PromptManager.promptNo();
+					PromptManager.promptNo();
 				}
 			}
 		}
@@ -447,7 +473,7 @@ public class MultiplayerGame : MonoBehaviour {
 			if(cards[i].GetType() == typeof(FoeCard)){
 				logger.warn("Play area invalid: you can't submit foes to the play area!");
 				if (doPrompt) {
-					MultiplayerPrompt.PromptManager.statusPrompt ("You can't submit foes to the play area!");
+					PromptManager.statusPrompt ("You can't submit foes to the play area!");
 				}
 				return false;
 			}
@@ -458,7 +484,7 @@ public class MultiplayerGame : MonoBehaviour {
 					if(currWeapon.name == weapons[x].name){
 						logger.warn("Play area invalid: you can't submit duplicate weapons to the play area!");
 						if (doPrompt) {
-							MultiplayerPrompt.PromptManager.statusPrompt ("You can't submit duplicate weapons.");
+							PromptManager.statusPrompt ("You can't submit duplicate weapons.");
 						}
 						return false;
 					}
@@ -760,7 +786,7 @@ public class MultiplayerGame : MonoBehaviour {
 
 
 		if(Hand.GetComponent<CardArea>().cards.Count >= 13 ){
-			MultiplayerPrompt.PromptManager.statusPrompt("Too many cards, please discard or use.");
+			PromptManager.statusPrompt("Too many cards, please discard or use.");
 		}
 
 	}

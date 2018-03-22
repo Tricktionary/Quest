@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/scenes/MultiplayerLobby.unity
+- path: Assets/scenes/PlayField.unity
   isLoaded: 1
   isActive: 1
