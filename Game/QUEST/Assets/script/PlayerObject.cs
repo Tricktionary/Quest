@@ -21,9 +21,6 @@ public class PlayerObject : NetworkBehaviour {
   public GameObject RankCard;
   public GameObject TournamentCard;
 
-  //Hand
-  public GameObject Hand;
-
   // Text fields.
   public GameObject playerIdTxt;
   public GameObject shieldCounterTxt;
@@ -32,13 +29,22 @@ public class PlayerObject : NetworkBehaviour {
   //PlayArea
   public GameObject PlayArea;
 
+  //Hand
+  public GameObject Hand;
+
+  //Rank Card Area
   public GameObject RankCardArea;
 
 
   void Awake(){
     //Debug.Log("Player Load");
 
+  }
+
+  void Start(){
+    Debug.Log(NetworkGameManager.NetworkManager);
     int id = NetworkGameManager.NetworkManager.GetCurrentNewId();
+    //Debug.Log("ID");
     thisPlayer = new Player(id);
     thisPlayer.hand = NetworkGameManager.NetworkManager.InitHand();
     NetworkGameManager.NetworkManager._players.Add(thisPlayer);
@@ -87,13 +93,15 @@ public class PlayerObject : NetworkBehaviour {
 			// TODO: Clean this up.
 			if (currCard.GetType () == typeof(WeaponCard)) {
 				WeaponCard currWeapon = (WeaponCard)currCard;
-				CardUI = Instantiate (WeaponCard);
+				CardUI = Instantiate (WeaponCard,new Vector3(), Quaternion.identity);
+        //CardUI = Instantiate(WeaponCard ,area.transform);
 				CardUI.GetComponent<WeaponCard>().name =  currWeapon.name;
 				CardUI.GetComponent<WeaponCard>().asset = currWeapon.asset;
 				CardUI.GetComponent<WeaponCard>().power = currWeapon.power;
 			} else if (currCard.GetType () == typeof(FoeCard)) {
 				FoeCard currFoe = (FoeCard)currCard;
-				CardUI = Instantiate (FoeCard);
+				CardUI = Instantiate (FoeCard,new Vector3(), Quaternion.identity);
+        //CardUI = Instantiate(FoeCard,area.transform);
 				CardUI.GetComponent<FoeCard>().name    = currFoe.name;
 				CardUI.GetComponent<FoeCard>().type    = currFoe.type;
 				CardUI.GetComponent<FoeCard>().loPower = currFoe.loPower;
@@ -102,7 +110,8 @@ public class PlayerObject : NetworkBehaviour {
 				CardUI.GetComponent<FoeCard>().asset   = currFoe.asset;
 			} else if (currCard.GetType () == typeof(AllyCard)) {
 				AllyCard currAlly = (AllyCard)currCard;
-				CardUI = Instantiate (AllyCard);
+				CardUI = Instantiate (AllyCard,new Vector3(), Quaternion.identity);
+        //CardUI = Instantiate(AllyCard,area.transform);
 				CardUI.GetComponent<AllyCard>().name    = currAlly.name;
 				CardUI.GetComponent<AllyCard>().asset   = currAlly.asset;
 				CardUI.GetComponent<AllyCard>().special = currAlly.special;
@@ -114,14 +123,16 @@ public class PlayerObject : NetworkBehaviour {
 				CardUI.GetComponent<AllyCard>().allyCondition  = currAlly.allyCondition;
 			} else if(currCard.GetType () == typeof(AmourCard)) {
 				AmourCard currAmour = (AmourCard)currCard;
-				CardUI = Instantiate (AmourCard);
+				CardUI = Instantiate (AmourCard,new Vector3(), Quaternion.identity);
+        CardUI = Instantiate(AmourCard,area.transform);
 				CardUI.GetComponent<AmourCard>().name = currAmour.name;
 				CardUI.GetComponent<AmourCard>().asset = currAmour.asset;
 				CardUI.GetComponent<AmourCard>().power = currAmour.power;
 				CardUI.GetComponent<AmourCard>().bid = currAmour.bid;
 			} else if(currCard.GetType () == typeof(TestCard)){
 				TestCard currTest = (TestCard)currCard;
-				CardUI = Instantiate (TestCard);
+				CardUI = Instantiate (TestCard,new Vector3(), Quaternion.identity);
+        //CardUI = Instantiate(TestCard,area.transform);
 				CardUI.GetComponent<TestCard>().name = currTest.name;
 				CardUI.GetComponent<TestCard>().asset = currTest.asset;
 				CardUI.GetComponent<TestCard>().minBids = currTest.minBids;
@@ -130,10 +141,9 @@ public class PlayerObject : NetworkBehaviour {
 			// Load the card sprite.
 			Sprite card = Resources.Load<Sprite>(currCard.asset);
 			CardUI.gameObject.GetComponent<Image>().sprite = card;
-			CardUI.transform.SetParent(area.transform);
 
-			// Set the cards obj to it's UI.
-			currCard.obj = CardUI;
+      currCard.obj = CardUI;
+      currCard.obj.transform.parent = area.transform;
 		}
 	}
 

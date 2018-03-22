@@ -20,3 +20,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/scenes/Server.unity
     guid: 4fb56cd3fadf84c3da3b3771d26ba620
+  - enabled: 1
+    path: Assets/scenes/PhotonMultiplayer.unity
+    guid: f3560fef8a21d45829666cc93d22240b

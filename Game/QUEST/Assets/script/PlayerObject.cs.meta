@@ -1,11 +1,34 @@
 fileFormatVersion: 2
 guid: 117969c19cecc4d9eb17c33ad700207d
-timeCreated: 1521151345
+timeCreated: 1521583236
 licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Card: {fileID: 1833412110767810, guid: 6eb155d50af9c4282a79a2560f9b47b6, type: 2}
+  - WeaponCard: {fileID: 1405695734331132, guid: 5e6167b2599404fd89e86fd2c46a9f9b,
+      type: 2}
+  - FoeCard: {fileID: 1115157619569266, guid: 674b3aed3fde8421d8933860e8745e98, type: 2}
+  - AllyCard: {fileID: 1097128100082594, guid: 52d4c5c17bf384c5fa0399609cfc88d2, type: 2}
+  - QuestCard: {fileID: 1251235100696200, guid: 9dcc0839dcfff4e018c3d4f3f62d4abe,
+      type: 2}
+  - AmourCard: {fileID: 1322412469086030, guid: 2eeb7baa2ed5e4ab7b225aa5cc4a6215,
+      type: 2}
+  - TestCard: {fileID: 1749605080736092, guid: f6c7e5c7954a147ee9d022c47f99e74c, type: 2}
+  - EventCard: {fileID: 1428669453579582, guid: e8cfbe5e1e4f7472c9ee81877823732c,
+      type: 2}
+  - RankCard: {fileID: 1627506936750964, guid: a6484d7cfc3ca40b7af0e691112aef4c, type: 2}
+  - TournamentCard: {fileID: 1819456281490832, guid: 12a5e1a5412eb46a5b4314b79f4cc07e,
+      type: 2}
+  - Hand: {fileID: 1074660887415496, guid: b66e1717932ea4c19858bdb47bd35cec, type: 2}
+  - playerIdTxt: {fileID: 1460362150747594, guid: 40fcdadabfa814f138de3bb96579ffa4,
+      type: 2}
+  - shieldCounterTxt: {fileID: 1573063297798754, guid: a718b5fc87c36422bb8f5b72c6faa9eb,
+      type: 2}
+  - PlayArea: {fileID: 1880502418485162, guid: f5691401955ec4d96886b49cd5d0e91e, type: 2}
+  - RankCardArea: {fileID: 1297949835201230, guid: 0e806fb8d98ea480d908717fb77c6297,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
