@@ -27,7 +27,6 @@ public class MultiplayerPrompt : MonoBehaviour {
 		this.promptObj = promptObj;
 		this.promptTxt = promptTxt;
 		this.gameStatus = gameStatus;
-
 	}
 
 	// Spawn a prompt.

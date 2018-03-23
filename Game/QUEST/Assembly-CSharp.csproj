@@ -233,8 +233,6 @@
      <Compile Include="Assets\script\Logger.cs" />
      <Compile Include="Assets\script\MainMenu.cs" />
      <Compile Include="Assets\script\Menu.cs" />
-     <Compile Include="Assets\script\NetworkGameManager.cs" />
-     <Compile Include="Assets\script\NetworkLobbyHook.cs" />
      <Compile Include="Assets\script\PhotonNetwork\Behaviours\MultiEventBehaviour.cs" />
      <Compile Include="Assets\script\PhotonNetwork\Behaviours\MultiGameBehaviour.cs" />
      <Compile Include="Assets\script\PhotonNetwork\Behaviours\MultiQuestBehaviour.cs" />
@@ -242,12 +240,14 @@
      <Compile Include="Assets\script\PhotonNetwork\Blocker\Blocker.cs" />
      <Compile Include="Assets\script\PhotonNetwork\MultiplayerGame.cs" />
      <Compile Include="Assets\script\PhotonNetwork\MultiplayerPrompt.cs" />
-     <Compile Include="Assets\script\PhotonNetwork\PhotonClicker.cs" />
+     <Compile Include="Assets\script\PhotonNetwork\PhotonEventHandler.cs" />
      <Compile Include="Assets\script\PhotonNetwork\PhotonNetworkManager.cs" />
      <Compile Include="Assets\script\Player.cs" />
      <Compile Include="Assets\script\PlayerObject.cs" />
      <Compile Include="Assets\script\Prompt.cs" />
      <Compile Include="Assets\script\QuestionableDeadFiles\MClient.cs" />
+     <Compile Include="Assets\script\QuestionableDeadFiles\NetworkGameManager.cs" />
+     <Compile Include="Assets\script\QuestionableDeadFiles\NetworkLobbyHook.cs" />
      <Compile Include="Assets\script\QuestionableDeadFiles\OnlinePlayer.cs" />
      <Compile Include="Assets\script\QuestionableDeadFiles\Server.cs" />
      <Compile Include="Assets\script\Story\EventBehaviour.cs" />

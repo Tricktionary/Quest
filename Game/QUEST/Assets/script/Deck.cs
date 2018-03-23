@@ -17,6 +17,14 @@ public class Deck{
 		if (type.Equals ("Adventure")) {
 			addAdventureCard();
 		}
+		else if(type.Equals ("OnlineAdventure")){
+			addAdventureCard();
+		}
+		else if(type.Equals("OnlineStory")){
+			addQuestCards();
+			addTournamentCards();
+			addEventCards();
+		}
 		else if (type.Equals ("QuestOnly")) {
 			addQuestCards();
 		}
@@ -51,7 +59,8 @@ public class Deck{
 			addAdventureCard();
 		}
 		//Boar Hunt is Prefix
-		if(type != "scenario1" && type != "specialHand" && type != "specialHand3" && type != "scenario3" && type != "scenario2"){
+		if(type != "scenario1" && type != "specialHand" && type != "specialHand3"
+		 	 && type != "scenario3" && type != "scenario2" && type != "OnlineAdventure" && type != "OnlineStory"){
 			// Shuffe the deck of cards after adding.
 			this.Shuffle();
 		}

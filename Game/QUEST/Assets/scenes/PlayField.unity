@@ -4759,8 +4759,9 @@ GameObject:
   - component: {fileID: 157731848}
   - component: {fileID: 1696644094}
   - component: {fileID: 1696644093}
-  - component: {fileID: 1696644092}
   - component: {fileID: 1696644091}
+  - component: {fileID: 1696644092}
+  - component: {fileID: 1696644095}
   m_Layer: 5
   m_Name: Iter2
   m_TagString: Untagged
@@ -4833,16 +4834,12 @@ MonoBehaviour:
   winScreenTxt: {fileID: 1254895683}
   playerIdTxt: {fileID: 1351268305}
   shieldCounterTxt: {fileID: 127354356}
-  endTurnButton: {fileID: 292011510}
-  drawCardButton: {fileID: 1387182219}
   showHandButton: {fileID: 1238101023}
   showPlayerButton: {fileID: 2000364105}
   exitShowPlayerButton: {fileID: 1308587927}
   promptObj: {fileID: 1506938491}
   promptTxt: {fileID: 533633146}
   gameStatus: {fileID: 814159947}
-  yesButton: {fileID: 1406108436}
-  noButton: {fileID: 1159196746}
   bonusQuestPoints: 0
 --- !u!114 &1696644092
 MonoBehaviour:
@@ -4852,14 +4849,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1696644090}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8213fb57cb4f041f2a318cf056b0eb8e, type: 3}
+  m_Script: {fileID: 11500000, guid: fa3c3c80e65564601a242a21707e9d48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  promptObj: {fileID: 1506938491}
-  promptTxt: {fileID: 533633146}
-  gameStatus: {fileID: 814159947}
-  yesButton: {fileID: 0}
-  noButton: {fileID: 0}
+  yesButton: {fileID: 1406108436}
+  noButton: {fileID: 1159196746}
+  endTurnButton: {fileID: 292011510}
+  drawCardButton: {fileID: 1387182219}
 --- !u!114 &1696644093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4895,6 +4891,32 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1696644090}
+--- !u!114 &1696644095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1696644090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 3
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 1696644091}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 1
+  instantiationId: 1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!1 &1776643684
 GameObject:
   m_ObjectHideFlags: 0

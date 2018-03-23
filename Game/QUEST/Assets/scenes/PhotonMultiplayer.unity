@@ -190,7 +190,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 610870049}
-        m_MethodName: OnJoinedRoom
+        m_MethodName: OnClickJoinRoom
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -321,6 +321,7 @@ GameObject:
   - component: {fileID: 610870046}
   - component: {fileID: 610870045}
   - component: {fileID: 610870049}
+  - component: {fileID: 610870050}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -424,6 +425,32 @@ MonoBehaviour:
   StartButton: {fileID: 1315616122}
   JoinButton: {fileID: 330871665}
   versionNumber: 0.1.0
+--- !u!114 &610870050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 610870044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 3
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 610870049}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 2
+  instantiationId: 2
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!1 &749257291
 GameObject:
   m_ObjectHideFlags: 0
@@ -528,11 +555,11 @@ RectTransform:
   m_Father: {fileID: 610870048}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 192, y: -47}
-  m_SizeDelta: {x: -575, y: -220.1}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 144.93167, y: -32.599976}
+  m_SizeDelta: {x: 404.5, y: 256.6}
+  m_Pivot: {x: 0.49999994, y: 0.5}
 --- !u!114 &782982339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -675,6 +702,7 @@ GameObject:
   - component: {fileID: 1315616126}
   - component: {fileID: 1315616125}
   - component: {fileID: 1315616124}
+  - component: {fileID: 1315616127}
   m_Layer: 5
   m_Name: StartGame
   m_TagString: Untagged
@@ -787,6 +815,32 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1315616122}
+--- !u!114 &1315616127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1315616122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 3
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 1315616123}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 1
+  instantiationId: 1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!1 &1569733392
 GameObject:
   m_ObjectHideFlags: 0

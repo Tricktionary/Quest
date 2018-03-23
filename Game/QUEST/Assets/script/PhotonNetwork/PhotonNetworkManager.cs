@@ -39,8 +39,16 @@ public class PhotonNetworkManager : MonoBehaviour {
 		Debug.Log("Disconnected");
 	}
 
+	public void OnClickJoinRoom(){
+		PhotonNetwork.JoinRoom("Game");
+	}
+
 	public void OnJoinedRoom(){
 		PhotonPlayer[] players = PhotonNetwork.playerList;
+
+		foreach (Transform child in PlayerPanel.transform) {
+			GameObject.Destroy(child.gameObject);
+		}
 
 		for(int i = 0 ; i < players.Length; i++){
 			GameObject currText = Instantiate(PlayerText);
@@ -57,16 +65,23 @@ public class PhotonNetworkManager : MonoBehaviour {
 	public void OnPhotonPlayerConnected(){
 		PhotonPlayer[] players = PhotonNetwork.playerList;
 
+		foreach (Transform child in PlayerPanel.transform) {
+			GameObject.Destroy(child.gameObject);
+		}
+
 		for(int i = 0 ; i < players.Length; i++){
 			GameObject currText = Instantiate(PlayerText);
 			currText.GetComponent<UnityEngine.UI.Text>().text = "Player ID: " + i ;
 			currText.transform.SetParent(PlayerPanel.transform);
 		}
-
 		if(players.Length == 4){PhotonNetwork.LoadLevel(3);}
 	}
 
   public void StartGame(){
-    PhotonNetwork.LoadLevel(3);
+		this.GetComponent<PhotonView>().RPC("loadLevel",PhotonTargets.All);
   }
+
+	[PunRPC] public void loadLevel(){
+		PhotonNetwork.LoadLevel(3);
+	}
 }

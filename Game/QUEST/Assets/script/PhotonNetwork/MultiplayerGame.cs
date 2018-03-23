@@ -68,8 +68,8 @@ public class MultiplayerGame : MonoBehaviour {
 	private Deck _discardPileStory;
 
 	//Button
-	public GameObject endTurnButton;
-	public GameObject drawCardButton;
+	//public GameObject endTurnButton;
+	//public GameObject drawCardButton;
 	public GameObject showHandButton;
 	public GameObject showPlayerButton;
 	public GameObject exitShowPlayerButton;
@@ -78,8 +78,9 @@ public class MultiplayerGame : MonoBehaviour {
 	public GameObject promptObj;
 	public GameObject promptTxt;
 	public GameObject gameStatus;
-	public GameObject yesButton;
-	public GameObject noButton;
+	//public GameObject yesButton;
+	//public GameObject noButton;
+
 
 	// The current story card in play.
 	Card _storyCard;
@@ -98,33 +99,23 @@ public class MultiplayerGame : MonoBehaviour {
 		logger.info("Initializing Game object.");
 		PromptManager = new MultiplayerPrompt(promptObj,promptTxt,gameStatus);
     NormalMode();
-
-		yesButton.GetComponent<Button>().onClick.AddListener(YesClick);
-		noButton.GetComponent<Button>().onClick.AddListener(NoClick);
-
-		endTurnButton.GetComponent<Button>().onClick.AddListener(EndTurn);
-		drawCardButton.GetComponent<Button>().onClick.AddListener(DrawCard);
 		showHandButton.GetComponent<Button>().onClick.AddListener(unflipHand);
 		showPlayerButton.GetComponent<Button>().onClick.AddListener(OpenShowPlayer);
 		exitShowPlayerButton.GetComponent<Button>().onClick.AddListener(CloseShowPlayer);
 	}
 
+
+
 	public void YesClick(){
-		PromptManager.promptYes();	
+		PromptManager.promptYes();
 	}
 
 	public void NoClick(){
 		PromptManager.promptNo();
 	}
 
-
-
-	public MultiplayerPrompt getPromptManager(){
-		return PromptManager;
-	}
 	// End a turn (fires when the End Turn button is clicked).
 	public void EndTurn() {
-
 		// If the hand has too many cards.
 		if(Hand.GetComponent<CardArea>().cards.Count >= 13 ){
 			PromptManager.statusPrompt("Too many cards, please discard or use.");
@@ -210,6 +201,11 @@ public class MultiplayerGame : MonoBehaviour {
 			// Auto end the turn to prompt.
 			EndTurn();
 		}
+	}
+
+	//Get Prompt Manager Object
+	public MultiplayerPrompt getPromptManager(){
+		return PromptManager;
 	}
 
 	// Get player from a player id.
@@ -974,13 +970,15 @@ public class MultiplayerGame : MonoBehaviour {
 
 		// Setup players.
 		_players = new List<Player>();
-    _players.Add(new Player ( 1 ));
-    _players.Add(new Player ( 2 ));
-    _players.Add(new Player ( 3 ));
-    _players.Add(new Player ( 4 ));
+		PhotonPlayer[] players = PhotonNetwork.playerList;
+
+		//Create Players on based on network connection
+		for(int i = 0 ; i < players.Length; i++){
+			_players.Add(new Player ( i + 1 ));
+		}
 
 		// Setup decks.
-		_adventureDeck = new Deck("Adventure");
+		_adventureDeck = new Deck("OnlineAdventure");
 		logger.info("Created adventure deck with " + _adventureDeck.GetSize() + " cards.");
 
 		_storyDeck = new Deck(storyDeckType);
@@ -1004,7 +1002,7 @@ public class MultiplayerGame : MonoBehaviour {
 	// Runs if the user selects Play PVP.
 	public void NormalMode(){
 		logger.info("Normal mode selected.");
-		genericModeSetup("Story");
+		genericModeSetup("OnlineStory");
 	}
 	//Give card to player
 	public void giveCard(int id){
