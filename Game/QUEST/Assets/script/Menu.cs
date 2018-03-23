@@ -12,7 +12,22 @@ public class Menu : MonoBehaviour {
 		HotSeatGameMode.SetActive(true);
 	}
 
-	public void MultiplayerMode(){
+	public void Host(){
+		MenuPanel.SetActive(false);
+		SceneManager.LoadScene("Server",LoadSceneMode.Single);
+	}
+
+	public void PhotonMultiplayer(){
+		MenuPanel.SetActive(false);
+		SceneManager.LoadScene("PhotonMultiplayer",LoadSceneMode.Single);
+	}
+
+	public void Join(){
+		MenuPanel.SetActive(false);
+		SceneManager.LoadScene("Client",LoadSceneMode.Single);
+	}
+
+	public void MultiplayerLobby(){
 		MenuPanel.SetActive(false);
 		SceneManager.LoadScene("MultiplayerLobby",LoadSceneMode.Single);
 	}

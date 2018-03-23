@@ -26,7 +26,7 @@ public class CardArea :  MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 			this._acceptObj = value;
 		}
 	}
-		
+
 	// Remove and return from card area.
 	public Card removeCard(Card card){
 		for (int i = 0; i < _cards.Count; i++){
@@ -44,11 +44,11 @@ public class CardArea :  MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 	}
 
 	// Use this for initialization
-	void Start () {	
+	void Start () {
 	}
-	
+
 	// Update is called once per frame
-	void Update () {	
+	void Update () {
 	}
 
 	//When a card is dropped
@@ -63,6 +63,7 @@ public class CardArea :  MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 				_cards.Add(c);
 				// Move the actual card.
 				currCard.oldPosition= this.transform;
+				
 			}
 		}
 	}
