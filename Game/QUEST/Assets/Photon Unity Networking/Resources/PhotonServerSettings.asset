@@ -47,4 +47,7 @@ MonoBehaviour:
   - EndTurn
   - NoClick
   - YesClick
+  - OnDropPhoton
+  - PhotonSendDeck
+  - PhotonLoadCard
   DisableAutoOpenWizard: 1

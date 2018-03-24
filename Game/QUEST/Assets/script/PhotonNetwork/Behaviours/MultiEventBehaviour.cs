@@ -16,6 +16,7 @@ public class MultiEventBehaviour : GameBehaviour {
 	public void endTurn(){
 		MultiplayerGame.GameManager.logger.info ("Handling event card: " + _eventCard.name);
 		handleEvent(_eventCard.name);
+		
 	}
 
 	public int getCurrentTurn(){

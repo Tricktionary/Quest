@@ -1,7 +1,8 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/script/PhotonNetwork/PhotonNetworkManager.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/script/PhotonNetwork/MultiplayerGame.cs">
     <Files>
+      <File FileName="Assets/script/PhotonNetwork/MultiplayerGame.cs" Line="964" Column="1" />
       <File FileName="Assets/script/PhotonNetwork/PhotonNetworkManager.cs" Line="81" Column="70" />
       <File FileName="Assets/script/PlayerObject.cs" Line="1" Column="1" />
       <File FileName="Assets/script/Menu.cs" Line="1" Column="1" />

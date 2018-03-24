@@ -133,6 +133,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 	// Moves to the next player.
 	public void nextPlayer(){
 		_turnId++;
+		MultiplayerGame.GameManager.block(_turnId);
 
 		if (_turnId >= MultiplayerGame.GameManager.getNumberOfPlayers()) {
 			_turnId = 0;

@@ -52,6 +52,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 	// Moves to the next player.
 	public void nextPlayer(){
 		_turnId++;
+		MultiplayerGame.GameManager.block(_turnId);
 
 		if (_turnId >= MultiplayerGame.GameManager.getNumberOfPlayers()) {
 			_turnId = 0;
@@ -384,7 +385,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 		} else {
 			MultiplayerGame.GameManager.logger.info("Player " + (_turnId + 1) + " decided NOT to sponsor the quest.");
 
-			if(_asked >= Game.GameManager.getNumberOfPlayers() ){
+			if(_asked >= MultiplayerGame.GameManager.getNumberOfPlayers() ){
 				MultiplayerGame.GameManager.logger.info("Nobody wanted to sponsor the quest!");
 				endQuest();
 				return;

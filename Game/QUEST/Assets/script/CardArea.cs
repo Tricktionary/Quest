@@ -63,7 +63,6 @@ public class CardArea :  MonoBehaviour, IDropHandler, IPointerEnterHandler, IPoi
 				_cards.Add(c);
 				// Move the actual card.
 				currCard.oldPosition= this.transform;
-				
 			}
 		}
 	}

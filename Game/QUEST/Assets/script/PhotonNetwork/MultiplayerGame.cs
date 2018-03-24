@@ -68,8 +68,6 @@ public class MultiplayerGame : MonoBehaviour {
 	private Deck _discardPileStory;
 
 	//Button
-	//public GameObject endTurnButton;
-	//public GameObject drawCardButton;
 	public GameObject showHandButton;
 	public GameObject showPlayerButton;
 	public GameObject exitShowPlayerButton;
@@ -78,9 +76,11 @@ public class MultiplayerGame : MonoBehaviour {
 	public GameObject promptObj;
 	public GameObject promptTxt;
 	public GameObject gameStatus;
-	//public GameObject yesButton;
-	//public GameObject noButton;
 
+	//Blocker
+	public GameObject blocker;
+	public GameObject blockerTXT;
+	public GameObject blockerCardArea;
 
 	// The current story card in play.
 	Card _storyCard;
@@ -168,6 +168,8 @@ public class MultiplayerGame : MonoBehaviour {
 			// Load the card sprite.
 			Sprite storySprite = Resources.Load<Sprite>(_storyCard.asset);
 
+			this.GetComponent<PhotonView>().RPC("PhotonLoadCard",PhotonTargets.All);
+
 			// A quest card has been drawn.
 			if (_storyCard.GetType() == typeof(QuestCard)) {
 				logger.info("A quest card was drawn: " + _storyCard.name);
@@ -201,6 +203,20 @@ public class MultiplayerGame : MonoBehaviour {
 			// Auto end the turn to prompt.
 			EndTurn();
 		}
+	}
+
+	[PunRPC]
+	public void PhotonLoadCard(){
+		foreach (Transform child in blockerCardArea.transform) {
+			GameObject.Destroy(child.gameObject);
+		}
+		GameObject storyCardObj = null;
+		storyCardObj = Instantiate(QuestCard);
+		// Load the card sprite.
+		Sprite storySprite = Resources.Load<Sprite>(_storyCard.asset);
+		// Update the card.
+		storyCardObj.gameObject.GetComponent<Image>().sprite = storySprite;
+		storyCardObj.transform.SetParent(blockerCardArea.transform);
 	}
 
 	//Get Prompt Manager Object
@@ -949,11 +965,23 @@ public class MultiplayerGame : MonoBehaviour {
 			}
 		}
 	}
+	/*
+	public GameObject blocker;
+	public GameObject blockerTXT;
+	public GameObject blockerCardArea;
+	*/
 
-	// MODE METHODS //
-	// ------------ //
+	//Block Player
+	public void block(int turnId){
+		if((turnId+1) != PhotonNetwork.player.ID){
+			blocker.SetActive(true);
+			blockerTXT.GetComponent<UnityEngine.UI.Text>().text = ""+(turnId+1);
+		}
+		else{
+			blocker.SetActive(false);
+		}
+	}
 
-	// Setup non-AI modes.
 	public void genericModeSetup(string storyDeckType){
 
 		logger.info("Setting up game...");
@@ -971,8 +999,10 @@ public class MultiplayerGame : MonoBehaviour {
 		// Setup players.
 		_players = new List<Player>();
 		PhotonPlayer[] players = PhotonNetwork.playerList;
+		block(0);
 
 		//Create Players on based on network connection
+		Debug.Log(players.Length);
 		for(int i = 0 ; i < players.Length; i++){
 			_players.Add(new Player ( i + 1 ));
 		}
@@ -983,6 +1013,8 @@ public class MultiplayerGame : MonoBehaviour {
 
 		_storyDeck = new Deck(storyDeckType);
 		logger.info("Created story deck with " + _storyDeck.GetSize() + " cards.");
+
+		//this.GetComponent<PhotonView>().RPC("PhotonSendDeck",PhotonTargets.All,_adventureDeck,_storyDeck);
 
 		// Make discard piles.
 		_discardPileAdventure = new Deck ("");
@@ -995,8 +1027,15 @@ public class MultiplayerGame : MonoBehaviour {
 				_players[i].addCard((_adventureDeck.Draw()));
 			}
 		}
+
 		// Load up the first player.
 		nextCardAndPlayer();
+	}
+
+	[PunRPC]
+	public void PhotonSendDeck(Deck Adventure, Deck Story){
+		_adventureDeck = Adventure;
+		_storyDeck = Story;
 	}
 
 	// Runs if the user selects Play PVP.
@@ -1004,6 +1043,7 @@ public class MultiplayerGame : MonoBehaviour {
 		logger.info("Normal mode selected.");
 		genericModeSetup("OnlineStory");
 	}
+
 	//Give card to player
 	public void giveCard(int id){
 		_players[id].addCard((_adventureDeck.Draw()));
