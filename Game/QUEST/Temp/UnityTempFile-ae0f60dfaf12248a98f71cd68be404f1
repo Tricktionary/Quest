@@ -369,6 +369,7 @@
 'Assets/script/PhotonNetwork/Behaviours/MultiQuestBehaviour.cs'
 'Assets/script/PhotonNetwork/Behaviours/MultiTournamentBehaviour.cs'
 'Assets/script/PhotonNetwork/Blocker/Blocker.cs'
+'Assets/script/PhotonNetwork/jsonhelper.cs'
 'Assets/script/PhotonNetwork/MultiplayerGame.cs'
 'Assets/script/PhotonNetwork/MultiplayerPrompt.cs'
 'Assets/script/PhotonNetwork/PhotonEventHandler.cs'

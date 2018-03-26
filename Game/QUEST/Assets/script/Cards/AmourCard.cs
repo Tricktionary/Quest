@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 
-
+[System.Serializable]
 public class AmourCard : AdventureCard
 { 
 	int _power;

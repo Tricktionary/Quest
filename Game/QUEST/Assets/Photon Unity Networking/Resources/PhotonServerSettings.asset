@@ -50,4 +50,6 @@ MonoBehaviour:
   - OnDropPhoton
   - PhotonSendDeck
   - PhotonLoadCard
+  - NormalMode
+  - SendDecks
   DisableAutoOpenWizard: 1

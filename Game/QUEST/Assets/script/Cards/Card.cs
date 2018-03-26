@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+
+[System.Serializable]
 public abstract class Card : MonoBehaviour, IEquatable<Card> {
 
 	public Transform oldPosition = null;     //Old Position of the card on the board

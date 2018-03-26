@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[System.Serializable]
 public class Deck{
 
 	// The list of cards that make up the deck.
-	private List<Card> _cards = new List<Card>();
+	public List<Card> _cards = new List<Card>();
 
 	// Getter for the deck cards.
 	public List<Card> GetDeck(){
 		return _cards;
 	}
+		
 
 	// Deck constructor.
 	public Deck(string type){
@@ -63,6 +66,108 @@ public class Deck{
 		 	 && type != "scenario3" && type != "scenario2" && type != "OnlineAdventure" && type != "OnlineStory"){
 			// Shuffe the deck of cards after adding.
 			this.Shuffle();
+		}
+	}
+
+	//For networking
+	public Deck(string[] array){
+		for (int i = 0; i < array.Length; i++) {
+			if (array [i] == "Excalibur") {
+				addWeapon ("Excalibur", 30, "card_image/weapons/weaponCard3", 1);
+			} else if (array [i] == "Lance") {
+				addWeapon ("Lance", 20, "card_image/weapons/weaponCard4", 1);
+			} else if (array [i] == "BattleAxe") {
+				addWeapon ("BattleAxe", 15, "card_image/weapons/weaponCard5", 1);
+			} else if (array [i] == "Sword") {
+				addWeapon ("Sword", 10, "card_image/weapons/weaponCard1", 1);
+			} else if (array [i] == "Horse") {
+				addWeapon ("Horse", 10, "card_image/weapons/weaponCard6", 1);
+			} else if (array [i] == "Dagger") {
+				addWeapon ("Dagger", 5, "card_image/weapons/weaponCard2", 1);
+			} else if (array [i] == "Robber Knight") {
+				addFoe ("Robber Knight", "Robber Knight", 15, 15, false, "card_image/foe/foeCard1", 1);
+			} else if (array [i] == "Saxons") {
+				addFoe ("Saxons", "Saxon", 10, 20, false, "card_image/foe/foeCard2", 1);
+			} else if (array [i] == "Boar") {
+				addFoe ("Boar", "Boar", 5, 15, false, "card_image/foe/foeCard3", 1);
+			} else if (array [i] == "Thieves") {
+				addFoe ("Thieves", "Thieves", 5, 5, false, "card_image/foe/foeCard4", 1);
+			} else if (array [i] == "Green Knight") {
+				addFoe ("Green Knight", "Green Knight", 25, 40, false, "card_image/foe/foeCard5", 1);
+			} else if (array [i] == "Black Knight") {
+				addFoe ("Black Knight", "Black Knight", 25, 35, false, "card_image/foe/foeCard6", 1);
+			} else if (array [i] == "Evil Knight") {
+				addFoe ("Evil Knight", "Evil Knight", 20, 30, false, "card_image/foe/foeCard7", 1);
+			} else if (array [i] == "Saxon Knight") {
+				addFoe ("Saxon Knight", "Saxon", 15, 25, false, "card_image/foe/foeCard8", 1);
+			} else if (array [i] == "Dragon") {
+				addFoe ("Dragon", "Dragon", 50, 70, false, "card_image/foe/foeCard9", 1);
+			} else if (array [i] == "Giant") {
+				addFoe ("Giant", "Giant", 40, 40, false, "card_image/foe/foeCard10", 1);
+			} else if (array [i] == "Mordred") {
+				addFoe ("Mordred", "Mordred", 30, 30, true, "card_image/foe/foeCard11", 1);
+			} else if (array [i] == "King Pellinore") {
+				addAlly ("King Pellinore", 10, 0, 0, 4, "Search for the Questing Beast", null, false, "card_image/special/specialCard1", 1);
+			} else if (array [i] == "Sir") {
+				addAlly ("Sir ", 5, 0, 20, 0, "Search for the Holy Grail", null, false, "card_image/special/specialCard2", 1);
+			} else if (array [i] == "Sir Tristan") {
+				addAlly ("Sir Tristan", 10, 0, 20, 0, null, "Queen Iseult", false, "card_image/special/specialCard4", 1);
+			} else if (array [i] == "King Arthur") {
+				addAlly ("King Arthur", 10, 2, 0, 0, null, null, false, "card_image/special/specialCard5", 1);
+			} else if (array [i] == "Queen Guinevere") {
+				addAlly ("Queen Guinevere", 0, 3, 0, 0, null, null, false, "card_image/special/specialCard6", 1);
+			} else if (array [i] == "Sir Lancelot") {
+				addAlly ("Sir Lancelot", 15, 0, 25, 0, "Defend the Queen's Honor", null, false, "card_image/special/specialCard9", 1);
+			} else if (array [i] == "Galahad") {
+				addAlly ("Galahad", 15, 0, 0, 0, null, null, false, "card_image/special/specialCard10", 1);
+			} else if (array [i] == "Sir Gawain") {
+				addAlly ("Sir Gawain", 10, 0, 20, 0, "Test of the Green Knight", null, false, "card_image/special/specialCard11", 1);
+			} else if (array [i] == "Amour") {
+				addArmour ("Amour", 10, 1, "card_image/special/specialCard3", 1);
+			} else if (array [i] == "Search for the Holy Grail") { 
+				addQuest ("Search for the Holy Grail", 5, "*", "card_image/quest/questCard9", 1);
+			} else if (array [i] == "Search for the Holy Grail") { 
+				addQuest ("Test of the Green Knight", 4, "Green Knight", "card_image/quest/questCard10", 1);
+			} else if (array [i] == "Search for the Questing Beast") { 
+				addQuest ("Search for the Questing Beast", 4, "", "card_image/quest/questCard5", 1);
+			} else if (array [i] == "Defend the Queen's Honor") {  
+				addQuest ("Defend the Queen's Honor", 4, "*", "card_image/quest/questCard6", 1);
+			} else if (array [i] == "Rescue the Fair Maiden") { 
+				addQuest ("Rescue the Fair Maiden", 3, "Black Knight", "card_image/quest/questCard8", 1);
+			} else if (array [i] == "Journey Through the Enchanted Forest") { 
+				addQuest ("Journey Through the Enchanted Forest", 3, "Evil Knight", "card_image/quest/questCard1", 1);
+			} else if (array [i] == "Vanquish King Arthur's Enemies") { 	 
+				addQuest ("Vanquish King Arthur's Enemies", 3, "", "card_image/quest/questCard2", 1);
+			} else if (array [i] == "Slay the Dragon") { 
+				addQuest ("Slay the Dragon", 3, "Dragon", "card_image/quest/questCard7", 1);
+			} else if (array [i] == "Boar Hunt") { 
+				addQuest ("Boar Hunt", 2, "Boar", "card_image/quest/questCard4", 1);
+			} else if (array [i] == "Repel the Saxxon Raiders") { 
+				addQuest ("Repel the Saxxon Raiders", 2, "Saxon", "card_image/quest/questCard3", 1);
+			} else if (array [i] == "Tournament at Camelot") { 
+				addTournament ("Tournament at Camelot", 3, "card_image/tournament/TournamentCard", 1);
+			} else if (array [i] == "Tournament at Orkney") { 
+				addTournament ("Tournament at Orkney", 2, "card_image/tournament/TournamentCard1", 1);
+			} else if (array [i] == "Tournament at Tintagel") { 
+				addTournament ("Tournament at Tintagel", 1, "card_image/tournament/TournamentCard2", 1);
+			} else if (array [i] == "Tournament at York") { 
+				addTournament ("Tournament at York", 0, "card_image/tournament/TournamentCard3", 1);
+			} else if (array [i] == "Chivalrous Deed") { 
+				addEvent ("Chivalrous Deed", "lowest rank and shield receives 3 shields", "card_image/events/eventCard1", 1);
+			} else if (array [i] == "Pox") { 
+				addEvent ("Pox", "All players except player drawing this card lose 1 shield", "card_image/events/eventCard2", 1);
+			} else if (array [i] == "Plague") { 
+				addEvent ("Plague", "Drawer loses 2 shields if possible", "card_image/events/eventCard3", 1);
+			} else if (array [i] == "King's Recognition") { 
+				addEvent ("King's Recognition", "The next player(s) to complete a quest will receive 2 extra shields", "card_image/events/eventCard4", 1);
+			} else if (array [i] == "Queen's Favor") { 
+				addEvent ("Queen's Favor", "The lowest ranked player(s) immediately receives 2 Adventure cards", "card_image/events/eventCard5", 1);
+			} else if (array [i] == "Court Called to Camelot") { 
+				addEvent ("Court Called to Camelot", "All Allies in play must be discarded", "card_image/events/eventCard6", 1);
+			} else if (array [i] == "Prosperity Throughout the Realm") { 
+				addEvent ("Prosperity Throughout the Realm", "All players may immediately draw 2 adventure Cards", "card_image/events/eventCard8", 1);
+			}
+				 
 		}
 	}
 
@@ -348,6 +453,8 @@ public class Deck{
 		/* 1 Properity Throughout the Realm */
 		addEvent("Prosperity Throughout the Realm", "All players may immediately draw 2 adventure Cards", "card_image/events/eventCard8", 1);
 	}
+
+
 
 	void addTestCard(string name, int minBid, string asset, int copies){
 		for(int i = 0 ; i < copies ; i++){

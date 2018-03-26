@@ -151,6 +151,7 @@ public class MultiplayerGame : MonoBehaviour {
 		} else {
 			logger.info("Drawing a story card...");
 			// Draw a story card.
+			
 			_storyCard = _storyDeck.Draw();
 			GameObject storyCardObj = null;
 
@@ -168,7 +169,7 @@ public class MultiplayerGame : MonoBehaviour {
 			// Load the card sprite.
 			Sprite storySprite = Resources.Load<Sprite>(_storyCard.asset);
 
-			this.GetComponent<PhotonView>().RPC("PhotonLoadCard",PhotonTargets.All);
+			this.GetComponent<PhotonView>().RPC("PhotonLoadCard",PhotonTargets.All,_storyCard.asset);
 
 			// A quest card has been drawn.
 			if (_storyCard.GetType() == typeof(QuestCard)) {
@@ -206,14 +207,14 @@ public class MultiplayerGame : MonoBehaviour {
 	}
 
 	[PunRPC]
-	public void PhotonLoadCard(){
+	public void PhotonLoadCard(string asset ){
 		foreach (Transform child in blockerCardArea.transform) {
 			GameObject.Destroy(child.gameObject);
 		}
 		GameObject storyCardObj = null;
 		storyCardObj = Instantiate(QuestCard);
 		// Load the card sprite.
-		Sprite storySprite = Resources.Load<Sprite>(_storyCard.asset);
+		Sprite storySprite = Resources.Load<Sprite>(asset);
 		// Update the card.
 		storyCardObj.gameObject.GetComponent<Image>().sprite = storySprite;
 		storyCardObj.transform.SetParent(blockerCardArea.transform);
@@ -1007,19 +1008,40 @@ public class MultiplayerGame : MonoBehaviour {
 			_players.Add(new Player ( i + 1 ));
 		}
 
-		// Setup decks.
-		_adventureDeck = new Deck("OnlineAdventure");
-		logger.info("Created adventure deck with " + _adventureDeck.GetSize() + " cards.");
+		if (PhotonNetwork.player.ID == 1) {
+			// Setup decks.
+			_adventureDeck = new Deck("Adventure");
+			logger.info("Created adventure deck with " + _adventureDeck.GetSize() + " cards.");
 
-		_storyDeck = new Deck(storyDeckType);
-		logger.info("Created story deck with " + _storyDeck.GetSize() + " cards.");
+			_storyDeck = new Deck(storyDeckType);
+			logger.info("Created story deck with " + _storyDeck.GetSize() + " cards.");
 
-		//this.GetComponent<PhotonView>().RPC("PhotonSendDeck",PhotonTargets.All,_adventureDeck,_storyDeck);
+			string[] listStringAdventure = new string[_adventureDeck.GetDeck().Count];
+			string[] listStringStory     = new string[_storyDeck.GetDeck().Count];
 
+			//Get adventure string
+			for (int i = 0; i < _adventureDeck.GetDeck().Count; i++) {
+				string currCardName = _adventureDeck.GetDeck()[i].name;
+				listStringAdventure[i] =  currCardName;
+			}
+
+			//Get Story string
+			for (int i = 0; i < _storyDeck.GetDeck().Count; i++) {
+				string currCardName = _storyDeck.GetDeck()[i].name;
+				listStringStory[i] = currCardName;
+			}
+			//Host Sends Deck Call
+			this.GetComponent<PhotonView> ().RPC ("SendDecks", PhotonTargets.All,listStringAdventure,listStringStory);
+		}
 		// Make discard piles.
 		_discardPileAdventure = new Deck ("");
 		_discardPileStory = new Deck ("");
+	}
 
+	[PunRPC]
+	public void SendDecks(string[] adventure, string[] story){
+		_adventureDeck = new Deck (adventure);
+		_storyDeck = new Deck (story);
 		// Populate the players hands.
 		logger.info("Dealing 12 cards from adventure deck to each player.");
 		for(int i = 0; i < _players.Count ; i++){
@@ -1027,21 +1049,15 @@ public class MultiplayerGame : MonoBehaviour {
 				_players[i].addCard((_adventureDeck.Draw()));
 			}
 		}
-
-		// Load up the first player.
+		//Load up the first player.
 		nextCardAndPlayer();
 	}
 
-	[PunRPC]
-	public void PhotonSendDeck(Deck Adventure, Deck Story){
-		_adventureDeck = Adventure;
-		_storyDeck = Story;
-	}
 
 	// Runs if the user selects Play PVP.
 	public void NormalMode(){
 		logger.info("Normal mode selected.");
-		genericModeSetup("OnlineStory");
+		genericModeSetup("Story");
 	}
 
 	//Give card to player
