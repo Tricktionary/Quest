@@ -246,6 +246,7 @@
      <Compile Include="Assets\script\Player.cs" />
      <Compile Include="Assets\script\PlayerObject.cs" />
      <Compile Include="Assets\script\Prompt.cs" />
+     <Compile Include="Assets\script\PromptBid.cs" />
      <Compile Include="Assets\script\QuestionableDeadFiles\MClient.cs" />
      <Compile Include="Assets\script\QuestionableDeadFiles\NetworkGameManager.cs" />
      <Compile Include="Assets\script\QuestionableDeadFiles\NetworkLobbyHook.cs" />
