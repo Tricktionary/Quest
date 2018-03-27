@@ -604,17 +604,7 @@ public class MultiplayerGame : MonoBehaviour {
 		this.GetComponent<PhotonView>().RPC("PhotonSetInPlay",PhotonTargets.Others,player_id,inPlayName);
 	}
 
-	[PunRPC]
-	public void PhotonSetInPlay(int player_id, string[] cardsInPlay){
-		List<Card> currListCards = cardFactory.createCardList (cardsInPlay);
-		_players[player_id].inPlay = currListCards;
-		for(int i = 0; i < cardsInPlay.Length; i++){
-			removeCardByName(player_id, cardsInPlay[i]);
-		}
-		for (int i = 0; i < _players.Count; i++) {
-			Debug.Log (i + "|" + _players [i].inPlay.Count);
-		}
-	}
+	 
 
 	//Remove Cards from player hand
 	public void removeCards(int playerid , List<Card> cards){
