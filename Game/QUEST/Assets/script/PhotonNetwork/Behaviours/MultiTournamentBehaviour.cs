@@ -48,6 +48,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 		return _turnId;
 	}
 
+
 	// End turn method for when a Tournament card is in play.
 	public void endTurn(){
 
@@ -62,11 +63,14 @@ public class MultiTournamentBehaviour : GameBehaviour {
 			if (MultiplayerGame.GameManager.playAreaValid ()) {
 
 				// Set the players cards that they have in play.
-				if(MultiplayerGame.GameManager.getPlayer(_turnId).GetType() != typeof(AIPlayer)){
-					MultiplayerGame.GameManager.setInPlay(_turnId);
+				if(MultiplayerGame.GameManager.getPlayer(_playersIn[participatingPlayerIndex]).GetType() != typeof(AIPlayer)){
+					Debug.Log ("Current Turn: "+ _playersIn[participatingPlayerIndex]);
+					MultiplayerGame.GameManager.setInPlay(_playersIn[participatingPlayerIndex]);
 				}
+
+
 				// Fix prompt message (if they submited an invalid input).
-					MultiplayerGame.GameManager.getPromptManager().statusPrompt ("Setup your weapons!");
+				MultiplayerGame.GameManager.getPromptManager().statusPrompt ("Setup your weapons!");
 
 				// Move to next player in _playersIn.
 				participatingPlayerIndex++;
@@ -109,6 +113,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 
 				// Load the new player.
 				MultiplayerGame.GameManager.loadPlayer(_turnId);
+				MultiplayerGame.GameManager.block(_turnId);
 
 			} else {
 					MultiplayerGame.GameManager.getPromptManager().statusPrompt("You can't submit foes to the play area!");
@@ -133,11 +138,10 @@ public class MultiTournamentBehaviour : GameBehaviour {
 	// Moves to the next player.
 	public void nextPlayer(){
 		_turnId++;
-		MultiplayerGame.GameManager.block(_turnId);
-
 		if (_turnId >= MultiplayerGame.GameManager.getNumberOfPlayers()) {
 			_turnId = 0;
 		}
+		MultiplayerGame.GameManager.block(_turnId);
 	}
 
 	// Find the tournament winner.
@@ -192,6 +196,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 
 		// Reset tournament varaibles.
 		_turnId = 0;
+		MultiplayerGame.GameManager.block(_turnId);
 		_playersIn = new List<int>();
 		_winners = new List<int>();
 		_asked = 0;
@@ -233,7 +238,6 @@ public class MultiTournamentBehaviour : GameBehaviour {
 				return;
 			} else {
 				_turnId = _playersIn[0];
-
 				//Pay everyone that join 1 adventure Card
 				for(int i = 0 ; i<_playersIn.Count ; i++){
 					MultiplayerGame.GameManager.logger.info("Giving Player " + (_playersIn[i] + 1) + " one card for joining the tournament.");
@@ -273,5 +277,6 @@ public class MultiTournamentBehaviour : GameBehaviour {
 
 		// Load the right player.
 		MultiplayerGame.GameManager.loadPlayer(_turnId);
+		MultiplayerGame.GameManager.block(_turnId);
 	}
 }

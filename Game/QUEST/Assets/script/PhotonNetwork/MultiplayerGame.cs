@@ -85,11 +85,15 @@ public class MultiplayerGame : MonoBehaviour {
 	// The current story card in play.
 	Card _storyCard;
 	bool activeStoryCard = false;
-
  	public bool bonusQuestPoints = false;
+
+	//Card Factory for networking
+	CardFactory cardFactory = new CardFactory();
+
 	//tempFix
 	bool allFlip = false;
 
+	int clientID;
 
 	// Initialization.
 	void Awake(){
@@ -117,11 +121,12 @@ public class MultiplayerGame : MonoBehaviour {
 	// End a turn (fires when the End Turn button is clicked).
 	public void EndTurn() {
 		// If the hand has too many cards.
-		if(Hand.GetComponent<CardArea>().cards.Count >= 13 ){
+		/*
+		if(Hand.GetComponent<CardArea>().cards.Count >= 13  ){
 			PromptManager.statusPrompt("Too many cards, please discard or use.");
 			logger.info("There are too many cards in Player " + (_currentPlayer + 1) + "'s hand, they must discard or play.");
 			return;
-		}
+		}*/
 
 		// Need's to be a story card in play to end a turn.
 		if (activeStoryCard) {
@@ -582,13 +587,32 @@ public class MultiplayerGame : MonoBehaviour {
 	// Set a players in play cards.
 	public void setInPlay(int player_id){
 		List<Card> playedCards = playArea.GetComponent<CardArea>().cards;
+		string[] inPlayName = new string[playedCards.Count];
+		for (int i = 0; i < playedCards.Count; i++) {
+			inPlayName [i] = playedCards[i].name;   //Copying string over
+		}
 
-		// Set the cards to inPlay.
-		_players[player_id].inPlay = playedCards;
+		//Local Save
+		_players[player_id].inPlay = new List<Card>();
+		for (int i = 0; i < playedCards.Count; i++) {
+			_players [player_id].inPlay.Add (playedCards [i]);
+		}
+		for(int i = 0; i < inPlayName.Length; i++){
+			removeCardByName(player_id, inPlayName[i]);
+		}
+			
+		this.GetComponent<PhotonView>().RPC("PhotonSetInPlay",PhotonTargets.Others,player_id,inPlayName);
+	}
 
-		// Remove the cards from the players hand.
-		for(int i = 0; i < playedCards.Count; i++){
-			removeCardByName(player_id, playedCards[i].name);
+	[PunRPC]
+	public void PhotonSetInPlay(int player_id, string[] cardsInPlay){
+		List<Card> currListCards = cardFactory.createCardList (cardsInPlay);
+		_players[player_id].inPlay = currListCards;
+		for(int i = 0; i < cardsInPlay.Length; i++){
+			removeCardByName(player_id, cardsInPlay[i]);
+		}
+		for (int i = 0; i < _players.Count; i++) {
+			Debug.Log (i + "|" + _players [i].inPlay.Count);
 		}
 	}
 
@@ -797,10 +821,10 @@ public class MultiplayerGame : MonoBehaviour {
 		cardUI.transform.SetParent(rankCardArea.transform);
 		allFlip = false;
 
-
+		/*
 		if(Hand.GetComponent<CardArea>().cards.Count >= 13 ){
 			PromptManager.statusPrompt("Too many cards, please discard or use.");
-		}
+		}*/
 
 	}
 
@@ -966,11 +990,6 @@ public class MultiplayerGame : MonoBehaviour {
 			}
 		}
 	}
-	/*
-	public GameObject blocker;
-	public GameObject blockerTXT;
-	public GameObject blockerCardArea;
-	*/
 
 	//Block Player
 	public void block(int turnId){
@@ -986,6 +1005,8 @@ public class MultiplayerGame : MonoBehaviour {
 	public void genericModeSetup(string storyDeckType){
 
 		logger.info("Setting up game...");
+
+		clientID = PhotonNetwork.player.ID;
 
 		// Clear hand.
 		foreach (Transform child in Hand.transform) {
@@ -1003,11 +1024,11 @@ public class MultiplayerGame : MonoBehaviour {
 		block(0);
 
 		//Create Players on based on network connection
-		Debug.Log(players.Length);
+		//Debug.Log(players.Length);
 		for(int i = 0 ; i < players.Length; i++){
-			_players.Add(new Player ( i + 1 ));
+			_players.Add(new Player ( i ));
 		}
-
+		 
 		if (PhotonNetwork.player.ID == 1) {
 			// Setup decks.
 			_adventureDeck = new Deck("Adventure");
@@ -1057,7 +1078,7 @@ public class MultiplayerGame : MonoBehaviour {
 	// Runs if the user selects Play PVP.
 	public void NormalMode(){
 		logger.info("Normal mode selected.");
-		genericModeSetup("Story");
+		genericModeSetup("TournamentOnly");
 	}
 
 	//Give card to player

@@ -296,3 +296,4 @@ a5bbd838795a0e002e88e1dd07ffabff Assembly-CSharp.dll:.EventCard
 239d2cc8d353bbfcbefc27fa8f0221cc Assembly-CSharp.dll:Prototype.NetworkLobby.LobbyServerList
 a5bbd838795a0e002e88e1dd07ffabff Assembly-CSharp.dll:.QuestCard
 54a26a95db9c623b6eb6fc01ae3ef891 Assembly-CSharp.dll:.CubeExtra
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.CardFactory

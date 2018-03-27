@@ -52,4 +52,5 @@ MonoBehaviour:
   - PhotonLoadCard
   - NormalMode
   - SendDecks
+  - PhotonSetInPlay
   DisableAutoOpenWizard: 1
