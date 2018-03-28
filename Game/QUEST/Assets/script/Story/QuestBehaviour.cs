@@ -77,6 +77,11 @@ public class QuestBehaviour : GameBehaviour {
 
 	// End turn method for when a Quest card is in play.
 	public void endTurn(){
+
+		Debug.Log("get num players: " + Game.GameManager.getNumberOfPlayers());
+		for(int i = 0 ; i < Game.GameManager.getNumberOfPlayers() ; i++){
+			Debug.Log("inplay counter: " + Game.GameManager.getNumInPlay(i));
+		}
 		/*
 			if(Game.GameManager.Stages[_currStage++].GetType() == typeof(TestCard))
 			{
@@ -183,10 +188,10 @@ public class QuestBehaviour : GameBehaviour {
 				}
 			} else {
 				// Update _turnId.
+
 				_turnId = _playersIn[participatingPlayerIndex];
 
 				didYouSurvivePrompt();
-
 				// Clear the players inPlay list.
 				Game.GameManager.clearInPlay(_turnId);
 			}
@@ -194,29 +199,42 @@ public class QuestBehaviour : GameBehaviour {
 			// Load the new player.
 			Game.GameManager.loadPlayer(_turnId);
 		} 
-
 		else {
 			//if we are on a test stage 
+			
+			
+
 			if(testStage == _currStage){
-				Debug.Log("FUCK");
+
+				if(Game.GameManager.getPlayer(_turnId).GetType() != typeof(AIPlayer)){
+				Game.GameManager.setInPlay(_turnId);
+				}
 				//check if newbid is higher than highestBid, save new highestBid and highest Bidder 
+				Debug.Log("get num players: " + Game.GameManager.getNumberOfPlayers());
 				
-				//Debug.Log("Num in hand -1" + Game.GameManager.getInPlay(_turnId-1).Count);
-				Debug.Log("Num in hand  " + Game.GameManager.getNumInPlay(_turnId));
-				//Debug.Log("Num in hand +1 " + Game.GameManager.getInPlay(_turnId+1).Count);
-				//Debug.Log("Num in hand +2" + Game.GameManager.getInPlay(_turnId+2).Count);
+				
+
+				for(int i = 0 ; i < Game.GameManager.getNumberOfPlayers() ; i++){
+					Debug.Log("inplay count: " + Game.GameManager.getNumInPlay(i));
+				}
+				
+
+
 				Debug.Log("turn ID: " + _turnId);
+				
 				if(Game.GameManager.getInPlay(_turnId).Count > highestBid){ 
 					highestBid = Game.GameManager.getInPlay(_turnId).Count;
 					highestBidder = _turnId;
 					Debug.Log("highest Bid: " + highestBid); 
 					Debug.Log("highest Bidder: " + highestBidder); 
 				}
+				
 				Prompt.PromptManager.statusPrompt ("Bid by adding cards in the play area, current highest bid: " + highestBid); 
 				
 				participatingPlayerIndex++;
 
 				if (participatingPlayerIndex > (participatingPlayers - 1)) {
+
 				}
 
 				nextPlayer();
@@ -242,6 +260,7 @@ public class QuestBehaviour : GameBehaviour {
 
 					// If we have finished checking all the participating players.
 					if (participatingPlayerIndex > (participatingPlayers - 1)) {
+
 						_setupWeapons = false;
 						_showResults = true;
 

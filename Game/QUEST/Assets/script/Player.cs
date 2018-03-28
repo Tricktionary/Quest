@@ -108,10 +108,12 @@ public class Player {
 
 	//Add Cards
 	public void addCard(Card card){
+		Debug.Log("Card added (addCard)");
 		_hand.Add(card);	//Adds card to hand
 	}
 
 	public void addPlayCard(Card card){
+		Debug.Log("Card added (addPlayCard)");
 		_inPlay.Add(card);
 	}
 
