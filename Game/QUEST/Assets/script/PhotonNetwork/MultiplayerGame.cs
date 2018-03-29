@@ -81,6 +81,7 @@ public class MultiplayerGame : MonoBehaviour {
 	public GameObject blocker;
 	public GameObject blockerTXT;
 	public GameObject blockerCardArea;
+	public GameObject blockerInGameMSG;
 
 	// The current story card in play.
 	Card _storyCard;
@@ -1041,7 +1042,7 @@ public class MultiplayerGame : MonoBehaviour {
 		// Setup players.
 		_players = new List<Player>();
 		PhotonPlayer[] players = PhotonNetwork.playerList;
-		//block(0);
+		block(0);
 
 		//Create Players on based on network connection
 		//Debug.Log(players.Length);

@@ -104,7 +104,9 @@ public class MultiTournamentBehaviour : GameBehaviour {
 					}
 
 					MultiplayerGame.GameManager.logger.info("The following player(s) have won " + shieldPrize + " shields: " + winners_string.Substring(0, winners_string.Length - 2));
-						MultiplayerGame.GameManager.getPromptManager().statusPrompt("The following player(s) have won " + shieldPrize + " shields: " + winners_string.Substring(0, winners_string.Length - 2));
+					MultiplayerGame.GameManager.getPromptManager().statusPrompt("The following player(s) have won " + shieldPrize + " shields: " + winners_string.Substring(0, winners_string.Length - 2));
+					//Blocker Message
+					MultiplayerGame.GameManager.blockerInGameMSG.GetComponent<UnityEngine.UI.Text>().text = "The following player(s) have won " + shieldPrize + " shields: " + winners_string.Substring(0, winners_string.Length - 2);
 
 					_tournamentConcluded = true;
 				} else {
@@ -122,7 +124,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 
 				// Load the new player.
 				MultiplayerGame.GameManager.loadPlayer(_turnId);
-				//MultiplayerGame.GameManager.block(_turnId);
+				MultiplayerGame.GameManager.block(_turnId);
 				MultiplayerGame.GameManager.photonSet = false;
 
 			} else {
@@ -151,7 +153,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 		if (_turnId >= MultiplayerGame.GameManager.getNumberOfPlayers()) {
 			_turnId = 0;
 		}
-		//MultiplayerGame.GameManager.block(_turnId);
+		MultiplayerGame.GameManager.block(_turnId);
 		MultiplayerGame.GameManager.photonSet = false;
 		MultiplayerGame.GameManager.photonSet = false;
 	}
@@ -295,7 +297,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 
 		// Load the right player.
 		MultiplayerGame.GameManager.loadPlayer(_turnId);
-		//MultiplayerGame.GameManager.block(_turnId);
+		MultiplayerGame.GameManager.block(_turnId);
 		MultiplayerGame.GameManager.photonSet = false;
 	}
 }
