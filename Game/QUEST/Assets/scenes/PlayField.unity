@@ -4872,7 +4872,7 @@ MonoBehaviour:
   blocker: {fileID: 2074599359}
   blockerTXT: {fileID: 1581617321}
   blockerCardArea: {fileID: 1821096482}
-  blockerInGameMSG: {fileID: 0}
+  blockerInGameMSG: {fileID: 2115740807}
   bonusQuestPoints: 0
   cardFactory: {fileID: 0}
   photonSet: 0
@@ -4947,7 +4947,6 @@ MonoBehaviour:
   ownershipTransfer: 0
   ObservedComponents:
   - {fileID: 1696644091}
-  - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 1
   instantiationId: 1
@@ -6074,8 +6073,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0000038147, y: -131.43259}
-  m_SizeDelta: {x: 250.3, y: 45.2}
+  m_AnchoredPosition: {x: -2.3939881, y: -126.99999}
+  m_SizeDelta: {x: 770.5, y: 45.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2115740809
 MonoBehaviour:
@@ -6099,7 +6098,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 40
+    m_FontSize: 15
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0

@@ -39,6 +39,9 @@ public class MultiTournamentBehaviour : GameBehaviour {
 		_tournamentCard = (TournamentCard)c;
 	}
 
+	//Block Message
+	string blockMessage= "";
+
 	public void setCurrentTurn(int n){
 		_turnId = n;
 	}
@@ -107,7 +110,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 					MultiplayerGame.GameManager.getPromptManager().statusPrompt("The following player(s) have won " + shieldPrize + " shields: " + winners_string.Substring(0, winners_string.Length - 2));
 					//Blocker Message
 					MultiplayerGame.GameManager.blockerInGameMSG.GetComponent<UnityEngine.UI.Text>().text = "The following player(s) have won " + shieldPrize + " shields: " + winners_string.Substring(0, winners_string.Length - 2);
-
+					blockMessage = "The following player(s) have won " + shieldPrize + " shields: " + winners_string.Substring(0, winners_string.Length - 2);
 					_tournamentConcluded = true;
 				} else {
 					// Update _turnId.
@@ -124,7 +127,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 
 				// Load the new player.
 				MultiplayerGame.GameManager.loadPlayer(_turnId);
-				MultiplayerGame.GameManager.block(_turnId);
+				MultiplayerGame.GameManager.block(_turnId,blockMessage);
 				MultiplayerGame.GameManager.photonSet = false;
 
 			} else {
@@ -153,7 +156,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 		if (_turnId >= MultiplayerGame.GameManager.getNumberOfPlayers()) {
 			_turnId = 0;
 		}
-		MultiplayerGame.GameManager.block(_turnId);
+		MultiplayerGame.GameManager.block(_turnId,blockMessage);
 		MultiplayerGame.GameManager.photonSet = false;
 		MultiplayerGame.GameManager.photonSet = false;
 	}
@@ -210,13 +213,14 @@ public class MultiTournamentBehaviour : GameBehaviour {
 
 		// Reset tournament varaibles.
 		_turnId = 0;
-		//MultiplayerGame.GameManager.block(_turnId);
+		//MultiplayerGame.GameManager.block(_turnId,blockMessage);
 		MultiplayerGame.GameManager.photonSet = false;
 
 		for (int i = 0; i < _playersIn.Count; i++) {
 			MultiplayerGame.GameManager.clearInPlayEnd(_playersIn[i]);
 		}
 
+		blockMessage = "";
 		_playersIn = new List<int>();
 		_winners = new List<int>();
 		_asked = 0;
@@ -297,7 +301,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 
 		// Load the right player.
 		MultiplayerGame.GameManager.loadPlayer(_turnId);
-		MultiplayerGame.GameManager.block(_turnId);
+		MultiplayerGame.GameManager.block(_turnId,blockMessage);
 		MultiplayerGame.GameManager.photonSet = false;
 	}
 }

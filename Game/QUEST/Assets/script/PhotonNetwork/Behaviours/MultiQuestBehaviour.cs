@@ -55,7 +55,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 		if (_turnId >= MultiplayerGame.GameManager.getNumberOfPlayers()) {
 			_turnId = 0;
 		}
-		MultiplayerGame.GameManager.block(_turnId);
+		MultiplayerGame.GameManager.block(_turnId,"");
 	}
 
 	// Set current turn.
@@ -145,7 +145,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 					// Go back to the first player who is still alive.
 					participatingPlayerIndex = 0;
 					_turnId = _playersIn[0];
-					MultiplayerGame.GameManager.block(_turnId);
+					MultiplayerGame.GameManager.block(_turnId,"");
 
 					// Pay everyone 1 adventure card.
 					for(int i = 0; i < _playersIn.Count; i++){
@@ -168,7 +168,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 			} else {
 				// Update _turnId.
 				_turnId = _playersIn[participatingPlayerIndex];
-				MultiplayerGame.GameManager.block(_turnId);
+				MultiplayerGame.GameManager.block(_turnId,"");
 
 				didYouSurvivePrompt();
 
@@ -206,7 +206,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 						participatingPlayerIndex = 0;
 						_turnId = _playersIn[0];
-						MultiplayerGame.GameManager.block(_turnId);
+						MultiplayerGame.GameManager.block(_turnId,"");
 
 						// Unflip the stage cards.
 						MultiplayerGame.GameManager.logger.info("Flipping cards in stage " + (_currStage + 1));
@@ -224,7 +224,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 						// Update _turnId.
 						_turnId = _playersIn[participatingPlayerIndex];
-						MultiplayerGame.GameManager.block(_turnId);
+						MultiplayerGame.GameManager.block(_turnId,"");
 						if(MultiplayerGame.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
 							Debug.Log("AI Setup Weapon");
 							List<Card> aiPlayCard = MultiplayerGame.GameManager.AILogicPlayCards(_turnId);
@@ -432,7 +432,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 			}
 			else{
 				_turnId = _playersIn[0];
-				MultiplayerGame.GameManager.block(_turnId);
+				MultiplayerGame.GameManager.block(_turnId,"");
 
 				// Pay everyone that join 1 adventure Card.
 				for(int i = 0 ; i<_playersIn.Count ; i++){

@@ -1013,7 +1013,7 @@ public class MultiplayerGame : MonoBehaviour {
 	}
 
 	//Block Player
-	public void block(int turnId){
+	public void block(int turnId,string msg){
 		if((turnId+1) != PhotonNetwork.player.ID){
 			blocker.SetActive(true);
 			blockerTXT.GetComponent<UnityEngine.UI.Text>().text = ""+(turnId+1);
@@ -1021,6 +1021,7 @@ public class MultiplayerGame : MonoBehaviour {
 		else{
 			blocker.SetActive(false);
 		}
+		blockerInGameMSG.GetComponent<UnityEngine.UI.Text> ().text = msg;
 	}
 
 	public void genericModeSetup(string storyDeckType){
@@ -1042,7 +1043,7 @@ public class MultiplayerGame : MonoBehaviour {
 		// Setup players.
 		_players = new List<Player>();
 		PhotonPlayer[] players = PhotonNetwork.playerList;
-		block(0);
+		block(0,"");
 
 		//Create Players on based on network connection
 		//Debug.Log(players.Length);
