@@ -123,6 +123,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 				// Load the new player.
 				MultiplayerGame.GameManager.loadPlayer(_turnId);
 				MultiplayerGame.GameManager.block(_turnId);
+				MultiplayerGame.GameManager.photonSet = false;
 
 			} else {
 					MultiplayerGame.GameManager.getPromptManager().statusPrompt("You can't submit foes to the play area!");
@@ -151,6 +152,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 			_turnId = 0;
 		}
 		MultiplayerGame.GameManager.block(_turnId);
+		MultiplayerGame.GameManager.photonSet = false;
 	}
 
 	// Find the tournament winner.
@@ -206,6 +208,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 		// Reset tournament varaibles.
 		_turnId = 0;
 		MultiplayerGame.GameManager.block(_turnId);
+		MultiplayerGame.GameManager.photonSet = false;
 		_playersIn = new List<int>();
 		_winners = new List<int>();
 		_asked = 0;
@@ -287,5 +290,6 @@ public class MultiTournamentBehaviour : GameBehaviour {
 		// Load the right player.
 		MultiplayerGame.GameManager.loadPlayer(_turnId);
 		MultiplayerGame.GameManager.block(_turnId);
+		MultiplayerGame.GameManager.photonSet = false;
 	}
 }

@@ -124,13 +124,13 @@ public class MultiplayerGame : MonoBehaviour {
 	public void EndTurn() {
 		// If the hand has too many cards.
 
-		/*
+
 		if(Hand.GetComponent<CardArea>().cards.Count >= 13  ){
 			PromptManager.statusPrompt("Too many cards, please discard or use.");
 			logger.info("There are too many cards in Player " + (_currentPlayer + 1) + "'s hand, they must discard or play.");
 			return;
 		}
-		*/
+
 
 		// Need's to be a story card in play to end a turn.
 		if (activeStoryCard) {
@@ -657,6 +657,10 @@ public class MultiplayerGame : MonoBehaviour {
 		CardFactory clone = new CardFactory ();
 		List<Card> cards = clone.createCardList (cardsPlayed);
 		setInPlay (turnId,cards);
+		foreach (Transform child in rankCardArea.transform) {
+			GameObject.Destroy(child.gameObject);
+		}
+		loadHand (turnId);
 		photonSet = true;
 		EndTurn ();
 	}
@@ -836,11 +840,11 @@ public class MultiplayerGame : MonoBehaviour {
 		cardUI.transform.SetParent(rankCardArea.transform);
 		allFlip = false;
 
-		/*
+
 		if(Hand.GetComponent<CardArea>().cards.Count >= 13 ){
 			PromptManager.statusPrompt("Too many cards, please discard or use.");
 		}
-		*/
+
 
 	}
 
