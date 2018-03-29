@@ -6,14 +6,13 @@ public class Player {
 
 	protected List<Card> _hand;
 	protected List<Card> _inPlay;
-	protected int _playerId;							//Player ID
+	protected int _playerId;					//Player ID
 	protected int _playerDisplay;
-	protected int _rank;								//Players current ranks 0-2; 3 ends the game
-	protected int _shieldCounter;      				//Shield Counter
-	protected List<Card> _allies;  //List of cards
+	protected int _rank;						  //Players current ranks 0-2; 3 ends the game
+	protected int _shieldCounter;     ///Shield Counter
+	protected List<Card> _allies;  		//List of cards
 	protected int _bp;								//Current BP
 	public static int limit = 12;
-
 
 	public List<Card> inPlay{
 		get{
@@ -23,7 +22,6 @@ public class Player {
 			this._inPlay = value;
 		}
 	}
-
 
 	//gets and sets for all vars
 	public List<Card> hand{
@@ -155,7 +153,11 @@ public class Player {
 
 		while (_shieldCounter >= requirements [_rank]) {
 			_shieldCounter -= requirements [_rank];
-			Game.GameManager.logger.info("Ranking up Player " + _playerId);
+			if (Game.GameManager != null) {
+				Game.GameManager.logger.info ("Ranking up Player " + _playerId);
+			} else {
+				MultiplayerGame.GameManager.logger.info ("Ranking up Player " + _playerId);
+			}
 			_rank++;
 			if (_rank == 3) {
 				//END GAME HERE

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -189,6 +189,9 @@ public class TournamentBehaviour : GameBehaviour {
 	public void endTournament(){
 		Game.GameManager.logger.info("Ending the tournament!");
 
+		for (int i = 0; i < _playersIn.Count; i++) {
+			Game.GameManager.clearInPlayEnd (_playersIn[i]);
+		}
 		// Reset tournament varaibles.
 		_turnId = 0;
 		_playersIn = new List<int>();

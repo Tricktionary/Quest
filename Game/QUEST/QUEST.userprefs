@@ -1,13 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/script/Prompt.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/script/PhotonNetwork/Behaviours/MultiQuestBehaviour.cs">
     <Files>
-      <File FileName="Assets/script/Prompt.cs" Line="55" Column="1" />
-      <File FileName="Assets/script/server.cs" Line="1" Column="1" />
-      <File FileName="Assets/script/MClient.cs" Line="1" Column="1" />
-      <File FileName="Assets/script/Menu.cs" Line="1" Column="1" />
-      <File FileName="Assets/script/Player.cs" Line="1" Column="1" />
-      <File FileName="Assets/script/OnlinePlayer.cs" Line="1" Column="1" />
+      <File FileName="Assets/script/Cards/WeaponCard.cs" Line="1" Column="1" />
+      <File FileName="Assets/script/Cards/TestCard.cs" Line="26" Column="2" />
+      <File FileName="Assets/script/Logger.cs" Line="53" Column="5" />
+      <File FileName="Assets/script/PhotonNetwork/Behaviours/MultiTournamentBehaviour.cs" Line="106" Column="63" />
+      <File FileName="Assets/script/PhotonNetwork/CardFactory.cs" Line="1" Column="1" />
+      <File FileName="Assets/script/PhotonNetwork/PhotonNetworkManager.cs" Line="46" Column="29" />
+      <File FileName="Assets/script/PhotonNetwork/Behaviours/MultiQuestBehaviour.cs" Line="59" Column="3" />
+      <File FileName="Assets/script/Game.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
