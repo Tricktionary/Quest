@@ -970,17 +970,17 @@ public class MultiplayerGame : MonoBehaviour {
 			playerPanel.SetActive(true);
 
 			// Load the num card text.
-			for(int i = 0 ; i < numCardText.Count ; i++){
+			for(int i = 0 ; i < _players.Count ; i++){
 				numCardText[i].GetComponent<UnityEngine.UI.Text>().text = "#Card: "+ _players[i].hand.Count.ToString();
 			}
 
 			// Load the shield counder list.
-			for(int i = 0 ; i < shieldCounterList.Count ; i++){
+			for(int i = 0 ; i < _players.Count ; i++){
 				shieldCounterList[i].GetComponent<UnityEngine.UI.Text>().text = "#Shield: "+ _players[i].shieldCounter.ToString();
 			}
 
 			// Load the rank texts.
-			for(int i = 0 ; i < rankTextList.Count ; i++){
+			for(int i = 0 ; i < _players.Count ; i++){
 				int currRank = _players[i].rank;
 				if(currRank == 0 ){
 					rankTextList[i].GetComponent<UnityEngine.UI.Text>().text = "Rank : Squire";
@@ -994,7 +994,7 @@ public class MultiplayerGame : MonoBehaviour {
 			}
 
 			// Load the cards.
-			for(int i = 0 ; i < playerActive.Count ; i++){
+			for(int i = 0 ; i < _players.Count ; i++){
 				loadCards(_players[i].inPlay,playerActive[i]);
 			}
 		}
@@ -1041,7 +1041,7 @@ public class MultiplayerGame : MonoBehaviour {
 		// Setup players.
 		_players = new List<Player>();
 		PhotonPlayer[] players = PhotonNetwork.playerList;
-		block(0);
+		//block(0);
 
 		//Create Players on based on network connection
 		//Debug.Log(players.Length);

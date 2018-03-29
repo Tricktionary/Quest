@@ -122,7 +122,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 
 				// Load the new player.
 				MultiplayerGame.GameManager.loadPlayer(_turnId);
-				MultiplayerGame.GameManager.block(_turnId);
+				//MultiplayerGame.GameManager.block(_turnId);
 				MultiplayerGame.GameManager.photonSet = false;
 
 			} else {
@@ -151,7 +151,8 @@ public class MultiTournamentBehaviour : GameBehaviour {
 		if (_turnId >= MultiplayerGame.GameManager.getNumberOfPlayers()) {
 			_turnId = 0;
 		}
-		MultiplayerGame.GameManager.block(_turnId);
+		//MultiplayerGame.GameManager.block(_turnId);
+		MultiplayerGame.GameManager.photonSet = false;
 		MultiplayerGame.GameManager.photonSet = false;
 	}
 
@@ -207,8 +208,13 @@ public class MultiTournamentBehaviour : GameBehaviour {
 
 		// Reset tournament varaibles.
 		_turnId = 0;
-		MultiplayerGame.GameManager.block(_turnId);
+		//MultiplayerGame.GameManager.block(_turnId);
 		MultiplayerGame.GameManager.photonSet = false;
+
+		for (int i = 0; i < _playersIn.Count; i++) {
+			MultiplayerGame.GameManager.clearInPlayEnd(_playersIn[i]);
+		}
+
 		_playersIn = new List<int>();
 		_winners = new List<int>();
 		_asked = 0;
@@ -289,7 +295,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 
 		// Load the right player.
 		MultiplayerGame.GameManager.loadPlayer(_turnId);
-		MultiplayerGame.GameManager.block(_turnId);
+		//MultiplayerGame.GameManager.block(_turnId);
 		MultiplayerGame.GameManager.photonSet = false;
 	}
 }
