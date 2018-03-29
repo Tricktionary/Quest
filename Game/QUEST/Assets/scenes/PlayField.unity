@@ -1500,6 +1500,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ef56b731999b4b3488c3b9dc20c57bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yesObj: {fileID: 0}
+  noObj: {fileID: 0}
   promptObj: {fileID: 695439496}
   promptTxt: {fileID: 1254895683}
   gameStatus: {fileID: 0}
@@ -4871,6 +4873,7 @@ MonoBehaviour:
   blockerTXT: {fileID: 1581617321}
   blockerCardArea: {fileID: 1821096482}
   bonusQuestPoints: 0
+  cardFactory: {fileID: 0}
 --- !u!114 &1696644092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4942,6 +4945,7 @@ MonoBehaviour:
   ownershipTransfer: 0
   ObservedComponents:
   - {fileID: 1696644091}
+  - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 1
   instantiationId: 1

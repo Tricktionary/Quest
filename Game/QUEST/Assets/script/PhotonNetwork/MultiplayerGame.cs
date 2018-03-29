@@ -88,12 +88,14 @@ public class MultiplayerGame : MonoBehaviour {
  	public bool bonusQuestPoints = false;
 
 	//Card Factory for networking
-	CardFactory cardFactory = new CardFactory();
+	public CardFactory cardFactory = new CardFactory();
 
 	//tempFix
 	bool allFlip = false;
 
 	int clientID;
+
+	public bool photonSet = false;
 
 	// Initialization.
 	void Awake(){
@@ -102,7 +104,7 @@ public class MultiplayerGame : MonoBehaviour {
 		}
 		logger.info("Initializing Game object.");
 		PromptManager = new MultiplayerPrompt(promptObj,promptTxt,gameStatus);
-    NormalMode();
+    	NormalMode();
 		showHandButton.GetComponent<Button>().onClick.AddListener(unflipHand);
 		showPlayerButton.GetComponent<Button>().onClick.AddListener(OpenShowPlayer);
 		exitShowPlayerButton.GetComponent<Button>().onClick.AddListener(CloseShowPlayer);
@@ -121,12 +123,14 @@ public class MultiplayerGame : MonoBehaviour {
 	// End a turn (fires when the End Turn button is clicked).
 	public void EndTurn() {
 		// If the hand has too many cards.
+
 		/*
 		if(Hand.GetComponent<CardArea>().cards.Count >= 13  ){
 			PromptManager.statusPrompt("Too many cards, please discard or use.");
 			logger.info("There are too many cards in Player " + (_currentPlayer + 1) + "'s hand, they must discard or play.");
 			return;
-		}*/
+		}
+		*/
 
 		// Need's to be a story card in play to end a turn.
 		if (activeStoryCard) {
@@ -582,26 +586,29 @@ public class MultiplayerGame : MonoBehaviour {
 		}
 
 	}
-
-
+		
 	// Set a players in play cards.
 	public void setInPlay(int player_id){
 		List<Card> playedCards = playArea.GetComponent<CardArea>().cards;
-		string[] inPlayName = new string[playedCards.Count];
-		for (int i = 0; i < playedCards.Count; i++) {
-			inPlayName [i] = playedCards[i].name;   //Copying string over
-		}
 
-		//Local Save
-		_players[player_id].inPlay = new List<Card>();
-		for (int i = 0; i < playedCards.Count; i++) {
-			_players [player_id].inPlay.Add (playedCards [i]);
+		// Set the cards to inPlay.
+		_players[player_id].inPlay = playedCards;
+
+		// Remove the cards from the players hand.
+		for(int i = 0; i < playedCards.Count; i++){
+			removeCardByName(player_id, playedCards[i].name);
 		}
-		for(int i = 0; i < inPlayName.Length; i++){
-			removeCardByName(player_id, inPlayName[i]);
+	}
+
+	// Set a players in play cards.
+	public void setInPlay(int player_id, List<Card> inPlayCard){
+		// Set the cards to inPlay.
+		_players[player_id].inPlay = inPlayCard;
+
+		// Remove the cards from the players hand.
+		for(int i = 0; i < inPlayCard.Count; i++){
+			removeCardByName(player_id, inPlayCard[i].name);
 		}
-			
-		this.GetComponent<PhotonView>().RPC("PhotonSetInPlay",PhotonTargets.Others,player_id,inPlayName);
 	}
 
 	 
@@ -637,6 +644,24 @@ public class MultiplayerGame : MonoBehaviour {
 		}
 
 	}
+
+	public void photonCall(string call,string[] cardsPlayed, int turnId){
+		if (call == "PhotonTournamentSetInPlay") {
+			this.GetComponent<PhotonView> ().RPC ("PhotonTournamentSetInPlay", PhotonTargets.Others, cardsPlayed, turnId);
+		}
+	}
+
+	[PunRPC]
+	public void PhotonTournamentSetInPlay(string[] cardsPlayed, int turnId){
+		//Debug.Log (cardsPlayed[0]);
+		CardFactory clone = new CardFactory ();
+		List<Card> cards = clone.createCardList (cardsPlayed);
+		setInPlay (turnId,cards);
+		photonSet = true;
+		EndTurn ();
+	}
+
+
 
 	// Get a players in play cards.
 	public List<Card> getInPlay(int player_id){
@@ -814,7 +839,8 @@ public class MultiplayerGame : MonoBehaviour {
 		/*
 		if(Hand.GetComponent<CardArea>().cards.Count >= 13 ){
 			PromptManager.statusPrompt("Too many cards, please discard or use.");
-		}*/
+		}
+		*/
 
 	}
 

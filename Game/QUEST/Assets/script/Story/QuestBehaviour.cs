@@ -83,7 +83,7 @@ public class QuestBehaviour : GameBehaviour {
 				Debug.Log("Test Mode");
 				Debug.Log("flip card");
 			}
-		
+
 		*/
 		// Check if the results of the quest are in.
 		//Debug.Log("Num in hand2  " + Game.GameManager.getNumInPlay(_turnId));
@@ -121,9 +121,9 @@ public class QuestBehaviour : GameBehaviour {
 					// Move to the next stage (players have been eliminated if they died).
 					_currStage++;
 
-					
-					
-					
+
+
+
 					// If there are no more stages, we have winners.
 					if (_currStage >= _stagePower.Count){
 						Game.GameManager.logger.info("Quest is over and we have winner(s)!");
@@ -151,7 +151,7 @@ public class QuestBehaviour : GameBehaviour {
 						endQuest();
 						return;
 					}
-		
+
 
 					// Return to setup weapons mode.
 					_setupWeapons = true;
@@ -193,27 +193,27 @@ public class QuestBehaviour : GameBehaviour {
 
 			// Load the new player.
 			Game.GameManager.loadPlayer(_turnId);
-		} 
+		}
 
 		else {
-			//if we are on a test stage 
+			//if we are on a test stage
 			if(testStage == _currStage){
 				Debug.Log("FUCK");
-				//check if newbid is higher than highestBid, save new highestBid and highest Bidder 
-				
+				//check if newbid is higher than highestBid, save new highestBid and highest Bidder
+
 				//Debug.Log("Num in hand -1" + Game.GameManager.getInPlay(_turnId-1).Count);
 				Debug.Log("Num in hand  " + Game.GameManager.getNumInPlay(_turnId));
 				//Debug.Log("Num in hand +1 " + Game.GameManager.getInPlay(_turnId+1).Count);
 				//Debug.Log("Num in hand +2" + Game.GameManager.getInPlay(_turnId+2).Count);
 				Debug.Log("turn ID: " + _turnId);
-				if(Game.GameManager.getInPlay(_turnId).Count > highestBid){ 
+				if(Game.GameManager.getInPlay(_turnId).Count > highestBid){
 					highestBid = Game.GameManager.getInPlay(_turnId).Count;
 					highestBidder = _turnId;
-					Debug.Log("highest Bid: " + highestBid); 
-					Debug.Log("highest Bidder: " + highestBidder); 
+					Debug.Log("highest Bid: " + highestBid);
+					Debug.Log("highest Bidder: " + highestBidder);
 				}
-				Prompt.PromptManager.statusPrompt ("Bid by adding cards in the play area, current highest bid: " + highestBid); 
-				
+				Prompt.PromptManager.statusPrompt ("Bid by adding cards in the play area, current highest bid: " + highestBid);
+
 				participatingPlayerIndex++;
 
 				if (participatingPlayerIndex > (participatingPlayers - 1)) {
@@ -262,7 +262,7 @@ public class QuestBehaviour : GameBehaviour {
 
 						// Clear the players inPlay list.
 						Game.GameManager.clearInPlay(_turnId);
-					} 
+					}
 
 					else {
 
@@ -325,7 +325,7 @@ public class QuestBehaviour : GameBehaviour {
 								}
 							}
 						}
-						
+
 
 						//Remove Cards Played in stage
 						Game.GameManager.removeCards(_turnId,stagedCards);
@@ -493,16 +493,16 @@ public class QuestBehaviour : GameBehaviour {
 				if(testStage==_currStage){
 					Debug.Log("currently on test stage");
 					Prompt.PromptManager.statusPrompt ("Bid by adding cards in the play area, current highest bid: " + highestBid);
-				
+
 					Debug.Log("Num in hand  " + Game.GameManager.currInPlay.Count);
-				
+
 					//Debug.Log("Num in hand +3 " + Game.GameManager.getInPlay(_turnId+3).Count);
 
 					highestBid = Game.GameManager.getNumInPlay(_turnId);
 					highestBidder = _turnId;
 					Debug.Log("highest bid: " + highestBid);
 
-					
+
 				}
 				else{
 				// Move to setup weapon phase.
@@ -666,7 +666,7 @@ public class QuestBehaviour : GameBehaviour {
 		}
 
 		// Grab the power levels from all the cards within the stages.
-		
+
 		for (int i = 0; i < stages.Count; i++) {
 			currPower = stageValid(stages[i],i);
 			if(currPower == -1){
@@ -680,7 +680,7 @@ public class QuestBehaviour : GameBehaviour {
 
 		// Check ascending power level
 		for(int i = 0; i < powerLevels.Count - 1; i++){
-			
+
 
 			if(powerLevels[i] >= powerLevels[i + 1] && powerLevels[i] != 10000){
 				Game.GameManager.logger.warn("Quest setup is invalid: not ascending power level.");

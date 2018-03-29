@@ -679,6 +679,7 @@ public class Game : MonoBehaviour {
 				QuestCard currQuest = (QuestCard)_storyCard;
 				//Same Quest
 				if(currAlly.questCondition == currQuest.name){
+					logger.info("Player has a featured Ally for the Quest:"+currAlly.name);
 					currAllyPower += currAlly.bonusPower;
 				}
 			}
@@ -694,6 +695,7 @@ public class Game : MonoBehaviour {
 						if(currInPlay[i].GetType() == typeof(AllyCard)){
 							AllyCard compareAlly = (AllyCard)currInPlay[i];
 							if(currAlly.allyCondition == compareAlly.name){
+								logger.info("Player's ally has a matching ally on the field:"+currAlly.name);
 								currAllyPower+=currAlly.bonusPower;
 								return currAllyPower;
 							}
@@ -735,7 +737,7 @@ public class Game : MonoBehaviour {
 		return _players[playerNum].inPlay.Count;
 	}
 
-	
+
 
 	// Load the players hand onto the UI.
 	void loadHand(int playerId){
@@ -926,7 +928,7 @@ public class Game : MonoBehaviour {
 	// Close show player panel.
 	public void CloseShowPlayer(){
 		playerPanel.SetActive(false);
-
+		logger.info("Closing all player panel.");
 		for(int i = 0 ; i < playerActive.Count ; i++){
 			foreach (Transform child in playerActive[i].transform) {
 				GameObject.Destroy(child.gameObject);
@@ -1083,6 +1085,7 @@ public class Game : MonoBehaviour {
 	//Give card to player
 	public void giveCard(int id){
 		_players[id].addCard((_adventureDeck.Draw()));
+		logger.info("Giving card to Player: " + id);
 	}
 
 	// Check for a winner of the game.

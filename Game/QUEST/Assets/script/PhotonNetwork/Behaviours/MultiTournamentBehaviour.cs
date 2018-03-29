@@ -47,28 +47,37 @@ public class MultiTournamentBehaviour : GameBehaviour {
 	public int getCurrentTurn(){
 		return _turnId;
 	}
+	 
 
+	 
 
 	// End turn method for when a Tournament card is in play.
 	public void endTurn(){
-
 		if (_tournamentConcluded){
 			endTournament();
 			return;
 		}
 
 		if (_joinedUp){
-
 			// Check if weapon setup is valid.
 			if (MultiplayerGame.GameManager.playAreaValid ()) {
-
+				if(MultiplayerGame.GameManager.photonSet == false){
 				// Set the players cards that they have in play.
-				if(MultiplayerGame.GameManager.getPlayer(_playersIn[participatingPlayerIndex]).GetType() != typeof(AIPlayer)){
-					Debug.Log ("Current Turn: "+ _playersIn[participatingPlayerIndex]);
-					MultiplayerGame.GameManager.setInPlay(_playersIn[participatingPlayerIndex]);
+					if (MultiplayerGame.GameManager.getPlayer (_turnId).GetType () != typeof(AIPlayer)) {
+						Debug.Log ("Current Turn: " + _turnId);
+						MultiplayerGame.GameManager.setInPlay (_turnId);
+						List<Card> currInPlayCards = MultiplayerGame.GameManager.getInPlay (_turnId);
+						string[] currInPlayCardStr = new string[currInPlayCards.Count];
+
+						for (int i = 0; i < currInPlayCards.Count; i++) {
+							currInPlayCardStr [i] = currInPlayCards [i].name;
+						}
+
+						MultiplayerGame.GameManager.photonSet = true;
+						MultiplayerGame.GameManager.photonCall("PhotonTournamentSetInPlay",currInPlayCardStr,_turnId);
+
+					}
 				}
-
-
 				// Fix prompt message (if they submited an invalid input).
 				MultiplayerGame.GameManager.getPromptManager().statusPrompt ("Setup your weapons!");
 

@@ -17,11 +17,13 @@ public class Deck{
 
 	// Deck constructor.
 	public Deck(string type){
+
 		if (type.Equals ("Adventure")) {
 			addAdventureCard();
+			addTestCard ();
 		}
 		else if(type.Equals ("OnlineAdventure")){
-			addAdventureCard();
+			addAdventureCard();	 
 		}
 		else if(type.Equals("OnlineStory")){
 			addQuestCards();
@@ -63,7 +65,7 @@ public class Deck{
 		}
 		//Boar Hunt is Prefix
 		if(type != "scenario1" && type != "specialHand" && type != "specialHand3"
-		 	 && type != "scenario3" && type != "scenario2" && type != "OnlineAdventure" && type != "OnlineStory"){
+		 	 && type != "scenario3" && type != "scenario2"){
 			// Shuffe the deck of cards after adding.
 			this.Shuffle();
 		}
@@ -260,14 +262,12 @@ public class Deck{
 
 		/* Amour load */
 		addArmour("Amour", 10, 1, "card_image/special/specialCard3", 8);
-
-		/*TestCard Load*/
-		
+	}
+	void addTestCard(){
 		addTestCard("Test of the Questing Beast",4,"card_image/tests/testCard",2);
 		addTestCard("Test of Temptation",0,"card_image/tests/testCard1",2);
 		addTestCard("Test of Valor",0,"card_image/tests/testCard2",2);
 		addTestCard("Test of Morgan Le Fey",3,"card_image/tests/testCard3",2);
-		
 	}
 	void addBoarHunt(){
 		addQuest("Boar Hunt", 2, "Boar", "card_image/quest/questCard4", 1);
