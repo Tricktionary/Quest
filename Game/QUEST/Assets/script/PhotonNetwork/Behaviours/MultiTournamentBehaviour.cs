@@ -67,8 +67,11 @@ public class MultiTournamentBehaviour : GameBehaviour {
 				if(MultiplayerGame.GameManager.photonSet == false){
 				// Set the players cards that they have in play.
 					if (MultiplayerGame.GameManager.getPlayer (_turnId).GetType () != typeof(AIPlayer)) {
+
 						Debug.Log ("Current Turn: " + _turnId);
+
 						MultiplayerGame.GameManager.setInPlay (_turnId);
+
 						List<Card> currInPlayCards = MultiplayerGame.GameManager.getInPlay (_turnId);
 						string[] currInPlayCardStr = new string[currInPlayCards.Count];
 
@@ -78,7 +81,6 @@ public class MultiTournamentBehaviour : GameBehaviour {
 
 						MultiplayerGame.GameManager.photonSet = true;
 						MultiplayerGame.GameManager.photonCall("PhotonTournamentSetInPlay",currInPlayCardStr,_turnId);
-
 					}
 				}
 				// Fix prompt message (if they submited an invalid input).
@@ -158,7 +160,6 @@ public class MultiTournamentBehaviour : GameBehaviour {
 		}
 		MultiplayerGame.GameManager.block(_turnId,blockMessage);
 		MultiplayerGame.GameManager.photonSet = false;
-		MultiplayerGame.GameManager.photonSet = false;
 	}
 
 	// Find the tournament winner.
@@ -213,7 +214,6 @@ public class MultiTournamentBehaviour : GameBehaviour {
 
 		// Reset tournament varaibles.
 		_turnId = 0;
-		//MultiplayerGame.GameManager.block(_turnId,blockMessage);
 		MultiplayerGame.GameManager.photonSet = false;
 
 		for (int i = 0; i < _playersIn.Count; i++) {

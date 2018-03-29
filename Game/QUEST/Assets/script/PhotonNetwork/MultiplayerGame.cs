@@ -658,9 +658,11 @@ public class MultiplayerGame : MonoBehaviour {
 		CardFactory clone = new CardFactory ();
 		List<Card> cards = clone.createCardList (cardsPlayed);
 		setInPlay (turnId,cards);
+
 		foreach (Transform child in rankCardArea.transform) {
 			GameObject.Destroy(child.gameObject);
 		}
+
 		loadHand (turnId);
 		photonSet = true;
 		EndTurn ();
@@ -1100,7 +1102,7 @@ public class MultiplayerGame : MonoBehaviour {
 	// Runs if the user selects Play PVP.
 	public void NormalMode(){
 		logger.info("Normal mode selected.");
-		genericModeSetup("TournamentOnly");
+		genericModeSetup("QuestOnly");
 	}
 
 	//Give card to player

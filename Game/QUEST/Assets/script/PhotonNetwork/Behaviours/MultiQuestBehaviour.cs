@@ -48,6 +48,8 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 	int numberOfTestStage = 0;
 
+	string blockMessage = "";
+
 
 	// Moves to the next player.
 	public void nextPlayer(){
@@ -178,6 +180,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 			// Load the new player.
 			MultiplayerGame.GameManager.loadPlayer(_turnId);
+			MultiplayerGame.GameManager.block(_turnId,blockMessage);
 		} else {
 
 			// If we are on the setup weapons stage.
@@ -237,6 +240,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 					// Load the new player.
 					MultiplayerGame.GameManager.loadPlayer(_turnId);
+					MultiplayerGame.GameManager.block(_turnId,blockMessage);
 
 				// Weapon setup is not valid.
 				} else {
@@ -302,6 +306,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 						// Load new player.
 						MultiplayerGame.GameManager.loadPlayer(_turnId);
+						MultiplayerGame.GameManager.block(_turnId,blockMessage);
 
 						// Ask if the next player wants to play.
 							MultiplayerGame.GameManager.getPromptManager().promptMessage ("quest");
@@ -402,6 +407,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 			// Load the next player.
 			MultiplayerGame.GameManager.loadPlayer(_turnId);
+			MultiplayerGame.GameManager.block(_turnId,blockMessage);
 
 			if(MultiplayerGame.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
 				MultiplayerGame.GameManager.AILogicResponse(_turnId,"sponsor");
@@ -471,6 +477,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 		// Load the right player.
 		MultiplayerGame.GameManager.loadPlayer(_turnId);
+		MultiplayerGame.GameManager.block(_turnId,blockMessage);
 	}
 
 	// Create a quest and setup the stages.
