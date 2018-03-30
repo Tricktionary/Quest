@@ -80,7 +80,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 						}
 
 						MultiplayerGame.GameManager.photonSet = true;
-						MultiplayerGame.GameManager.photonCall("PhotonTournamentSetInPlay",currInPlayCardStr,_turnId);
+						MultiplayerGame.GameManager.photonCall("PhotonTournamentSetInPlay",currInPlayCardStr,_turnId,null,null,null,null,null);
 					}
 				}
 				// Fix prompt message (if they submited an invalid input).

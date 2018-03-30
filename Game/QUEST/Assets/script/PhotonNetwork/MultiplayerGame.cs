@@ -646,12 +646,62 @@ public class MultiplayerGame : MonoBehaviour {
 
 	}
 
-	public void photonCall(string call,string[] cardsPlayed, int turnId){
+	public void photonCall(string call, string[] cardsPlayed, int turnId,string[] stage1, string[] stage2, string[] stage3, string[] stage4, string[] stage5){
 		if (call == "PhotonTournamentSetInPlay") {
 			this.GetComponent<PhotonView> ().RPC ("PhotonTournamentSetInPlay", PhotonTargets.Others, cardsPlayed, turnId);
 		}
+		if (call == "PhotonQuestStage") {
+			this.GetComponent<PhotonView> ().RPC ("PhotonQuestStage", PhotonTargets.Others, turnId, stage1,stage2,stage3,stage4,stage5);
+		}
 	}
 
+	[PunRPC]
+	public void PhotonQuestStage(int turnId,string[] stage1, string[] stage2, string[] stage3, string[] stage4, string[] stage5){
+
+		CardFactory tempFact = new CardFactory ();
+
+		List<Card> stage1Cards = tempFact.createCardList (stage1);
+		List<Card> stage2Cards = tempFact.createCardList (stage2);
+		List<Card> stage3Cards = tempFact.createCardList (stage3);
+		List<Card> stage4Cards = tempFact.createCardList (stage4);
+		List<Card> stage5Cards = tempFact.createCardList (stage5);
+
+		photonSet = true;
+
+		for (int i = 0; i < Stages.Count; i++) {
+			if (i == 1) {
+				Stages [i].GetComponent<CardArea> ().cards = stage1Cards;
+			}
+			if (i == 2) {
+				Stages [i].GetComponent<CardArea> ().cards = stage2Cards;
+			}
+			if (i == 3) {
+				Stages [i].GetComponent<CardArea> ().cards = stage3Cards;
+			}
+			if (i == 4) {
+				Stages [i].GetComponent<CardArea> ().cards = stage4Cards;
+			}
+			if (i == 5) {
+				Stages [i].GetComponent<CardArea> ().cards = stage5Cards;
+			}
+		}
+
+		for (int i = 0; i < Stages.Count; i++) {
+			loadCards(Stages[i].GetComponent<CardArea>().cards,Stages[i]);
+		}
+
+		List<Card> stagedCards = getStagedCards (5);
+
+		for (int i = 0; i < stagedCards.Count; i++) {
+			removeCardByName (turnId, stagedCards [i].name);
+		}
+
+		 
+
+		EndTurn ();
+
+
+	}
 	[PunRPC]
 	public void PhotonTournamentSetInPlay(string[] cardsPlayed, int turnId){
 		//Debug.Log (cardsPlayed[0]);
@@ -933,6 +983,8 @@ public class MultiplayerGame : MonoBehaviour {
 	// Discard a card.
 	public void discardCard(int player_id, List<Card> discardList = null){
 
+		//this.GetComponent<PhotonView>().RPC("PhotonDiscardCards",PhotonTargets.All,_storyCard.asset);
+
 		List<Card> disCards = new List<Card>();
 
 		// Handle discard.
@@ -961,6 +1013,7 @@ public class MultiplayerGame : MonoBehaviour {
 				}
 			}
 		}
+
 	}
 
 
@@ -1045,7 +1098,7 @@ public class MultiplayerGame : MonoBehaviour {
 		// Setup players.
 		_players = new List<Player>();
 		PhotonPlayer[] players = PhotonNetwork.playerList;
-		block(0,"");
+		//block(0,"");
 
 		//Create Players on based on network connection
 		//Debug.Log(players.Length);

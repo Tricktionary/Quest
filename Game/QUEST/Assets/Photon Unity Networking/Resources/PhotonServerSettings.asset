@@ -54,4 +54,5 @@ MonoBehaviour:
   - SendDecks
   - PhotonSetInPlay
   - PhotonTournamentSetInPlay
+  - PhotonQuestStage
   DisableAutoOpenWizard: 1
