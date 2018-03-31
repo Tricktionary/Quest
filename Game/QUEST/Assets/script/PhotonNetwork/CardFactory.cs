@@ -9,8 +9,11 @@ public class CardFactory : MonoBehaviour {
 	}
 
 	public List<Card> createCardList(string[] cards){
-		Deck placeHolderDeck = new Deck (cards);
-		return placeHolderDeck.GetDeck ();
+		if (cards != null) {
+			Deck placeHolderDeck = new Deck (cards);
+			return placeHolderDeck.GetDeck ();
+		}
+		return null;
 	}
 
 	// Use this for initialization

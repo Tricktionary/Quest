@@ -265,34 +265,59 @@ public class MultiQuestBehaviour : GameBehaviour {
 					// Quest is setup correctly.
 					if (_questReady) {
 
-						List<List<Card>> allStageCard = MultiplayerGame.GameManager.getStages(5);
+						 
+					
 
-						string[] stage1 = new string[allStageCard[0].Count];
-						string[] stage2 = new string[allStageCard[1].Count];
-						string[] stage3 = new string[allStageCard[2].Count];
-						string[] stage4 = new string[allStageCard[3].Count];
-						string[] stage5 = new string[allStageCard[0].Count];
-
-						for (int x = 0; x < allStageCard.Count; x++) {
-							for (int z = 0; z < allStageCard [x].Count; z++) {
-								if (x == 0) {
-									stage1 [z] = allStageCard [x] [z].name;
-								} else if (x == 1) {
-									stage2 [z] = allStageCard [x] [z].name;
-								} else if (x == 2) {
-									stage3 [z] = allStageCard [x] [z].name;
-								} else if (x == 3) {
-									stage4 [z] = allStageCard [x] [z].name;
-								} else if (x == 4) {
-									stage5 [z] = allStageCard [x] [z].name;
-								}
-
-							}
-						}
-
+						//Only Let this call Once (RECURSIVE METHOD)
 						if (MultiplayerGame.GameManager.photonSet == false) {
+							//Pull Cards To Push
+							List<List<Card>> allStageCard = MultiplayerGame.GameManager.getStages(5);
+							string[] stage1 = new string[allStageCard[0].Count];
+							string[] stage2 = new string[allStageCard[1].Count];
+							string[] stage3 = new string[allStageCard[2].Count];
+							string[] stage4 = new string[allStageCard[3].Count];
+							string[] stage5 = new string[allStageCard[4].Count];
+
+							Debug.Log ("Here");
+							for (int x = 0; x < allStageCard.Count; x++) {
+								for (int z = 0; z < allStageCard [x].Count; z++) {
+									if (x == 0) {
+										//Debug.Log (allStageCard [x] [z].name);
+										stage1 [z] = allStageCard [x] [z].name;
+									} else if (x == 1) {
+										//Debug.Log (allStageCard [x] [z].name);
+										stage2 [z] = allStageCard [x] [z].name;
+									} else if (x == 2) {
+										//Debug.Log (allStageCard [x] [z].name);
+										stage3 [z] = allStageCard [x] [z].name;
+									} else if (x == 3) {
+										//Debug.Log (allStageCard [x] [z].name);
+										stage4 [z] = allStageCard [x] [z].name;
+									} else if (x == 4) {
+										//Debug.Log (allStageCard [x] [z].name);
+										stage5 [z] = allStageCard [x] [z].name;
+									}
+								}
+							}
+
+							/* Print Testing */
+							for (int i = 0; i < stage1.Length; i++) {
+								Debug.Log (stage1 [i]);
+							}
+							for (int i = 0; i < stage2.Length; i++) {
+								Debug.Log (stage2 [i]);
+							}
+							for (int i = 0; i < stage3.Length; i++) {
+								Debug.Log (stage3 [i]);
+							}
+							for (int i = 0; i < stage4.Length; i++) {
+								Debug.Log (stage4 [i]);
+							}
+							for (int i = 0; i < stage5.Length; i++) {
+								Debug.Log (stage5 [i]);
+							}
+
 							//Photon Call for sponsoring stage
-							Debug.Log("Here");
 							MultiplayerGame.GameManager.photonCall ("PhotonQuestStage", null, _turnId, stage1, stage2, stage3, stage4, stage5);
 						}
 

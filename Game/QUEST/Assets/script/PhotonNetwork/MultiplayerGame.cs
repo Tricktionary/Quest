@@ -651,40 +651,59 @@ public class MultiplayerGame : MonoBehaviour {
 			this.GetComponent<PhotonView> ().RPC ("PhotonTournamentSetInPlay", PhotonTargets.Others, cardsPlayed, turnId);
 		}
 		if (call == "PhotonQuestStage") {
+			for (int i = 0; i < stage1.Length; i++) {
+				Debug.Log (stage1 [i]);
+			}
 			this.GetComponent<PhotonView> ().RPC ("PhotonQuestStage", PhotonTargets.Others, turnId, stage1,stage2,stage3,stage4,stage5);
 		}
 	}
 
 	[PunRPC]
 	public void PhotonQuestStage(int turnId,string[] stage1, string[] stage2, string[] stage3, string[] stage4, string[] stage5){
-
-		CardFactory tempFact = new CardFactory ();
-
-		List<Card> stage1Cards = tempFact.createCardList (stage1);
-		List<Card> stage2Cards = tempFact.createCardList (stage2);
-		List<Card> stage3Cards = tempFact.createCardList (stage3);
-		List<Card> stage4Cards = tempFact.createCardList (stage4);
-		List<Card> stage5Cards = tempFact.createCardList (stage5);
-
 		photonSet = true;
 
+	
+		CardFactory tempFact1 = new CardFactory ();
+		CardFactory tempFact2 = new CardFactory ();
+		CardFactory tempFact3 = new CardFactory ();
+		CardFactory tempFact4 = new CardFactory ();
+		CardFactory tempFact5 = new CardFactory ();
+
+
+		List<Card> stage1Cards = tempFact1.createCardList (stage1);
+		List<Card> stage2Cards = tempFact2.createCardList (stage2);
+		List<Card> stage3Cards = tempFact3.createCardList (stage3);
+		List<Card> stage4Cards = tempFact4.createCardList (stage4);
+		List<Card> stage5Cards = tempFact5.createCardList (stage5);
+ 		
 		for (int i = 0; i < Stages.Count; i++) {
+			if (i == 0) {
+				for (int x = 0; x < stage1Cards.Count; x++) {
+					Stages [i].GetComponent<CardArea> ().addCard(stage1Cards[x]);
+				}
+			}
 			if (i == 1) {
-				Stages [i].GetComponent<CardArea> ().cards = stage1Cards;
+				for (int x = 0; x < stage2Cards.Count; x++) {
+					Stages [i].GetComponent<CardArea> ().addCard(stage2Cards[x]);
+				}
 			}
 			if (i == 2) {
-				Stages [i].GetComponent<CardArea> ().cards = stage2Cards;
+				for (int x = 0; x < stage3Cards.Count; x++) {
+					Stages [i].GetComponent<CardArea> ().addCard(stage3Cards[x]);
+				}
 			}
 			if (i == 3) {
-				Stages [i].GetComponent<CardArea> ().cards = stage3Cards;
+				for (int x = 0; x < stage4Cards.Count; x++) {
+					Stages [i].GetComponent<CardArea> ().addCard(stage4Cards[x]);
+				}
 			}
 			if (i == 4) {
-				Stages [i].GetComponent<CardArea> ().cards = stage4Cards;
-			}
-			if (i == 5) {
-				Stages [i].GetComponent<CardArea> ().cards = stage5Cards;
+				for (int x = 0; x < stage5Cards.Count; x++) {
+					Stages [i].GetComponent<CardArea> ().addCard(stage5Cards[x]);
+				}
 			}
 		}
+
 
 		for (int i = 0; i < Stages.Count; i++) {
 			loadCards(Stages[i].GetComponent<CardArea>().cards,Stages[i]);
@@ -696,11 +715,8 @@ public class MultiplayerGame : MonoBehaviour {
 			removeCardByName (turnId, stagedCards [i].name);
 		}
 
-		 
 
-		EndTurn ();
-
-
+		//EndTurn ();
 	}
 	[PunRPC]
 	public void PhotonTournamentSetInPlay(string[] cardsPlayed, int turnId){
