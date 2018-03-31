@@ -123,8 +123,14 @@ public class MultiplayerGame : MonoBehaviour {
 
 	// End a turn (fires when the End Turn button is clicked).
 	public void EndTurn() {
+		
 		// If the hand has too many cards.
-
+		/*
+		List<Card> stagedCards = getStagedCards (5);
+		for (int i = 0; i < stagedCards.Count; i++) {
+			Debug.Log (stagedCards [i].name);
+		}
+		*/
 
 		if(Hand.GetComponent<CardArea>().cards.Count >= 13  ){
 			PromptManager.statusPrompt("Too many cards, please discard or use.");
@@ -660,8 +666,8 @@ public class MultiplayerGame : MonoBehaviour {
 
 	[PunRPC]
 	public void PhotonQuestStage(int turnId,string[] stage1, string[] stage2, string[] stage3, string[] stage4, string[] stage5){
-		photonSet = true;
 
+		photonSet = true;
 	
 		CardFactory tempFact1 = new CardFactory ();
 		CardFactory tempFact2 = new CardFactory ();
@@ -703,20 +709,19 @@ public class MultiplayerGame : MonoBehaviour {
 				}
 			}
 		}
-
-
-		for (int i = 0; i < Stages.Count; i++) {
-			loadCards(Stages[i].GetComponent<CardArea>().cards,Stages[i]);
+		foreach (Transform child in Hand.transform) {
+			GameObject.Destroy(child.gameObject);
 		}
+		loadHand (turnId);
 
-		List<Card> stagedCards = getStagedCards (5);
+		//List<Card> stagedCards = getStagedCards (5);
 
-		for (int i = 0; i < stagedCards.Count; i++) {
-			removeCardByName (turnId, stagedCards [i].name);
-		}
+		//for (int i = 0; i < stagedCards.Count; i++) {
+		//	removeCardByName (turnId, stagedCards [i].name);
+		//}
 
 
-		//EndTurn ();
+		EndTurn ();
 	}
 	[PunRPC]
 	public void PhotonTournamentSetInPlay(string[] cardsPlayed, int turnId){
@@ -725,7 +730,7 @@ public class MultiplayerGame : MonoBehaviour {
 		List<Card> cards = clone.createCardList (cardsPlayed);
 		setInPlay (turnId,cards);
 
-		foreach (Transform child in rankCardArea.transform) {
+		foreach (Transform child in Hand.transform) {
 			GameObject.Destroy(child.gameObject);
 		}
 

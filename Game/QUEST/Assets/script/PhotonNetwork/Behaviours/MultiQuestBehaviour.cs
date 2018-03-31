@@ -214,10 +214,10 @@ public class MultiQuestBehaviour : GameBehaviour {
 						// Unflip the stage cards.
 						MultiplayerGame.GameManager.logger.info("Flipping cards in stage " + (_currStage + 1));
 						if(_currStage < _questCard.stages){
-							List<Card> cardsToReveal = MultiplayerGame.GameManager.Stages[_currStage].GetComponent<CardArea>().cards;
-							for(int i = 0; i < cardsToReveal.Count; i++){
-								cardsToReveal[i].flipCard(false);
-							}
+							//List<Card> cardsToReveal = MultiplayerGame.GameManager.Stages[_currStage].GetComponent<CardArea>().cards;
+							//for(int i = 0; i < cardsToReveal.Count; i++){
+							//	cardsToReveal[i].flipCard(false);
+							//}
 						}
 						didYouSurvivePrompt();
 
@@ -323,7 +323,9 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 
 						// Flip the staged cards.
+
 						List<Card> stagedCards = MultiplayerGame.GameManager.getStagedCards(_questCard.stages);
+						/*
 						for(int x = 0 ; x < 4 ; x++){
 							for (int i = 0; i < stagedCards.Count; i++) {
 								stagedCards[i].flipCard (true);
@@ -337,7 +339,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 							}
 						}
 
-
+						*/
 						//Remove Cards Played in stage
 						MultiplayerGame.GameManager.removeCards(_turnId,stagedCards);
 
@@ -486,7 +488,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 		}
 
 		// If we have asked all the players.
-		if (_asked >= (Game.GameManager.getNumberOfPlayers() - 1)) {
+		if (_asked >= (MultiplayerGame.GameManager.getNumberOfPlayers() - 1)) {
 
 			if(_playersIn.Count == 0 ){
 				MultiplayerGame.GameManager.logger.info("Ending the quest because no players joined.");
@@ -549,7 +551,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 	public bool didYouSurvive(List<Card> cards){
 		int power = 0;
 		for(int i = 0 ; i < cards.Count ; i++){
-			power += Game.GameManager.getPowerFromCard(cards[i]);
+			power += MultiplayerGame.GameManager.getPowerFromCard(cards[i]);
 		}
 
 		// Add the rank bonus.
