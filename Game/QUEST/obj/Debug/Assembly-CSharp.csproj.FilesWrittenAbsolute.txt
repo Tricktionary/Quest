@@ -141,3 +141,8 @@
 /Users/andybui/Documents/School/Winter2018/comp3004/proj/COMP3004-QUEST/Game/QUEST/Temp/bin/Debug/Unity.Cecil.Mdb.dll
 /Users/andybui/Documents/School/Winter2018/comp3004/proj/COMP3004-QUEST/Game/QUEST/Temp/bin/Debug/UnityEditor.iOS.Extensions.Xcode.dll
 /Users/andybui/Documents/School/Winter2018/comp3004/proj/COMP3004-QUEST/Game/QUEST/Temp/bin/Debug/UnityEditor.iOS.Extensions.Xcode.xml
+/Users/andybui/Documents/School/Winter2018/comp3004/proj/COMP3004-QUEST/Game/QUEST/Temp/bin/Debug/Photon3Unity3D.dll
+/Users/andybui/Documents/School/Winter2018/comp3004/proj/COMP3004-QUEST/Game/QUEST/Temp/bin/Debug/websocket-sharp.dll
+/Users/andybui/Documents/School/Winter2018/comp3004/proj/COMP3004-QUEST/Game/QUEST/Temp/bin/Debug/Newtonsoft.Json.dll
+/Users/andybui/Documents/School/Winter2018/comp3004/proj/COMP3004-QUEST/Game/QUEST/Temp/bin/Debug/Assembly-CSharp-firstpass.dll
+/Users/andybui/Documents/School/Winter2018/comp3004/proj/COMP3004-QUEST/Game/QUEST/Temp/bin/Debug/Assembly-CSharp-firstpass.dll.mdb

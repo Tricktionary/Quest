@@ -265,9 +265,6 @@ public class MultiQuestBehaviour : GameBehaviour {
 					// Quest is setup correctly.
 					if (_questReady) {
 
-						 
-					
-
 						//Only Let this call Once (RECURSIVE METHOD)
 						if (MultiplayerGame.GameManager.photonSet == false) {
 							//Pull Cards To Push
@@ -278,7 +275,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 							string[] stage4 = new string[allStageCard[3].Count];
 							string[] stage5 = new string[allStageCard[4].Count];
 
-							Debug.Log ("Here");
+						
 							for (int x = 0; x < allStageCard.Count; x++) {
 								for (int z = 0; z < allStageCard [x].Count; z++) {
 									if (x == 0) {
