@@ -653,8 +653,8 @@ public class MultiplayerGame : MonoBehaviour {
 	}
 
 	public void photonCall(string call, string[] cardsPlayed, int turnId,string[] stage1, string[] stage2, string[] stage3, string[] stage4, string[] stage5){
-		if (call == "PhotonTournamentSetInPlay") {
-			this.GetComponent<PhotonView> ().RPC ("PhotonTournamentSetInPlay", PhotonTargets.Others, cardsPlayed, turnId);
+		if (call == "PhotonSetInPlay") {
+			this.GetComponent<PhotonView> ().RPC ("PhotonSetInPlay", PhotonTargets.Others, cardsPlayed, turnId);
 		}
 		if (call == "PhotonQuestStage") {
 			for (int i = 0; i < stage1.Length; i++) {
@@ -729,7 +729,7 @@ public class MultiplayerGame : MonoBehaviour {
 		EndTurn ();
 	}
 	[PunRPC]
-	public void PhotonTournamentSetInPlay(string[] cardsPlayed, int turnId){
+	public void PhotonSetInPlay(string[] cardsPlayed, int turnId){
 		//Debug.Log (cardsPlayed[0]);
 		CardFactory clone = new CardFactory ();
 		List<Card> cards = clone.createCardList (cardsPlayed);

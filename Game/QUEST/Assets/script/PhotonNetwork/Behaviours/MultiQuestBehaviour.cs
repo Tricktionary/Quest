@@ -180,18 +180,30 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 			// Load the new player.
 			MultiplayerGame.GameManager.loadPlayer(_turnId);
+			MultiplayerGame.GameManager.photonSet = false;
 			//MultiplayerGame.GameManager.block(_turnId,blockMessage);
 		} else {
 
 			// If we are on the setup weapons stage.
-			if (_setupWeapons) {
+			if (_setupWeapons ) {
 
 				// Weapon setup is valid.
 				if (MultiplayerGame.GameManager.playAreaValid ()) {
+					if (MultiplayerGame.GameManager.photonSet == false) {
+						// Set the players cards that they have in play.
+						if (MultiplayerGame.GameManager.getPlayer (_turnId).GetType () != typeof(AIPlayer)) {
+							MultiplayerGame.GameManager.setInPlay (_turnId);
+							//TODO:Send Photon Call simillar to Tournament Set In Play
+							List<Card> currInPlayCards = MultiplayerGame.GameManager.getInPlay (_turnId);
+							string[] currInPlayCardStr = new string[currInPlayCards.Count];
 
-					// Set the players cards that they have in play.
-					if(MultiplayerGame.GameManager.getPlayer(_turnId).GetType() != typeof(AIPlayer)){
-						MultiplayerGame.GameManager.setInPlay(_turnId);
+							for (int i = 0; i < currInPlayCards.Count; i++) {
+								currInPlayCardStr [i] = currInPlayCards [i].name;
+							}
+
+							MultiplayerGame.GameManager.photonSet = true;
+							MultiplayerGame.GameManager.photonCall ("PhotonSetInPlay", currInPlayCardStr, _turnId, null, null, null, null, null);
+						}
 					}
 
 					// Fix prompt message (if they submited an invalid input).
@@ -213,12 +225,14 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 						// Unflip the stage cards.
 						MultiplayerGame.GameManager.logger.info("Flipping cards in stage " + (_currStage + 1));
+						/*
 						if(_currStage < _questCard.stages){
-							//List<Card> cardsToReveal = MultiplayerGame.GameManager.Stages[_currStage].GetComponent<CardArea>().cards;
-							//for(int i = 0; i < cardsToReveal.Count; i++){
-							//	cardsToReveal[i].flipCard(false);
-							//}
+							List<Card> cardsToReveal = MultiplayerGame.GameManager.Stages[_currStage].GetComponent<CardArea>().cards;
+							for(int i = 0; i < cardsToReveal.Count; i++){
+								cardsToReveal[i].flipCard(false);
+							}
 						}
+						*/
 						didYouSurvivePrompt();
 
 						// Clear the players inPlay list.
@@ -240,6 +254,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 					// Load the new player.
 					MultiplayerGame.GameManager.loadPlayer(_turnId);
+					MultiplayerGame.GameManager.photonSet = false;
 					//MultiplayerGame.GameManager.block(_turnId,blockMessage);
 
 				// Weapon setup is not valid.
@@ -362,6 +377,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 						// Load new player.
 						MultiplayerGame.GameManager.loadPlayer(_turnId);
+						MultiplayerGame.GameManager.photonSet = false;
 						//MultiplayerGame.GameManager.block(_turnId,blockMessage);
 
 						// Ask if the next player wants to play.
@@ -463,6 +479,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 			// Load the next player.
 			MultiplayerGame.GameManager.loadPlayer(_turnId);
+			MultiplayerGame.GameManager.photonSet = false;
 			//MultiplayerGame.GameManager.block(_turnId,blockMessage);
 
 			if(MultiplayerGame.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
@@ -533,6 +550,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 		// Load the right player.
 		MultiplayerGame.GameManager.loadPlayer(_turnId);
+		MultiplayerGame.GameManager.photonSet = false;
 		//MultiplayerGame.GameManager.block(_turnId,blockMessage);
 	}
 
