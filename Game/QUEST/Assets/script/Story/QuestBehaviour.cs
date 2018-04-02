@@ -25,6 +25,9 @@ public class QuestBehaviour : GameBehaviour {
 	// Indicates if we are in the setup weapons phase.
 	bool _setupWeapons = false;
 
+	// Indicates that a bid has been won, move to next stage/end	
+	bool _bidWin = false;
+
 	// Indicates if we are showing the results.
 	bool _showResults = false;
 
@@ -78,10 +81,6 @@ public class QuestBehaviour : GameBehaviour {
 	// End turn method for when a Quest card is in play.
 	public void endTurn(){
 
-		Debug.Log("get num players: " + Game.GameManager.getNumberOfPlayers());
-		for(int i = 0 ; i < Game.GameManager.getNumberOfPlayers() ; i++){
-			Debug.Log("inplay counter: " + Game.GameManager.getNumInPlay(i));
-		}
 		/*
 			if(Game.GameManager.Stages[_currStage++].GetType() == typeof(TestCard))
 			{
@@ -207,43 +206,71 @@ public class QuestBehaviour : GameBehaviour {
 			if(testStage == _currStage){
 
 				if(Game.GameManager.getPlayer(_turnId).GetType() != typeof(AIPlayer)){
-				Game.GameManager.setInPlay(_turnId);
-				}
-				//check if newbid is higher than highestBid, save new highestBid and highest Bidder 
-				Debug.Log("get num players: " + Game.GameManager.getNumberOfPlayers());
-				
-				
-
-				for(int i = 0 ; i < Game.GameManager.getNumberOfPlayers() ; i++){
-					Debug.Log("inplay count: " + Game.GameManager.getNumInPlay(i));
+					Game.GameManager.setInPlay(_turnId);
 				}
 				
+				//check if newbid is higher than highestBid, lower removed from quest, save new highestBid and highest Bidder if higher
+				//save bid cards for all players who are bidding 
+				//
 
 
+		
 				Debug.Log("turn ID: " + _turnId);
+				Debug.Log("participatingPlayers: " + participatingPlayers);
+			
 				
+
+
 				if(Game.GameManager.getInPlay(_turnId).Count > highestBid){ 
 					highestBid = Game.GameManager.getInPlay(_turnId).Count;
 					highestBidder = _turnId;
 					Debug.Log("highest Bid: " + highestBid); 
 					Debug.Log("highest Bidder: " + highestBidder); 
 				}
-				
+				else{
+					Debug.Log("Removed player: " + _turnId);
+					//return card to their hand 
+					Game.GameManager.getInPlay(_turnId);
+					_playersIn.Remove(_turnId);
+					participatingPlayers--;
+				}
 				Prompt.PromptManager.statusPrompt ("Bid by adding cards in the play area, current highest bid: " + highestBid); 
+			
 				
-				participatingPlayerIndex++;
+				Debug.Log("participatingPlayers: " + participatingPlayers);
+				
 
-				if (participatingPlayerIndex > (participatingPlayers - 1)) {
+				if (participatingPlayers == 1) {	
+					Debug.Log("participatingPlayerIndex: " + participatingPlayerIndex);	
+					_turnId = _playersIn[participatingPlayerIndex];
+					participatingPlayerIndex = 0;
+					Game.GameManager.clearInPlay(_turnId);
+					_showResults = true;
+					_bidWin = true;
+					Game.GameManager.logger.info("All playing players have bid for stage, highest bid was player: " + highestBidder);
+
+				}
+				else{
+					participatingPlayerIndex++;
+
+					if(participatingPlayerIndex == participatingPlayers){
+						participatingPlayerIndex = 0;
+						_turnId = _playersIn[participatingPlayerIndex];
+
+					}
+
+
+					_turnId = _playersIn[participatingPlayerIndex];
 
 				}
 
-				nextPlayer();
+				//nextPlayer();
 				// Load the new player.
 				Game.GameManager.loadPlayer(_turnId);
 			}
 			// If we are on the setup weapons stage.
 			else if (_setupWeapons) {
-
+				Debug.Log("Inside _setupWeapons");
 				// Weapon setup is valid.
 				if (Game.GameManager.playAreaValid ()) {
 
@@ -510,16 +537,16 @@ public class QuestBehaviour : GameBehaviour {
 				}
 
 				if(testStage==_currStage){
+					Debug.Log("Why am I here????");
 					Debug.Log("currently on test stage");
-					Prompt.PromptManager.statusPrompt ("Bid by adding cards in the play area, current highest bid: " + highestBid);
-				
-					Debug.Log("Num in hand  " + Game.GameManager.currInPlay.Count);
+					Prompt.PromptManager.statusPrompt ("Bid by adding cards in the play area");
 				
 					//Debug.Log("Num in hand +3 " + Game.GameManager.getInPlay(_turnId+3).Count);
 
 					highestBid = Game.GameManager.getNumInPlay(_turnId);
 					highestBidder = _turnId;
 					Debug.Log("highest bid: " + highestBid);
+					participatingPlayers = _playersIn.Count;
 
 					
 				}
