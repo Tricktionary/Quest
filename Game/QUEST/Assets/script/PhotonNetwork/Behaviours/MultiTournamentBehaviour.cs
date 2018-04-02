@@ -65,7 +65,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 			// Check if weapon setup is valid.
 			if (MultiplayerGame.GameManager.playAreaValid ()) {
 				if(MultiplayerGame.GameManager.photonSet == false){
-				// Set the players cards that they have in play.
+					// Set the players cards that they have in play.
 					if (MultiplayerGame.GameManager.getPlayer (_turnId).GetType () != typeof(AIPlayer)) {
 
 						Debug.Log ("Current Turn: " + _turnId);
@@ -83,6 +83,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 						MultiplayerGame.GameManager.photonCall("PhotonSetInPlay",currInPlayCardStr,_turnId,null,null,null,null,null);
 					}
 				}
+				MultiplayerGame.GameManager.photonSet = false;
 				// Fix prompt message (if they submited an invalid input).
 				MultiplayerGame.GameManager.getPromptManager().statusPrompt ("Setup your weapons!");
 
@@ -130,7 +131,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 				// Load the new player.
 				MultiplayerGame.GameManager.loadPlayer(_turnId);
 				MultiplayerGame.GameManager.block(_turnId,blockMessage);
-				MultiplayerGame.GameManager.photonSet = false;
+				//MultiplayerGame.GameManager.photonSet = false;
 
 			} else {
 					MultiplayerGame.GameManager.getPromptManager().statusPrompt("You can't submit foes to the play area!");
@@ -159,7 +160,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 			_turnId = 0;
 		}
 		MultiplayerGame.GameManager.block(_turnId,blockMessage);
-		MultiplayerGame.GameManager.photonSet = false;
+		//MultiplayerGame.GameManager.photonSet = false;
 	}
 
 	// Find the tournament winner.
@@ -214,7 +215,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 
 		// Reset tournament varaibles.
 		_turnId = 0;
-		MultiplayerGame.GameManager.photonSet = false;
+		//MultiplayerGame.GameManager.photonSet = false;
 
 		for (int i = 0; i < _playersIn.Count; i++) {
 			MultiplayerGame.GameManager.clearInPlayEnd(_playersIn[i]);
@@ -302,6 +303,6 @@ public class MultiTournamentBehaviour : GameBehaviour {
 		// Load the right player.
 		MultiplayerGame.GameManager.loadPlayer(_turnId);
 		MultiplayerGame.GameManager.block(_turnId,blockMessage);
-		MultiplayerGame.GameManager.photonSet = false;
+		//MultiplayerGame.GameManager.photonSet = false;
 	}
 }

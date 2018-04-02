@@ -206,6 +206,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 							MultiplayerGame.GameManager.photonCall ("PhotonSetInPlay", currInPlayCardStr, _turnId, null, null, null, null, null);
 						}
 					}
+					MultiplayerGame.GameManager.photonSet = false;
 
 					// Fix prompt message (if they submited an invalid input).
 						MultiplayerGame.GameManager.getPromptManager().statusPrompt ("Setup your weapons!");
@@ -380,7 +381,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 						//AI join quest
 						if(MultiplayerGame.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
 							MultiplayerGame.GameManager.AILogicResponse(_turnId,"quest");
-							Debug.Log("Herelol");
+							//Debug.Log("Herelol");
 						}
 
 						// Clear the status prompt.

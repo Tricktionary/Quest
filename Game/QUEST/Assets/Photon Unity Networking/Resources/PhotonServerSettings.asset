@@ -55,4 +55,5 @@ MonoBehaviour:
   - PhotonSetInPlay
   - PhotonTournamentSetInPlay
   - PhotonQuestStage
+  - PhontonPayShield
   DisableAutoOpenWizard: 1
