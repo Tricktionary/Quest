@@ -75,6 +75,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 		if(_currStage == testStage){
 			Debug.Log("Test Mode");
 		}
+
 		// Check if the results of the quest are in.
 		else if (_showResults) {
 			// Move to the next player.
@@ -225,14 +226,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 						// Unflip the stage cards.
 						MultiplayerGame.GameManager.logger.info("Flipping cards in stage " + (_currStage + 1));
-						/*
-						if(_currStage < _questCard.stages){
-							List<Card> cardsToReveal = MultiplayerGame.GameManager.Stages[_currStage].GetComponent<CardArea>().cards;
-							for(int i = 0; i < cardsToReveal.Count; i++){
-								cardsToReveal[i].flipCard(false);
-							}
-						}
-						*/
+
 						didYouSurvivePrompt();
 
 						// Clear the players inPlay list.
@@ -328,7 +322,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 							for (int i = 0; i < stage5.Length; i++) {
 								Debug.Log (stage5 [i]);
 							}
-
+							MultiplayerGame.GameManager.photonSet = true;
 							//Photon Call for sponsoring stage
 							MultiplayerGame.GameManager.photonCall ("PhotonQuestStage", null, _turnId, stage1, stage2, stage3, stage4, stage5);
 						}
@@ -407,11 +401,11 @@ public class MultiQuestBehaviour : GameBehaviour {
 		_asked = 0;
 		_currStage = 0;
 		_questReady = false;
-	  _setupWeapons = false;
+	  	_setupWeapons = false;
 		_showResults = false;
 		testStage = -1;
 		numberOfTestStage = 0;
-
+		_playersIn = new List<int>();
 		participatingPlayerIndex = 0;
 		participatingPlayers = 0;
 
