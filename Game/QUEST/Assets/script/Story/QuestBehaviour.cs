@@ -197,7 +197,7 @@ public class QuestBehaviour : GameBehaviour {
 
 			// Load the new player.
 			Game.GameManager.loadPlayer(_turnId);
-		} 
+		}
 		else {
 			//if we are on a test stage 
 			
@@ -229,8 +229,9 @@ public class QuestBehaviour : GameBehaviour {
 				}
 				else{
 					Debug.Log("Removed player: " + _turnId);
-					//return card to their hand 
-					Game.GameManager.getInPlay(_turnId);
+					//return card to their hand or remove not sure??? 
+					//Game.GameManager.getInPlay(_turnId);
+					Game.GameManager.clearInPlay(_turnId);
 					_playersIn.Remove(_turnId);
 					participatingPlayers--;
 				}
@@ -245,8 +246,9 @@ public class QuestBehaviour : GameBehaviour {
 					_turnId = _playersIn[participatingPlayerIndex];
 					participatingPlayerIndex = 0;
 					Game.GameManager.clearInPlay(_turnId);
-					_showResults = true;
 					_bidWin = true;
+					_showResults = true;
+
 					Game.GameManager.logger.info("All playing players have bid for stage, highest bid was player: " + highestBidder);
 
 				}
@@ -430,13 +432,15 @@ public class QuestBehaviour : GameBehaviour {
 		_showResults = false;
 		testStage = -1;
 		numberOfTestStage = 0;
-
+		_bidWin = false;
 		participatingPlayerIndex = 0;
 		participatingPlayers = 0;
 
 		// Proceed to the next player and story card in the game.
 		Game.GameManager.nextCardAndPlayer();
 	}
+
+	
 
 	// Set the current story card.
 	public void setCard(Card c){
