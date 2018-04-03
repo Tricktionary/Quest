@@ -428,8 +428,8 @@ public class MultiQuestBehaviour : GameBehaviour {
 		_asked++;
 		if (answer) {
 			// Prompt the user to setup the quest.
-				MultiplayerGame.GameManager.getPromptManager().statusPrompt("Please set up the Quest.");
-
+			MultiplayerGame.GameManager.getPromptManager().statusPrompt("Please set up the Quest.");
+			MultiplayerGame.GameManager.blockMessage("Player " + (_turnId + 1) + " decided to sponsor the quest.");
 			MultiplayerGame.GameManager.logger.info("Player " + (_turnId + 1) + " decided to sponsor the quest.");
 
 			// Set the sponsor and setup the stages.
