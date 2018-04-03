@@ -20,7 +20,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 2}
-  m_MinSize: {x: 950, y: 392}
+  m_MinSize: {x: 950, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -43,7 +43,7 @@ MonoBehaviour:
     y: 0
     width: 1280
     height: 756
-  m_MinSize: {x: 950, y: 392}
+  m_MinSize: {x: 950, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &3
 MonoBehaviour:
@@ -109,7 +109,7 @@ MonoBehaviour:
   m_MinSize: {x: 683, y: 342}
   m_MaxSize: {x: 12008, y: 8042}
   vertical: 0
-  controlID: 83
+  controlID: 26
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -130,13 +130,13 @@ MonoBehaviour:
     height: 706
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 12}
+  m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 12}
   - {fileID: 13}
   - {fileID: 14}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -184,7 +184,7 @@ MonoBehaviour:
   m_MinSize: {x: 481, y: 221}
   m_MaxSize: {x: 8006, y: 4021}
   vertical: 0
-  controlID: 62
+  controlID: 47
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -285,7 +285,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 93
-    width: 797
+    width: 527
     height: 685
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SceneLighting: 0
@@ -294,9 +294,9 @@ MonoBehaviour:
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 322.22556, y: 223.17633, z: 8.941537}
+    m_Target: {x: 400.10663, y: 189.17186, z: 8.875}
     speed: 2
-    m_Value: {x: 322.22556, y: 223.17633, z: 8.941537}
+    m_Value: {x: 400.10663, y: 189.17186, z: 8.875}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -507,7 +507,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: e6f8feff52f9feff46fbfeff4cfbfeff56fbfeffb6fdfeffc4fdfeffc8fdfeff1c18ffff8618ffff7a1affff801affff8a1affffea1cfffff81cfffffc1cffff263affff8e3affff823cffff883cffff923cfffff23effff003fffff043fffffe456ffff3657ffff2a59ffff3059ffff3a59ffff9a5bffffa85bffffac5bffff3c72ffffa472ffff9874ffff9e74ffffa874ffff0877ffff1677ffff1a77ffffaa8affff128bffff068dffff0c8dffff168dffff768fffff8e8fffff9c8fffff92bfffff10c0ffff04c2ffff0ac2ffff14c2ffff74c4ffff82c4ffff86c4ffffd8d4ffff54d5ffff48d7ffff4ed7ffff58d7ffffb8d9ffffc6d9ffffcad9ffffd0e7ffff4ee8ffff46eaffff50eaffff68eaffffccecffffdeecffffe6ecffff9efbffff000000002e8d00007cb50000
+    m_ExpandedIDs: 40fdfaffa6fdfaff9afffaffa0fffaffaafffaff0a02fbff1802fbff1c02fbffc21dfbff2a1efbff1e20fbff2420fbff2e20fbff8e22fbff9c22fbffa022fbff023afbffba42fbff2243fbff1645fbff1c45fbff2645fbff8647fbff9447fbff9847fbffbc5afbff245bfbff185dfbff1e5dfbff285dfbff885ffbff965ffbff9a5ffbff2873fbff8c73fbff8075fbff8675fbff9075fbfff077fbff0878fbff0c78fbfff888fbff5a89fbff4e8bfbff548bfbff5e8bfbffbe8dfbffcc8dfbffd08dfbff90a5fbffe2a5fbffd6a7fbffdca7fbffe6a7fbff46aafbff54aafbff58aafbff68b2fbffcab2fbffbeb4fbffc4b4fbffceb4fbff2eb7fbff3cb7fbff40b7fbff10c0fbff74c0fbff68c2fbff6ec2fbff78c2fbffd8c4fbffe6c4fbffeac4fbff62cbfbffcacbfbffbecdfbffc4cdfbffcecdfbff2ed0fbff3cd0fbff40d0fbffcadbfbff2cdcfbff20defbff26defbff30defbff9ae0fbffa8e0fbfface0fbff1e04fcffc224fcff2425fcff1827fcff1e27fcff2827fcff8829fcff9629fcff9a29fcff143ffcff7e3ffcff7241fcff7841fcff8241fcffe243fcfff043fcfff443fcff2c5cfcff945cfcff885efcff8e5efcff985efcfff860fcff0661fcff0a61fcff3273fcff6677fcffd077fcffc479fcffca79fcffd479fcff347cfcff4c7cfcff5a7cfcff6891fcffd091fcffc493fcffca93fcffd493fcff3496fcff4296fcff4696fcff04a9fcff70a9fcff64abfcff6aabfcff74abfcffd4adfcffe2adfcffe6adfcff9ec2fcff0ac3fcfffec4fcff04c5fcff0ec5fcff6ec7fcff7cc7fcff80c7fcff3edbfcff90dbfcff84ddfcff8addfcff94ddfcfff4dffcff02e0fcff06e0fcffaaf8fcff14f9fcff08fbfcff0efbfcff18fbfcff78fdfcff86fdfcff8afdfcffd211fdff3a12fdff2e14fdff3414fdff3e14fdff9e16fdffac16fdffb016fdffc427fdff2c28fdff202afdff262afdff302afdff902cfdff9e2cfdffa22cfdff3a3efdff8c3efdff8040fdff8640fdff9040fdfff042fdfffe42fdff0243fdff1257fdff7a57fdff6e59fdff7459fdff7e59fdffde5bfdffec5bfdfff05bfdff8a6bfdfff46bfdffe86dfdffee6dfdfff86dfdff5870fdff6670fdff6a70fdff3873fdffa273fdff9675fdff9c75fdffa675fdff0678fdff1478fdff1878fdffa4b0fdff10b1fdff10b3fdff22b3fdff38b3fdffa4b5fdffbeb5fdffc2b5fdff3ad0fdffa6d0fdffa6d2fdffb8d2fdffced2fdff3ad5fdff54d5fdff58d5fdff54f3fdffbef3fdffbef5fdffd0f5fdffe6f5fdff52f8fdff6cf8fdff70f8fdffee0dfeff400efeff4010feff5210feff6810feffd412feffee12fefff212feff9039fefffa39fefffa3bfeff0c3cfeff223cfeff8e3efeffa83efeffac3efefffcbafeff4ebbfeff4ebdfeff60bdfeff76bdfeffe2bffefffcbffeff00c0feffd0e0feff3ee1feff3ee3feff50e3feff66e3feffd2e5feffece5fefff0e5feff2218ffff8c18ffff8c1affff9e1affffb41affff201dffff3a1dffff3e1dffff6647ffffd247ffffd249ffffe449fffffa49ffff664cffff804cffff844cffff40eaffffbeeaffffc2ecffffd8ecfffff2ecffff62efffff80efffff88efffff9efbffff00000000beed0000c48902006c8b020046de0200a2de02004a310300a6310300c422040020230400
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -525,8 +525,7 @@ MonoBehaviour:
       m_IsRenamingFilename: 0
       m_ClientGUIView: {fileID: 10}
     m_SearchString: 
-  m_ExpandedScenes:
-  - MainGame
+  m_ExpandedScenes: []
   m_CurrenRootInstanceID: 0
   m_Locked: 0
   m_CurrentSortingName: TransformSorting
@@ -553,9 +552,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 801
-    y: 397
+    y: 372
     width: 479
-    height: 381
+    height: 406
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SearchFilter:
     m_NameFilter: 
@@ -578,7 +577,7 @@ MonoBehaviour:
   m_LastProjectPath: /Users/andybui/Documents/School/Winter2018/comp3004/proj/COMP3004-QUEST/Game/QUEST
   m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 24}
+    scrollPos: {x: 0, y: 0}
     m_SelectedIDs: f6300000
     m_LastClickedID: 12534
     m_ExpandedIDs: 000000004c290000682b00005e2e0000e42e00003c30000000ca9a3bffffff7f
@@ -636,7 +635,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000362a0000f2290000ee29000018bdfdffc2300000
     m_RenameOverlay:
       m_UserAcceptedRename: 0

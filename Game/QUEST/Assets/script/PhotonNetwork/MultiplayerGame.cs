@@ -18,10 +18,10 @@ public class MultiplayerGame : MonoBehaviour {
 
 	public MultiplayerPrompt PromptManager;
 	// List of players.
-	private List<Player> _players = new List<Player>();
+	public List<Player> _players = new List<Player>();
 
 	// Store the current player id (outside of quest, tournament, events).
-	public int _currentPlayer = -1;
+	public int _currentPlayer = 0;
 
 	// Prefabs.
 	public GameObject Card;
@@ -270,6 +270,7 @@ public class MultiplayerGame : MonoBehaviour {
 
 		// Load their hand.
 		loadHand(n);
+		block(n,"");
 	}
 
 	// Rank up players.
@@ -288,16 +289,21 @@ public class MultiplayerGame : MonoBehaviour {
 		//Check if anyone won
 		checkWinner();
 
+		Debug.Log("Before:"+_currentPlayer);
+
 		// Move onto the next player.
 		_currentPlayer++;
-
+ 
+		
 		// Wrap around.
 		if (_currentPlayer >= _players.Count) {
 			_currentPlayer = 0;
 		}
-
+		Debug.Log("After:"+_currentPlayer);
+		block(_currentPlayer,"");
 		loadPlayer(_currentPlayer);
-
+		
+		
 		// Clean the stages.
 		logger.info("Cleaning cards from stages.");
 		for (int i = 0; i < Stages.Count; i++) {
@@ -1002,7 +1008,14 @@ public class MultiplayerGame : MonoBehaviour {
 	//Pay the player shields
 	public void payShield(int playerId, int shields){
 		logger.info("Paying " + shields + " shields to Player " + (playerId + 1) + ".");
+		
 		_players[playerId].AddShields(shields);
+		this.GetComponent<PhotonView>().RPC("PhotonPayShield",PhotonTargets.Others,playerId,shields);
+	}
+
+	[PunRPC]
+	public void PhotonPayShield(int playerId, int shields){
+		_players[playerId].AddShields(shields);	
 	}
 
 
@@ -1095,7 +1108,10 @@ public class MultiplayerGame : MonoBehaviour {
 
 	//Block Player
 	public void block(int turnId,string msg){
-		if((turnId+1) != PhotonNetwork.player.ID){
+		//this.GetComponent<PhotonView> ().RPC ("PhotonBlock", PhotonTargets.All,turnId,msg);
+		Debug.Log("TurnID:"+(turnId+1));
+		Debug.Log("ClientID:"+clientID);
+		if((turnId+1) != clientID){
 			blocker.SetActive(true);
 			blockerTXT.GetComponent<UnityEngine.UI.Text>().text = ""+(turnId+1);
 		}
@@ -1105,6 +1121,12 @@ public class MultiplayerGame : MonoBehaviour {
 		blockerInGameMSG.GetComponent<UnityEngine.UI.Text> ().text = msg;
 	}
 
+/* 
+	[PunRPC]
+	public void PhotonBlock(int turnId,string msg){
+
+	}
+*/
 	public void genericModeSetup(string storyDeckType){
 
 		logger.info("Setting up game...");
@@ -1124,7 +1146,7 @@ public class MultiplayerGame : MonoBehaviour {
 		// Setup players.
 		_players = new List<Player>();
 		PhotonPlayer[] players = PhotonNetwork.playerList;
-		//block(0,"");
+		block(0,"");
 
 		//Create Players on based on network connection
 		//Debug.Log(players.Length);
@@ -1181,7 +1203,7 @@ public class MultiplayerGame : MonoBehaviour {
 	// Runs if the user selects Play PVP.
 	public void NormalMode(){
 		logger.info("Normal mode selected.");
-		genericModeSetup("QuestOnly");
+		genericModeSetup("scenario1");
 	}
 
 	//Give card to player

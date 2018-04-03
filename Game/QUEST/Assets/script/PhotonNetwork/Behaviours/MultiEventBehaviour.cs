@@ -12,11 +12,12 @@ public class MultiEventBehaviour : GameBehaviour {
 	// Event handled.
 	bool _eventHandled = false;
 
+	string blockMessage = "";
+
 	// End turn method for when a Event card is in play.
 	public void endTurn(){
 		MultiplayerGame.GameManager.logger.info ("Handling event card: " + _eventCard.name);
-		handleEvent(_eventCard.name);
-		
+		handleEvent(_eventCard.name);		
 	}
 
 	public int getCurrentTurn(){
@@ -157,6 +158,7 @@ public class MultiEventBehaviour : GameBehaviour {
 
 			// Proceed to next card and player.
 			MultiplayerGame.GameManager.nextCardAndPlayer();
+			
 		}
 	}
 
