@@ -56,6 +56,7 @@ public class Game : MonoBehaviour {
 	//cards currently in play
 	public List<Card> currInPlay = new List<Card>();
 
+
 	// Misc GameObject's.
 	public GameObject currStageTxt;
 	public GameObject discardPile;
@@ -614,6 +615,14 @@ public class Game : MonoBehaviour {
 
 		//Filtered Hand
 		_players[player_id].inPlay = filteredHand2;
+	}
+
+
+	public void clearAllInPlay(int player_id){
+		List<Card> newEmpty = new List<Card>();
+		List<Card> currInPlay = new List<Card>();
+		currInPlay = _players[player_id].inPlay;
+		_players[player_id].inPlay = newEmpty;
 	}
 
 	// Clear a players in play cards.
