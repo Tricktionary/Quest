@@ -891,6 +891,7 @@ public class Game : MonoBehaviour {
 
 	// Open show player panel.
 	public void OpenShowPlayer(){
+		unflipHand();
 		if(allFlip){
 			playerPanel.SetActive(true);
 

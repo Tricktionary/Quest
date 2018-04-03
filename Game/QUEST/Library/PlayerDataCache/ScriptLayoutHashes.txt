@@ -175,7 +175,6 @@ e0d7152ecf22ae2a833ea3b9acd8d0a2 Assembly-CSharp.dll:.WorkerInGame
 e626bae268f8b272b7a2d07760d262c6 Assembly-CSharp.dll:.PickupController
 1356b4a6096c35c829823b7e28399030 Assembly-CSharp.dll:.HubGui
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.MultiEventBehaviour
-05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.CardFactory
 5a78906060300940acb71bc3dfb6396d Assembly-CSharp.dll:.DragToMove
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.CubeLerp
 9650139907be6d63bf3c3eaa8900f13f Assembly-CSharp.dll:.myThirdPersonController
@@ -297,3 +296,4 @@ a5bbd838795a0e002e88e1dd07ffabff Assembly-CSharp.dll:.EventCard
 239d2cc8d353bbfcbefc27fa8f0221cc Assembly-CSharp.dll:Prototype.NetworkLobby.LobbyServerList
 a5bbd838795a0e002e88e1dd07ffabff Assembly-CSharp.dll:.QuestCard
 54a26a95db9c623b6eb6fc01ae3ef891 Assembly-CSharp.dll:.CubeExtra
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.CardFactory
