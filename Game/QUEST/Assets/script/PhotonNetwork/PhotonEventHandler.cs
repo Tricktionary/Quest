@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PhotonEventHandler : MonoBehaviour {
-
   public GameObject yesButton;
   public GameObject noButton;
   public GameObject endTurnButton;

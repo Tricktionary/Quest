@@ -1015,6 +1015,8 @@ public class MultiplayerGame : MonoBehaviour {
 	[PunRPC]
 	public void PhotonPayShield(int playerId, int shields){
 		_players[playerId].AddShields(shields);	
+		logger.info("Client Desync, Player " + (playerId + 1) + " won!");
+		logger.info("Paying " + shields + " shields to Player " + (playerId + 1) + ".");
 	}
 
 
