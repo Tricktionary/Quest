@@ -470,7 +470,7 @@ GameObject:
   - component: {fileID: 114814496125241012}
   - component: {fileID: 114448825051914738}
   m_Layer: 5
-  m_Name: Iter2
+  m_Name: ITER2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2593,6 +2593,7 @@ MonoBehaviour:
   _questBehaviour: {fileID: 0}
   _tournamentBehaviour: {fileID: 0}
   _eventBehaviour: {fileID: 0}
+  PromptManager: {fileID: 0}
   _currentPlayer: -1
   Card: {fileID: 1833412110767810, guid: 6eb155d50af9c4282a79a2560f9b47b6, type: 2}
   WeaponCard: {fileID: 1405695734331132, guid: 5e6167b2599404fd89e86fd2c46a9f9b, type: 2}
@@ -2642,11 +2643,12 @@ MonoBehaviour:
   winScreenTxt: {fileID: 1254540706614582}
   playerIdTxt: {fileID: 1492322648412922}
   shieldCounterTxt: {fileID: 1215610870050726}
-  endTurnButton: {fileID: 1614622069188120}
-  drawCardButton: {fileID: 1883192972413674}
   showHandButton: {fileID: 1605002357160868}
   showPlayerButton: {fileID: 1218031518072380}
   exitShowPlayerButton: {fileID: 1877855962417972}
+  promptObj: {fileID: 0}
+  promptTxt: {fileID: 0}
+  gameStatus: {fileID: 0}
   bonusQuestPoints: 0
 --- !u!114 &114449345194773990
 MonoBehaviour:
