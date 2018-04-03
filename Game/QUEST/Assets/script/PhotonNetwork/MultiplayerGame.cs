@@ -1019,7 +1019,8 @@ public class MultiplayerGame : MonoBehaviour {
 	}
 
 
-	// Discard a card.
+	// Discard a card. 
+	// TODO:Network this shit
 	public void discardCard(int player_id, List<Card> discardList = null){
 
 		//this.GetComponent<PhotonView>().RPC("PhotonDiscardCards",PhotonTargets.All,_storyCard.asset);
@@ -1118,6 +1119,11 @@ public class MultiplayerGame : MonoBehaviour {
 		else{
 			blocker.SetActive(false);
 		}
+		blockerInGameMSG.GetComponent<UnityEngine.UI.Text> ().text = msg;
+	}
+	
+	//Change Block message
+	public void blockMessage(string msg){
 		blockerInGameMSG.GetComponent<UnityEngine.UI.Text> ().text = msg;
 	}
 

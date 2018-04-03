@@ -271,10 +271,10 @@ public class Deck{
 	}
 	void addBoarHunt(){
 		addQuest("Boar Hunt", 2, "Boar", "card_image/quest/questCard4", 1);
-		addEvent("Court Called to Camelot", "All Allies in play must be discarded", "card_image/events/eventCard6", 1);
-		addEvent("Prosperity Throughout the Realm", "All players may immediately draw 2 adventure Cards", "card_image/events/eventCard8", 1);
 		addEvent("Chivalrous Deed", "lowest rank and shield receives 3 shields", "card_image/events/eventCard1", 1);
-		addEvent("Queen's Favor", "The lowest ranked player(s) immediately receives 2 Adventure cards", "card_image/events/eventCard5", 2);
+		addEvent("Prosperity Throughout the Realm", "All players may immediately draw 2 adventure Cards", "card_image/events/eventCard8", 1);
+		addTournament("Tournament at Camelot", 3, "card_image/tournament/TournamentCard", 1);
+		addQuest("Slay the Dragon", 3, "Dragon", "card_image/quest/questCard7", 1);
 	}
 	void addScenario2(){
 		addQuest("Boar Hunt", 2, "Boar", "card_image/quest/questCard4", 1);
