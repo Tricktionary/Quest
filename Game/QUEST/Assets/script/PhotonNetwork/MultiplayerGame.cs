@@ -18,10 +18,10 @@ public class MultiplayerGame : MonoBehaviour {
 
 	public MultiplayerPrompt PromptManager;
 	// List of players.
-	private List<Player> _players = new List<Player>();
+	public List<Player> _players = new List<Player>();
 
 	// Store the current player id (outside of quest, tournament, events).
-	public int _currentPlayer = -1;
+	public int _currentPlayer = 0;
 
 	// Prefabs.
 	public GameObject Card;
@@ -68,8 +68,6 @@ public class MultiplayerGame : MonoBehaviour {
 	private Deck _discardPileStory;
 
 	//Button
-	//public GameObject endTurnButton;
-	//public GameObject drawCardButton;
 	public GameObject showHandButton;
 	public GameObject showPlayerButton;
 	public GameObject exitShowPlayerButton;
@@ -78,18 +76,27 @@ public class MultiplayerGame : MonoBehaviour {
 	public GameObject promptObj;
 	public GameObject promptTxt;
 	public GameObject gameStatus;
-	//public GameObject yesButton;
-	//public GameObject noButton;
 
+	//Blocker
+	public GameObject blocker;
+	public GameObject blockerTXT;
+	public GameObject blockerCardArea;
+	public GameObject blockerInGameMSG;
 
 	// The current story card in play.
 	Card _storyCard;
 	bool activeStoryCard = false;
-
  	public bool bonusQuestPoints = false;
+
+	//Card Factory for networking
+	public CardFactory cardFactory = new CardFactory();
+
 	//tempFix
 	bool allFlip = false;
 
+	int clientID;
+
+	public bool photonSet = false;
 
 	// Initialization.
 	void Awake(){
@@ -98,7 +105,7 @@ public class MultiplayerGame : MonoBehaviour {
 		}
 		logger.info("Initializing Game object.");
 		PromptManager = new MultiplayerPrompt(promptObj,promptTxt,gameStatus);
-    NormalMode();
+    	NormalMode();
 		showHandButton.GetComponent<Button>().onClick.AddListener(unflipHand);
 		showPlayerButton.GetComponent<Button>().onClick.AddListener(OpenShowPlayer);
 		exitShowPlayerButton.GetComponent<Button>().onClick.AddListener(CloseShowPlayer);
@@ -116,12 +123,21 @@ public class MultiplayerGame : MonoBehaviour {
 
 	// End a turn (fires when the End Turn button is clicked).
 	public void EndTurn() {
+		
 		// If the hand has too many cards.
-		if(Hand.GetComponent<CardArea>().cards.Count >= 13 ){
+		/*
+		List<Card> stagedCards = getStagedCards (5);
+		for (int i = 0; i < stagedCards.Count; i++) {
+			Debug.Log (stagedCards [i].name);
+		}
+		*/
+
+		if(Hand.GetComponent<CardArea>().cards.Count >= 13  ){
 			PromptManager.statusPrompt("Too many cards, please discard or use.");
 			logger.info("There are too many cards in Player " + (_currentPlayer + 1) + "'s hand, they must discard or play.");
 			return;
 		}
+
 
 		// Need's to be a story card in play to end a turn.
 		if (activeStoryCard) {
@@ -151,6 +167,7 @@ public class MultiplayerGame : MonoBehaviour {
 		} else {
 			logger.info("Drawing a story card...");
 			// Draw a story card.
+			
 			_storyCard = _storyDeck.Draw();
 			GameObject storyCardObj = null;
 
@@ -167,6 +184,8 @@ public class MultiplayerGame : MonoBehaviour {
 
 			// Load the card sprite.
 			Sprite storySprite = Resources.Load<Sprite>(_storyCard.asset);
+
+			this.GetComponent<PhotonView>().RPC("PhotonLoadCard",PhotonTargets.All,_storyCard.asset);
 
 			// A quest card has been drawn.
 			if (_storyCard.GetType() == typeof(QuestCard)) {
@@ -203,6 +222,20 @@ public class MultiplayerGame : MonoBehaviour {
 		}
 	}
 
+	[PunRPC]
+	public void PhotonLoadCard(string asset ){
+		foreach (Transform child in blockerCardArea.transform) {
+			GameObject.Destroy(child.gameObject);
+		}
+		GameObject storyCardObj = null;
+		storyCardObj = Instantiate(QuestCard);
+		// Load the card sprite.
+		Sprite storySprite = Resources.Load<Sprite>(asset);
+		// Update the card.
+		storyCardObj.gameObject.GetComponent<Image>().sprite = storySprite;
+		storyCardObj.transform.SetParent(blockerCardArea.transform);
+	}
+
 	//Get Prompt Manager Object
 	public MultiplayerPrompt getPromptManager(){
 		return PromptManager;
@@ -237,6 +270,7 @@ public class MultiplayerGame : MonoBehaviour {
 
 		// Load their hand.
 		loadHand(n);
+		block(n,"");
 	}
 
 	// Rank up players.
@@ -255,16 +289,21 @@ public class MultiplayerGame : MonoBehaviour {
 		//Check if anyone won
 		checkWinner();
 
+		Debug.Log("Before:"+_currentPlayer);
+
 		// Move onto the next player.
 		_currentPlayer++;
-
+ 
+		
 		// Wrap around.
 		if (_currentPlayer >= _players.Count) {
 			_currentPlayer = 0;
 		}
-
+		Debug.Log("After:"+_currentPlayer);
+		block(_currentPlayer,"");
 		loadPlayer(_currentPlayer);
-
+		
+		
 		// Clean the stages.
 		logger.info("Cleaning cards from stages.");
 		for (int i = 0; i < Stages.Count; i++) {
@@ -560,8 +599,7 @@ public class MultiplayerGame : MonoBehaviour {
 		}
 
 	}
-
-
+		
 	// Set a players in play cards.
 	public void setInPlay(int player_id){
 		List<Card> playedCards = playArea.GetComponent<CardArea>().cards;
@@ -574,6 +612,19 @@ public class MultiplayerGame : MonoBehaviour {
 			removeCardByName(player_id, playedCards[i].name);
 		}
 	}
+
+	// Set a players in play cards.
+	public void setInPlay(int player_id, List<Card> inPlayCard){
+		// Set the cards to inPlay.
+		_players[player_id].inPlay = inPlayCard;
+
+		// Remove the cards from the players hand.
+		for(int i = 0; i < inPlayCard.Count; i++){
+			removeCardByName(player_id, inPlayCard[i].name);
+		}
+	}
+
+	 
 
 	//Remove Cards from player hand
 	public void removeCards(int playerid , List<Card> cards){
@@ -606,6 +657,100 @@ public class MultiplayerGame : MonoBehaviour {
 		}
 
 	}
+
+	public void photonCall(string call, string[] cardsPlayed, int turnId,string[] stage1, string[] stage2, string[] stage3, string[] stage4, string[] stage5){
+		if (call == "PhotonSetInPlay") {
+			this.GetComponent<PhotonView> ().RPC ("PhotonSetInPlay", PhotonTargets.Others, cardsPlayed, turnId);
+		}
+		if (call == "PhotonQuestStage") {
+			for (int i = 0; i < stage1.Length; i++) {
+				Debug.Log (stage1 [i]);
+			}
+			this.GetComponent<PhotonView> ().RPC ("PhotonQuestStage", PhotonTargets.Others, turnId, stage1,stage2,stage3,stage4,stage5);
+		}
+	}
+
+	[PunRPC]
+	public void PhotonQuestStage(int turnId,string[] stage1, string[] stage2, string[] stage3, string[] stage4, string[] stage5){
+
+		photonSet = true;
+	
+		CardFactory tempFact1 = new CardFactory ();
+		CardFactory tempFact2 = new CardFactory ();
+		CardFactory tempFact3 = new CardFactory ();
+		CardFactory tempFact4 = new CardFactory ();
+		CardFactory tempFact5 = new CardFactory ();
+
+
+		List<Card> stage1Cards = tempFact1.createCardList (stage1);
+		List<Card> stage2Cards = tempFact2.createCardList (stage2);
+		List<Card> stage3Cards = tempFact3.createCardList (stage3);
+		List<Card> stage4Cards = tempFact4.createCardList (stage4);
+		List<Card> stage5Cards = tempFact5.createCardList (stage5);
+ 		
+		List<Card> allCARDS = new List<Card> ();
+
+		for (int i = 0; i < Stages.Count; i++) {
+			if (i == 0) {
+				for (int x = 0; x < stage1Cards.Count; x++) {
+					allCARDS.Add (stage1Cards [x]);
+					Stages [i].GetComponent<CardArea> ().addCard(stage1Cards[x]);
+				}
+			}
+			if (i == 1) {
+				for (int x = 0; x < stage2Cards.Count; x++) {
+					allCARDS.Add (stage2Cards [x]);
+					Stages [i].GetComponent<CardArea> ().addCard(stage2Cards[x]);
+				}
+			}
+			if (i == 2) {
+				for (int x = 0; x < stage3Cards.Count; x++) {
+					allCARDS.Add (stage3Cards [x]);
+					Stages [i].GetComponent<CardArea> ().addCard(stage3Cards[x]);
+				}
+			}
+			if (i == 3) {
+				for (int x = 0; x < stage4Cards.Count; x++) {
+					allCARDS.Add (stage4Cards [x]);
+					Stages [i].GetComponent<CardArea> ().addCard(stage4Cards[x]);
+				}
+			}
+			if (i == 4) {
+				for (int x = 0; x < stage5Cards.Count; x++) {
+					allCARDS.Add (stage5Cards [x]);
+					Stages [i].GetComponent<CardArea> ().addCard(stage5Cards[x]);
+				}
+			}
+		}
+		/*
+		foreach (Transform child in Hand.transform) {
+			GameObject.Destroy(child.gameObject);
+		}
+		 
+		for (int i = 0; i < allCARDS.Count; i++) {
+			removeCardByName (turnId, allCARDS [i].name);
+		}
+		loadHand (turnId);
+		*/
+		EndTurn ();
+	}
+	[PunRPC]
+	public void PhotonSetInPlay(string[] cardsPlayed, int turnId){
+		//Debug.Log (cardsPlayed[0]);
+		CardFactory clone = new CardFactory ();
+		List<Card> cards = clone.createCardList (cardsPlayed);
+		setInPlay (turnId,cards);
+
+		foreach (Transform child in Hand.transform) {
+			GameObject.Destroy(child.gameObject);
+		}
+
+		loadHand (turnId);
+		photonSet = true;
+		EndTurn ();
+	}
+
+
 
 	// Get a players in play cards.
 	public List<Card> getInPlay(int player_id){
@@ -785,6 +930,7 @@ public class MultiplayerGame : MonoBehaviour {
 			PromptManager.statusPrompt("Too many cards, please discard or use.");
 		}
 
+
 	}
 
 	//Unflip the hands
@@ -862,12 +1008,22 @@ public class MultiplayerGame : MonoBehaviour {
 	//Pay the player shields
 	public void payShield(int playerId, int shields){
 		logger.info("Paying " + shields + " shields to Player " + (playerId + 1) + ".");
+		
 		_players[playerId].AddShields(shields);
+		this.GetComponent<PhotonView>().RPC("PhotonPayShield",PhotonTargets.Others,playerId,shields);
+	}
+
+	[PunRPC]
+	public void PhotonPayShield(int playerId, int shields){
+		_players[playerId].AddShields(shields);	
 	}
 
 
-	// Discard a card.
+	// Discard a card. 
+	// TODO:Network this shit
 	public void discardCard(int player_id, List<Card> discardList = null){
+
+		//this.GetComponent<PhotonView>().RPC("PhotonDiscardCards",PhotonTargets.All,_storyCard.asset);
 
 		List<Card> disCards = new List<Card>();
 
@@ -897,6 +1053,7 @@ public class MultiplayerGame : MonoBehaviour {
 				}
 			}
 		}
+
 	}
 
 
@@ -909,17 +1066,17 @@ public class MultiplayerGame : MonoBehaviour {
 			playerPanel.SetActive(true);
 
 			// Load the num card text.
-			for(int i = 0 ; i < numCardText.Count ; i++){
+			for(int i = 0 ; i < _players.Count ; i++){
 				numCardText[i].GetComponent<UnityEngine.UI.Text>().text = "#Card: "+ _players[i].hand.Count.ToString();
 			}
 
 			// Load the shield counder list.
-			for(int i = 0 ; i < shieldCounterList.Count ; i++){
+			for(int i = 0 ; i < _players.Count ; i++){
 				shieldCounterList[i].GetComponent<UnityEngine.UI.Text>().text = "#Shield: "+ _players[i].shieldCounter.ToString();
 			}
 
 			// Load the rank texts.
-			for(int i = 0 ; i < rankTextList.Count ; i++){
+			for(int i = 0 ; i < _players.Count ; i++){
 				int currRank = _players[i].rank;
 				if(currRank == 0 ){
 					rankTextList[i].GetComponent<UnityEngine.UI.Text>().text = "Rank : Squire";
@@ -933,7 +1090,7 @@ public class MultiplayerGame : MonoBehaviour {
 			}
 
 			// Load the cards.
-			for(int i = 0 ; i < playerActive.Count ; i++){
+			for(int i = 0 ; i < _players.Count ; i++){
 				loadCards(_players[i].inPlay,playerActive[i]);
 			}
 		}
@@ -950,13 +1107,37 @@ public class MultiplayerGame : MonoBehaviour {
 		}
 	}
 
-	// MODE METHODS //
-	// ------------ //
+	//Block Player
+	public void block(int turnId,string msg){
+		//this.GetComponent<PhotonView> ().RPC ("PhotonBlock", PhotonTargets.All,turnId,msg);
+		Debug.Log("TurnID:"+(turnId+1));
+		Debug.Log("ClientID:"+clientID);
+		if((turnId+1) != clientID){
+			blocker.SetActive(true);
+			blockerTXT.GetComponent<UnityEngine.UI.Text>().text = ""+(turnId+1);
+		}
+		else{
+			blocker.SetActive(false);
+		}
+		blockerInGameMSG.GetComponent<UnityEngine.UI.Text> ().text = msg;
+	}
+	
+	//Change Block message
+	public void blockMessage(string msg){
+		blockerInGameMSG.GetComponent<UnityEngine.UI.Text> ().text = msg;
+	}
 
-	// Setup non-AI modes.
+/* 
+	[PunRPC]
+	public void PhotonBlock(int turnId,string msg){
+
+	}
+*/
 	public void genericModeSetup(string storyDeckType){
 
 		logger.info("Setting up game...");
+
+		clientID = PhotonNetwork.player.ID;
 
 		// Clear hand.
 		foreach (Transform child in Hand.transform) {
@@ -971,23 +1152,48 @@ public class MultiplayerGame : MonoBehaviour {
 		// Setup players.
 		_players = new List<Player>();
 		PhotonPlayer[] players = PhotonNetwork.playerList;
+		block(0,"");
 
 		//Create Players on based on network connection
+		//Debug.Log(players.Length);
 		for(int i = 0 ; i < players.Length; i++){
-			_players.Add(new Player ( i + 1 ));
+			_players.Add(new Player ( i ));
 		}
+		 
+		if (PhotonNetwork.player.ID == 1) {
+			// Setup decks.
+			_adventureDeck = new Deck("Adventure");
+			logger.info("Created adventure deck with " + _adventureDeck.GetSize() + " cards.");
 
-		// Setup decks.
-		_adventureDeck = new Deck("OnlineAdventure");
-		logger.info("Created adventure deck with " + _adventureDeck.GetSize() + " cards.");
+			_storyDeck = new Deck(storyDeckType);
+			logger.info("Created story deck with " + _storyDeck.GetSize() + " cards.");
 
-		_storyDeck = new Deck(storyDeckType);
-		logger.info("Created story deck with " + _storyDeck.GetSize() + " cards.");
+			string[] listStringAdventure = new string[_adventureDeck.GetDeck().Count];
+			string[] listStringStory     = new string[_storyDeck.GetDeck().Count];
 
+			//Get adventure string
+			for (int i = 0; i < _adventureDeck.GetDeck().Count; i++) {
+				string currCardName = _adventureDeck.GetDeck()[i].name;
+				listStringAdventure[i] =  currCardName;
+			}
+
+			//Get Story string
+			for (int i = 0; i < _storyDeck.GetDeck().Count; i++) {
+				string currCardName = _storyDeck.GetDeck()[i].name;
+				listStringStory[i] = currCardName;
+			}
+			//Host Sends Deck Call
+			this.GetComponent<PhotonView> ().RPC ("SendDecks", PhotonTargets.All,listStringAdventure,listStringStory);
+		}
 		// Make discard piles.
 		_discardPileAdventure = new Deck ("");
 		_discardPileStory = new Deck ("");
+	}
 
+	[PunRPC]
+	public void SendDecks(string[] adventure, string[] story){
+		_adventureDeck = new Deck (adventure);
+		_storyDeck = new Deck (story);
 		// Populate the players hands.
 		logger.info("Dealing 12 cards from adventure deck to each player.");
 		for(int i = 0; i < _players.Count ; i++){
@@ -995,15 +1201,17 @@ public class MultiplayerGame : MonoBehaviour {
 				_players[i].addCard((_adventureDeck.Draw()));
 			}
 		}
-		// Load up the first player.
+		//Load up the first player.
 		nextCardAndPlayer();
 	}
+
 
 	// Runs if the user selects Play PVP.
 	public void NormalMode(){
 		logger.info("Normal mode selected.");
-		genericModeSetup("OnlineStory");
+		genericModeSetup("scenario1");
 	}
+
 	//Give card to player
 	public void giveCard(int id){
 		_players[id].addCard((_adventureDeck.Draw()));

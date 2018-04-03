@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+[System.Serializable]
 public abstract class AdventureCard : Card,IBeginDragHandler,IDragHandler, IEndDragHandler
 {
 

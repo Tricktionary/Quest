@@ -607,3 +607,6 @@
 2018-03-14T17:45:02.5499070-04:00 [INFO]: Dealing 12 cards from adventure deck to each player.
 2018-03-14T17:45:02.5553050-04:00 [INFO]: Loading player: 1
 2018-03-14T17:45:02.6205420-04:00 [INFO]: Cleaning cards from stages.
+2018-03-28T14:12:53.2936050-04:00 [INFO]: Initializing Game object.
+2018-03-28T14:12:53.3040980-04:00 [INFO]: Normal mode selected.
+2018-03-28T14:12:53.3055650-04:00 [INFO]: Setting up game...

@@ -60,6 +60,12 @@ public class PhotonNetworkManager : MonoBehaviour {
 		JoinButton.SetActive(false);
 
 		Debug.Log("Player Connected to Game");
+
+		if (PhotonNetwork.player.ID == 1) {
+			StartButton.SetActive (true);
+		} else {
+			StartButton.SetActive (false);
+		}
 }
 
 	public void OnPhotonPlayerConnected(){

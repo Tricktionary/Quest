@@ -47,4 +47,15 @@ MonoBehaviour:
   - EndTurn
   - NoClick
   - YesClick
+  - OnDropPhoton
+  - PhotonSendDeck
+  - PhotonLoadCard
+  - NormalMode
+  - SendDecks
+  - PhotonSetInPlay
+  - PhotonTournamentSetInPlay
+  - PhotonQuestStage
+  - PhontonPayShield
+  - PhotonPayShield
+  - PhotonBlock
   DisableAutoOpenWizard: 1

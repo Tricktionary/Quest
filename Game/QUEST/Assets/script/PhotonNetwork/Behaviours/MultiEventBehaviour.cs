@@ -12,10 +12,11 @@ public class MultiEventBehaviour : GameBehaviour {
 	// Event handled.
 	bool _eventHandled = false;
 
+	
 	// End turn method for when a Event card is in play.
 	public void endTurn(){
 		MultiplayerGame.GameManager.logger.info ("Handling event card: " + _eventCard.name);
-		handleEvent(_eventCard.name);
+		handleEvent(_eventCard.name);		
 	}
 
 	public int getCurrentTurn(){
@@ -26,8 +27,9 @@ public class MultiEventBehaviour : GameBehaviour {
 		if (!_eventHandled) {
 			_eventHandled = true;
 
+			MultiplayerGame.GameManager.blockMessage("Event Card: "+name+" was drawn");
 			if (name == "Chivalrous Deed") {
-
+				
 				int numPlayers = MultiplayerGame.GameManager.getNumberOfPlayers ();
 				int lowest = 1000;
 				List<int> winners = new List<int> ();
@@ -156,6 +158,7 @@ public class MultiEventBehaviour : GameBehaviour {
 
 			// Proceed to next card and player.
 			MultiplayerGame.GameManager.nextCardAndPlayer();
+			
 		}
 	}
 

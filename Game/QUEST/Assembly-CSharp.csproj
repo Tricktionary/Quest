@@ -238,6 +238,7 @@
      <Compile Include="Assets\script\PhotonNetwork\Behaviours\MultiQuestBehaviour.cs" />
      <Compile Include="Assets\script\PhotonNetwork\Behaviours\MultiTournamentBehaviour.cs" />
      <Compile Include="Assets\script\PhotonNetwork\Blocker\Blocker.cs" />
+     <Compile Include="Assets\script\PhotonNetwork\CardFactory.cs" />
      <Compile Include="Assets\script\PhotonNetwork\MultiplayerGame.cs" />
      <Compile Include="Assets\script\PhotonNetwork\MultiplayerPrompt.cs" />
      <Compile Include="Assets\script\PhotonNetwork\PhotonEventHandler.cs" />
@@ -245,6 +246,7 @@
      <Compile Include="Assets\script\Player.cs" />
      <Compile Include="Assets\script\PlayerObject.cs" />
      <Compile Include="Assets\script\Prompt.cs" />
+     <Compile Include="Assets\script\PromptBid.cs" />
      <Compile Include="Assets\script\QuestionableDeadFiles\MClient.cs" />
      <Compile Include="Assets\script\QuestionableDeadFiles\NetworkGameManager.cs" />
      <Compile Include="Assets\script\QuestionableDeadFiles\NetworkLobbyHook.cs" />

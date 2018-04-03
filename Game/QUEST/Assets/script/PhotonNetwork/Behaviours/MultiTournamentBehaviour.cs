@@ -39,6 +39,9 @@ public class MultiTournamentBehaviour : GameBehaviour {
 		_tournamentCard = (TournamentCard)c;
 	}
 
+	//Block Message
+	string blockMessage= "";
+
 	public void setCurrentTurn(int n){
 		_turnId = n;
 	}
@@ -47,26 +50,42 @@ public class MultiTournamentBehaviour : GameBehaviour {
 	public int getCurrentTurn(){
 		return _turnId;
 	}
+	 
+
+	 
 
 	// End turn method for when a Tournament card is in play.
 	public void endTurn(){
-
 		if (_tournamentConcluded){
 			endTournament();
 			return;
 		}
 
 		if (_joinedUp){
-
 			// Check if weapon setup is valid.
 			if (MultiplayerGame.GameManager.playAreaValid ()) {
+				if(MultiplayerGame.GameManager.photonSet == false){
+					// Set the players cards that they have in play.
+					if (MultiplayerGame.GameManager.getPlayer (_turnId).GetType () != typeof(AIPlayer)) {
 
-				// Set the players cards that they have in play.
-				if(MultiplayerGame.GameManager.getPlayer(_turnId).GetType() != typeof(AIPlayer)){
-					MultiplayerGame.GameManager.setInPlay(_turnId);
+						Debug.Log ("Current Turn: " + _turnId);
+
+						MultiplayerGame.GameManager.setInPlay (_turnId);
+
+						List<Card> currInPlayCards = MultiplayerGame.GameManager.getInPlay (_turnId);
+						string[] currInPlayCardStr = new string[currInPlayCards.Count];
+
+						for (int i = 0; i < currInPlayCards.Count; i++) {
+							currInPlayCardStr [i] = currInPlayCards [i].name;
+						}
+
+						MultiplayerGame.GameManager.photonSet = true;
+						MultiplayerGame.GameManager.photonCall("PhotonSetInPlay",currInPlayCardStr,_turnId,null,null,null,null,null);
+					}
 				}
+				MultiplayerGame.GameManager.photonSet = false;
 				// Fix prompt message (if they submited an invalid input).
-					MultiplayerGame.GameManager.getPromptManager().statusPrompt ("Setup your weapons!");
+				MultiplayerGame.GameManager.getPromptManager().statusPrompt ("Setup your weapons!");
 
 				// Move to next player in _playersIn.
 				participatingPlayerIndex++;
@@ -91,8 +110,10 @@ public class MultiTournamentBehaviour : GameBehaviour {
 					}
 
 					MultiplayerGame.GameManager.logger.info("The following player(s) have won " + shieldPrize + " shields: " + winners_string.Substring(0, winners_string.Length - 2));
-						MultiplayerGame.GameManager.getPromptManager().statusPrompt("The following player(s) have won " + shieldPrize + " shields: " + winners_string.Substring(0, winners_string.Length - 2));
-
+					MultiplayerGame.GameManager.getPromptManager().statusPrompt("The following player(s) have won " + shieldPrize + " shields: " + winners_string.Substring(0, winners_string.Length - 2));
+					//Blocker Message
+					MultiplayerGame.GameManager.blockerInGameMSG.GetComponent<UnityEngine.UI.Text>().text = "The following player(s) have won " + shieldPrize + " shields: " + winners_string.Substring(0, winners_string.Length - 2);
+					blockMessage = "The following player(s) have won " + shieldPrize + " shields: " + winners_string.Substring(0, winners_string.Length - 2);
 					_tournamentConcluded = true;
 				} else {
 					// Update _turnId.
@@ -109,6 +130,8 @@ public class MultiTournamentBehaviour : GameBehaviour {
 
 				// Load the new player.
 				MultiplayerGame.GameManager.loadPlayer(_turnId);
+				MultiplayerGame.GameManager.block(_turnId,blockMessage);
+				//MultiplayerGame.GameManager.photonSet = false;
 
 			} else {
 					MultiplayerGame.GameManager.getPromptManager().statusPrompt("You can't submit foes to the play area!");
@@ -133,10 +156,11 @@ public class MultiTournamentBehaviour : GameBehaviour {
 	// Moves to the next player.
 	public void nextPlayer(){
 		_turnId++;
-
 		if (_turnId >= MultiplayerGame.GameManager.getNumberOfPlayers()) {
 			_turnId = 0;
 		}
+		MultiplayerGame.GameManager.block(_turnId,blockMessage);
+		MultiplayerGame.GameManager.photonSet = false;
 	}
 
 	// Find the tournament winner.
@@ -191,6 +215,13 @@ public class MultiTournamentBehaviour : GameBehaviour {
 
 		// Reset tournament varaibles.
 		_turnId = 0;
+		//MultiplayerGame.GameManager.photonSet = false;
+
+		for (int i = 0; i < _playersIn.Count; i++) {
+			MultiplayerGame.GameManager.clearInPlayEnd(_playersIn[i]);
+		}
+
+		blockMessage = "";
 		_playersIn = new List<int>();
 		_winners = new List<int>();
 		_asked = 0;
@@ -232,7 +263,6 @@ public class MultiTournamentBehaviour : GameBehaviour {
 				return;
 			} else {
 				_turnId = _playersIn[0];
-
 				//Pay everyone that join 1 adventure Card
 				for(int i = 0 ; i<_playersIn.Count ; i++){
 					MultiplayerGame.GameManager.logger.info("Giving Player " + (_playersIn[i] + 1) + " one card for joining the tournament.");
@@ -272,5 +302,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 
 		// Load the right player.
 		MultiplayerGame.GameManager.loadPlayer(_turnId);
+		MultiplayerGame.GameManager.block(_turnId,blockMessage);
+		MultiplayerGame.GameManager.photonSet = false;
 	}
 }
