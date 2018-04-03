@@ -160,7 +160,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 			_turnId = 0;
 		}
 		MultiplayerGame.GameManager.block(_turnId,blockMessage);
-		//MultiplayerGame.GameManager.photonSet = false;
+		MultiplayerGame.GameManager.photonSet = false;
 	}
 
 	// Find the tournament winner.
@@ -303,6 +303,6 @@ public class MultiTournamentBehaviour : GameBehaviour {
 		// Load the right player.
 		MultiplayerGame.GameManager.loadPlayer(_turnId);
 		MultiplayerGame.GameManager.block(_turnId,blockMessage);
-		//MultiplayerGame.GameManager.photonSet = false;
+		MultiplayerGame.GameManager.photonSet = false;
 	}
 }
