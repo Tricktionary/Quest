@@ -28,6 +28,9 @@ public class QuestBehaviour : GameBehaviour {
 	// Indicates if we are showing the results.
 	bool _showResults = false;
 
+	//if player has won the bidding 
+	bool _bidWin = false;
+
 	// List of stage powers.
 	List<int> _stagePower;
 
@@ -198,9 +201,10 @@ public class QuestBehaviour : GameBehaviour {
 		else {
 			//if we are on a test stage
 			if(testStage == _currStage){
-				Debug.Log("FUCK");
-				//check if newbid is higher than highestBid, save new highestBid and highest Bidder
-
+				
+				if(Game.GameManager.getPlayer(_turnId).GetType() != typeof(AIPlayer)){
+					Game.GameManager.setInPlay(_turnId);
+				}
 				//Debug.Log("Num in hand -1" + Game.GameManager.getInPlay(_turnId-1).Count);
 				Debug.Log("Num in hand  " + Game.GameManager.getNumInPlay(_turnId));
 				//Debug.Log("Num in hand +1 " + Game.GameManager.getInPlay(_turnId+1).Count);
@@ -212,14 +216,46 @@ public class QuestBehaviour : GameBehaviour {
 					Debug.Log("highest Bid: " + highestBid);
 					Debug.Log("highest Bidder: " + highestBidder);
 				}
-				Prompt.PromptManager.statusPrompt ("Bid by adding cards in the play area, current highest bid: " + highestBid);
+				else{
+					Debug.Log("Removed player: " + _turnId);
+					Game.GameManager.clearAllInPlay(_turnId);
+					_playersIn.Remove(_turnId);
+					participatingPlayers--;
 
-				participatingPlayerIndex++;
-
-				if (participatingPlayerIndex > (participatingPlayers - 1)) {
 				}
 
-				nextPlayer();
+				Prompt.PromptManager.statusPrompt ("Bid by adding cards in the play area, current highest bid: " + highestBid);
+
+				//participatingPlayerIndex++;
+
+				if (participatingPlayers == 1) {	
+					Debug.Log("participatingPlayerIndex: " + participatingPlayerIndex);	
+					_turnId = _playersIn[participatingPlayerIndex];
+					participatingPlayerIndex = 0;
+
+					Game.GameManager.clearAllInPlay(_turnId);
+			
+					_bidWin = true;
+					_showResults = true;
+
+					Game.GameManager.logger.info("All playing players have bid for stage, highest bid was player: " + highestBidder);
+
+				}
+				else{
+					participatingPlayerIndex++;
+
+					if(participatingPlayerIndex == participatingPlayers){
+						participatingPlayerIndex = 0;
+						_turnId = _playersIn[participatingPlayerIndex];
+
+					}
+
+
+					_turnId = _playersIn[participatingPlayerIndex];
+
+				}
+
+				//nextPlayer();
 				// Load the new player.
 				Game.GameManager.loadPlayer(_turnId);
 			}
@@ -384,7 +420,7 @@ public class QuestBehaviour : GameBehaviour {
 		_showResults = false;
 		testStage = -1;
 		numberOfTestStage = 0;
-
+		_bidWin = false;
 		participatingPlayerIndex = 0;
 		participatingPlayers = 0;
 
@@ -492,14 +528,14 @@ public class QuestBehaviour : GameBehaviour {
 
 				if(testStage==_currStage){
 					Debug.Log("currently on test stage");
-					Prompt.PromptManager.statusPrompt ("Bid by adding cards in the play area, current highest bid: " + highestBid);
-
+					Prompt.PromptManager.statusPrompt ("Bid by adding cards in the play area");
 					Debug.Log("Num in hand  " + Game.GameManager.currInPlay.Count);
 
 					//Debug.Log("Num in hand +3 " + Game.GameManager.getInPlay(_turnId+3).Count);
 
 					highestBid = Game.GameManager.getNumInPlay(_turnId);
 					highestBidder = _turnId;
+					participatingPlayers = _playersIn.Count;
 					Debug.Log("highest bid: " + highestBid);
 
 
