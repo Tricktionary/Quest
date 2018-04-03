@@ -226,11 +226,11 @@ public class QuestBehaviour : GameBehaviour {
 
 				Prompt.PromptManager.statusPrompt ("Bid by adding cards in the play area, current highest bid: " + highestBid);
 
-				//participatingPlayerIndex++;
 
 				if (participatingPlayers == 1) {	
-					Debug.Log("participatingPlayerIndex: " + participatingPlayerIndex);	
-					_turnId = _playersIn[participatingPlayerIndex];
+					Debug.Log("participatingPlayerIndex: " + participatingPlayerIndex);
+					Debug.Log("_playersIn[participatingPlayerIndex]: " + _playersIn[participatingPlayerIndex-1]);		
+					_turnId = _playersIn[participatingPlayerIndex-1];
 					participatingPlayerIndex = 0;
 
 					Game.GameManager.clearAllInPlay(_turnId);
