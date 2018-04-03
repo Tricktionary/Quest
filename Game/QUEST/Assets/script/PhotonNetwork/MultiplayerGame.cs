@@ -1009,8 +1009,7 @@ public class MultiplayerGame : MonoBehaviour {
 	public void payShield(int playerId, int shields){
 		logger.info("Paying " + shields + " shields to Player " + (playerId + 1) + ".");
 		
-		_players[playerId].AddShields(shields);
-		this.GetComponent<PhotonView>().RPC("PhotonPayShield",PhotonTargets.Others,playerId,shields);
+		this.GetComponent<PhotonView>().RPC("PhotonPayShield",PhotonTargets.All,playerId,shields);
 	}
 
 	[PunRPC]
@@ -1062,6 +1061,7 @@ public class MultiplayerGame : MonoBehaviour {
 
 	// Open show player panel.
 	public void OpenShowPlayer(){
+		unflipHand();
 		if(allFlip){
 			playerPanel.SetActive(true);
 
