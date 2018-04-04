@@ -50,7 +50,7 @@ public class Logger {
 		// Print logs to console too.
 		Debug.Log(n);
 		/*COMMENT THIS OUT BEFORE SHIPPING*/
-		System.IO.File.AppendAllText(Directory.GetCurrentDirectory() + "/Logs/GameLog.log", n);
+		System.IO.File.AppendAllText(Directory.GetCurrentDirectory() + "/Logs/GameLog2.log", n);
 	}
 
 	private string generateTimestamp() {
