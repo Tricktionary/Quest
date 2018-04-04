@@ -71,6 +71,7 @@ public class MultiplayerGame : MonoBehaviour {
 	public GameObject showHandButton;
 	public GameObject showPlayerButton;
 	public GameObject exitShowPlayerButton;
+	public GameObject discardButton;
 
 	//Prompt;
 	public GameObject promptObj;
@@ -106,6 +107,7 @@ public class MultiplayerGame : MonoBehaviour {
 		logger.info("Initializing Game object.");
 		PromptManager = new MultiplayerPrompt(promptObj,promptTxt,gameStatus);
     	NormalMode();
+		discardButton.GetComponent<Button>().onClick.AddListener(discardHandler);
 		showHandButton.GetComponent<Button>().onClick.AddListener(unflipHand);
 		showPlayerButton.GetComponent<Button>().onClick.AddListener(OpenShowPlayer);
 		exitShowPlayerButton.GetComponent<Button>().onClick.AddListener(CloseShowPlayer);
@@ -143,13 +145,10 @@ public class MultiplayerGame : MonoBehaviour {
 		if (activeStoryCard) {
 			// Use the correct behaviour to handle the ending of a turn.
 			if (_storyCard.GetType() == typeof(QuestCard)) {
-				discardCard(_questBehaviour.getCurrentTurn());
 				_questBehaviour.endTurn();
 			} else if (_storyCard.GetType() == typeof(TournamentCard)) {
-				discardCard(_tournamentBehaviour.getCurrentTurn());
 				_tournamentBehaviour.endTurn();
 			} else {
-				discardCard(_eventBehaviour.getCurrentTurn());
 				_eventBehaviour.endTurn();
 			}
 		} else {
@@ -1017,9 +1016,18 @@ public class MultiplayerGame : MonoBehaviour {
 		_players[playerId].AddShields(shields);	
 	}
 
+	//Discard Button
+	public void discardHandler(){
+		if (_storyCard.GetType() == typeof(QuestCard)) {
+			discardCard(_questBehaviour.getCurrentTurn());
+		} else if (_storyCard.GetType() == typeof(TournamentCard)) {
+			discardCard(_tournamentBehaviour.getCurrentTurn());
+		} else {
+			discardCard(_eventBehaviour.getCurrentTurn());
+		}
+	}
 
 	// Discard a card. 
-	// TODO:Network this shit
 	public void discardCard(int player_id, List<Card> discardList = null){
 
 		//this.GetComponent<PhotonView>().RPC("PhotonDiscardCards",PhotonTargets.All,_storyCard.asset);
@@ -1034,10 +1042,11 @@ public class MultiplayerGame : MonoBehaviour {
 		}
 
 		if (disCards.Count > 0){
+			
 			// Remove the cards from the player.
 			removeCards(player_id, disCards);
 
-			if (discardList == null) {
+			if (discardList == null) {	
 				// Discard.
 				for (int i = 0; i < disCards.Count; i++) {
 					logger.info ("Player " + (player_id + 1) + " discarded: " + disCards [i].name);
@@ -1050,9 +1059,30 @@ public class MultiplayerGame : MonoBehaviour {
 				foreach (Transform child in discardPile.transform) {
 					GameObject.Destroy (child.gameObject);
 				}
+				string[] cardStrings = new string[disCards.Count];
+				for(int i = 0 ; i < disCards.Count;i++){
+					cardStrings[i]= disCards[i].name;
+				}
+				this.GetComponent<PhotonView> ().RPC ("PhotonDiscard", PhotonTargets.Others,player_id,cardStrings);
 			}
-		}
 
+			 
+			 
+		}
+	}
+
+	[PunRPC]
+	public void PhotonDiscard(int player_id,string[] cards){
+		CardFactory tempFact = new CardFactory();
+		List<Card> removalCards = tempFact.createCardList(cards);
+		removeCards(player_id,removalCards);
+		foreach (Transform child in Hand.transform) {
+			GameObject.Destroy (child.gameObject);
+		}
+		foreach (Transform child in playArea.transform) {
+			GameObject.Destroy (child.gameObject);
+		}
+		loadHand(player_id);
 	}
 
 
