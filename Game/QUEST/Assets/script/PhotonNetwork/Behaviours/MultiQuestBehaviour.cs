@@ -72,6 +72,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 	// End turn method for when a Quest card is in play.
 	public void endTurn(){
+		string message = "";
 		if(_currStage == testStage){
 			Debug.Log("Test Mode");
 		}
@@ -173,7 +174,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 				_turnId = _playersIn[participatingPlayerIndex];
 				MultiplayerGame.GameManager.block(_turnId,"");
 
-				didYouSurvivePrompt();
+				message = didYouSurvivePrompt();
 
 				// Clear the players inPlay list.
 				MultiplayerGame.GameManager.clearInPlay(_turnId);
@@ -182,7 +183,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 			// Load the new player.
 			MultiplayerGame.GameManager.loadPlayer(_turnId);
 			MultiplayerGame.GameManager.photonSet = false;
-			MultiplayerGame.GameManager.block(_turnId,blockMessage);
+			MultiplayerGame.GameManager.block(_turnId,message);
 		} else {
 
 			// If we are on the setup weapons stage.
@@ -228,7 +229,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 						// Unflip the stage cards.
 						MultiplayerGame.GameManager.logger.info("Flipping cards in stage " + (_currStage + 1));
 
-						didYouSurvivePrompt();
+						message = didYouSurvivePrompt();
 
 						// Clear the players inPlay list.
 						MultiplayerGame.GameManager.clearInPlay(_turnId);
@@ -250,7 +251,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 					// Load the new player.
 					MultiplayerGame.GameManager.loadPlayer(_turnId);
 					MultiplayerGame.GameManager.photonSet = false;
-					MultiplayerGame.GameManager.block(_turnId,blockMessage);
+					MultiplayerGame.GameManager.block(_turnId,message);
 
 				// Weapon setup is not valid.
 				} else {
@@ -490,14 +491,16 @@ public class MultiQuestBehaviour : GameBehaviour {
 	// When the user responds to the join quest prompt.
 	public void joinQuest(bool answer){
 		_asked++;
-
+		string choice = "";
 		// The user doesn't want to join the quest.
 		if (!answer) {
 			// Remove the players from the players in the quest.
 			_playersIn.Remove (_turnId);
 			MultiplayerGame.GameManager.logger.info ("Player " + (_turnId + 1) + " decided to NOT join the quest.");
+			choice = "Player " + (_turnId + 1) + " decided to NOT join the quest.";
 		} else {
 			MultiplayerGame.GameManager.logger.info("Player " + (_turnId + 1) + " decided to join the quest.");
+			choice = "Player " + (_turnId + 1) + " decided to join the quest.";
 		}
 
 		// If we have asked all the players.
@@ -539,8 +542,9 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 		// Not eveyone has been asked yet.
 		else {
-				MultiplayerGame.GameManager.getPromptManager().promptMessage("quest");
+			MultiplayerGame.GameManager.getPromptManager().promptMessage("quest");
 			nextPlayer();
+			//BLOCK MESSAGE
 			//AI join quest
 			if(MultiplayerGame.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
 				MultiplayerGame.GameManager.AILogicResponse(_turnId,"quest");
@@ -551,6 +555,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 		MultiplayerGame.GameManager.loadPlayer(_turnId);
 		MultiplayerGame.GameManager.photonSet = false;
 		MultiplayerGame.GameManager.block(_turnId,blockMessage);
+		MultiplayerGame.GameManager.blockMessage(choice);
 	}
 
 	// Create a quest and setup the stages.
@@ -575,18 +580,20 @@ public class MultiQuestBehaviour : GameBehaviour {
 		return power > _stagePower[_currStage];
 	}
 
-	public void didYouSurvivePrompt(){
+	public string didYouSurvivePrompt(){
+		string message = "";
 		if (didYouSurvive(MultiplayerGame.GameManager.getInPlay(_turnId))){
 			MultiplayerGame.GameManager.getPromptManager().statusPrompt ("You passed stage " + (_currStage + 1) + "! Stage " + (_currStage + 1) + " has a power level of " + _stagePower[_currStage] + ".");
 			MultiplayerGame.GameManager.logger.info("Player " + (_turnId + 1) + " passed stage " + (_currStage + 1) + ".");
-			MultiplayerGame.GameManager.blockMessage("Player " + (_turnId + 1) + " passed stage " + (_currStage + 1) + ".");
+			message = ("Player " + (_turnId + 1) + " passed stage " + (_currStage + 1) + ".");
 		} else {
 			// Player died, remove them.
 			_deadPlayers.Add(_turnId);
 			MultiplayerGame.GameManager.logger.info("Player " + (_turnId + 1) + " died on stage " + (_currStage + 1) + ".");
-			MultiplayerGame.GameManager.blockMessage("Player " + (_turnId + 1) + " died on stage " + (_currStage + 1) + ".");
 			MultiplayerGame.GameManager.getPromptManager().statusPrompt ("You died on stage " + (_currStage + 1) + "! Stage " + (_currStage + 1) + " has a power level of " + _stagePower[_currStage] + ".");
+			message = ("Player " + (_turnId + 1) + " died on stage " + (_currStage + 1) + ".");
 		}
+		return message;
 	}
 
 	// Check to make sure a stage is valid.
@@ -607,7 +614,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 					if(currWeapon.name == weapons[x].name){
 						if (doPrompt) {
 							MultiplayerGame.GameManager.logger.warn("Quest setup is invalid: duplicate weapons.");
-								MultiplayerGame.GameManager.getPromptManager().statusPrompt ("Quest Invalid: Duplicate weapons.");
+							MultiplayerGame.GameManager.getPromptManager().statusPrompt ("Quest Invalid: Duplicate weapons.");
 						}
 						return -1;
 					}
