@@ -411,7 +411,7 @@ public class UnitTests {
 		players [1] = new Player (1);
 
 		//JOIN AND PLAY QUEST
-		ai = new AIPlayer(0);
+		ai = new AIPlayer(0,1);
 		players[0] = ai;
 		Assert.IsFalse (ai.joinQuest (quest, players));
 		ai.addCard (thieves);
