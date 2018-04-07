@@ -56,7 +56,6 @@ public class Game : MonoBehaviour {
 	//cards currently in play
 	public List<Card> currInPlay = new List<Card>();
 
-
 	// Misc GameObject's.
 	public GameObject currStageTxt;
 	public GameObject discardPile;
