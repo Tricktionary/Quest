@@ -9,17 +9,8 @@ EditorBuildSettings:
     path: Assets/scenes/MainGame.unity
     guid: b0e7b96006bf74c009ef6868c6af45d8
   - enabled: 1
-    path: Assets/scenes/Client.unity
-    guid: 04db0ee711a974920ab1c2ee81b1fc30
-  - enabled: 1
-    path: Assets/scenes/MultiplayerLobby.unity
-    guid: b21951c00962e4da88a79d8875bc1173
-  - enabled: 1
     path: Assets/scenes/PlayField.unity
     guid: 10fa45c7c975f4cdb89fbf0bf8795502
-  - enabled: 1
-    path: Assets/scenes/Server.unity
-    guid: 4fb56cd3fadf84c3da3b3771d26ba620
   - enabled: 1
     path: Assets/scenes/PhotonMultiplayer.unity
     guid: f3560fef8a21d45829666cc93d22240b

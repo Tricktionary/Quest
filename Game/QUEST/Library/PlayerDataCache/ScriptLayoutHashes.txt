@@ -1,10 +1,7 @@
 OSXStandalone
 SceneListBegin?
 Assets/scenes/MainGame.unity
-Assets/scenes/Client.unity
-Assets/scenes/MultiplayerLobby.unity
 Assets/scenes/PlayField.unity
-Assets/scenes/Server.unity
 Assets/scenes/PhotonMultiplayer.unity
 SceneListEnd?
 82c8c8940439d24517b71a242f62fbc3 Assembly-CSharp.dll:.HighlightOwnedGameObj
