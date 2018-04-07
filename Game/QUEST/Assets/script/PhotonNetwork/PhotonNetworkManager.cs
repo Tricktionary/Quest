@@ -92,6 +92,6 @@ public class PhotonNetworkManager : MonoBehaviour {
   }
 
 	[PunRPC] public void loadLevel(){
-		PhotonNetwork.LoadLevel(3);
+		PhotonNetwork.LoadLevel(2);
 	}
 }
