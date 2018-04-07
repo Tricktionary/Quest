@@ -1007,8 +1007,7 @@ public class MultiplayerGame : MonoBehaviour {
 	//Pay the player shields
 	public void payShield(int playerId, int shields){
 		logger.info("Paying " + shields + " shields to Player " + (playerId + 1) + ".");
-		
-		this.GetComponent<PhotonView>().RPC("PhotonPayShield",PhotonTargets.All,playerId,shields);
+		//this.GetComponent<PhotonView>().RPC("PhotonPayShield",PhotonTargets.All,playerId,shields);
 	}
 
 	[PunRPC]

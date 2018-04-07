@@ -55,7 +55,7 @@ public class PhotonNetworkManager : MonoBehaviour {
 
 		for(int i = 0 ; i < players.Length; i++){
 			GameObject currText = Instantiate(PlayerText);
-			currText.GetComponent<UnityEngine.UI.Text>().text = "Player ID: " + i ;
+			currText.GetComponent<UnityEngine.UI.Text>().text = "Player ID: " + (i + 1) ;
 			currText.transform.SetParent(PlayerPanel.transform);
 		}
 
@@ -81,7 +81,7 @@ public class PhotonNetworkManager : MonoBehaviour {
 
 		for(int i = 0 ; i < players.Length; i++){
 			GameObject currText = Instantiate(PlayerText);
-			currText.GetComponent<UnityEngine.UI.Text>().text = "Player ID: " + i ;
+			currText.GetComponent<UnityEngine.UI.Text>().text = "Player ID: " + ( i + 1) ;
 			currText.transform.SetParent(PlayerPanel.transform);
 		}
 		if(players.Length > 4){PhotonNetwork.LoadLevel(2);}

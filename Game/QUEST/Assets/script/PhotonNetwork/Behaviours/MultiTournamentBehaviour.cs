@@ -238,21 +238,23 @@ public class MultiTournamentBehaviour : GameBehaviour {
 	// Fires when someone answers the tournament prompt.
 	public void joinTournament(bool answer){
 		_asked++;
-
+		string message = "";
 		// The user wants to join the tournament.
 		if (!answer) {
 			// Remove the players from the players in the quest.
 			_playersIn.Remove (_turnId);
 			MultiplayerGame.GameManager.logger.info ("Player " + (_turnId + 1) + " decided to NOT join the tournament.");
+			message = ("Player " + (_turnId + 1) + " decided to NOT join the tournament.");
 		} else {
 			MultiplayerGame.GameManager.logger.info ("Player " + (_turnId + 1) + " decided to join the tournament.");
+			message = ("Player " + (_turnId + 1) + " decided to join the tournament.");
 		}
 
 		// If we have asked all the players.
 		if (_asked >= (MultiplayerGame.GameManager.getNumberOfPlayers())) {
 			if(_playersIn.Count < 2){
 				MultiplayerGame.GameManager.logger.info("Not enough players joined the tournament!");
-
+				message = ("Not enough players joined the tournament!");
 				//Pay the one player that joined the tournament
 				for(int i = 0 ; i < _playersIn.Count;i++){
 					MultiplayerGame.GameManager.getPlayer(_playersIn[i]).AddShields(1);
@@ -291,11 +293,11 @@ public class MultiTournamentBehaviour : GameBehaviour {
 		}
 
 		else {
-				MultiplayerGame.GameManager.getPromptManager().promptMessage("tournament");
+			MultiplayerGame.GameManager.getPromptManager().promptMessage("tournament");
 			nextPlayer();
 			//AI Join?
 			if(MultiplayerGame.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
-					MultiplayerGame.GameManager.getPromptManager().promptYes();
+				MultiplayerGame.GameManager.getPromptManager().promptYes();
 				MultiplayerGame.GameManager.AILogicResponse(_turnId,"");
 			}
 		}
@@ -304,5 +306,6 @@ public class MultiTournamentBehaviour : GameBehaviour {
 		MultiplayerGame.GameManager.loadPlayer(_turnId);
 		MultiplayerGame.GameManager.block(_turnId,blockMessage);
 		MultiplayerGame.GameManager.photonSet = false;
+		MultiplayerGame.GameManager.blockMessage(message);
 	}
 }
