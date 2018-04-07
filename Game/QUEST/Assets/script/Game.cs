@@ -975,7 +975,7 @@ public class Game : MonoBehaviour {
 			}
 			else if (playerChoice [i].GetComponent<Dropdown> ().value == 1) { //AI
 				logger.info("Creating Player " + (i) + " as an AI player.");
-						_players.Add(new AIPlayer(i));
+						_players.Add(new AIPlayer(i, 1));
 			}
 		}
 
@@ -1066,11 +1066,11 @@ public class Game : MonoBehaviour {
 			}
 			else if (playerChoice [i].GetComponent<Dropdown> ().value == 1) { //AI Strattegy 1
 				Debug.Log ("AI Player1 ID: "+ (i+1));
-				_players.Add(new AIPlayer(i+1));
+				_players.Add(new AIPlayer(i+1,1));
 			}
 			else if (playerChoice [i].GetComponent<Dropdown> ().value == 2) { //AI Strattegy 2
 				Debug.Log ("AI Player2 ID: "+ (i+1));
-				_players.Add(new AIPlayer(i+1));
+				_players.Add(new AIPlayer(i+1,1));
 			}
 		}
 
