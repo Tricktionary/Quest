@@ -364,7 +364,7 @@ public class UnitTests {
 
 	[Test]
 	public void Test_AI() {
-		AIPlayer ai = new AIPlayer (0);
+		AIPlayer ai = new AIPlayer (0,1);
 		List<Player> players = new List<Player> ();
 
 
@@ -423,7 +423,7 @@ public class UnitTests {
 		ai.addCard(excalibur2);
 		//2 foe cards from the quest sponsor
 		Assert.IsTrue (ai.joinQuest (quest, players));
-		ai = new AIPlayer (0);
+		ai = new AIPlayer (0,1);
 		players [0] = ai;
 		ai.addCard (thieves);
 		ai.addCard (boar);
@@ -442,7 +442,7 @@ public class UnitTests {
 		Assert.IsTrue (played.Contains (dagger));
 		Assert.AreEqual (played.Count, 4);
 
-		ai = new AIPlayer (0);
+		ai = new AIPlayer (0,1);
 		players [0] = ai;
 		ai.addCard(excalibur);
 		ai.addCard (sirtristan);
