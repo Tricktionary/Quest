@@ -84,7 +84,7 @@ public class PhotonNetworkManager : MonoBehaviour {
 			currText.GetComponent<UnityEngine.UI.Text>().text = "Player ID: " + i ;
 			currText.transform.SetParent(PlayerPanel.transform);
 		}
-		if(players.Length == 4){PhotonNetwork.LoadLevel(3);}
+		if(players.Length > 4){PhotonNetwork.LoadLevel(2);}
 	}
 
   public void StartGame(){

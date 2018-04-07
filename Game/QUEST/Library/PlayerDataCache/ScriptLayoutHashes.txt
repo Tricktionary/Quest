@@ -1,4 +1,4 @@
-OSXStandalone
+WebGL
 SceneListBegin?
 Assets/scenes/MainGame.unity
 Assets/scenes/PhotonMultiplayer.unity
