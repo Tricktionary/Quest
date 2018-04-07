@@ -100,8 +100,8 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 				// Check if there are still players.
 				if (participatingPlayers == 0) {
-					MultiplayerGame.GameManager.logger.info("Quest is over and everyone died!\t");
-
+					MultiplayerGame.GameManager.logger.info("Quest is over and everyone died!");
+					MultiplayerGame.GameManager.blockMessage("Quest is over and everyone died!");;
 					// End the quest.
 					endQuest();
 					return;
@@ -577,13 +577,15 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 	public void didYouSurvivePrompt(){
 		if (didYouSurvive(MultiplayerGame.GameManager.getInPlay(_turnId))){
-				MultiplayerGame.GameManager.getPromptManager().statusPrompt ("You passed stage " + (_currStage + 1) + "!");
+			MultiplayerGame.GameManager.getPromptManager().statusPrompt ("You passed stage " + (_currStage + 1) + "!");
 			MultiplayerGame.GameManager.logger.info("Player " + (_turnId + 1) + " passed stage " + (_currStage + 1) + ".");
+			MultiplayerGame.GameManager.blockMessage("Player " + (_turnId + 1) + " passed stage " + (_currStage + 1) + ".");
 		} else {
 			// Player died, remove them.
 			_deadPlayers.Add(_turnId);
 			MultiplayerGame.GameManager.logger.info("Player " + (_turnId + 1) + " died on stage " + (_currStage + 1) + ".");
-				MultiplayerGame.GameManager.getPromptManager().statusPrompt ("You died on stage " + (_currStage + 1) + "!");
+			MultiplayerGame.GameManager.blockMessage("Player " + (_turnId + 1) + " died on stage " + (_currStage + 1) + ".");
+			MultiplayerGame.GameManager.getPromptManager().statusPrompt ("You died on stage " + (_currStage + 1) + "!");
 		}
 	}
 
