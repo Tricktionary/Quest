@@ -1070,7 +1070,7 @@ public class Game : MonoBehaviour {
 			}
 			else if (playerChoice [i].GetComponent<Dropdown> ().value == 2) { //AI Strattegy 2
 				Debug.Log ("AI Player2 ID: "+ (i+1));
-				_players.Add(new AIPlayer(i+1,1));
+				_players.Add(new AIPlayer(i+1,2));
 			}
 		}
 

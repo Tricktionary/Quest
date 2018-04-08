@@ -23,6 +23,7 @@ public class PhotonEventHandler : MonoBehaviour {
   }
   public void PhotonEndTurn(){
   	Debug.Log("Photon End Turn");
+
   	this.GetComponent<PhotonView>().RPC("EndTurn",PhotonTargets.All);
   }
   public void PhotonYesClick(){
@@ -46,7 +47,9 @@ public class PhotonEventHandler : MonoBehaviour {
 
   [PunRPC]
   public void EndTurn(){
-    MultiplayerGame.GameManager.EndTurn();
+    if(MultiplayerGame.GameManager.sync == true){
+      MultiplayerGame.GameManager.EndTurn();
+    }
   }
 
   [PunRPC]

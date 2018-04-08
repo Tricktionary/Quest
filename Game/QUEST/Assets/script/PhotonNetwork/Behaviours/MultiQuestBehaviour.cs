@@ -72,12 +72,15 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 	// End turn method for when a Quest card is in play.
 	public void endTurn(){
+		string message = "";
 		if(_currStage == testStage){
 			Debug.Log("Test Mode");
 		}
 
 		// Check if the results of the quest are in.
 		else if (_showResults) {
+			//Has to be true for showing results
+			MultiplayerGame.GameManager.sync = true;
 			// Move to the next player.
 			participatingPlayerIndex++;
 
@@ -88,7 +91,6 @@ public class MultiQuestBehaviour : GameBehaviour {
 				for(int i = 0 ;i <_deadPlayers.Count;i++){
 					MultiplayerGame.GameManager.clearInPlayEnd(_deadPlayers[i]);
 				}
-
 				// Update the _playersIn list.
 				for(int i = 0; i < _deadPlayers.Count; i++){
 					_playersIn.Remove(_deadPlayers [i]);
@@ -105,8 +107,8 @@ public class MultiQuestBehaviour : GameBehaviour {
 					// End the quest.
 					endQuest();
 					return;
-
-				} else {
+				} 
+				else {
 					// Move to the next stage (players have been eliminated if they died).
 					_currStage++;
 
@@ -116,9 +118,10 @@ public class MultiQuestBehaviour : GameBehaviour {
 						MultiplayerGame.GameManager.logger.info("Quest is over and we have winner(s)!");
 
 						// Payout winners.
+						string winnerString = "";
 						for(int i = 0 ; i < _playersIn.Count ; i++){
 							MultiplayerGame.GameManager.logger.info("Player " + (_playersIn[i] + 1) + " won the quest!");
-
+							winnerString = winnerString + (_playersIn[i] + 1);
 							if(MultiplayerGame.GameManager.bonusQuestPoints){
 								MultiplayerGame.GameManager.payShield(_playersIn[i], _questCard.stages + 2);
 								MultiplayerGame.GameManager.logger.info("Player " + (_playersIn[i] + 1) + " recieved 2 extra shields because of King's Recognition.");
@@ -127,6 +130,8 @@ public class MultiQuestBehaviour : GameBehaviour {
 								MultiplayerGame.GameManager.payShield(_playersIn[i], _questCard.stages);
 							}
 						}
+						message = "Player: "+ winnerString + "are the winner of this Quest";
+						MultiplayerGame.GameManager.getPromptManager().statusPrompt(message);
 
 						// Remove AmourCard.
 						for(int i = 0 ;i <_playersIn.Count;i++){
@@ -157,7 +162,9 @@ public class MultiQuestBehaviour : GameBehaviour {
 					}
 
 					// Return to setup weapons prompt.
-						MultiplayerGame.GameManager.getPromptManager().statusPrompt("Setup your weapons!");
+					MultiplayerGame.GameManager.getPromptManager().statusPrompt("Setup your weapons!");
+					message = "Player: " + (_turnId+1) + " turn to set up weapons";
+
 					if(MultiplayerGame.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
 						Debug.Log("AI Setup Weapon");
 						List<Card> aiPlayCard = Game.GameManager.AILogicPlayCards(_turnId);
@@ -166,23 +173,28 @@ public class MultiQuestBehaviour : GameBehaviour {
 						}
 						endTurn();
 					}
-
 				}
 			} else {
 				// Update _turnId.
 				_turnId = _playersIn[participatingPlayerIndex];
-				MultiplayerGame.GameManager.block(_turnId,"");
 
-				didYouSurvivePrompt();
+				message = didYouSurvivePrompt();
 
 				// Clear the players inPlay list.
 				MultiplayerGame.GameManager.clearInPlay(_turnId);
+				MultiplayerGame.GameManager.loadPlayer(_turnId);
+				MultiplayerGame.GameManager.sync = true; 
+				MultiplayerGame.GameManager.block(_turnId,"");
+				MultiplayerGame.GameManager.blockMessage(message);
+				return;
 			}
 
 			// Load the new player.
 			MultiplayerGame.GameManager.loadPlayer(_turnId);
-			MultiplayerGame.GameManager.photonSet = false;
-			MultiplayerGame.GameManager.block(_turnId,blockMessage);
+			MultiplayerGame.GameManager.setSync(_turnId);
+			MultiplayerGame.GameManager.block(_turnId,"");
+			MultiplayerGame.GameManager.blockMessage(message);
+
 		} else {
 
 			// If we are on the setup weapons stage.
@@ -190,27 +202,27 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 				// Weapon setup is valid.
 				if (MultiplayerGame.GameManager.playAreaValid ()) {
-					if (MultiplayerGame.GameManager.photonSet == false) {
+					
+					
+					//Only the current client can do this
+					if (MultiplayerGame.GameManager.sync == true && MultiplayerGame.GameManager.clientID == _turnId + 1) {
 						// Set the players cards that they have in play.
 						if (MultiplayerGame.GameManager.getPlayer (_turnId).GetType () != typeof(AIPlayer)) {
 							MultiplayerGame.GameManager.setInPlay (_turnId);
 							//TODO:Send Photon Call simillar to Tournament Set In Play
 							List<Card> currInPlayCards = MultiplayerGame.GameManager.getInPlay (_turnId);
 							string[] currInPlayCardStr = new string[currInPlayCards.Count];
-
 							for (int i = 0; i < currInPlayCards.Count; i++) {
 								currInPlayCardStr [i] = currInPlayCards [i].name;
 							}
-
-							MultiplayerGame.GameManager.photonSet = true;
 							MultiplayerGame.GameManager.photonCall ("PhotonSetInPlay", currInPlayCardStr, _turnId, null, null, null, null, null);
 						}
 					}
-					MultiplayerGame.GameManager.photonSet = false;
+
 
 					// Fix prompt message (if they submited an invalid input).
-						MultiplayerGame.GameManager.getPromptManager().statusPrompt ("Setup your weapons!");
-
+					MultiplayerGame.GameManager.getPromptManager().statusPrompt ("Setup your weapons!");
+					message = ("Player: "+(_turnId+1)+" is currently setting up weapon");
 					// Move to next player in _playersIn.
 					participatingPlayerIndex++;
 
@@ -228,10 +240,16 @@ public class MultiQuestBehaviour : GameBehaviour {
 						// Unflip the stage cards.
 						MultiplayerGame.GameManager.logger.info("Flipping cards in stage " + (_currStage + 1));
 
-						didYouSurvivePrompt();
+						message = didYouSurvivePrompt();
 
 						// Clear the players inPlay list.
 						MultiplayerGame.GameManager.clearInPlay(_turnId);
+						MultiplayerGame.GameManager.loadPlayer(_turnId);
+						MultiplayerGame.GameManager.sync = true; 
+						MultiplayerGame.GameManager.block(_turnId,"");
+						MultiplayerGame.GameManager.blockMessage(message);
+						return;
+
 					} else {
 
 						// Update _turnId.
@@ -249,13 +267,13 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 					// Load the new player.
 					MultiplayerGame.GameManager.loadPlayer(_turnId);
-					MultiplayerGame.GameManager.photonSet = false;
-					MultiplayerGame.GameManager.block(_turnId,blockMessage);
+					MultiplayerGame.GameManager.setSync(_turnId);
+					MultiplayerGame.GameManager.block(_turnId,message);
 
 				// Weapon setup is not valid.
 				} else {
 					MultiplayerGame.GameManager.logger.info("Play area is invalid!");
-						MultiplayerGame.GameManager.getPromptManager().statusPrompt("You can't submit foe/too many amours to the play area!");
+					MultiplayerGame.GameManager.getPromptManager().statusPrompt("You can't submit foe/too many amours to the play area!");
 				}
 
 			// Otherwise, quest needs to be setup.
@@ -276,8 +294,12 @@ public class MultiQuestBehaviour : GameBehaviour {
 					if (_questReady) {
 
 						//Only Let this call Once (RECURSIVE METHOD)
-						if (MultiplayerGame.GameManager.photonSet == false) {
+						Debug.Log(MultiplayerGame.GameManager.sync);
+						Debug.Log(MultiplayerGame.GameManager.clientID);
+						Debug.Log(_turnId);
+						if (MultiplayerGame.GameManager.sync == true && MultiplayerGame.GameManager.clientID == _turnId+1) {
 							//Pull Cards To Push
+							Debug.Log("HERE LMAO");
 							List<List<Card>> allStageCard = MultiplayerGame.GameManager.getStages(5);
 							string[] stage1 = new string[allStageCard[0].Count];
 							string[] stage2 = new string[allStageCard[1].Count];
@@ -323,34 +345,16 @@ public class MultiQuestBehaviour : GameBehaviour {
 							for (int i = 0; i < stage5.Length; i++) {
 								Debug.Log (stage5 [i]);
 							}
-							MultiplayerGame.GameManager.photonSet = true;
 							//Photon Call for sponsoring stage
 							MultiplayerGame.GameManager.photonCall ("PhotonQuestStage", null, _turnId, stage1, stage2, stage3, stage4, stage5);
 						}
 
 
 						// Flip the staged cards.
-
 						List<Card> stagedCards = MultiplayerGame.GameManager.getStagedCards(_questCard.stages);
-						/*
-						for(int x = 0 ; x < 4 ; x++){
-							for (int i = 0; i < stagedCards.Count; i++) {
-								stagedCards[i].flipCard (true);
-							}
-						}
-
-						// 2nd time to ensure flipage
-						for(int x = 0 ; x < 4 ; x++){
-							for (int i = 0; i < stagedCards.Count; i++) {
-								stagedCards[i].flipCard (true);
-							}
-						}
-
-						*/
+						
 						//Remove Cards Played in stage
 						MultiplayerGame.GameManager.removeCards(_turnId,stagedCards);
-
-						
 
 						// Get cards to add back to player.
 						List<Card> cardsToAdd = new List<Card> ();
@@ -373,7 +377,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 						// Load new player.
 						MultiplayerGame.GameManager.loadPlayer(_turnId);
-						MultiplayerGame.GameManager.photonSet = false;
+						MultiplayerGame.GameManager.setSync(_turnId);
 						MultiplayerGame.GameManager.block(_turnId,blockMessage);
 
 						// Ask if the next player wants to play.
@@ -412,7 +416,6 @@ public class MultiQuestBehaviour : GameBehaviour {
 		_playersIn = new List<int>();
 		participatingPlayerIndex = 0;
 		participatingPlayers = 0;
-		MultiplayerGame.GameManager.photonSet = false;
 		// Proceed to the next player and story card in the game.
 		MultiplayerGame.GameManager.nextCardAndPlayer();
 	}
@@ -463,7 +466,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 		// The user doesn't want to sponsor the quest.
 		} else {
 			MultiplayerGame.GameManager.logger.info("Player " + (_turnId + 1) + " decided NOT to sponsor the quest.");
-
+			MultiplayerGame.GameManager.blockMessage("Player " + (_turnId + 1) + " decided NOT to sponsor the quest.");
 			if(_asked >= MultiplayerGame.GameManager.getNumberOfPlayers() ){
 				MultiplayerGame.GameManager.logger.info("Nobody wanted to sponsor the quest!");
 				endQuest();
@@ -478,7 +481,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 			// Load the next player.
 			MultiplayerGame.GameManager.loadPlayer(_turnId);
-			MultiplayerGame.GameManager.photonSet = false;
+			MultiplayerGame.GameManager.setSync(_turnId);
 			MultiplayerGame.GameManager.block(_turnId,blockMessage);
 
 			if(MultiplayerGame.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
@@ -489,15 +492,18 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 	// When the user responds to the join quest prompt.
 	public void joinQuest(bool answer){
+		blockMessage = "";
 		_asked++;
-
+		string choice = "";
 		// The user doesn't want to join the quest.
 		if (!answer) {
 			// Remove the players from the players in the quest.
 			_playersIn.Remove (_turnId);
 			MultiplayerGame.GameManager.logger.info ("Player " + (_turnId + 1) + " decided to NOT join the quest.");
+			choice = "Player " + (_turnId + 1) + " decided to NOT join the quest.";
 		} else {
 			MultiplayerGame.GameManager.logger.info("Player " + (_turnId + 1) + " decided to join the quest.");
+			choice = "Player " + (_turnId + 1) + " decided to join the quest.";
 		}
 
 		// If we have asked all the players.
@@ -524,7 +530,9 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 				participatingPlayers = _playersIn.Count;
 
-					MultiplayerGame.GameManager.getPromptManager().statusPrompt("Setup your weapons!");
+				MultiplayerGame.GameManager.getPromptManager().statusPrompt("Setup your weapons!");
+				
+				blockMessage = "Player: "+(_turnId+1)+" time to set up weapon.";
 
 				if(MultiplayerGame.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
 					Debug.Log("AI Setup Weapon");
@@ -539,8 +547,9 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 		// Not eveyone has been asked yet.
 		else {
-				MultiplayerGame.GameManager.getPromptManager().promptMessage("quest");
+			MultiplayerGame.GameManager.getPromptManager().promptMessage("quest");
 			nextPlayer();
+			//BLOCK MESSAGE
 			//AI join quest
 			if(MultiplayerGame.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
 				MultiplayerGame.GameManager.AILogicResponse(_turnId,"quest");
@@ -549,8 +558,9 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 		// Load the right player.
 		MultiplayerGame.GameManager.loadPlayer(_turnId);
-		MultiplayerGame.GameManager.photonSet = false;
+		MultiplayerGame.GameManager.setSync(_turnId);
 		MultiplayerGame.GameManager.block(_turnId,blockMessage);
+		MultiplayerGame.GameManager.blockMessage(choice);
 	}
 
 	// Create a quest and setup the stages.
@@ -575,18 +585,20 @@ public class MultiQuestBehaviour : GameBehaviour {
 		return power > _stagePower[_currStage];
 	}
 
-	public void didYouSurvivePrompt(){
+	public string didYouSurvivePrompt(){
+		string message = "";
 		if (didYouSurvive(MultiplayerGame.GameManager.getInPlay(_turnId))){
 			MultiplayerGame.GameManager.getPromptManager().statusPrompt ("You passed stage " + (_currStage + 1) + "! Stage " + (_currStage + 1) + " has a power level of " + _stagePower[_currStage] + ".");
 			MultiplayerGame.GameManager.logger.info("Player " + (_turnId + 1) + " passed stage " + (_currStage + 1) + ".");
-			MultiplayerGame.GameManager.blockMessage("Player " + (_turnId + 1) + " passed stage " + (_currStage + 1) + ".");
+			message = ("Player " + (_turnId + 1) + " passed stage " + (_currStage + 1) + ".");
 		} else {
 			// Player died, remove them.
 			_deadPlayers.Add(_turnId);
 			MultiplayerGame.GameManager.logger.info("Player " + (_turnId + 1) + " died on stage " + (_currStage + 1) + ".");
-			MultiplayerGame.GameManager.blockMessage("Player " + (_turnId + 1) + " died on stage " + (_currStage + 1) + ".");
 			MultiplayerGame.GameManager.getPromptManager().statusPrompt ("You died on stage " + (_currStage + 1) + "! Stage " + (_currStage + 1) + " has a power level of " + _stagePower[_currStage] + ".");
+			message = ("Player " + (_turnId + 1) + " died on stage " + (_currStage + 1) + ".");
 		}
+		return message;
 	}
 
 	// Check to make sure a stage is valid.
@@ -607,7 +619,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 					if(currWeapon.name == weapons[x].name){
 						if (doPrompt) {
 							MultiplayerGame.GameManager.logger.warn("Quest setup is invalid: duplicate weapons.");
-								MultiplayerGame.GameManager.getPromptManager().statusPrompt ("Quest Invalid: Duplicate weapons.");
+							MultiplayerGame.GameManager.getPromptManager().statusPrompt ("Quest Invalid: Duplicate weapons.");
 						}
 						return -1;
 					}
