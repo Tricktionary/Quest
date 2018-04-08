@@ -84,10 +84,14 @@ public class MultiplayerGame : MonoBehaviour {
 	public GameObject blockerCardArea;
 	public GameObject blockerInGameMSG;
 
+
 	// The current story card in play.
 	Card _storyCard;
 	bool activeStoryCard = false;
  	public bool bonusQuestPoints = false;
+	
+	//Ensure the game is in sync
+	public bool sync;
 
 	//Card Factory for networking
 	public CardFactory cardFactory = new CardFactory();
@@ -95,7 +99,8 @@ public class MultiplayerGame : MonoBehaviour {
 	//tempFix
 	bool allFlip = false;
 
-	int clientID;
+	//Client ID
+	public int clientID;
 
 	public bool photonSet = false;
 
@@ -125,7 +130,7 @@ public class MultiplayerGame : MonoBehaviour {
 
 	// End a turn (fires when the End Turn button is clicked).
 	public void EndTurn() {
-		
+		Debug.Log("End Turn Called");
 		// If the hand has too many cards.
 		/*
 		List<Card> stagedCards = getStagedCards (5);
@@ -164,6 +169,8 @@ public class MultiplayerGame : MonoBehaviour {
 
 			// Story card hasn't been drawn yet.
 		} else {
+			sync = true;
+
 			logger.info("Drawing a story card...");
 			// Draw a story card.
 			
@@ -269,7 +276,7 @@ public class MultiplayerGame : MonoBehaviour {
 
 		// Load their hand.
 		loadHand(n);
-		block(n,"");
+		//block(n,"");
 	}
 
 	// Rank up players.
@@ -279,9 +286,16 @@ public class MultiplayerGame : MonoBehaviour {
 		}
 	}
 
+	public void setSync(int turnId){
+		if(clientID == turnId+1){
+			sync = true;
+		}else{
+			sync = false;
+		}
+	}
+
 	// Switch to the next gamewise player, and draw a new story card.
 	public void nextCardAndPlayer(){
-
 		//Rank Up player before next turn
 		rankUpPlayers();
 
@@ -298,11 +312,13 @@ public class MultiplayerGame : MonoBehaviour {
 		if (_currentPlayer >= _players.Count) {
 			_currentPlayer = 0;
 		}
+
 		Debug.Log("After:"+_currentPlayer);
-		block(_currentPlayer,"");
+		//block(_currentPlayer,"");
+		
+		setSync(_currentPlayer);
 		loadPlayer(_currentPlayer);
-		
-		
+	
 		// Clean the stages.
 		logger.info("Cleaning cards from stages.");
 		for (int i = 0; i < Stages.Count; i++) {
@@ -325,7 +341,8 @@ public class MultiplayerGame : MonoBehaviour {
 		}
 
 		PromptManager.statusPrompt("It's your turn to draw a story card!");
-
+		blockMessage("It's currently Player: "+(_currentPlayer + 1 ) +" to Draw a card");
+	
 		// AI logic.
 		if(_players[_currentPlayer].GetType() == typeof(AIPlayer)){
 			AILogicResponse(_currentPlayer,"");
@@ -672,7 +689,7 @@ public class MultiplayerGame : MonoBehaviour {
 	[PunRPC]
 	public void PhotonQuestStage(int turnId,string[] stage1, string[] stage2, string[] stage3, string[] stage4, string[] stage5){
 
-		photonSet = true;
+		 
 	
 		CardFactory tempFact1 = new CardFactory ();
 		CardFactory tempFact2 = new CardFactory ();
@@ -731,6 +748,7 @@ public class MultiplayerGame : MonoBehaviour {
 		}
 		loadHand (turnId);
 		*/
+		sync = true;
 		EndTurn ();
 	}
 	[PunRPC]
@@ -745,7 +763,7 @@ public class MultiplayerGame : MonoBehaviour {
 		}
 
 		loadHand (turnId);
-		photonSet = true;
+		sync = true;
 		EndTurn ();
 	}
 
@@ -1007,6 +1025,7 @@ public class MultiplayerGame : MonoBehaviour {
 	//Pay the player shields
 	public void payShield(int playerId, int shields){
 		logger.info("Paying " + shields + " shields to Player " + (playerId + 1) + ".");
+		_players[playerId].AddShields(shields);	
 		//this.GetComponent<PhotonView>().RPC("PhotonPayShield",PhotonTargets.All,playerId,shields);
 	}
 
@@ -1023,8 +1042,10 @@ public class MultiplayerGame : MonoBehaviour {
 			discardCard(_questBehaviour.getCurrentTurn());
 		} else if (_storyCard.GetType() == typeof(TournamentCard)) {
 			discardCard(_tournamentBehaviour.getCurrentTurn());
-		} else {
+		} else if (_storyCard.GetType() == typeof(EventCard)) {
 			discardCard(_eventBehaviour.getCurrentTurn());
+		}else{
+			return;
 		}
 	}
 
@@ -1142,7 +1163,7 @@ public class MultiplayerGame : MonoBehaviour {
 	public void block(int turnId,string msg){
 		//this.GetComponent<PhotonView> ().RPC ("PhotonBlock", PhotonTargets.All,turnId,msg);
 		Debug.Log("TurnID:"+(turnId+1));
-		Debug.Log("ClientID:"+clientID);
+		//Debug.Log("ClientID:"+clientID);
 		if((turnId+1) != clientID){
 			blocker.SetActive(true);
 			blockerTXT.GetComponent<UnityEngine.UI.Text>().text = ""+(turnId+1);
@@ -1183,13 +1204,25 @@ public class MultiplayerGame : MonoBehaviour {
 		// Setup players.
 		_players = new List<Player>();
 		PhotonPlayer[] players = PhotonNetwork.playerList;
-		block(0,"");
+		//block(0,"");
+		
+		//Determine AI PLAYER SIZE 
+		int aiPlayerSize = 4 - players.Length;
+		
+		int currIndex = 0;
 
 		//Create Players on based on network connection
-		//Debug.Log(players.Length);
 		for(int i = 0 ; i < players.Length; i++){
 			_players.Add(new Player ( i ));
+			currIndex = i;
 		}
+
+		/* 
+		//Populate Multiplayer With AI
+		for(int i = currIndex ; i < aiPlayerSize ;i++){
+			_players.Add(new AIPlayer(i+1,1));
+		}
+		*/
 		 
 		if (PhotonNetwork.player.ID == 1) {
 			// Setup decks.
@@ -1216,6 +1249,7 @@ public class MultiplayerGame : MonoBehaviour {
 			//Host Sends Deck Call
 			this.GetComponent<PhotonView> ().RPC ("SendDecks", PhotonTargets.All,listStringAdventure,listStringStory);
 		}
+
 		// Make discard piles.
 		_discardPileAdventure = new Deck ("");
 		_discardPileStory = new Deck ("");
@@ -1241,6 +1275,7 @@ public class MultiplayerGame : MonoBehaviour {
 	public void NormalMode(){
 		logger.info("Normal mode selected.");
 		genericModeSetup("scenario1");
+		//genericModeSetup("TournamentOnly");
 	}
 
 	//Give card to player
