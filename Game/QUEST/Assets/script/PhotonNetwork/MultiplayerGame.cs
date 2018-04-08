@@ -276,7 +276,7 @@ public class MultiplayerGame : MonoBehaviour {
 
 		// Load their hand.
 		loadHand(n);
-		//block(n,"");
+		block(n,"");
 	}
 
 	// Rank up players.
@@ -314,7 +314,7 @@ public class MultiplayerGame : MonoBehaviour {
 		}
 
 		Debug.Log("After:"+_currentPlayer);
-		//block(_currentPlayer,"");
+		block(_currentPlayer,"");
 		
 		setSync(_currentPlayer);
 		loadPlayer(_currentPlayer);
@@ -1161,7 +1161,7 @@ public class MultiplayerGame : MonoBehaviour {
 
 	//Block Player
 	public void block(int turnId,string msg){
-		//this.GetComponent<PhotonView> ().RPC ("PhotonBlock", PhotonTargets.All,turnId,msg);
+		
 		Debug.Log("TurnID:"+(turnId+1));
 		//Debug.Log("ClientID:"+clientID);
 		if((turnId+1) != clientID){
@@ -1179,12 +1179,7 @@ public class MultiplayerGame : MonoBehaviour {
 		blockerInGameMSG.GetComponent<UnityEngine.UI.Text> ().text = msg;
 	}
 
-/* 
-	[PunRPC]
-	public void PhotonBlock(int turnId,string msg){
 
-	}
-*/
 	public void genericModeSetup(string storyDeckType){
 
 		logger.info("Setting up game...");
@@ -1204,7 +1199,7 @@ public class MultiplayerGame : MonoBehaviour {
 		// Setup players.
 		_players = new List<Player>();
 		PhotonPlayer[] players = PhotonNetwork.playerList;
-		//block(0,"");
+		block(0,"");
 		
 		//Determine AI PLAYER SIZE 
 		int aiPlayerSize = 4 - players.Length;

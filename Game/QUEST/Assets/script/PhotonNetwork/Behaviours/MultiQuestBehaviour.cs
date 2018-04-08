@@ -57,7 +57,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 		if (_turnId >= MultiplayerGame.GameManager.getNumberOfPlayers()) {
 			_turnId = 0;
 		}
-		//MultiplayerGame.GameManager.block(_turnId,"");
+		MultiplayerGame.GameManager.block(_turnId,"");
 	}
 
 	// Set current turn.
@@ -153,7 +153,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 					// Go back to the first player who is still alive.
 					participatingPlayerIndex = 0;
 					_turnId = _playersIn[0];
-					//MultiplayerGame.GameManager.block(_turnId,"");
+					MultiplayerGame.GameManager.block(_turnId,"");
 
 					// Pay everyone 1 adventure card.
 					for(int i = 0; i < _playersIn.Count; i++){
@@ -184,13 +184,17 @@ public class MultiQuestBehaviour : GameBehaviour {
 				MultiplayerGame.GameManager.clearInPlay(_turnId);
 				MultiplayerGame.GameManager.loadPlayer(_turnId);
 				MultiplayerGame.GameManager.sync = true; 
+				MultiplayerGame.GameManager.block(_turnId,"");
+				MultiplayerGame.GameManager.blockMessage(message);
 				return;
 			}
 
 			// Load the new player.
 			MultiplayerGame.GameManager.loadPlayer(_turnId);
 			MultiplayerGame.GameManager.setSync(_turnId);
+			MultiplayerGame.GameManager.block(_turnId,"");
 			MultiplayerGame.GameManager.blockMessage(message);
+
 		} else {
 
 			// If we are on the setup weapons stage.
@@ -231,7 +235,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 						participatingPlayerIndex = 0;
 						_turnId = _playersIn[0];
-						//MultiplayerGame.GameManager.block(_turnId,"");
+						MultiplayerGame.GameManager.block(_turnId,"");
 
 						// Unflip the stage cards.
 						MultiplayerGame.GameManager.logger.info("Flipping cards in stage " + (_currStage + 1));
@@ -240,16 +244,17 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 						// Clear the players inPlay list.
 						MultiplayerGame.GameManager.clearInPlay(_turnId);
-						
 						MultiplayerGame.GameManager.loadPlayer(_turnId);
 						MultiplayerGame.GameManager.sync = true; 
+						MultiplayerGame.GameManager.block(_turnId,"");
+						MultiplayerGame.GameManager.blockMessage(message);
 						return;
 
 					} else {
 
 						// Update _turnId.
 						_turnId = _playersIn[participatingPlayerIndex];
-						//MultiplayerGame.GameManager.block(_turnId,"");
+						MultiplayerGame.GameManager.block(_turnId,"");
 						if(MultiplayerGame.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
 							Debug.Log("AI Setup Weapon");
 							List<Card> aiPlayCard = MultiplayerGame.GameManager.AILogicPlayCards(_turnId);
@@ -263,7 +268,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 					// Load the new player.
 					MultiplayerGame.GameManager.loadPlayer(_turnId);
 					MultiplayerGame.GameManager.setSync(_turnId);
-					//MultiplayerGame.GameManager.block(_turnId,message);
+					MultiplayerGame.GameManager.block(_turnId,message);
 
 				// Weapon setup is not valid.
 				} else {
@@ -373,7 +378,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 						// Load new player.
 						MultiplayerGame.GameManager.loadPlayer(_turnId);
 						MultiplayerGame.GameManager.setSync(_turnId);
-						//MultiplayerGame.GameManager.block(_turnId,blockMessage);
+						MultiplayerGame.GameManager.block(_turnId,blockMessage);
 
 						// Ask if the next player wants to play.
 							MultiplayerGame.GameManager.getPromptManager().promptMessage ("quest");
@@ -477,7 +482,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 			// Load the next player.
 			MultiplayerGame.GameManager.loadPlayer(_turnId);
 			MultiplayerGame.GameManager.setSync(_turnId);
-			//MultiplayerGame.GameManager.block(_turnId,blockMessage);
+			MultiplayerGame.GameManager.block(_turnId,blockMessage);
 
 			if(MultiplayerGame.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
 				MultiplayerGame.GameManager.AILogicResponse(_turnId,"sponsor");
@@ -511,7 +516,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 			}
 			else{
 				_turnId = _playersIn[0];
-				//MultiplayerGame.GameManager.block(_turnId,"");
+				MultiplayerGame.GameManager.block(_turnId,"");
 
 				// Pay everyone that join 1 adventure Card.
 				for(int i = 0 ; i<_playersIn.Count ; i++){
@@ -554,7 +559,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 		// Load the right player.
 		MultiplayerGame.GameManager.loadPlayer(_turnId);
 		MultiplayerGame.GameManager.setSync(_turnId);
-		//MultiplayerGame.GameManager.block(_turnId,blockMessage);
+		MultiplayerGame.GameManager.block(_turnId,blockMessage);
 		MultiplayerGame.GameManager.blockMessage(choice);
 	}
 

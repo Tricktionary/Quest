@@ -114,9 +114,10 @@ public class MultiTournamentBehaviour : GameBehaviour {
 					blockMessage = "The following player(s) have won " + shieldPrize + " shields: " + winners_string.Substring(0, winners_string.Length - 2);
 					_tournamentConcluded = true;
 					MultiplayerGame.GameManager.loadPlayer(_turnId);
+					MultiplayerGame.GameManager.block(_turnId,blockMessage);
 					MultiplayerGame.GameManager.sync = true;
 					return;
-					
+
 				} else {
 					// Update _turnId.
 					_turnId = _playersIn[participatingPlayerIndex];
@@ -132,7 +133,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 
 				// Load the new player.
 				MultiplayerGame.GameManager.loadPlayer(_turnId);
-				//MultiplayerGame.GameManager.block(_turnId,blockMessage);
+				MultiplayerGame.GameManager.block(_turnId,blockMessage);
 				MultiplayerGame.GameManager.setSync(_turnId);
 
 			} else {
@@ -161,7 +162,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 		if (_turnId >= MultiplayerGame.GameManager.getNumberOfPlayers()) {
 			_turnId = 0;
 		}
-		//MultiplayerGame.GameManager.block(_turnId,blockMessage);
+		MultiplayerGame.GameManager.block(_turnId,blockMessage);
 		MultiplayerGame.GameManager.setSync(_turnId);
 	}
 
@@ -305,7 +306,7 @@ public class MultiTournamentBehaviour : GameBehaviour {
 
 		// Load the right player.
 		MultiplayerGame.GameManager.loadPlayer(_turnId);
-		//MultiplayerGame.GameManager.block(_turnId,blockMessage);
+		MultiplayerGame.GameManager.block(_turnId,blockMessage);
 		MultiplayerGame.GameManager.blockMessage(message);
 		MultiplayerGame.GameManager.setSync(_turnId);
 	}
