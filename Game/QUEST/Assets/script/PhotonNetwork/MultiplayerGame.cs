@@ -89,7 +89,6 @@ public class MultiplayerGame : MonoBehaviour {
 	public GameObject clienIDtxt;
 	public GameObject clientShield;
 	public GameObject clientRankArea;
-	public List<GameObject> cStages;
 	
 
 
@@ -335,15 +334,6 @@ public class MultiplayerGame : MonoBehaviour {
 				GameObject.Destroy (child.gameObject);
 			}
 		}
-		for (int i = 0; i < cStages.Count; i++) {
-			cStages[i].SetActive (true);
-			cStages[i].GetComponent<CardArea>().cards = new List<Card> ();
-
-			// Clears out draw card area.
-			foreach (Transform child in cStages[i].transform) {
-				GameObject.Destroy (child.gameObject);
-			}
-		}
 
 		// Reset the story card.
 		activeStoryCard = false;
@@ -481,10 +471,6 @@ public class MultiplayerGame : MonoBehaviour {
 		// Setup the stages.
 		for (int i = 0; i < (5 - questCard.stages); i++) {
 			Stages[4-i].SetActive(false);
-		}
-		// Setup the stages.
-		for (int i = 0; i < (5 - questCard.stages); i++) {
-			cStages[4-i].SetActive(false);
 		}
 	}
 
@@ -734,12 +720,6 @@ public class MultiplayerGame : MonoBehaviour {
 		loadCards(stage4Cards,Stages[3]);
 		loadCards(stage5Cards,Stages[4]);
 		 
-
-		loadCards(stage1Cards,cStages[0]);
-		loadCards(stage2Cards,cStages[1]);
-		loadCards(stage3Cards,cStages[2]);
-		loadCards(stage4Cards,cStages[3]);
-		loadCards(stage5Cards,cStages[4]);
 
 		for (int i = 0; i < allCARDS.Count; i++) {
 			removeCardByName (turnId, allCARDS [i].name);
