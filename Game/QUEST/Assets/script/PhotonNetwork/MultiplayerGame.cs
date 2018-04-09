@@ -47,6 +47,7 @@ public class MultiplayerGame : MonoBehaviour {
 	public List<GameObject> numCardText;
 	public List<GameObject> shieldCounterList;
 	public List<GameObject> rankTextList;
+	public GameObject clientIdTxt;
 
 	// Misc GameObject's.
 	public GameObject currStageTxt;
@@ -83,11 +84,22 @@ public class MultiplayerGame : MonoBehaviour {
 	public GameObject blockerTXT;
 	public GameObject blockerCardArea;
 	public GameObject blockerInGameMSG;
+	public GameObject clientHand;
+	public GameObject clientInPlay;
+	public GameObject clienIDtxt;
+	public GameObject clientShield;
+	public GameObject clientRankArea;
+	public List<GameObject> cStages;
+	
+
 
 	// The current story card in play.
 	Card _storyCard;
 	bool activeStoryCard = false;
  	public bool bonusQuestPoints = false;
+	
+	//Ensure the game is in sync
+	public bool sync;
 
 	//Card Factory for networking
 	public CardFactory cardFactory = new CardFactory();
@@ -95,7 +107,9 @@ public class MultiplayerGame : MonoBehaviour {
 	//tempFix
 	bool allFlip = false;
 
-	int clientID;
+	//Client ID
+	public int clientID;
+
 
 	public bool photonSet = false;
 
@@ -125,14 +139,8 @@ public class MultiplayerGame : MonoBehaviour {
 
 	// End a turn (fires when the End Turn button is clicked).
 	public void EndTurn() {
-		
-		// If the hand has too many cards.
-		/*
-		List<Card> stagedCards = getStagedCards (5);
-		for (int i = 0; i < stagedCards.Count; i++) {
-			Debug.Log (stagedCards [i].name);
-		}
-		*/
+		Debug.Log("End Turn Called");
+
 
 		if(Hand.GetComponent<CardArea>().cards.Count >= 13  ){
 			PromptManager.statusPrompt("Too many cards, please discard or use.");
@@ -164,6 +172,8 @@ public class MultiplayerGame : MonoBehaviour {
 
 			// Story card hasn't been drawn yet.
 		} else {
+			sync = true;
+
 			logger.info("Drawing a story card...");
 			// Draw a story card.
 			
@@ -261,13 +271,15 @@ public class MultiplayerGame : MonoBehaviour {
 			GameObject.Destroy(child.gameObject);
 		}
 
-		// Set Player ID text.
-		playerIdTxt.GetComponent<UnityEngine.UI.Text>().text = "Player ID: " + (n + 1);
+		// Set TURN ID text.
+		playerIdTxt.GetComponent<UnityEngine.UI.Text>().text = "Turn ID: " + (n + 1);
 
+		clientIdTxt.GetComponent<UnityEngine.UI.Text>().text = "Player ID: " + clientID;
 		// Get current players shield.
 		shieldCounterTxt.GetComponent<UnityEngine.UI.Text>().text = "# Shield: "+ (_players[n].shieldCounter);
 
 		// Load their hand.
+		
 		loadHand(n);
 		block(n,"");
 	}
@@ -279,9 +291,16 @@ public class MultiplayerGame : MonoBehaviour {
 		}
 	}
 
+	public void setSync(int turnId){
+		if(clientID == turnId+1){
+			sync = true;
+		}else{
+			sync = false;
+		}
+	}
+
 	// Switch to the next gamewise player, and draw a new story card.
 	public void nextCardAndPlayer(){
-
 		//Rank Up player before next turn
 		rankUpPlayers();
 
@@ -298,11 +317,13 @@ public class MultiplayerGame : MonoBehaviour {
 		if (_currentPlayer >= _players.Count) {
 			_currentPlayer = 0;
 		}
+
 		Debug.Log("After:"+_currentPlayer);
 		block(_currentPlayer,"");
+		
+		setSync(_currentPlayer);
 		loadPlayer(_currentPlayer);
-		
-		
+	 
 		// Clean the stages.
 		logger.info("Cleaning cards from stages.");
 		for (int i = 0; i < Stages.Count; i++) {
@@ -311,6 +332,15 @@ public class MultiplayerGame : MonoBehaviour {
 
 			// Clears out draw card area.
 			foreach (Transform child in Stages[i].transform) {
+				GameObject.Destroy (child.gameObject);
+			}
+		}
+		for (int i = 0; i < cStages.Count; i++) {
+			cStages[i].SetActive (true);
+			cStages[i].GetComponent<CardArea>().cards = new List<Card> ();
+
+			// Clears out draw card area.
+			foreach (Transform child in cStages[i].transform) {
 				GameObject.Destroy (child.gameObject);
 			}
 		}
@@ -325,7 +355,8 @@ public class MultiplayerGame : MonoBehaviour {
 		}
 
 		PromptManager.statusPrompt("It's your turn to draw a story card!");
-
+		blockMessage("It's currently Player: "+(_currentPlayer + 1 ) +" to Draw a card");
+	
 		// AI logic.
 		if(_players[_currentPlayer].GetType() == typeof(AIPlayer)){
 			AILogicResponse(_currentPlayer,"");
@@ -446,10 +477,14 @@ public class MultiplayerGame : MonoBehaviour {
 		logger.info("Setting up stages for quest: " + _storyCard.name);
 		// Get the number of stages for the quest.
 		QuestCard questCard = (QuestCard)_storyCard;
-
+		 
 		// Setup the stages.
 		for (int i = 0; i < (5 - questCard.stages); i++) {
 			Stages[4-i].SetActive(false);
+		}
+		// Setup the stages.
+		for (int i = 0; i < (5 - questCard.stages); i++) {
+			cStages[4-i].SetActive(false);
 		}
 	}
 
@@ -672,7 +707,7 @@ public class MultiplayerGame : MonoBehaviour {
 	[PunRPC]
 	public void PhotonQuestStage(int turnId,string[] stage1, string[] stage2, string[] stage3, string[] stage4, string[] stage5){
 
-		photonSet = true;
+		 
 	
 		CardFactory tempFact1 = new CardFactory ();
 		CardFactory tempFact2 = new CardFactory ();
@@ -688,49 +723,30 @@ public class MultiplayerGame : MonoBehaviour {
 		List<Card> stage5Cards = tempFact5.createCardList (stage5);
  		
 		List<Card> allCARDS = new List<Card> ();
-
-		for (int i = 0; i < Stages.Count; i++) {
-			if (i == 0) {
-				for (int x = 0; x < stage1Cards.Count; x++) {
-					allCARDS.Add (stage1Cards [x]);
-					Stages [i].GetComponent<CardArea> ().addCard(stage1Cards[x]);
-				}
-			}
-			if (i == 1) {
-				for (int x = 0; x < stage2Cards.Count; x++) {
-					allCARDS.Add (stage2Cards [x]);
-					Stages [i].GetComponent<CardArea> ().addCard(stage2Cards[x]);
-				}
-			}
-			if (i == 2) {
-				for (int x = 0; x < stage3Cards.Count; x++) {
-					allCARDS.Add (stage3Cards [x]);
-					Stages [i].GetComponent<CardArea> ().addCard(stage3Cards[x]);
-				}
-			}
-			if (i == 3) {
-				for (int x = 0; x < stage4Cards.Count; x++) {
-					allCARDS.Add (stage4Cards [x]);
-					Stages [i].GetComponent<CardArea> ().addCard(stage4Cards[x]);
-				}
-			}
-			if (i == 4) {
-				for (int x = 0; x < stage5Cards.Count; x++) {
-					allCARDS.Add (stage5Cards [x]);
-					Stages [i].GetComponent<CardArea> ().addCard(stage5Cards[x]);
-				}
-			}
-		}
-		/*
+		
 		foreach (Transform child in Hand.transform) {
 			GameObject.Destroy(child.gameObject);
 		}
+		//HEHEXD
+		loadCards(stage1Cards,Stages[0]);
+		loadCards(stage2Cards,Stages[1]);
+		loadCards(stage3Cards,Stages[2]);
+		loadCards(stage4Cards,Stages[3]);
+		loadCards(stage5Cards,Stages[4]);
 		 
+
+		loadCards(stage1Cards,cStages[0]);
+		loadCards(stage2Cards,cStages[1]);
+		loadCards(stage3Cards,cStages[2]);
+		loadCards(stage4Cards,cStages[3]);
+		loadCards(stage5Cards,cStages[4]);
+
 		for (int i = 0; i < allCARDS.Count; i++) {
 			removeCardByName (turnId, allCARDS [i].name);
 		}
 		loadHand (turnId);
-		*/
+		
+		sync = true;
 		EndTurn ();
 	}
 	[PunRPC]
@@ -745,7 +761,7 @@ public class MultiplayerGame : MonoBehaviour {
 		}
 
 		loadHand (turnId);
-		photonSet = true;
+		sync = true;
 		EndTurn ();
 	}
 
@@ -909,10 +925,6 @@ public class MultiplayerGame : MonoBehaviour {
 		loadCards(_players[playerId].hand, Hand);
 		loadCards(_players[playerId].inPlay, playArea);
 
-		for(int i = 0 ; i < Hand.GetComponent<CardArea>().cards.Count; i++){
-			Hand.GetComponent<CardArea>().cards[i].flipCard(true);
-		}
-
 		GameObject cardUI = Instantiate(RankCard);
 
 		// Get the rank asset.
@@ -1007,8 +1019,8 @@ public class MultiplayerGame : MonoBehaviour {
 	//Pay the player shields
 	public void payShield(int playerId, int shields){
 		logger.info("Paying " + shields + " shields to Player " + (playerId + 1) + ".");
-		
-		this.GetComponent<PhotonView>().RPC("PhotonPayShield",PhotonTargets.All,playerId,shields);
+		_players[playerId].AddShields(shields);	
+		//this.GetComponent<PhotonView>().RPC("PhotonPayShield",PhotonTargets.All,playerId,shields);
 	}
 
 	[PunRPC]
@@ -1024,8 +1036,10 @@ public class MultiplayerGame : MonoBehaviour {
 			discardCard(_questBehaviour.getCurrentTurn());
 		} else if (_storyCard.GetType() == typeof(TournamentCard)) {
 			discardCard(_tournamentBehaviour.getCurrentTurn());
-		} else {
+		} else if (_storyCard.GetType() == typeof(EventCard)) {
 			discardCard(_eventBehaviour.getCurrentTurn());
+		}else{
+			return;
 		}
 	}
 
@@ -1141,17 +1155,54 @@ public class MultiplayerGame : MonoBehaviour {
 
 	//Block Player
 	public void block(int turnId,string msg){
-		//this.GetComponent<PhotonView> ().RPC ("PhotonBlock", PhotonTargets.All,turnId,msg);
 		Debug.Log("TurnID:"+(turnId+1));
-		Debug.Log("ClientID:"+clientID);
+		//Debug.Log("ClientID:"+clientID);
 		if((turnId+1) != clientID){
 			blocker.SetActive(true);
-			blockerTXT.GetComponent<UnityEngine.UI.Text>().text = ""+(turnId+1);
 		}
 		else{
 			blocker.SetActive(false);
 		}
+
+
+		foreach (Transform child in clientHand.transform) {
+			GameObject.Destroy(child.gameObject);
+		}
+		foreach (Transform child in clientInPlay.transform) {
+			GameObject.Destroy(child.gameObject);
+		}
+		foreach (Transform child in clientRankArea.transform) {
+			GameObject.Destroy(child.gameObject);
+		}
+
+		//Display TURN Number
+		blockerTXT.GetComponent<UnityEngine.UI.Text>().text = "Turn ID:"+(turnId+1);
+		//Load The client message
 		blockerInGameMSG.GetComponent<UnityEngine.UI.Text> ().text = msg;
+		//Load Client ID txt
+		clienIDtxt.GetComponent<UnityEngine.UI.Text> ().text = "Player ID:"+clientID;
+		//Display Shield Counter	
+		clientShield.GetComponent<UnityEngine.UI.Text> ().text = "# Shield: "+_players[clientID-1].shieldCounter;
+
+		GameObject cardUI = Instantiate(RankCard);
+		// Get the rank asset.
+		string rankAsset = getRankAsset(_players[clientID - 1].rank);
+		// Set the rank asset.
+		Sprite rankCard = Resources.Load<Sprite>(rankAsset);
+		cardUI.gameObject.GetComponent<Image>().sprite = rankCard;
+		cardUI.transform.SetParent(clientRankArea.transform);
+		
+		
+		//Load Hand For client
+		loadCards(_players[clientID-1].hand,clientHand);
+		
+		//Load inplay for client
+		loadCards(_players[clientID-1].inPlay,clientInPlay);
+		
+
+		 
+		
+
 	}
 	
 	//Change Block message
@@ -1159,12 +1210,7 @@ public class MultiplayerGame : MonoBehaviour {
 		blockerInGameMSG.GetComponent<UnityEngine.UI.Text> ().text = msg;
 	}
 
-/* 
-	[PunRPC]
-	public void PhotonBlock(int turnId,string msg){
 
-	}
-*/
 	public void genericModeSetup(string storyDeckType){
 
 		logger.info("Setting up game...");
@@ -1184,13 +1230,25 @@ public class MultiplayerGame : MonoBehaviour {
 		// Setup players.
 		_players = new List<Player>();
 		PhotonPlayer[] players = PhotonNetwork.playerList;
-		block(0,"");
+		 
+		
+		//Determine AI PLAYER SIZE 
+		int aiPlayerSize = 4 - players.Length;
+		
+		int currIndex = 0;
 
 		//Create Players on based on network connection
-		//Debug.Log(players.Length);
 		for(int i = 0 ; i < players.Length; i++){
 			_players.Add(new Player ( i ));
+			currIndex = i;
 		}
+
+		/* 
+		//Populate Multiplayer With AI
+		for(int i = currIndex ; i < aiPlayerSize ;i++){
+			_players.Add(new AIPlayer(i+1,1));
+		}
+		*/
 		 
 		if (PhotonNetwork.player.ID == 1) {
 			// Setup decks.
@@ -1217,9 +1275,11 @@ public class MultiplayerGame : MonoBehaviour {
 			//Host Sends Deck Call
 			this.GetComponent<PhotonView> ().RPC ("SendDecks", PhotonTargets.All,listStringAdventure,listStringStory);
 		}
+
 		// Make discard piles.
 		_discardPileAdventure = new Deck ("");
 		_discardPileStory = new Deck ("");
+		//block(0,"");
 	}
 
 	[PunRPC]
@@ -1242,6 +1302,7 @@ public class MultiplayerGame : MonoBehaviour {
 	public void NormalMode(){
 		logger.info("Normal mode selected.");
 		genericModeSetup("scenario1");
+		//genericModeSetup("TournamentOnly");
 	}
 
 	//Give card to player

@@ -15,22 +15,18 @@ public class PhotonNetworkManager : MonoBehaviour {
 	private void Awake(){
 		PhotonNetwork.ConnectUsingSettings(versionNumber);
 		PhotonNetwork.automaticallySyncScene = true;
-		Debug.Log("Connecting to server");
 		NetworkLogger.info("Connecting to server");
 	}
 
 	private void OnConnectedToMaster(){
-		Debug.Log("Conected");
 		NetworkLogger.info("Conected");
 		PhotonNetwork.JoinLobby(TypedLobby.Default);
 	}
 
 	private void OnJoinedLobby(){
-		Debug.Log("Conected to lobby");
 		NetworkLogger.info("Conected to lobby");
 		if(PhotonNetwork.countOfRooms ==0){
 			PhotonNetwork.CreateRoom("Game",new RoomOptions(){MaxPlayers = 4},null);
-			Debug.Log("Created Game");
 			NetworkLogger.info("Created Game");
 			//Turn off join button because already joined
 			JoinButton.SetActive(false);
@@ -38,7 +34,6 @@ public class PhotonNetworkManager : MonoBehaviour {
 	}
 
 	private void OnDisconnectedFromPhoton(){
-		Debug.Log("Disconnected");
 		NetworkLogger.info("Disconnected");
 	}
 
@@ -55,14 +50,12 @@ public class PhotonNetworkManager : MonoBehaviour {
 
 		for(int i = 0 ; i < players.Length; i++){
 			GameObject currText = Instantiate(PlayerText);
-			currText.GetComponent<UnityEngine.UI.Text>().text = "Player ID: " + i ;
+			currText.GetComponent<UnityEngine.UI.Text>().text = "Player ID: " + (i + 1) ;
 			currText.transform.SetParent(PlayerPanel.transform);
 		}
 
 		//Turn off join button because already joined
 		JoinButton.SetActive(false);
-
-		Debug.Log("Player Connected to Game");
 		NetworkLogger.info("Player Connected to Game");
 
 		if (PhotonNetwork.player.ID == 1) {
@@ -81,10 +74,10 @@ public class PhotonNetworkManager : MonoBehaviour {
 
 		for(int i = 0 ; i < players.Length; i++){
 			GameObject currText = Instantiate(PlayerText);
-			currText.GetComponent<UnityEngine.UI.Text>().text = "Player ID: " + i ;
+			currText.GetComponent<UnityEngine.UI.Text>().text = "Player ID: " + ( i + 1) ;
 			currText.transform.SetParent(PlayerPanel.transform);
 		}
-		if(players.Length == 4){PhotonNetwork.LoadLevel(3);}
+		if(players.Length > 4){PhotonNetwork.LoadLevel(2);}
 	}
 
   public void StartGame(){
@@ -92,6 +85,6 @@ public class PhotonNetworkManager : MonoBehaviour {
   }
 
 	[PunRPC] public void loadLevel(){
-		PhotonNetwork.LoadLevel(3);
+		PhotonNetwork.LoadLevel(2);
 	}
 }
