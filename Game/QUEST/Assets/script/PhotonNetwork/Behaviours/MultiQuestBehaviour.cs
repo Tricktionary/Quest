@@ -239,7 +239,12 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 						// Unflip the stage cards.
 						MultiplayerGame.GameManager.logger.info("Flipping cards in stage " + (_currStage + 1));
-
+						if(_currStage < _questCard.stages){
+							List<Card> cardsToReveal = MultiplayerGame.GameManager.Stages[_currStage].GetComponent<CardArea>().cards;
+							for(int i = 0; i < cardsToReveal.Count; i++){
+								cardsToReveal[i].flipCard(false);
+							}
+						}
 						message = didYouSurvivePrompt();
 
 						// Clear the players inPlay list.
@@ -299,7 +304,6 @@ public class MultiQuestBehaviour : GameBehaviour {
 						Debug.Log(_turnId);
 						if (MultiplayerGame.GameManager.sync == true && MultiplayerGame.GameManager.clientID == _turnId+1) {
 							//Pull Cards To Push
-							Debug.Log("HERE LMAO");
 							List<List<Card>> allStageCard = MultiplayerGame.GameManager.getStages(5);
 							string[] stage1 = new string[allStageCard[0].Count];
 							string[] stage2 = new string[allStageCard[1].Count];
@@ -352,7 +356,13 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 						// Flip the staged cards.
 						List<Card> stagedCards = MultiplayerGame.GameManager.getStagedCards(_questCard.stages);
-						
+						for(int x = 0 ; x < 4 ; x++){
+								for (int i = 0; i < stagedCards.Count; i++) {
+									if(stagedCards[i].GetType() != typeof(TestCard)){
+										stagedCards[i].flipCard (true);
+									}
+								}
+							}
 						//Remove Cards Played in stage
 						MultiplayerGame.GameManager.removeCards(_turnId,stagedCards);
 

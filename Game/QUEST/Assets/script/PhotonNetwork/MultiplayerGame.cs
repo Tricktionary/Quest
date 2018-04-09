@@ -705,49 +705,22 @@ public class MultiplayerGame : MonoBehaviour {
 		List<Card> stage5Cards = tempFact5.createCardList (stage5);
  		
 		List<Card> allCARDS = new List<Card> ();
-
-		for (int i = 0; i < Stages.Count; i++) {
-			if (i == 0) {
-				for (int x = 0; x < stage1Cards.Count; x++) {
-					allCARDS.Add (stage1Cards [x]);
-					Stages [i].GetComponent<CardArea> ().addCard(stage1Cards[x]);
-				}
-			}
-			if (i == 1) {
-				for (int x = 0; x < stage2Cards.Count; x++) {
-					allCARDS.Add (stage2Cards [x]);
-					Stages [i].GetComponent<CardArea> ().addCard(stage2Cards[x]);
-				}
-			}
-			if (i == 2) {
-				for (int x = 0; x < stage3Cards.Count; x++) {
-					allCARDS.Add (stage3Cards [x]);
-					Stages [i].GetComponent<CardArea> ().addCard(stage3Cards[x]);
-				}
-			}
-			if (i == 3) {
-				for (int x = 0; x < stage4Cards.Count; x++) {
-					allCARDS.Add (stage4Cards [x]);
-					Stages [i].GetComponent<CardArea> ().addCard(stage4Cards[x]);
-				}
-			}
-			if (i == 4) {
-				for (int x = 0; x < stage5Cards.Count; x++) {
-					allCARDS.Add (stage5Cards [x]);
-					Stages [i].GetComponent<CardArea> ().addCard(stage5Cards[x]);
-				}
-			}
-		}
-		/*
+		
 		foreach (Transform child in Hand.transform) {
 			GameObject.Destroy(child.gameObject);
 		}
-		 
+		//HEHEXD
+		loadCards(stage1Cards,Stages[0]);
+		loadCards(stage2Cards,Stages[1]);
+		loadCards(stage3Cards,Stages[2]);
+		loadCards(stage4Cards,Stages[3]);
+		loadCards(stage5Cards,Stages[4]);
+
 		for (int i = 0; i < allCARDS.Count; i++) {
 			removeCardByName (turnId, allCARDS [i].name);
 		}
 		loadHand (turnId);
-		*/
+		
 		sync = true;
 		EndTurn ();
 	}
