@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MultiQuestBehaviour : GameBehaviour {
 
+
 	// The current quest card.
 	QuestCard _questCard;
 
@@ -92,6 +93,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 				// Update the _playersIn list.
 				for(int i = 0; i < _deadPlayers.Count; i++){
 					_playersIn.Remove(_deadPlayers [i]);
+					
 				}
 				_deadPlayers = new List<int>();
 
@@ -131,6 +133,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 						// Remove AmourCard.
 						for(int i = 0 ;i <_playersIn.Count;i++){
 							MultiplayerGame.GameManager.clearInPlayEnd(_playersIn[i]);
+							MultiplayerGame.GameManager.logger.info("Clear Cards at the end of the quest");
 						}
 
 						// End the quest.
@@ -255,7 +258,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 				// Weapon setup is not valid.
 				} else {
 					MultiplayerGame.GameManager.logger.info("Play area is invalid!");
-						MultiplayerGame.GameManager.getPromptManager().statusPrompt("You can't submit foe/too many amours to the play area!");
+					MultiplayerGame.GameManager.getPromptManager().statusPrompt("You can't submit foe/too many amours to the play area!");
 				}
 
 			// Otherwise, quest needs to be setup.
@@ -355,6 +358,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 						// Get cards to add back to player.
 						List<Card> cardsToAdd = new List<Card> ();
 						for (int x = 0; x < (stagedCards.Count + 1); x++) {
+							MultiplayerGame.GameManager.logger.info("Sponsor draws: " + stagedCards.Count+1 + " cards");
 							cardsToAdd.Add (MultiplayerGame.GameManager.drawAdventureCard ());
 						}
 
