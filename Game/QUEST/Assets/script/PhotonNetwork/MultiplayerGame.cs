@@ -47,6 +47,7 @@ public class MultiplayerGame : MonoBehaviour {
 	public List<GameObject> numCardText;
 	public List<GameObject> shieldCounterList;
 	public List<GameObject> rankTextList;
+	public GameObject clientIdTxt;
 
 	// Misc GameObject's.
 	public GameObject currStageTxt;
@@ -83,6 +84,13 @@ public class MultiplayerGame : MonoBehaviour {
 	public GameObject blockerTXT;
 	public GameObject blockerCardArea;
 	public GameObject blockerInGameMSG;
+	public GameObject clientHand;
+	public GameObject clientInPlay;
+	public GameObject clienIDtxt;
+	public GameObject clientShield;
+	public GameObject clientRankArea;
+	public List<GameObject> cStages;
+	
 
 
 	// The current story card in play.
@@ -101,6 +109,7 @@ public class MultiplayerGame : MonoBehaviour {
 
 	//Client ID
 	public int clientID;
+
 
 	public bool photonSet = false;
 
@@ -131,13 +140,7 @@ public class MultiplayerGame : MonoBehaviour {
 	// End a turn (fires when the End Turn button is clicked).
 	public void EndTurn() {
 		Debug.Log("End Turn Called");
-		// If the hand has too many cards.
-		/*
-		List<Card> stagedCards = getStagedCards (5);
-		for (int i = 0; i < stagedCards.Count; i++) {
-			Debug.Log (stagedCards [i].name);
-		}
-		*/
+
 
 		if(Hand.GetComponent<CardArea>().cards.Count >= 13  ){
 			PromptManager.statusPrompt("Too many cards, please discard or use.");
@@ -268,13 +271,15 @@ public class MultiplayerGame : MonoBehaviour {
 			GameObject.Destroy(child.gameObject);
 		}
 
-		// Set Player ID text.
-		playerIdTxt.GetComponent<UnityEngine.UI.Text>().text = "Player ID: " + (n + 1);
+		// Set TURN ID text.
+		playerIdTxt.GetComponent<UnityEngine.UI.Text>().text = "Turn ID: " + (n + 1);
 
+		clientIdTxt.GetComponent<UnityEngine.UI.Text>().text = "Player ID: " + clientID;
 		// Get current players shield.
 		shieldCounterTxt.GetComponent<UnityEngine.UI.Text>().text = "# Shield: "+ (_players[n].shieldCounter);
 
 		// Load their hand.
+		
 		loadHand(n);
 		block(n,"");
 	}
@@ -318,7 +323,7 @@ public class MultiplayerGame : MonoBehaviour {
 		
 		setSync(_currentPlayer);
 		loadPlayer(_currentPlayer);
-	
+	 
 		// Clean the stages.
 		logger.info("Cleaning cards from stages.");
 		for (int i = 0; i < Stages.Count; i++) {
@@ -327,6 +332,15 @@ public class MultiplayerGame : MonoBehaviour {
 
 			// Clears out draw card area.
 			foreach (Transform child in Stages[i].transform) {
+				GameObject.Destroy (child.gameObject);
+			}
+		}
+		for (int i = 0; i < cStages.Count; i++) {
+			cStages[i].SetActive (true);
+			cStages[i].GetComponent<CardArea>().cards = new List<Card> ();
+
+			// Clears out draw card area.
+			foreach (Transform child in cStages[i].transform) {
 				GameObject.Destroy (child.gameObject);
 			}
 		}
@@ -463,10 +477,14 @@ public class MultiplayerGame : MonoBehaviour {
 		logger.info("Setting up stages for quest: " + _storyCard.name);
 		// Get the number of stages for the quest.
 		QuestCard questCard = (QuestCard)_storyCard;
-
+		 
 		// Setup the stages.
 		for (int i = 0; i < (5 - questCard.stages); i++) {
 			Stages[4-i].SetActive(false);
+		}
+		// Setup the stages.
+		for (int i = 0; i < (5 - questCard.stages); i++) {
+			cStages[4-i].SetActive(false);
 		}
 	}
 
@@ -715,6 +733,13 @@ public class MultiplayerGame : MonoBehaviour {
 		loadCards(stage3Cards,Stages[2]);
 		loadCards(stage4Cards,Stages[3]);
 		loadCards(stage5Cards,Stages[4]);
+		 
+
+		loadCards(stage1Cards,cStages[0]);
+		loadCards(stage2Cards,cStages[1]);
+		loadCards(stage3Cards,cStages[2]);
+		loadCards(stage4Cards,cStages[3]);
+		loadCards(stage5Cards,cStages[4]);
 
 		for (int i = 0; i < allCARDS.Count; i++) {
 			removeCardByName (turnId, allCARDS [i].name);
@@ -899,10 +924,6 @@ public class MultiplayerGame : MonoBehaviour {
 
 		loadCards(_players[playerId].hand, Hand);
 		loadCards(_players[playerId].inPlay, playArea);
-
-		for(int i = 0 ; i < Hand.GetComponent<CardArea>().cards.Count; i++){
-			Hand.GetComponent<CardArea>().cards[i].flipCard(true);
-		}
 
 		GameObject cardUI = Instantiate(RankCard);
 
@@ -1134,17 +1155,54 @@ public class MultiplayerGame : MonoBehaviour {
 
 	//Block Player
 	public void block(int turnId,string msg){
-		
 		Debug.Log("TurnID:"+(turnId+1));
 		//Debug.Log("ClientID:"+clientID);
 		if((turnId+1) != clientID){
 			blocker.SetActive(true);
-			blockerTXT.GetComponent<UnityEngine.UI.Text>().text = ""+(turnId+1);
 		}
 		else{
 			blocker.SetActive(false);
 		}
+
+
+		foreach (Transform child in clientHand.transform) {
+			GameObject.Destroy(child.gameObject);
+		}
+		foreach (Transform child in clientInPlay.transform) {
+			GameObject.Destroy(child.gameObject);
+		}
+		foreach (Transform child in clientRankArea.transform) {
+			GameObject.Destroy(child.gameObject);
+		}
+
+		//Display TURN Number
+		blockerTXT.GetComponent<UnityEngine.UI.Text>().text = "Turn ID:"+(turnId+1);
+		//Load The client message
 		blockerInGameMSG.GetComponent<UnityEngine.UI.Text> ().text = msg;
+		//Load Client ID txt
+		clienIDtxt.GetComponent<UnityEngine.UI.Text> ().text = "Player ID:"+clientID;
+		//Display Shield Counter	
+		clientShield.GetComponent<UnityEngine.UI.Text> ().text = "# Shield: "+_players[clientID-1].shieldCounter;
+
+		GameObject cardUI = Instantiate(RankCard);
+		// Get the rank asset.
+		string rankAsset = getRankAsset(_players[clientID - 1].rank);
+		// Set the rank asset.
+		Sprite rankCard = Resources.Load<Sprite>(rankAsset);
+		cardUI.gameObject.GetComponent<Image>().sprite = rankCard;
+		cardUI.transform.SetParent(clientRankArea.transform);
+		
+		
+		//Load Hand For client
+		loadCards(_players[clientID-1].hand,clientHand);
+		
+		//Load inplay for client
+		loadCards(_players[clientID-1].inPlay,clientInPlay);
+		
+
+		 
+		
+
 	}
 	
 	//Change Block message
@@ -1172,7 +1230,7 @@ public class MultiplayerGame : MonoBehaviour {
 		// Setup players.
 		_players = new List<Player>();
 		PhotonPlayer[] players = PhotonNetwork.playerList;
-		block(0,"");
+		 
 		
 		//Determine AI PLAYER SIZE 
 		int aiPlayerSize = 4 - players.Length;
@@ -1221,6 +1279,7 @@ public class MultiplayerGame : MonoBehaviour {
 		// Make discard piles.
 		_discardPileAdventure = new Deck ("");
 		_discardPileStory = new Deck ("");
+		//block(0,"");
 	}
 
 	[PunRPC]
