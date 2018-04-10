@@ -1163,7 +1163,7 @@ public class MultiplayerGame : MonoBehaviour {
 		clienIDtxt.GetComponent<UnityEngine.UI.Text> ().text = "Player ID:"+clientID;
 		//Display Shield Counter	
 		clientShield.GetComponent<UnityEngine.UI.Text> ().text = "# Shield: "+_players[clientID-1].shieldCounter;
-
+		
 		GameObject cardUI = Instantiate(RankCard);
 		// Get the rank asset.
 		string rankAsset = getRankAsset(_players[clientID - 1].rank);
@@ -1171,18 +1171,6 @@ public class MultiplayerGame : MonoBehaviour {
 		Sprite rankCard = Resources.Load<Sprite>(rankAsset);
 		cardUI.gameObject.GetComponent<Image>().sprite = rankCard;
 		cardUI.transform.SetParent(clientRankArea.transform);
-		
-		
-		//Load Hand For client
-		loadCards(_players[clientID-1].hand,clientHand);
-		
-		//Load inplay for client
-		loadCards(_players[clientID-1].inPlay,clientInPlay);
-		
-
-		 
-		
-
 	}
 	
 	//Change Block message
