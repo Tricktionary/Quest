@@ -1171,6 +1171,14 @@ public class MultiplayerGame : MonoBehaviour {
 		Sprite rankCard = Resources.Load<Sprite>(rankAsset);
 		cardUI.gameObject.GetComponent<Image>().sprite = rankCard;
 		cardUI.transform.SetParent(clientRankArea.transform);
+	
+		
+		//Load Hand For client
+		loadCards(_players[clientID-1].hand,clientHand);
+		
+		//Load inplay for client
+		loadCards(_players[clientID-1].inPlay,clientInPlay);
+		
 	}
 	
 	//Change Block message

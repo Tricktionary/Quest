@@ -245,7 +245,9 @@ public class MultiQuestBehaviour : GameBehaviour {
 						if(_currStage < _questCard.stages){
 							List<Card> cardsToReveal = MultiplayerGame.GameManager.Stages[_currStage].GetComponent<CardArea>().cards;
 							for(int i = 0; i < cardsToReveal.Count; i++){
-								cardsToReveal[i].flipCard(false);
+								if(cardsToReveal[i] != null){
+									cardsToReveal[i].flipCard(false);
+								}
 							}
 						}
 						message = didYouSurvivePrompt();
