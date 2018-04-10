@@ -63,14 +63,16 @@ public abstract class Card : MonoBehaviour, IEquatable<Card> {
 
 	// Flip a card over.
 	public void flipCard(bool f){
-		_flipped = f;
-		Sprite card_image;
-		if(_flipped){
-			card_image = Resources.Load<Sprite>("card_image/special/backOfCard");
-		} else {
-			card_image = Resources.Load<Sprite>(this.asset);
+		if(_obj != null){
+			_flipped = f;
+			Sprite card_image;
+			if(_flipped){
+				card_image = Resources.Load<Sprite>("card_image/special/backOfCard");
+			} else {
+				card_image = Resources.Load<Sprite>(this.asset);
+			}
+			_obj.GetComponent<Image>().sprite = card_image;
 		}
-		_obj.GetComponent<Image>().sprite = card_image;
 	}
 
 	public bool Equals(Card other) {
