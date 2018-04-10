@@ -189,6 +189,11 @@ public class MultiQuestBehaviour : GameBehaviour {
 				MultiplayerGame.GameManager.sync = true; 
 				MultiplayerGame.GameManager.block(_turnId,"");
 				MultiplayerGame.GameManager.blockMessage(message);
+
+				if(MultiplayerGame.GameManager.getPlayer(_turnId).GetType() == typeof(AIPlayer)){
+					endTurn();
+				}
+				
 				return;
 			}
 

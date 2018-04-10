@@ -358,6 +358,8 @@ public class MultiplayerGame : MonoBehaviour {
 	public void AILogicResponse(int turnId,string type){
 		//Current AI
 		AIPlayer currAi = (AIPlayer)_players[turnId];
+		sync = true;
+
 		/*
 			AI Draws so he can either
 				-Sponsor Quest
@@ -1218,13 +1220,14 @@ public class MultiplayerGame : MonoBehaviour {
 			_players.Add(new Player ( i ));
 			currIndex = i;
 		}
-
-		/* 
+		/* Buggy
 		//Populate Multiplayer With AI
-		for(int i = currIndex ; i < aiPlayerSize ;i++){
-			_players.Add(new AIPlayer(i+1,1));
+		for(int i = currIndex ; i <= aiPlayerSize ;i++){
+			_players.Add(new AIPlayer(i,1));
 		}
 		*/
+		
+		Debug.Log(_players.Count);
 		 
 		if (PhotonNetwork.player.ID == 1) {
 			// Setup decks.
