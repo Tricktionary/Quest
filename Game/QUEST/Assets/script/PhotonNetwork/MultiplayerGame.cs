@@ -851,6 +851,7 @@ public class MultiplayerGame : MonoBehaviour {
 				if(currAlly.questCondition == currQuest.name){
 					currAllyPower += currAlly.bonusPower;
 				}
+				logger.info("Empowered Ally");
 			}
 
 			//Ally Condition
@@ -865,6 +866,7 @@ public class MultiplayerGame : MonoBehaviour {
 							AllyCard compareAlly = (AllyCard)currInPlay[i];
 							if(currAlly.allyCondition == compareAlly.name){
 								currAllyPower+=currAlly.bonusPower;
+								logger.info("Empowered Ally");
 								return currAllyPower;
 							}
 						}
