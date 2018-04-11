@@ -134,6 +134,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 						}
 						message = "Player: "+ winnerString + "are the winner of this Quest";
 						MultiplayerGame.GameManager.getPromptManager().statusPrompt(message);
+						MultiplayerGame.GameManager.blockMessage(message);
 
 						// Remove AmourCard.
 						for(int i = 0 ;i <_playersIn.Count;i++){
@@ -250,9 +251,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 						if(_currStage < _questCard.stages){
 							List<Card> cardsToReveal = MultiplayerGame.GameManager.Stages[_currStage].GetComponent<CardArea>().cards;
 							for(int i = 0; i < cardsToReveal.Count; i++){
-								if(cardsToReveal[i] != null){
-									cardsToReveal[i].flipCard(false);
-								}
+								cardsToReveal[i].flipCard(false);
 							}
 						}
 						message = didYouSurvivePrompt();
