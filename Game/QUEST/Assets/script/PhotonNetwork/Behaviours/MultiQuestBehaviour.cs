@@ -132,8 +132,9 @@ public class MultiQuestBehaviour : GameBehaviour {
 								MultiplayerGame.GameManager.payShield(_playersIn[i], _questCard.stages);
 							}
 						}
-						message = "Player: "+ winnerString + "are the winner of this Quest";
+						message = "Player: "+ winnerString + " are the winner of this Quest";
 						MultiplayerGame.GameManager.getPromptManager().statusPrompt(message);
+						MultiplayerGame.GameManager.blockMessage(message);
 
 						// Remove AmourCard.
 						for(int i = 0 ;i <_playersIn.Count;i++){
@@ -143,7 +144,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 
 						// End the quest.
 						MultiplayerGame.GameManager.bonusQuestPoints = false;
-						endQuest();
+						endQuest(message);
 						return;
 					}
 
@@ -250,9 +251,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 						if(_currStage < _questCard.stages){
 							List<Card> cardsToReveal = MultiplayerGame.GameManager.Stages[_currStage].GetComponent<CardArea>().cards;
 							for(int i = 0; i < cardsToReveal.Count; i++){
-								if(cardsToReveal[i] != null){
-									cardsToReveal[i].flipCard(false);
-								}
+								cardsToReveal[i].flipCard(false);
 							}
 						}
 						message = didYouSurvivePrompt();
@@ -419,7 +418,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 	}
 
 	// Ends the currect quest.
-	public void endQuest(){
+	public void endQuest(string message = null){
 		MultiplayerGame.GameManager.logger.info("Quest has been fully reset and ended.");
 		for(int i = 0 ; i < MultiplayerGame.GameManager._players.Count; i++){
 			MultiplayerGame.GameManager.clearInPlayEnd(i);
@@ -438,7 +437,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 		participatingPlayerIndex = 0;
 		participatingPlayers = 0;
 		// Proceed to the next player and story card in the game.
-		MultiplayerGame.GameManager.nextCardAndPlayer();
+		MultiplayerGame.GameManager.nextCardAndPlayer(message);
 	}
 
 	// Set the current story card.

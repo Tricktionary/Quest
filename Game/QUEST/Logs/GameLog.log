@@ -457,3 +457,16 @@
 2018-04-10T18:21:18.7238250-04:00 [INFO]: Drawing a story card...
 2018-04-10T18:21:18.7294940-04:00 [INFO]: A quest card was drawn: Boar Hunt
 2018-04-10T18:21:18.7362760-04:00 [INFO]: Displaying sponsor prompt!
+2018-04-11T10:48:05.9056170-04:00 [INFO]: Connecting to server
+2018-04-11T10:48:06.8237550-04:00 [INFO]: Conected
+2018-04-11T10:48:06.8855230-04:00 [INFO]: Conected to lobby
+2018-04-11T10:48:06.8958720-04:00 [INFO]: Created Game
+2018-04-11T10:48:07.2319550-04:00 [INFO]: Player Connected to Game
+2018-04-11T10:48:15.5290970-04:00 [INFO]: Initializing Game object.
+2018-04-11T10:48:15.5316700-04:00 [INFO]: Normal mode selected.
+2018-04-11T10:48:15.5342140-04:00 [INFO]: Setting up game...
+2018-04-11T10:48:15.8697080-04:00 [INFO]: Created adventure deck with 125 cards.
+2018-04-11T10:48:15.8824320-04:00 [INFO]: Created story deck with 5 cards.
+2018-04-11T10:48:16.2758970-04:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-04-11T10:48:16.4481490-04:00 [INFO]: Loading player: 1
+2018-04-11T10:48:16.6783220-04:00 [INFO]: Cleaning cards from stages.

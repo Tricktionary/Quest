@@ -299,7 +299,7 @@ public class MultiplayerGame : MonoBehaviour {
 	}
 
 	// Switch to the next gamewise player, and draw a new story card.
-	public void nextCardAndPlayer(){
+	public void nextCardAndPlayer(string message = null){
 		//Rank Up player before next turn
 		rankUpPlayers();
 
@@ -344,9 +344,15 @@ public class MultiplayerGame : MonoBehaviour {
 			GameObject.Destroy(child.gameObject);
 		}
 
-		PromptManager.statusPrompt("It's your turn to draw a story card!");
-		blockMessage("It's currently Player: "+(_currentPlayer + 1 ) +" to Draw a card");
-	
+		 
+		if(message != null){
+			PromptManager.statusPrompt(message + " , It's your turn to draw a story card!");
+			blockMessage(message + " , It's currently Player: "+(_currentPlayer + 1 ) +" to Draw a card");
+		}else{
+			PromptManager.statusPrompt("It's your turn to draw a story card!");
+			blockMessage("It's currently Player: "+(_currentPlayer + 1 ) +" to Draw a card");
+		}
+
 		// AI logic.
 		if(_players[_currentPlayer].GetType() == typeof(AIPlayer)){
 			AILogicResponse(_currentPlayer,"");
