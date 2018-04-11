@@ -1,0 +1,175 @@
+2018-04-11T11:52:12.6949150-04:00 [INFO]: Connecting to server
+2018-04-11T11:52:13.5165160-04:00 [INFO]: Conected
+2018-04-11T11:52:13.6253550-04:00 [INFO]: Conected to lobby
+2018-04-11T11:52:13.6324630-04:00 [INFO]: Created Game
+2018-04-11T11:52:13.9647250-04:00 [INFO]: Player Connected to Game
+2018-04-11T11:52:19.5070310-04:00 [INFO]: Initializing Game object.
+2018-04-11T11:52:19.5106050-04:00 [INFO]: Normal mode selected.
+2018-04-11T11:52:19.5136220-04:00 [INFO]: Setting up game...
+2018-04-11T11:52:19.5230950-04:00 [INFO]: Created adventure deck with 0 cards.
+2018-04-11T11:52:19.5552940-04:00 [INFO]: Created story deck with 13 cards.
+2018-04-11T11:52:19.6068710-04:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-04-11T11:53:43.5810660-04:00 [INFO]: Connecting to server
+2018-04-11T11:53:44.4630020-04:00 [INFO]: Conected
+2018-04-11T11:53:44.5093940-04:00 [INFO]: Conected to lobby
+2018-04-11T11:53:44.5139880-04:00 [INFO]: Created Game
+2018-04-11T11:53:44.8757700-04:00 [INFO]: Player Connected to Game
+2018-04-11T11:53:51.5090330-04:00 [INFO]: Initializing Game object.
+2018-04-11T11:53:51.5129030-04:00 [INFO]: Normal mode selected.
+2018-04-11T11:53:51.5155370-04:00 [INFO]: Setting up game...
+2018-04-11T11:53:51.7879210-04:00 [INFO]: Created adventure deck with 163 cards.
+2018-04-11T11:53:51.8062880-04:00 [INFO]: Created story deck with 13 cards.
+2018-04-11T11:53:52.1823420-04:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-04-11T11:53:52.3331850-04:00 [INFO]: Loading player: 1
+2018-04-11T11:53:52.5184740-04:00 [INFO]: Cleaning cards from stages.
+2018-04-11T11:53:59.1965060-04:00 [INFO]: Drawing a story card...
+2018-04-11T11:53:59.2063610-04:00 [INFO]: A quest card was drawn: Repel the Saxxon Raiders
+2018-04-11T11:53:59.2199570-04:00 [INFO]: Displaying sponsor prompt!
+2018-04-11T11:54:04.6678110-04:00 [INFO]: Player 1 decided NOT to sponsor the quest.
+2018-04-11T11:54:04.8041460-04:00 [INFO]: Displaying sponsor prompt!
+2018-04-11T11:54:04.8067920-04:00 [INFO]: Loading player: 2
+2018-04-11T11:54:08.4462960-04:00 [INFO]: Player 2 decided NOT to sponsor the quest.
+2018-04-11T11:54:08.4502450-04:00 [INFO]: Nobody wanted to sponsor the quest!
+2018-04-11T11:54:08.4538400-04:00 [INFO]: Quest has been fully reset and ended.
+2018-04-11T11:54:08.5506090-04:00 [INFO]: Loading player: 2
+2018-04-11T11:54:08.7215730-04:00 [INFO]: Cleaning cards from stages.
+2018-04-11T11:54:10.8395000-04:00 [INFO]: Drawing a story card...
+2018-04-11T11:54:10.8481170-04:00 [INFO]: A quest card was drawn: Search for the Holy Grail
+2018-04-11T11:54:10.8514990-04:00 [INFO]: Displaying sponsor prompt!
+2018-04-11T11:54:11.7500490-04:00 [INFO]: Player 2 decided to sponsor the quest.
+2018-04-11T11:54:11.7552610-04:00 [INFO]: Setting up stages for quest: Search for the Holy Grail
+2018-04-11T11:57:50.1832630-04:00 [INFO]: Connecting to server
+2018-04-11T11:57:51.1101960-04:00 [INFO]: Conected
+2018-04-11T11:57:51.1860770-04:00 [INFO]: Conected to lobby
+2018-04-11T11:57:51.1940870-04:00 [INFO]: Created Game
+2018-04-11T11:57:51.5817870-04:00 [INFO]: Player Connected to Game
+2018-04-11T11:59:43.3350850-04:00 [INFO]: Connecting to server
+2018-04-11T11:59:44.3260040-04:00 [INFO]: Conected
+2018-04-11T11:59:44.3678270-04:00 [INFO]: Conected to lobby
+2018-04-11T11:59:44.3749280-04:00 [INFO]: Created Game
+2018-04-11T11:59:44.6881990-04:00 [INFO]: Player Connected to Game
+2018-04-11T11:59:50.1185910-04:00 [INFO]: Initializing Game object.
+2018-04-11T11:59:50.1202870-04:00 [INFO]: Normal mode selected.
+2018-04-11T11:59:50.1221370-04:00 [INFO]: Setting up game...
+2018-04-11T11:59:50.4362070-04:00 [INFO]: Created adventure deck with 163 cards.
+2018-04-11T11:59:50.4664110-04:00 [INFO]: Created story deck with 13 cards.
+2018-04-11T11:59:51.2246840-04:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-04-11T11:59:51.5104280-04:00 [INFO]: Loading player: 1
+2018-04-11T11:59:51.8265300-04:00 [INFO]: Cleaning cards from stages.
+2018-04-11T11:59:56.9058010-04:00 [INFO]: Drawing a story card...
+2018-04-11T11:59:56.9170230-04:00 [INFO]: A quest card was drawn: Slay the Dragon
+2018-04-11T11:59:56.9292850-04:00 [INFO]: Displaying sponsor prompt!
+2018-04-11T11:59:59.2549160-04:00 [INFO]: Player 1 decided NOT to sponsor the quest.
+2018-04-11T11:59:59.4542400-04:00 [INFO]: Displaying sponsor prompt!
+2018-04-11T11:59:59.4614950-04:00 [INFO]: Loading player: 2
+2018-04-11T12:00:02.0146590-04:00 [INFO]: Player 2 decided to sponsor the quest.
+2018-04-11T12:00:02.0196030-04:00 [INFO]: Setting up stages for quest: Slay the Dragon
+2018-04-11T12:00:58.5931870-04:00 [INFO]: Connecting to server
+2018-04-11T12:00:59.3086200-04:00 [INFO]: Conected
+2018-04-11T12:00:59.3891220-04:00 [INFO]: Conected to lobby
+2018-04-11T12:00:59.3935770-04:00 [INFO]: Created Game
+2018-04-11T12:00:59.7047440-04:00 [INFO]: Player Connected to Game
+2018-04-11T12:01:04.4210670-04:00 [INFO]: Initializing Game object.
+2018-04-11T12:01:04.4229350-04:00 [INFO]: Normal mode selected.
+2018-04-11T12:01:04.4244930-04:00 [INFO]: Setting up game...
+2018-04-11T12:01:04.6060330-04:00 [INFO]: Created adventure deck with 163 cards.
+2018-04-11T12:01:04.6215990-04:00 [INFO]: Created story deck with 13 cards.
+2018-04-11T12:01:04.9576230-04:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-04-11T12:01:05.0898700-04:00 [INFO]: Loading player: 1
+2018-04-11T12:01:05.2435850-04:00 [INFO]: Cleaning cards from stages.
+2018-04-11T12:01:06.2747410-04:00 [INFO]: Drawing a story card...
+2018-04-11T12:01:06.2818700-04:00 [INFO]: A quest card was drawn: Vanquish King Arthur's Enemies
+2018-04-11T12:01:06.2919220-04:00 [INFO]: Displaying sponsor prompt!
+2018-04-11T12:01:08.5908030-04:00 [INFO]: Player 1 decided NOT to sponsor the quest.
+2018-04-11T12:01:08.7251740-04:00 [INFO]: Displaying sponsor prompt!
+2018-04-11T12:01:08.7281990-04:00 [INFO]: Loading player: 2
+2018-04-11T12:01:11.5392660-04:00 [INFO]: Player 2 decided NOT to sponsor the quest.
+2018-04-11T12:01:11.5428310-04:00 [INFO]: Nobody wanted to sponsor the quest!
+2018-04-11T12:01:11.5473010-04:00 [INFO]: Quest has been fully reset and ended.
+2018-04-11T12:01:11.6658950-04:00 [INFO]: Loading player: 2
+2018-04-11T12:01:11.9564410-04:00 [INFO]: Cleaning cards from stages.
+2018-04-11T12:01:12.7766300-04:00 [INFO]: Drawing a story card...
+2018-04-11T12:01:12.7847920-04:00 [INFO]: A quest card was drawn: Defend the Queen's Honor
+2018-04-11T12:01:12.7919930-04:00 [INFO]: Displaying sponsor prompt!
+2018-04-11T12:01:14.4518280-04:00 [INFO]: Player 2 decided NOT to sponsor the quest.
+2018-04-11T12:01:14.5219220-04:00 [INFO]: Displaying sponsor prompt!
+2018-04-11T12:01:14.5252320-04:00 [INFO]: Loading player: 1
+2018-04-11T12:01:16.1508210-04:00 [INFO]: Player 1 decided NOT to sponsor the quest.
+2018-04-11T12:01:16.1531640-04:00 [INFO]: Nobody wanted to sponsor the quest!
+2018-04-11T12:01:16.1565950-04:00 [INFO]: Quest has been fully reset and ended.
+2018-04-11T12:01:16.2716160-04:00 [INFO]: Loading player: 1
+2018-04-11T12:01:16.5026400-04:00 [INFO]: Cleaning cards from stages.
+2018-04-11T12:01:17.3962980-04:00 [INFO]: Drawing a story card...
+2018-04-11T12:01:17.4016650-04:00 [INFO]: A quest card was drawn: Search for the Holy Grail
+2018-04-11T12:01:17.4068180-04:00 [INFO]: Displaying sponsor prompt!
+2018-04-11T12:01:19.7448560-04:00 [INFO]: Player 1 decided NOT to sponsor the quest.
+2018-04-11T12:01:19.8662070-04:00 [INFO]: Displaying sponsor prompt!
+2018-04-11T12:01:19.8685980-04:00 [INFO]: Loading player: 2
+2018-04-11T12:01:22.1152110-04:00 [INFO]: Player 2 decided NOT to sponsor the quest.
+2018-04-11T12:01:22.1175280-04:00 [INFO]: Nobody wanted to sponsor the quest!
+2018-04-11T12:01:22.1193300-04:00 [INFO]: Quest has been fully reset and ended.
+2018-04-11T12:01:22.2148050-04:00 [INFO]: Loading player: 2
+2018-04-11T12:01:22.3716600-04:00 [INFO]: Cleaning cards from stages.
+2018-04-11T12:01:22.9535690-04:00 [INFO]: Drawing a story card...
+2018-04-11T12:01:22.9592780-04:00 [INFO]: A quest card was drawn: Slay the Dragon
+2018-04-11T12:01:22.9647400-04:00 [INFO]: Displaying sponsor prompt!
+2018-04-11T12:01:25.0646390-04:00 [INFO]: Player 2 decided NOT to sponsor the quest.
+2018-04-11T12:01:25.1860970-04:00 [INFO]: Displaying sponsor prompt!
+2018-04-11T12:01:25.1900390-04:00 [INFO]: Loading player: 1
+2018-04-11T12:01:26.5473970-04:00 [INFO]: Player 1 decided NOT to sponsor the quest.
+2018-04-11T12:01:26.5515710-04:00 [INFO]: Nobody wanted to sponsor the quest!
+2018-04-11T12:01:26.5584780-04:00 [INFO]: Quest has been fully reset and ended.
+2018-04-11T12:01:26.8034700-04:00 [INFO]: Loading player: 1
+2018-04-11T12:01:27.1173390-04:00 [INFO]: Cleaning cards from stages.
+2018-04-11T12:01:27.8908310-04:00 [INFO]: Drawing a story card...
+2018-04-11T12:01:27.8990160-04:00 [INFO]: A quest card was drawn: Repel the Saxxon Raiders
+2018-04-11T12:01:27.9039270-04:00 [INFO]: Displaying sponsor prompt!
+2018-04-11T12:01:29.9180920-04:00 [INFO]: Player 1 decided NOT to sponsor the quest.
+2018-04-11T12:01:30.0037580-04:00 [INFO]: Displaying sponsor prompt!
+2018-04-11T12:01:30.0068840-04:00 [INFO]: Loading player: 2
+2018-04-11T12:01:32.0595160-04:00 [INFO]: Player 2 decided to sponsor the quest.
+2018-04-11T12:01:32.0626600-04:00 [INFO]: Setting up stages for quest: Repel the Saxxon Raiders
+2018-04-11T12:01:37.8136290-04:00 [INFO]: Using low power for Thieves because it is NOT featured.
+2018-04-11T12:01:37.8154440-04:00 [INFO]: Using low power for Boar because it is NOT featured.
+2018-04-11T12:01:37.8275700-04:00 [INFO]: Sponsor draws: 31 cards
+2018-04-11T12:01:37.8306810-04:00 [INFO]: Sponsor draws: 31 cards
+2018-04-11T12:01:37.8335530-04:00 [INFO]: Sponsor draws: 31 cards
+2018-04-11T12:01:37.8363440-04:00 [INFO]: Sponsor draws: 31 cards
+2018-04-11T12:01:37.9165790-04:00 [INFO]: Loading player: 1
+2018-04-11T12:01:38.1375600-04:00 [INFO]: Displaying join quest prompt!
+2018-04-11T12:01:40.0119560-04:00 [INFO]: Player 1 decided to join the quest.
+2018-04-11T12:01:40.1109520-04:00 [INFO]: Giving Player 1 one adventure card for joining the quest.
+2018-04-11T12:01:40.1134890-04:00 [INFO]: Moving to setup weapons state.
+2018-04-11T12:01:40.1158970-04:00 [INFO]: Loading player: 1
+2018-04-11T12:02:01.2642110-04:00 [INFO]: All playing players have setup weapons for stage 1
+2018-04-11T12:02:01.3609550-04:00 [INFO]: Flipping cards in stage 1
+2018-04-11T12:02:01.3641550-04:00 [INFO]: Empowered Ally
+2018-04-11T12:02:01.3664330-04:00 [INFO]: Empowered Ally
+2018-04-11T12:02:01.3691820-04:00 [INFO]: Empowered Ally
+2018-04-11T12:02:01.3726610-04:00 [INFO]: Empowered Ally
+2018-04-11T12:02:01.3756730-04:00 [INFO]: Empowered Ally
+2018-04-11T12:02:01.3783620-04:00 [INFO]: Stage 1 has a power level of 5.
+2018-04-11T12:02:01.3808730-04:00 [INFO]: Player 1 has a power level of 50.
+2018-04-11T12:02:01.3831390-04:00 [INFO]: Player 1 passed stage 1.
+2018-04-11T12:02:01.3856800-04:00 [INFO]: Loading player: 1
+2018-04-11T12:02:12.0886180-04:00 [INFO]: Swithing back to setup weapons state.
+2018-04-11T12:02:12.1754550-04:00 [INFO]: Giving Player 1 an adventure card for passing the stage.
+2018-04-11T12:02:12.1789090-04:00 [INFO]: Loading player: 1
+2018-04-11T12:02:13.1335310-04:00 [INFO]: All playing players have setup weapons for stage 2
+2018-04-11T12:02:13.2398360-04:00 [INFO]: Flipping cards in stage 2
+2018-04-11T12:02:13.2423470-04:00 [INFO]: Empowered Ally
+2018-04-11T12:02:13.2448870-04:00 [INFO]: Empowered Ally
+2018-04-11T12:02:13.2471930-04:00 [INFO]: Empowered Ally
+2018-04-11T12:02:13.2494370-04:00 [INFO]: Empowered Ally
+2018-04-11T12:02:13.2517590-04:00 [INFO]: Empowered Ally
+2018-04-11T12:02:13.2561730-04:00 [INFO]: Stage 2 has a power level of 35.
+2018-04-11T12:02:13.2590830-04:00 [INFO]: Player 1 has a power level of 50.
+2018-04-11T12:02:13.2614050-04:00 [INFO]: Player 1 passed stage 2.
+2018-04-11T12:02:13.2635010-04:00 [INFO]: Loading player: 1
+2018-04-11T12:02:15.6825630-04:00 [INFO]: Quest is over and we have winner(s)!
+2018-04-11T12:02:15.6854220-04:00 [INFO]: Player 1 won the quest!
+2018-04-11T12:02:15.6890600-04:00 [INFO]: Paying 2 shields to Player 1.
+2018-04-11T12:02:15.6920850-04:00 [INFO]: Clear Cards at the end of the quest
+2018-04-11T12:02:15.6943090-04:00 [INFO]: Quest has been fully reset and ended.
+2018-04-11T12:02:15.8096740-04:00 [INFO]: Loading player: 2
+2018-04-11T12:02:16.0400170-04:00 [INFO]: Cleaning cards from stages.

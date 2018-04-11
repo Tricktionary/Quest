@@ -1240,6 +1240,7 @@ public class MultiplayerGame : MonoBehaviour {
 		if (PhotonNetwork.player.ID == 1) {
 			// Setup decks.
 			_adventureDeck = new Deck("Adventure");
+			//_adventureDeck = new Deck("specialHand");
 			logger.info("Created adventure deck with " + _adventureDeck.GetSize() + " cards.");
 
 			_storyDeck = new Deck(storyDeckType);
@@ -1289,7 +1290,6 @@ public class MultiplayerGame : MonoBehaviour {
 	public void NormalMode(){
 		logger.info("Normal mode selected.");
 		genericModeSetup("scenario1");
-		//genericModeSetup("TournamentOnly");
 	}
 
 	//Give card to player

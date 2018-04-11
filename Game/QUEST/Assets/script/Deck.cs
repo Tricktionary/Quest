@@ -300,13 +300,14 @@ public class Deck{
 		addAlly("Sir Lancelot", 15, 0, 25, 0, "Defend the Queen's Honor", null, false, "card_image/special/specialCard9", 1);
 		addFoe("Mordred","Mordred", 30, 30, true, "card_image/foe/foeCard11", 1);
 		addFoe("Black Knight","Black Knight", 25, 35, false, "card_image/foe/foeCard6", 1);
-		addFoe("Boar","Boar", 5, 15, false, "card_image/foe/foeCard3", 1);
+		addAlly("Sir Tristan", 10, 0, 20, 0, null, "Queen Iseult", false, "card_image/special/specialCard4", 1);
+		 
 
 
 		//Player 2 Hand
+		addFoe("Boar","Boar", 5, 15, false, "card_image/foe/foeCard3", 1);
 		addAlly("King Pellinore",10,0,0,4,"Search for the Questing Beast", null, false, "card_image/special/specialCard1", 1);
 		addAlly("Sir Percival",5,0,20,0,"Search for the Holy Grail", null, false, "card_image/special/specialCard2", 1);
-		addAlly("Sir Tristan", 10, 0, 20, 0, null, "Queen Iseult", false, "card_image/special/specialCard4", 1);
 		addAlly("King Arthur", 10, 2, 0, 0, null, null, false, "card_image/special/specialCard5", 1);
 		addAlly("Queen Guinevere", 0, 3, 0, 0, null, null, false, "card_image/special/specialCard6", 1);
 		addAlly("Merlin", 0, 0, 0, 0, null, null, true, "card_image/special/specialCard7", 1);
