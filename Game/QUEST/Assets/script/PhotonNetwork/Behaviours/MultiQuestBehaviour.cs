@@ -287,7 +287,7 @@ public class MultiQuestBehaviour : GameBehaviour {
 				// Weapon setup is not valid.
 				} else {
 					MultiplayerGame.GameManager.logger.info("Play area is invalid!");
-					MultiplayerGame.GameManager.getPromptManager().statusPrompt("You can't submit foe/too many amours to the play area!");
+					MultiplayerGame.GameManager.getPromptManager().statusPrompt("You can't submit foe/too many amours/duplicate weapons to the play area!");
 				}
 
 			// Otherwise, quest needs to be setup.

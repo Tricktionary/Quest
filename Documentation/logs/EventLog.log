@@ -1,0 +1,79 @@
+2018-04-11T11:38:52.6259730-04:00 [INFO]: Connecting to server
+2018-04-11T11:38:54.3534830-04:00 [INFO]: Conected
+2018-04-11T11:38:54.5048410-04:00 [INFO]: Conected to lobby
+2018-04-11T11:38:54.5171410-04:00 [INFO]: Created Game
+2018-04-11T11:38:55.2009360-04:00 [INFO]: Player Connected to Game
+2018-04-11T11:39:00.3401880-04:00 [INFO]: Initializing Game object.
+2018-04-11T11:39:00.3433670-04:00 [INFO]: Normal mode selected.
+2018-04-11T11:39:00.3466070-04:00 [INFO]: Setting up game...
+2018-04-11T11:39:00.6045970-04:00 [INFO]: Created adventure deck with 125 cards.
+2018-04-11T11:39:00.6237830-04:00 [INFO]: Created story deck with 10 cards.
+2018-04-11T11:39:01.0158390-04:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-04-11T11:39:01.1840830-04:00 [INFO]: Loading player: 1
+2018-04-11T11:39:01.3868230-04:00 [INFO]: Cleaning cards from stages.
+2018-04-11T11:39:04.5605650-04:00 [INFO]: Drawing a story card...
+1
+2018-04-11T11:39:06.0067630-04:00 [INFO]: Loading player: 2
+2018-04-11T11:39:06.2176600-04:00 [INFO]: Cleaning cards from stages.
+2018-04-11T11:39:08.2622600-04:00 [INFO]: Drawing a story card...
+2018-04-11T11:39:08.2673410-04:00 [INFO]: A event card was drawn: King's Recognition
+2018-04-11T11:39:08.2704260-04:00 [INFO]: There are too many cards in Player 2's hand, they must discard or play.
+2018-04-11T11:39:08.9510740-04:00 [INFO]: There are too many cards in Player 2's hand, they must discard or play.
+2018-04-11T11:39:17.7263180-04:00 [INFO]: A story card has already been drawn.
+2018-04-11T11:39:18.4610940-04:00 [INFO]: Handling event card: King's Recognition
+2018-04-11T11:39:19.6866370-04:00 [INFO]: Handling event card: King's Recognition
+2018-04-11T11:39:19.7891750-04:00 [INFO]: Loading player: 1
+2018-04-11T11:39:19.9471360-04:00 [INFO]: Cleaning cards from stages.
+2018-04-11T11:39:21.4854800-04:00 [INFO]: Drawing a story card...
+2018-04-11T11:39:21.4888050-04:00 [INFO]: A event card was drawn: Queen's Favor
+2018-04-11T11:39:21.4952690-04:00 [INFO]: There are too many cards in Player 1's hand, they must discard or play.
+2018-04-11T11:39:22.1711900-04:00 [INFO]: There are too many cards in Player 1's hand, they must discard or play.
+2018-04-11T11:39:28.9665550-04:00 [INFO]: Player 1 discarded: Horse
+2018-04-11T11:39:28.9681210-04:00 [INFO]: Player 1 discarded: Dagger
+2018-04-11T11:39:28.9693460-04:00 [INFO]: Player 1 discarded: Amour
+2018-04-11T11:39:31.0293280-04:00 [INFO]: A story card has already been drawn.
+2018-04-11T11:39:31.6621960-04:00 [INFO]: Handling event card: Queen's Favor
+2018-04-11T11:39:33.9070800-04:00 [INFO]: Handling event card: Queen's Favor
+2018-04-11T11:39:34.0206000-04:00 [INFO]: Loading player: 2
+2018-04-11T11:39:34.2468380-04:00 [INFO]: Cleaning cards from stages.
+2018-04-11T11:39:36.7900790-04:00 [INFO]: Drawing a story card...
+2018-04-11T11:39:36.7972380-04:00 [INFO]: A event card was drawn: Plague
+2018-04-11T11:39:36.8006030-04:00 [INFO]: There are too many cards in Player 2's hand, they must discard or play.
+2018-04-11T11:39:37.6496680-04:00 [INFO]: There are too many cards in Player 2's hand, they must discard or play.
+2018-04-11T11:39:48.8239420-04:00 [INFO]: Handling event card: Plague
+2018-04-11T11:39:50.0196160-04:00 [INFO]: A story card has already been drawn.
+2018-04-11T11:39:51.2842270-04:00 [INFO]: Handling event card: Plague
+2018-04-11T11:39:51.3810650-04:00 [INFO]: Loading player: 1
+2018-04-11T11:39:51.5296550-04:00 [INFO]: Cleaning cards from stages.
+2018-04-11T11:39:53.1420380-04:00 [INFO]: Drawing a story card...
+2018-04-11T11:39:53.1486930-04:00 [INFO]: A event card was drawn: Court Called to Camelot
+2018-04-11T11:39:53.1533070-04:00 [INFO]: There are too many cards in Player 1's hand, they must discard or play.
+2018-04-11T11:39:53.9110620-04:00 [INFO]: There are too many cards in Player 1's hand, they must discard or play.
+2018-04-11T11:39:54.5255110-04:00 [INFO]: There are too many cards in Player 1's hand, they must discard or play.
+2018-04-11T11:40:03.7828350-04:00 [INFO]: Player 1 discarded: Horse
+2018-04-11T11:40:03.8877600-04:00 [INFO]: Player 1 discarded: Robber Knight
+2018-04-11T11:40:03.9028420-04:00 [INFO]: Player 1 discarded: Giant
+2018-04-11T11:40:03.9060680-04:00 [INFO]: Player 1 discarded: Evil Knight
+2018-04-11T11:40:03.9080300-04:00 [INFO]: Player 1 discarded: Sword
+2018-04-11T11:40:04.9815390-04:00 [INFO]: Handling event card: Court Called to Camelot
+2018-04-11T11:40:07.4110640-04:00 [INFO]: Handling event card: Court Called to Camelot
+2018-04-11T11:40:07.4763800-04:00 [INFO]: Loading player: 2
+2018-04-11T11:40:07.5828810-04:00 [INFO]: Cleaning cards from stages.
+2018-04-11T11:40:10.0185030-04:00 [INFO]: Drawing a story card...
+2018-04-11T11:40:10.0237090-04:00 [INFO]: A event card was drawn: Pox
+2018-04-11T11:40:10.0272940-04:00 [INFO]: Handling event card: Pox
+2018-04-11T11:40:14.1587570-04:00 [INFO]: Handling event card: Pox
+2018-04-11T11:40:14.2092810-04:00 [INFO]: Loading player: 1
+2018-04-11T11:40:14.3031640-04:00 [INFO]: Cleaning cards from stages.
+2018-04-11T11:40:15.9051410-04:00 [INFO]: Drawing a story card...
+2018-04-11T11:40:15.9202720-04:00 [INFO]: A event card was drawn: Chivalrous Deed
+2018-04-11T11:40:15.9499630-04:00 [INFO]: Handling event card: Chivalrous Deed
+2018-04-11T11:40:16.9065290-04:00 [INFO]: Handling event card: Chivalrous Deed
+2018-04-11T11:40:17.0060730-04:00 [INFO]: Loading player: 2
+2018-04-11T11:40:17.1325860-04:00 [INFO]: Cleaning cards from stages.
+2018-04-11T11:40:19.4403560-04:00 [INFO]: Drawing a story card...
+2018-04-11T11:40:19.4430620-04:00 [INFO]: A event card was drawn: Court Called to Camelot
+2018-04-11T11:40:19.4459930-04:00 [INFO]: Handling event card: Court Called to Camelot
+2018-04-11T11:40:20.4968600-04:00 [INFO]: Handling event card: Court Called to Camelot
+2018-04-11T11:40:20.5486010-04:00 [INFO]: Loading player: 1
+2018-04-11T11:40:20.6478100-04:00 [INFO]: Cleaning cards from stages.

@@ -1,0 +1,38 @@
+2018-04-11T12:27:16.5718280-04:00 [INFO]: Connecting to server
+2018-04-11T12:27:17.7115250-04:00 [INFO]: Conected
+2018-04-11T12:27:17.7535310-04:00 [INFO]: Conected to lobby
+2018-04-11T12:27:22.8315070-04:00 [INFO]: Player Connected to Game
+2018-04-11T12:27:25.1340710-04:00 [INFO]: Initializing Game object.
+2018-04-11T12:27:25.1378120-04:00 [INFO]: Normal mode selected.
+2018-04-11T12:27:25.1405460-04:00 [INFO]: Setting up game...
+2018-04-11T12:27:25.6744760-04:00 [INFO]: Dealing 12 cards from adventure deck to each player.
+2018-04-11T12:27:25.8195650-04:00 [INFO]: Loading player: 1
+2018-04-11T12:27:26.0690280-04:00 [INFO]: Cleaning cards from stages.
+2018-04-11T12:27:26.2121310-04:00 [INFO]: Drawing a story card...
+2018-04-11T12:27:26.2265780-04:00 [INFO]: A quest card was drawn: Boar Hunt
+2018-04-11T12:27:26.2411610-04:00 [INFO]: Displaying sponsor prompt!
+2018-04-11T12:27:26.7952450-04:00 [INFO]: Player 1 decided to sponsor the quest.
+2018-04-11T12:27:26.8004830-04:00 [INFO]: Setting up stages for quest: Boar Hunt
+2018-04-11T12:27:32.2423560-04:00 [WARN]: Quest setup is invalid: each stage must have exactly 1 foe.
+2018-04-11T12:27:32.3546410-04:00 [INFO]: Using low power for Saxons because it is NOT featured.
+2018-04-11T12:27:32.3579350-04:00 [INFO]: Using low power for Mordred because it is NOT featured.
+2018-04-11T12:27:32.3725540-04:00 [INFO]: Sponsor draws: 21 cards
+2018-04-11T12:27:32.3755950-04:00 [INFO]: Sponsor draws: 21 cards
+2018-04-11T12:27:32.3773170-04:00 [INFO]: Sponsor draws: 21 cards
+2018-04-11T12:27:32.4490670-04:00 [INFO]: Loading player: 2
+2018-04-11T12:27:32.7335320-04:00 [INFO]: Displaying join quest prompt!
+2018-04-11T12:27:34.1067270-04:00 [INFO]: Player 2 decided to join the quest.
+2018-04-11T12:27:34.2082230-04:00 [INFO]: Giving Player 2 one adventure card for joining the quest.
+2018-04-11T12:27:34.2110970-04:00 [INFO]: Moving to setup weapons state.
+2018-04-11T12:27:34.2150320-04:00 [INFO]: Loading player: 2
+2018-04-11T12:27:38.0696540-04:00 [WARN]: Play area invalid: you can't submit duplicate weapons to the play area!
+2018-04-11T12:27:38.0731200-04:00 [INFO]: Play area is invalid!
+2018-04-11T12:27:41.0122880-04:00 [INFO]: All playing players have setup weapons for stage 1
+2018-04-11T12:27:41.1204110-04:00 [INFO]: Flipping cards in stage 1
+2018-04-11T12:27:41.1237330-04:00 [INFO]: Stage 1 has a power level of 10.
+2018-04-11T12:27:41.1260160-04:00 [INFO]: Player 2 has a power level of 15.
+2018-04-11T12:27:41.1289390-04:00 [INFO]: Player 2 passed stage 1.
+2018-04-11T12:27:41.1333880-04:00 [INFO]: Loading player: 2
+2018-04-11T12:27:42.0396890-04:00 [INFO]: Swithing back to setup weapons state.
+2018-04-11T12:27:42.1417880-04:00 [INFO]: Giving Player 2 an adventure card for passing the stage.
+2018-04-11T12:27:42.1438610-04:00 [INFO]: Loading player: 2
