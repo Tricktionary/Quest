@@ -4,4 +4,5 @@ To launch Game:
   3. Go to toolbar and make sure build setting is on WEBGL
   4. Build and Play
 
+-All log files are found in /Documentation
 As of April 11 it is only compatible with firefox
