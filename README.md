@@ -1,11 +1,15 @@
-# COMP3004-QUEST
-The final group project for COMP3004 at Carleton University.
+# QUEST
+------
+Quest of the round table is a multiplayer card game set in camelot 
 
-This is the repository for team 20.
-TA: acerbusace (Alex)
+## How to run
+------
 
-Group Members:
+- Install Unity 
+- Inport this project repository into Unity and press play or generate the game on your client of choice 
 
+## Contributor
+-------
 joshua-arts (Joshua Arts)
 Tricktionary (Andy Bui)
 PhiliLegault (Philippe Legault)
